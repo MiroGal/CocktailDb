@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">Cocktail</string>
+
+    <string name="launch_label">Cocktails</string>
+
+    <string name="save_list_label">Cocktail App</string>
+    <string name="save_list_empty">History is empty</string>
+
+    <string name="search_list_label">Search Cocktail</string>
+    <string name="search_list_empty">No cocktails found</string>
+    <string name="search_list_start">Enter text to start search</string>
+    <string name="search_list_action_search">Search</string>
+    <string name="search_list_action_search_hint">Enter cocktail name</string>
+
+    <string name="detail_label">Cocktail Details</string>
+    <string name="detail_info_name">Name:</string>
+    <string name="detail_info_alcoholic">Alcoholic:</string>
+    <string name="detail_info_glass">Glass:</string>
+    <string name="detail_ingredient_title">Ingredients</string>
+    <string name="detail_instruction_title">Instructions</string>
+
+</resources>
