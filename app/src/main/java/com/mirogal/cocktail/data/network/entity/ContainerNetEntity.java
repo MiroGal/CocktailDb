@@ -10,12 +10,11 @@ public class ContainerNetEntity implements Serializable {
     @SerializedName("drinks")
     private List<CocktailNetEntity> cocktailList;
 
-    public ContainerNetEntity() {
-    }
-
     public ContainerNetEntity(List<CocktailNetEntity> cocktailList) {
         this.cocktailList = cocktailList;
     }
+
+    //  All getters and setters for the completeness of the entity
 
     public List<CocktailNetEntity> getCocktailList() {
         return cocktailList;

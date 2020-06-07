@@ -13,9 +13,9 @@ import java.util.List;
 
 public class ListAdapter extends RecyclerView.Adapter<ItemHolder> {
 
-    private List<IngredientEntity> ingredientList;
+    private final List<IngredientEntity> ingredientList;
 
-    private int itemLayoutId;
+    private final int itemLayoutId;
 
     public ListAdapter(List<IngredientEntity> ingredientList, int itemLayoutId) {
         this.ingredientList = ingredientList;

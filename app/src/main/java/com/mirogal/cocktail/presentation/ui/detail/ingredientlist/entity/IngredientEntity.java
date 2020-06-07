@@ -8,14 +8,13 @@ public class IngredientEntity {
 
     private String measure;
 
-    public IngredientEntity() {
-    }
-
     public IngredientEntity(int id, String name, String measure) {
         this.id = id;
         this.name = name;
         this.measure = measure;
     }
+
+    //  All getters and setters for the completeness of the entity
 
     public int getId() {
         return id;

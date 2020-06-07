@@ -11,13 +11,13 @@ import androidx.recyclerview.widget.DiffUtil;
 
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity;
 
-public class ListAdapter extends PagedListAdapter<CocktailDbEntity, ItemHolder> {
+class ListAdapter extends PagedListAdapter<CocktailDbEntity, ItemHolder> {
 
-    private Context context;
-    private OnItemClickListener onItemClickListener;
-    private int itemLayoutId;
+    private final Context context;
+    private final OnItemClickListener onItemClickListener;
+    private final int itemLayoutId;
 
-    private static DiffUtil.ItemCallback<CocktailDbEntity> DIFF_CALLBACK =
+    private static final DiffUtil.ItemCallback<CocktailDbEntity> DIFF_CALLBACK =
             new DiffUtil.ItemCallback<CocktailDbEntity>() {
 
         @Override
@@ -37,7 +37,7 @@ public class ListAdapter extends PagedListAdapter<CocktailDbEntity, ItemHolder> 
         }
     };
 
-    public ListAdapter(Context context, OnItemClickListener clickListener, int itemLayoutId) {
+    ListAdapter(Context context, OnItemClickListener clickListener, int itemLayoutId) {
         super(DIFF_CALLBACK);
         this.context = context;
         this.onItemClickListener = clickListener;
@@ -67,7 +67,7 @@ public class ListAdapter extends PagedListAdapter<CocktailDbEntity, ItemHolder> 
         }
     }
 
-    public interface OnItemClickListener {
+    interface OnItemClickListener {
         void onItemClick(CocktailDbEntity cocktail);
     }
 }

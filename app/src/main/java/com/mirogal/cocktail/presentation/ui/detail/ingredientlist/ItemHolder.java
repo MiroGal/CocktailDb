@@ -10,13 +10,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.mirogal.cocktail.R;
 import com.mirogal.cocktail.presentation.ui.detail.ingredientlist.entity.IngredientEntity;
 
-public class ItemHolder extends RecyclerView.ViewHolder {
+class ItemHolder extends RecyclerView.ViewHolder {
 
-    private TextView tvPosition;
-    private TextView tvIngredient;
-    private TextView tvMeasure;
+    private final TextView tvPosition;
+    private final TextView tvIngredient;
+    private final TextView tvMeasure;
 
-    public ItemHolder(@NonNull View itemView) {
+    ItemHolder(@NonNull View itemView) {
         super(itemView);
         tvPosition = itemView.findViewById(R.id.tv_position);
         tvIngredient = itemView.findViewById(R.id.tv_ingredient);
@@ -24,7 +24,7 @@ public class ItemHolder extends RecyclerView.ViewHolder {
     }
 
     @SuppressLint("SetTextI18n")
-    public void bind(IngredientEntity ingredientEntity) {
+    void bind(IngredientEntity ingredientEntity) {
         tvPosition.setText(ingredientEntity.getId() + ".");
         tvIngredient.setText(ingredientEntity.getName());
         tvMeasure.setText(ingredientEntity.getMeasure());

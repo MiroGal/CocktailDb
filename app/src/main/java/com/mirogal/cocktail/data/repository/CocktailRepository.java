@@ -18,10 +18,10 @@ public class CocktailRepository {
 
     private LiveData<PagedList<CocktailDbEntity>> saveCocktailList;
     private LiveData<PagedList<CocktailDbEntity>> selectCocktailList;
-    private MutableLiveData<NetworkState.Status> networkStatus;
-    private MutableLiveData<String> requestQuery;
+    private final MutableLiveData<NetworkState.Status> networkStatus;
+    private final MutableLiveData<String> requestQuery;
 
-    private CocktailDao cocktailDao;
+    private final CocktailDao cocktailDao;
     private DataSourceFactory dataSourceFactory;
     private BoundaryCallback boundaryCallback;
 
@@ -103,18 +103,10 @@ public class CocktailRepository {
     }
 
     public void saveCocktail(CocktailDbEntity cocktail) {
-        new Thread(new Runnable() {
-            public void run() {
-                cocktailDao.insertCocktail(cocktail);
-            }
-        }).start();
+        new Thread(() -> cocktailDao.insertCocktail(cocktail)).start();
     }
 
     public void deleteCocktail(int cocktailId) {
-        new Thread(new Runnable() {
-            public void run() {
-                cocktailDao.deleteCocktail(cocktailId);
-            }
-        }).start();
+        new Thread(() -> cocktailDao.deleteCocktail(cocktailId)).start();
     }
 }

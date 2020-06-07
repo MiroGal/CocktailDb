@@ -11,7 +11,6 @@ import android.widget.LinearLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,6 +25,8 @@ import com.mirogal.cocktail.presentation.viewmodel.searchlist.CocktailSearchList
 
 public class CocktailSearchListActivity extends AppCompatActivity
         implements ListAdapter.OnItemClickListener {
+
+    // TODO Dagger integration
 
     private CocktailSearchListViewModel viewModel;
 
@@ -58,9 +59,9 @@ public class CocktailSearchListActivity extends AppCompatActivity
             listColumn = 3;
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.rw_list);
-        layoutEmpty = (LinearLayout) findViewById(R.id.layout_empty);
-        layoutStart = (LinearLayout) findViewById(R.id.layout_start);
+        recyclerView = findViewById(R.id.rw_list);
+        layoutEmpty = findViewById(R.id.layout_empty);
+        layoutStart = findViewById(R.id.layout_start);
 
         layoutManager = new GridLayoutManager(this, listColumn);
         recyclerView.setLayoutManager(layoutManager);
@@ -73,28 +74,22 @@ public class CocktailSearchListActivity extends AppCompatActivity
         viewModel.getCocktailList().observe(this, pagedList -> {
             try {
                 listAdapter.submitList(pagedList);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
         });
         recyclerView.setAdapter(listAdapter);
 
-        viewModel.getNetworkStatus().observe(this, new Observer<NetworkState.Status>() {
-            @Override
-            public void onChanged(NetworkState.Status status) {
-                if (status == NetworkState.EMPTY) {
-                    showEmpty();
-                } else {
-                    showData();
-                }
+        viewModel.getNetworkStatus().observe(this, status -> {
+            if (status == NetworkState.EMPTY) {
+                showEmpty();
+            } else {
+                showData();
             }
         });
 
-        viewModel.getRequestQuery().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String s) {
-                requestQuery = s;
-                if (s == null || s.isEmpty()) {
-                    showStart();
-                }
+        viewModel.getRequestQuery().observe(this, query -> {
+            CocktailSearchListActivity.this.requestQuery = query;
+            if (query == null || query.isEmpty()) {
+                showStart();
             }
         });
     }
@@ -134,7 +129,7 @@ public class CocktailSearchListActivity extends AppCompatActivity
         openCocktailDetailActivity(cocktail);
     }
 
-    public void openCocktailDetailActivity(CocktailDbEntity cocktail) {
+    private void openCocktailDetailActivity(CocktailDbEntity cocktail) {
         Intent intent = new Intent(CocktailSearchListActivity.this, CocktailDetailActivity.class);
         intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail);
         startActivity(intent);

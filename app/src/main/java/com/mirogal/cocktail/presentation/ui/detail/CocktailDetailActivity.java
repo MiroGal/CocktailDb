@@ -1,7 +1,6 @@
 package com.mirogal.cocktail.presentation.ui.detail;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,6 +21,8 @@ import java.util.List;
 import java.util.Objects;
 
 public class CocktailDetailActivity extends AppCompatActivity {
+
+    // TODO Dagger integration
 
     private CocktailDbEntity cocktailEntity;
 
@@ -54,25 +55,20 @@ public class CocktailDetailActivity extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 //        toolbar.setNavigationIcon(R.drawable.ic_back);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
-            }
-        });
+        toolbar.setNavigationOnClickListener(v -> onBackPressed());
 
-        ivImage = (ImageView) findViewById(R.id.iv_image);
-        tvInfoName = (TextView) findViewById(R.id.tv_info_name);
-        tvInfoAlcoholic = (TextView) findViewById(R.id.tv_info_alcoholic);
-        tvInfoGlass = (TextView) findViewById(R.id.tv_info_glass);
-        tvInstructionBody = (TextView) findViewById(R.id.tv_instruction_body);
+        ivImage = findViewById(R.id.iv_image);
+        tvInfoName = findViewById(R.id.tv_info_name);
+        tvInfoAlcoholic = findViewById(R.id.tv_info_alcoholic);
+        tvInfoGlass = findViewById(R.id.tv_info_glass);
+        tvInstructionBody = findViewById(R.id.tv_instruction_body);
 
         tvInfoName.setText(cocktailEntity.getName());
         tvInfoAlcoholic.setText(cocktailEntity.getAlcoholic());
         tvInfoGlass.setText(cocktailEntity.getGlass());
         tvInstructionBody.setText(cocktailEntity.getInstruction());
 
-        recyclerView = (RecyclerView) findViewById(R.id.rw_list);
+        recyclerView = findViewById(R.id.rw_list);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

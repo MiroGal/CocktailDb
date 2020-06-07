@@ -10,6 +10,8 @@ import java.io.Serializable;
 @Entity(tableName = CocktailDbEntity.TABLE_NAME)
 public class CocktailDbEntity implements Serializable {
 
+    //  Public column names
+
     public static final String TABLE_NAME = "cocktail_entity";
     public static final String COLUMN_ID = "id";
     public static final String COLUMN_NAME = "name";

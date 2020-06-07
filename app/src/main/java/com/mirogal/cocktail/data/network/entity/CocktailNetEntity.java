@@ -137,78 +137,7 @@ public class CocktailNetEntity implements Serializable {
     @SerializedName("dateModified")
     private String dateModified;
 
-    public CocktailNetEntity() {
-    }
-
-    public CocktailNetEntity(int id, String name, String nameAlternate, String nameEs, String nameDe,
-                             String nameFr, String nameZhHans, String nameZhHant, String tags,
-                             String video, String category, String iba, String alcoholic, String glass,
-                             String instruction, String instructionEs, String instructionDe,
-                             String instructionFr, String instructionZhHans, String instructionZhHant,
-                             String imagePath, String ingredient1, String ingredient2,
-                             String ingredient3, String ingredient4, String ingredient5,
-                             String ingredient6, String ingredient7, String ingredient8,
-                             String ingredient9, String ingredient10, String ingredient11,
-                             String ingredient12, String ingredient13, String ingredient14,
-                             String ingredient15, String measure1, String measure2, String measure3,
-                             String measure4, String measure5, String measure6, String measure7,
-                             String measure8, String measure9, String measure10, String measure11,
-                             String measure12, String measure13, String measure14, String measure15,
-                             String creativeCommonsConfirmed, String dateModified) {
-        this.id = id;
-        this.name = name;
-        this.nameAlternate = nameAlternate;
-        this.nameEs = nameEs;
-        this.nameDe = nameDe;
-        this.nameFr = nameFr;
-        this.nameZhHans = nameZhHans;
-        this.nameZhHant = nameZhHant;
-        this.tags = tags;
-        this.video = video;
-        this.category = category;
-        this.iba = iba;
-        this.alcoholic = alcoholic;
-        this.glass = glass;
-        this.instruction = instruction;
-        this.instructionEs = instructionEs;
-        this.instructionDe = instructionDe;
-        this.instructionFr = instructionFr;
-        this.instructionZhHans = instructionZhHans;
-        this.instructionZhHant = instructionZhHant;
-        this.imagePath = imagePath;
-        this.ingredient1 = ingredient1;
-        this.ingredient2 = ingredient2;
-        this.ingredient3 = ingredient3;
-        this.ingredient4 = ingredient4;
-        this.ingredient5 = ingredient5;
-        this.ingredient6 = ingredient6;
-        this.ingredient7 = ingredient7;
-        this.ingredient8 = ingredient8;
-        this.ingredient9 = ingredient9;
-        this.ingredient10 = ingredient10;
-        this.ingredient11 = ingredient11;
-        this.ingredient12 = ingredient12;
-        this.ingredient13 = ingredient13;
-        this.ingredient14 = ingredient14;
-        this.ingredient15 = ingredient15;
-        this.measure1 = measure1;
-        this.measure2 = measure2;
-        this.measure3 = measure3;
-        this.measure4 = measure4;
-        this.measure5 = measure5;
-        this.measure6 = measure6;
-        this.measure7 = measure7;
-        this.measure8 = measure8;
-        this.measure9 = measure9;
-        this.measure10 = measure10;
-        this.measure11 = measure11;
-        this.measure12 = measure12;
-        this.measure13 = measure13;
-        this.measure14 = measure14;
-        this.measure15 = measure15;
-        this.creativeCommonsConfirmed = creativeCommonsConfirmed;
-        this.dateModified = dateModified;
-    }
+    //  All getters and setters for the completeness of the entity
 
     public int getId() {
         return id;

@@ -12,22 +12,22 @@ import com.bumptech.glide.Glide;
 import com.mirogal.cocktail.R;
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity;
 
-public class ItemHolder extends RecyclerView.ViewHolder {
+class ItemHolder extends RecyclerView.ViewHolder {
 
-    private Context context;
+    private final Context context;
     private CocktailDbEntity cocktailEntity;
 
-    private TextView tvName;
-    private ImageView ivImage;
+    private final TextView tvName;
+    private final ImageView ivImage;
 
-    public ItemHolder(@NonNull Context context, @NonNull View itemView) {
+    ItemHolder(@NonNull Context context, @NonNull View itemView) {
         super(itemView);
         this.context = context;
         tvName = itemView.findViewById(R.id.tv_name);
         ivImage = itemView.findViewById(R.id.iv_image);
     }
 
-    public void bind(CocktailDbEntity cocktailEntity) {
+    void bind(CocktailDbEntity cocktailEntity) {
         this.cocktailEntity = cocktailEntity;
         tvName.setText(cocktailEntity.getName());
 
@@ -39,12 +39,7 @@ public class ItemHolder extends RecyclerView.ViewHolder {
                 .into(ivImage);
     }
 
-    public void setListener(final ListAdapter.OnItemClickListener listener) {
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.onItemClick(cocktailEntity);
-            }
-        });
+    void setListener(final ListAdapter.OnItemClickListener listener) {
+        itemView.setOnClickListener(v -> listener.onItemClick(cocktailEntity));
     }
 }

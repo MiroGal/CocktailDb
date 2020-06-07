@@ -20,9 +20,9 @@ import retrofit2.Response;
 
 public class DataSource extends PositionalDataSource<CocktailDbEntity> {
 
-    private String currentQuery;
+    private final String currentQuery;
 
-    public DataSource(String currentQuery) {
+    DataSource(String currentQuery) {
         this.currentQuery = currentQuery;
     }
 

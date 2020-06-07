@@ -6,7 +6,9 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity;
 
 public class DataSourceFactory extends androidx.paging.DataSource.Factory<Integer, CocktailDbEntity> {
 
-    private MutableLiveData<DataSource> mutableLiveData = new MutableLiveData<>();
+    // TODO Dagger integration
+
+    private final MutableLiveData<DataSource> mutableLiveData = new MutableLiveData<>();
 
     private DataSource cocktailDataSource;
     private String currentQuery;

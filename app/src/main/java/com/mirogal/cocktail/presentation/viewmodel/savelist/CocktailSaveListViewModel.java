@@ -12,8 +12,8 @@ import com.mirogal.cocktail.data.repository.CocktailRepository;
 
 public class CocktailSaveListViewModel extends AndroidViewModel {
 
-    private LiveData<PagedList<CocktailDbEntity>> cocktailList;
-    private CocktailRepository repository;
+    private final LiveData<PagedList<CocktailDbEntity>> cocktailList;
+    private final CocktailRepository repository;
 
     public CocktailSaveListViewModel(@NonNull Application application) {
         super(application);

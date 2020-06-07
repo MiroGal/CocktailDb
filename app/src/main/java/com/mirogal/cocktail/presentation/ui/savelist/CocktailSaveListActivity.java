@@ -26,6 +26,8 @@ import java.util.Objects;
 public class CocktailSaveListActivity extends AppCompatActivity
         implements ListAdapter.OnItemClickListener, ListAdapter.OnItemLongClickListener {
 
+    // TODO Dagger integration
+
     private CocktailSaveListViewModel viewModel;
 
     private RecyclerView recyclerView;
@@ -50,7 +52,7 @@ public class CocktailSaveListActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         Objects.requireNonNull(getSupportActionBar()).setTitle(R.string.save_list_label);
 
-        fabSearch = (FloatingActionButton) findViewById(R.id.fab_search);
+        fabSearch = findViewById(R.id.fab_search);
         fabSearch.setOnClickListener(onFabClickListener);
 
         int listColumn;
@@ -61,8 +63,8 @@ public class CocktailSaveListActivity extends AppCompatActivity
             listColumn = 3;
         }
 
-        recyclerView = (RecyclerView) findViewById(R.id.rw_list);
-        tvEmpty = (TextView) findViewById(R.id.tv_empty);
+        recyclerView = findViewById(R.id.rw_list);
+        tvEmpty = findViewById(R.id.tv_empty);
 
         layoutManager = new GridLayoutManager(this, listColumn);
         recyclerView.setLayoutManager(layoutManager);
@@ -81,17 +83,12 @@ public class CocktailSaveListActivity extends AppCompatActivity
             }
             try {
                 listAdapter.submitList(pagedList);
-            } catch (Exception e) {}
+            } catch (Exception ignored) {}
         });
         recyclerView.setAdapter(listAdapter);
     }
 
-    View.OnClickListener onFabClickListener = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            openCocktailSearchListActivity();
-        }
-    };
+    private final View.OnClickListener onFabClickListener = view -> openCocktailSearchListActivity();
 
     @Override
     public void onItemClick(CocktailDbEntity cocktail) {
@@ -103,12 +100,12 @@ public class CocktailSaveListActivity extends AppCompatActivity
         viewModel.deleteCocktail(cocktailId);
     }
 
-    public void openCocktailSearchListActivity() {
+    private void openCocktailSearchListActivity() {
         Intent intent = new Intent(CocktailSaveListActivity.this, CocktailSearchListActivity.class);
         startActivity(intent);
     }
 
-    public void openCocktailDetailActivity(CocktailDbEntity cocktail) {
+    private void openCocktailDetailActivity(CocktailDbEntity cocktail) {
         Intent intent = new Intent(CocktailSaveListActivity.this, CocktailDetailActivity.class);
         intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail);
         startActivity(intent);

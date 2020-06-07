@@ -9,7 +9,7 @@ import com.mirogal.cocktail.data.repository.NetworkState;
 
 public class BoundaryCallback extends PagedList.BoundaryCallback<CocktailDbEntity> {
 
-    private CocktailRepository repository;
+    private final CocktailRepository repository;
 
     public BoundaryCallback(CocktailRepository repository) {
         this.repository = repository;

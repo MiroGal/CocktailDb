@@ -20,12 +20,14 @@ public class CocktailSearchListViewModel extends AndroidViewModel {
 
     private static final String SAVE_REQUEST_QUERY = "save_request_query";
 
-    private LiveData<PagedList<CocktailDbEntity>> cocktailList;
-    private CocktailRepository repository;
+    // TODO Dagger integration
 
-    private MutableLiveData<String> requestQuery;
+    private final LiveData<PagedList<CocktailDbEntity>> cocktailList;
+    private final CocktailRepository repository;
 
-    private SharedPreferences sharedPreferences;
+    private final MutableLiveData<String> requestQuery;
+
+    private final SharedPreferences sharedPreferences;
     private SharedPreferences.Editor sharedPreferencesEditor;
 
     public CocktailSearchListViewModel(@NonNull Application application) {
