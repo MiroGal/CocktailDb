@@ -75,7 +75,7 @@ public class CocktailDetailActivity extends AppCompatActivity {
 
         List<IngredientEntity> ingredientList = IngredientMapper.toIngredientList(
                 cocktailEntity.getIngredientList(), cocktailEntity.getMeasureList());
-        listAdapter = new ListAdapter(ingredientList, R.layout.item_ingridient);
+        listAdapter = new ListAdapter(ingredientList, R.layout.item_ingredient);
         recyclerView.setAdapter(listAdapter);
 
         Glide.with(this)

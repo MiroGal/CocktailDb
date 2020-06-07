@@ -60,13 +60,13 @@ public class CocktailSearchListActivity extends AppCompatActivity
         }
 
         recyclerView = findViewById(R.id.rw_list);
-        layoutEmpty = findViewById(R.id.layout_empty);
-        layoutStart = findViewById(R.id.layout_start);
+        layoutEmpty = findViewById(R.id.layout_search_list_empty);
+        layoutStart = findViewById(R.id.layout_search_list_start);
 
         layoutManager = new GridLayoutManager(this, listColumn);
         recyclerView.setLayoutManager(layoutManager);
 
-        int spaceInPixel = getResources().getDimensionPixelSize(R.dimen.grid_layout_margin);
+        int spaceInPixel = getResources().getDimensionPixelSize(R.dimen.padding_horizontal);
         itemDecoration = new GridSpaceItemDecoration(listColumn, spaceInPixel, true, 0);
         recyclerView.addItemDecoration(itemDecoration);
 

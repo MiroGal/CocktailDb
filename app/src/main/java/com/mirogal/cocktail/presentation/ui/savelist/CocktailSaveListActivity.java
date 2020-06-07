@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,7 +34,7 @@ public class CocktailSaveListActivity extends AppCompatActivity
     private GridLayoutManager layoutManager;
     private GridSpaceItemDecoration itemDecoration;
     private ListAdapter listAdapter;
-    private TextView tvEmpty;
+    private LinearLayout layoutEmpty;
 
     private FloatingActionButton fabSearch;
 
@@ -64,12 +64,12 @@ public class CocktailSaveListActivity extends AppCompatActivity
         }
 
         recyclerView = findViewById(R.id.rw_list);
-        tvEmpty = findViewById(R.id.tv_empty);
+        layoutEmpty = findViewById(R.id.layout_save_list_empty);
 
         layoutManager = new GridLayoutManager(this, listColumn);
         recyclerView.setLayoutManager(layoutManager);
 
-        int spaceInPixel = getResources().getDimensionPixelSize(R.dimen.grid_layout_margin);
+        int spaceInPixel = getResources().getDimensionPixelSize(R.dimen.padding_horizontal);
         itemDecoration = new GridSpaceItemDecoration(listColumn, spaceInPixel, true, 0);
         recyclerView.addItemDecoration(itemDecoration);
 
@@ -114,14 +114,14 @@ public class CocktailSaveListActivity extends AppCompatActivity
     private void showData() {
         if (recyclerView.getVisibility() == View.INVISIBLE) {
             recyclerView.setVisibility(View.VISIBLE);
-            tvEmpty.setVisibility(View.INVISIBLE);
+            layoutEmpty.setVisibility(View.INVISIBLE);
         }
     }
 
     private void showEmpty() {
-        if (tvEmpty.getVisibility() == View.INVISIBLE) {
+        if (layoutEmpty.getVisibility() == View.INVISIBLE) {
             recyclerView.setVisibility(View.INVISIBLE);
-            tvEmpty.setVisibility(View.VISIBLE);
+            layoutEmpty.setVisibility(View.VISIBLE);
         }
     }
 }
