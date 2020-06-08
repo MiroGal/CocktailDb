@@ -64,7 +64,7 @@
             android:text="@string/detail_ingredient_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rw_list"
+            android:id="@+id/recyclerView"
             style="@style/RecyclerViewIngredient" />
 
         <TextView

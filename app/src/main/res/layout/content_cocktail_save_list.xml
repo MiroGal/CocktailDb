@@ -7,7 +7,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rw_list"
+        android:id="@+id/recyclerView"
         style="@style/RecyclerViewCocktail"
         android:visibility="visible" />
 

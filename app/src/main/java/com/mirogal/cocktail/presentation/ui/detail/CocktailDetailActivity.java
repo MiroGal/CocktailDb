@@ -68,7 +68,7 @@ public class CocktailDetailActivity extends AppCompatActivity {
         tvInfoGlass.setText(cocktailEntity.getGlass());
         tvInstructionBody.setText(cocktailEntity.getInstruction());
 
-        recyclerView = findViewById(R.id.rw_list);
+        recyclerView = findViewById(R.id.recyclerView);
 
         layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);

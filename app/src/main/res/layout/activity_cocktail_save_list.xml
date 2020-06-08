@@ -18,7 +18,7 @@
     <include layout="@layout/content_cocktail_save_list" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_search"
+        android:onClick="onFabClick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

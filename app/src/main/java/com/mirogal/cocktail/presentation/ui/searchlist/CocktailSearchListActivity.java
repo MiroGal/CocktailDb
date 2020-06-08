@@ -59,7 +59,7 @@ public class CocktailSearchListActivity extends AppCompatActivity
             listColumn = 3;
         }
 
-        recyclerView = findViewById(R.id.rw_list);
+        recyclerView = findViewById(R.id.recyclerView);
         layoutEmpty = findViewById(R.id.layout_search_list_empty);
         layoutStart = findViewById(R.id.layout_search_list_start);
 
@@ -71,12 +71,12 @@ public class CocktailSearchListActivity extends AppCompatActivity
         recyclerView.addItemDecoration(itemDecoration);
 
         listAdapter = new ListAdapter(this, this, R.layout.item_cocktail);
-        viewModel.getCocktailList().observe(this, pagedList -> {
-            try {
-                listAdapter.submitList(pagedList);
-            } catch (Exception ignored) {}
-        });
-        recyclerView.setAdapter(listAdapter);
+//        viewModel.cocktailList.observe(this, pagedList -> {
+//            try {
+//                listAdapter.submitList(pagedList);
+//            } catch (Exception ignored) {}
+//        });
+//        recyclerView.setAdapter(listAdapter);
 
         viewModel.getNetworkStatus().observe(this, status -> {
             if (status == NetworkState.EMPTY) {
