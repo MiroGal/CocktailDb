@@ -14,7 +14,7 @@ import com.mirogal.cocktail.data.repository.NetworkState
 
 class CocktailSearchListViewModel(application: Application) : AndroidViewModel(application) {
 
-    val cocktailList: LiveData<PagedList<CocktailDbEntity>>
+    val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
     private val repository: CocktailRepository = CocktailRepository.getInstance(application)
     private val requestQuery: MutableLiveData<String?>
     private val sharedPreferences: SharedPreferences = getApplication<Application>().getSharedPreferences(
