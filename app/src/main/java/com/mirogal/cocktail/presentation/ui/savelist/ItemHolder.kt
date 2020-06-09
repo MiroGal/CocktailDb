@@ -34,4 +34,5 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
             false
         }
     }
+
 }

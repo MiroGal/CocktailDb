@@ -10,6 +10,6 @@ public class NetworkState {
         RUNNING,
         SUCCESS_LOADED,
         SUCCESS_EMPTY,
-        FAILED //TODO failure status processing
+        //TODO (FAILED status processing)
     }
 }

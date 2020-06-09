@@ -58,4 +58,5 @@ class CocktailSearchListViewModel(application: Application) : AndroidViewModel(a
             repository.requestQuery.value = requestQuery.value
         }
     }
+
 }

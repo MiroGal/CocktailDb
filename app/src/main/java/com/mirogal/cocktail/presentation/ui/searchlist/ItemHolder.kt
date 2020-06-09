@@ -29,4 +29,5 @@ internal class ItemHolder(private val context: Context, itemView: View) : Recycl
     fun setListener(listener: ListAdapter.OnItemClickListener) {
         itemView.setOnClickListener { listener.onItemClick(cocktailEntity) }
     }
+
 }

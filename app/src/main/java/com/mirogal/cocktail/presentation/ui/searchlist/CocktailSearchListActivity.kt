@@ -131,4 +131,5 @@ class CocktailSearchListActivity : AppCompatActivity(), ListAdapter.OnItemClickL
             layoutStart.visibility = View.VISIBLE
         }
     }
+
 }

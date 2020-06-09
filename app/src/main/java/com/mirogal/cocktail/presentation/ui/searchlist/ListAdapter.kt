@@ -41,4 +41,5 @@ internal class ListAdapter(private val context: Context,
                 = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
         }
     }
+
 }

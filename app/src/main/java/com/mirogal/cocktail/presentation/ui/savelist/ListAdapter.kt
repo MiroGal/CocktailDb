@@ -13,7 +13,6 @@ class ListAdapter(private val context: Context,
                   private val onItemLongClickListener: OnItemLongClickListener,
                   private val itemLayoutId: Int) : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
 
-
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         if (position <= -1) {
             return
@@ -47,4 +46,5 @@ class ListAdapter(private val context: Context,
                     = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
         }
     }
+
 }

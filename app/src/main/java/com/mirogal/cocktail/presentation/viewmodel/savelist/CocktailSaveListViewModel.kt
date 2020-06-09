@@ -19,4 +19,5 @@ class CocktailSaveListViewModel(application: Application) : AndroidViewModel(app
     init {
         cocktailList = repository.saveCocktailList
     }
+
 }

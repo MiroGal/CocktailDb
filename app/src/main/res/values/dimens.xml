@@ -17,7 +17,6 @@
     <dimen name="item_cocktail_image_height">120dp</dimen>
 
     <!-- Item ingredient -->
-    <dimen name="item_ingredient_vertical_margin">8dp</dimen>
     <dimen name="item_ingredient_horizontal_margin">16dp</dimen>
     <dimen name="item_ingredient_min_width">20dp</dimen>
 

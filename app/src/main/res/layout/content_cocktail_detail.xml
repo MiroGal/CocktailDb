@@ -20,7 +20,7 @@
             android:layout_margin="@dimen/detail_horizontal_margin"
             app:cardCornerRadius="@dimen/detail_image_corner_radius">
             <ImageView
-                android:id="@+id/iv_image"
+                android:id="@+id/ivImage"
                 android:layout_width="@dimen/detail_image_width"
                 android:layout_height="@dimen/detail_image_height"
                 tools:ignore="ContentDescription" />
@@ -38,7 +38,7 @@
                     style="@style/TextDetailInfoTitle"
                     android:text="@string/detail_info_name" />
                 <TextView
-                    android:id="@+id/tv_info_name"
+                    android:id="@+id/tvInfoName"
                     style="@style/TextDetailInfoBody" />
             </TableRow>
             <TableRow>
@@ -46,7 +46,7 @@
                     style="@style/TextDetailInfoTitle"
                     android:text="@string/detail_info_alcoholic" />
                 <TextView
-                    android:id="@+id/tv_info_alcoholic"
+                    android:id="@+id/tvInfoAlcoholic"
                     style="@style/TextDetailInfoBody" />
             </TableRow>
             <TableRow>
@@ -54,7 +54,7 @@
                     style="@style/TextDetailInfoTitle"
                     android:text="@string/detail_info_glass" />
                 <TextView
-                    android:id="@+id/tv_info_glass"
+                    android:id="@+id/tvInfoGlass"
                     style="@style/TextDetailInfoBody" />
             </TableRow>
         </TableLayout>
@@ -72,7 +72,7 @@
             android:text="@string/detail_instruction_title" />
 
         <TextView
-            android:id="@+id/tv_instruction_body"
+            android:id="@+id/tvInstructionBody"
             style="@style/TextDetailInstructionBody"
             android:layout_marginBottom="@dimen/detail_vertical_margin"
             tools:text="Instruction body" />

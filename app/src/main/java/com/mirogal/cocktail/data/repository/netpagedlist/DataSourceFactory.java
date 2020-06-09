@@ -6,11 +6,8 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity;
 
 public class DataSourceFactory extends androidx.paging.DataSource.Factory<Integer, CocktailDbEntity> {
 
-    // TODO Dagger integration
-
     private final MutableLiveData<DataSource> mutableLiveData = new MutableLiveData<>();
 
-    private DataSource cocktailDataSource;
     private String currentQuery;
 
     public void setCurrentQuery(String currentQuery) {
@@ -19,7 +16,7 @@ public class DataSourceFactory extends androidx.paging.DataSource.Factory<Intege
 
     @Override
     public DataSource create() {
-        cocktailDataSource = new DataSource(currentQuery);
+        DataSource cocktailDataSource = new DataSource(currentQuery);
         mutableLiveData.postValue(cocktailDataSource);
         return cocktailDataSource;
     }
