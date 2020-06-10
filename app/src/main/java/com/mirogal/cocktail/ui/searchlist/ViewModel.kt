@@ -15,11 +15,11 @@ import com.mirogal.cocktail.data.repository.NetworkState
 class ViewModel(application: Application) : AndroidViewModel(application) {
 
     val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
-    private val repository: CocktailRepository = CocktailRepository.getInstance(application)
     private val requestQuery: MutableLiveData<String?>
+    private val repository: CocktailRepository = CocktailRepository.getInstance(application)
     private val sharedPreferences: SharedPreferences = getApplication<Application>().getSharedPreferences(
             getApplication<Application>().resources.getString(R.string.app_name), Context.MODE_PRIVATE)
-    private var sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
+    private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
 
     val networkStatus: LiveData<NetworkState.Status>
         get() = repository.networkStatus
