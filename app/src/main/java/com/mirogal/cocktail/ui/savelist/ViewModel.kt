@@ -9,15 +9,15 @@ import com.mirogal.cocktail.data.repository.CocktailRepository
 
 class ViewModel(application: Application) : AndroidViewModel(application) {
 
-    val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
-    private val repository: CocktailRepository = CocktailRepository.getInstance(application)
+    private val repository = CocktailRepository.getInstance(application)
+    val cocktailList: LiveData<PagedList<CocktailDbEntity>>
 
     fun deleteCocktail(id: Int) {
-        repository.deleteCocktail(id)
+        repository?.deleteCocktail(id)
     }
 
     init {
-        cocktailList = repository.saveCocktailList
+        cocktailList = repository?.saveCocktailList!!
     }
 
 }

@@ -22,7 +22,7 @@ class CocktailDetailActivity : BaseActivity() {
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
-        if (cocktailEntity.name.isNotEmpty()) {
+        if (cocktailEntity.name!!.isNotEmpty()) {
             toolbar.title = cocktailEntity.name
         }
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)

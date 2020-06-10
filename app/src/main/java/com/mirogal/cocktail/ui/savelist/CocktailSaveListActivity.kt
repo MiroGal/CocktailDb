@@ -47,7 +47,7 @@ class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener
 
         val listAdapter = ListAdapter(this, this, this, R.layout.item_cocktail)
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
-        viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
+        viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity> ->
             if (!pagedList.isEmpty()) {
                 showData()
             } else {

@@ -16,13 +16,13 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
 
     val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
     private val requestQuery: MutableLiveData<String?>
-    private val repository: CocktailRepository = CocktailRepository.getInstance(application)
+    private val repository = CocktailRepository.getInstance(application)
     private val sharedPreferences: SharedPreferences = getApplication<Application>().getSharedPreferences(
             getApplication<Application>().resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
 
     val networkStatus: LiveData<NetworkState.Status>
-        get() = repository.networkStatus
+        get() = repository?.networkStatus!!
 
     fun getRequestQuery(): LiveData<String?> {
         return requestQuery
@@ -31,7 +31,7 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     fun setRequestQuery(requestQuery: String) {
         saveStringPreference(requestQuery)
         this.requestQuery.value = requestQuery
-        repository.requestQuery.value = requestQuery
+        repository?.requestQuery?.value = requestQuery
     }
 
     private fun saveStringPreference(value: String) {
@@ -43,7 +43,7 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     fun saveCocktail(cocktail: CocktailDbEntity?) {
-        repository.saveCocktail(cocktail)
+        repository?.saveCocktail(cocktail)
     }
 
     companion object {
@@ -51,7 +51,7 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     }
 
     init {
-        cocktailList = repository.selectCocktailList
+        cocktailList = repository?.selectCocktailList!!
         requestQuery = MutableLiveData()
         requestQuery.value = loadStringPreference()
         if (requestQuery.value != null && requestQuery.value != repository.requestQuery.value) {

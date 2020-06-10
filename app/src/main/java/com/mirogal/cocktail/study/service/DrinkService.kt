@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.IBinder
 import android.widget.Toast
 
-class DrinkService() : Service() {
+class DrinkService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         try {
