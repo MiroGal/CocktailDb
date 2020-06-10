@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.constant
+package com.mirogal.cocktail.ui.constant
 
 enum class IntentTag(private val stringValue: String) {
 

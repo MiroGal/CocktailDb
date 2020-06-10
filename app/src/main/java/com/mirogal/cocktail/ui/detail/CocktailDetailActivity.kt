@@ -1,18 +1,18 @@
-package com.mirogal.cocktail.presentation.ui.detail
+package com.mirogal.cocktail.ui.detail
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.presentation.ui.constant.IntentTag
-import com.mirogal.cocktail.presentation.ui.detail.ingredientlist.IngredientMapper.toIngredientList
-import com.mirogal.cocktail.presentation.ui.detail.ingredientlist.ListAdapter
+import com.mirogal.cocktail.ui.constant.IntentTag
+import com.mirogal.cocktail.ui.detail.ingredientlist.IngredientMapper.toIngredientList
+import com.mirogal.cocktail.ui.detail.ingredientlist.ListAdapter
 import kotlinx.android.synthetic.main.activity_cocktail_detail.*
 import kotlinx.android.synthetic.main.content_cocktail_detail.*
 
-class CocktailDetailActivity : AppCompatActivity() {
+class CocktailDetailActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

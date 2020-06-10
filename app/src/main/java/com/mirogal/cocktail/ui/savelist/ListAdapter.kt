@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.searchlist
+package com.mirogal.cocktail.ui.savelist
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,9 +8,10 @@ import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 
-internal class ListAdapter(private val context: Context,
-                           private val onItemClickListener: OnItemClickListener,
-                           private val itemLayoutId: Int) : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
+class ListAdapter(private val context: Context,
+                  private val onItemClickListener: OnItemClickListener,
+                  private val onItemLongClickListener: OnItemLongClickListener,
+                  private val itemLayoutId: Int) : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         if (position <= -1) {
@@ -18,7 +19,7 @@ internal class ListAdapter(private val context: Context,
         }
         val item = getItem(position)
         holder.bind(item!!)
-        holder.setListener(onItemClickListener)
+        holder.setListener(onItemClickListener, onItemLongClickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -27,8 +28,12 @@ internal class ListAdapter(private val context: Context,
         return ItemHolder(context, view)
     }
 
-    internal interface OnItemClickListener {
+    interface OnItemClickListener {
         fun onItemClick(cocktail: CocktailDbEntity?)
+    }
+
+    interface OnItemLongClickListener {
+        fun onItemLongClick(cocktailId: Int)
     }
 
     companion object {
@@ -38,7 +43,7 @@ internal class ListAdapter(private val context: Context,
                     = oldItem.id == newItem.id
 
             override fun areContentsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
-                = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
+                    = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
         }
     }
 

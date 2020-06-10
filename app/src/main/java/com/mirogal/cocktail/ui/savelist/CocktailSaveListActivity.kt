@@ -1,28 +1,30 @@
-package com.mirogal.cocktail.presentation.ui.savelist
+package com.mirogal.cocktail.ui.savelist
 
 import android.content.Intent
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.presentation.ui.constant.IntentTag
-import com.mirogal.cocktail.presentation.ui.detail.CocktailDetailActivity
-import com.mirogal.cocktail.presentation.ui.searchlist.CocktailSearchListActivity
-import com.mirogal.cocktail.presentation.ui.util.GridSpaceItemDecoration
-import com.mirogal.cocktail.presentation.viewmodel.savelist.CocktailSaveListViewModel
+import com.mirogal.cocktail.ui.constant.IntentTag
+import com.mirogal.cocktail.ui.detail.CocktailDetailActivity
+import com.mirogal.cocktail.ui.searchlist.CocktailSearchListActivity
+import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
+import com.mirogal.cocktail.study.receiver.BootRestateReceiver
+import com.mirogal.cocktail.study.service.DrinkService
 import kotlinx.android.synthetic.main.activity_cocktail_save_list.*
 import kotlinx.android.synthetic.main.content_cocktail_save_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 
-class CocktailSaveListActivity : AppCompatActivity(), ListAdapter.OnItemClickListener, ListAdapter.OnItemLongClickListener {
+class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAdapter.OnItemLongClickListener {
 
-    private lateinit var viewModel: CocktailSaveListViewModel
+    private lateinit var viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
@@ -44,7 +46,7 @@ class CocktailSaveListActivity : AppCompatActivity(), ListAdapter.OnItemClickLis
         recyclerView.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this, this, R.layout.item_cocktail)
-        viewModel = ViewModelProvider(this).get(CocktailSaveListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
             if (!pagedList.isEmpty()) {
                 showData()
@@ -57,6 +59,30 @@ class CocktailSaveListActivity : AppCompatActivity(), ListAdapter.OnItemClickLis
             }
         })
         recyclerView.adapter = listAdapter
+    }
+
+    private lateinit var broadcastReceiver: BootRestateReceiver
+    private lateinit var service: DrinkService
+
+    override fun onStart() {
+        super.onStart()
+        broadcastReceiver = BootRestateReceiver()
+        registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        IntentFilter().apply {
+            addAction("android.intent.action.BATTERY_LOW")
+            addAction("android.intent.action.BATTERY_OK")
+        }
+    }
+
+    override fun onStop() {
+        unregisterReceiver(broadcastReceiver)
+        super.onStop()
+    }
+
+    override fun onDestroy() {
+        service = DrinkService()
+        startService(Intent(this, DrinkService::class.java))
+        super.onDestroy()
     }
 
 

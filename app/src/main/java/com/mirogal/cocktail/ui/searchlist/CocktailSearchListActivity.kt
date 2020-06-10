@@ -1,31 +1,30 @@
-package com.mirogal.cocktail.presentation.ui.searchlist
+package com.mirogal.cocktail.ui.searchlist
 
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
-import com.mirogal.cocktail.presentation.ui.constant.IntentTag
-import com.mirogal.cocktail.presentation.ui.detail.CocktailDetailActivity
-import com.mirogal.cocktail.presentation.ui.util.GridSpaceItemDecoration
-import com.mirogal.cocktail.presentation.viewmodel.searchlist.CocktailSearchListViewModel
+import com.mirogal.cocktail.ui.constant.IntentTag
+import com.mirogal.cocktail.ui.detail.CocktailDetailActivity
+import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_cocktail_save_list.*
 import kotlinx.android.synthetic.main.content_cocktail_save_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 import kotlinx.android.synthetic.main.layout_search_list_start.*
 
-class CocktailSearchListActivity : AppCompatActivity(), ListAdapter.OnItemClickListener {
+class CocktailSearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
-    private lateinit var viewModel: CocktailSearchListViewModel
+    private lateinit var viewModel: ViewModel
     private var requestQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +45,7 @@ class CocktailSearchListActivity : AppCompatActivity(), ListAdapter.OnItemClickL
         recyclerView.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this, R.layout.item_cocktail)
-        viewModel = ViewModelProvider(this).get(CocktailSearchListViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
             try {
                 listAdapter.submitList(pagedList)

@@ -1,9 +1,9 @@
-package com.mirogal.cocktail.presentation.ui.detail.ingredientlist
+package com.mirogal.cocktail.ui.detail.ingredientlist
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.mirogal.cocktail.presentation.ui.detail.ingredientlist.entity.IngredientEntity
+import com.mirogal.cocktail.ui.detail.ingredientlist.entity.IngredientEntity
 
 class ListAdapter(private val ingredientList: List<IngredientEntity>,
                   private val itemLayoutId: Int) : RecyclerView.Adapter<ItemHolder>() {

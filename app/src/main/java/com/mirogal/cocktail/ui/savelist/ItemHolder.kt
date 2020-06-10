@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.searchlist
+package com.mirogal.cocktail.ui.savelist
 
 import android.content.Context
 import android.view.View
@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 
-internal class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
+class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private var cocktailEntity: CocktailDbEntity? = null
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
@@ -26,8 +26,13 @@ internal class ItemHolder(private val context: Context, itemView: View) : Recycl
                 .into(ivImage)
     }
 
-    fun setListener(listener: ListAdapter.OnItemClickListener) {
-        itemView.setOnClickListener { listener.onItemClick(cocktailEntity) }
+    fun setListener(clickListener: ListAdapter.OnItemClickListener,
+                    longClickListener: ListAdapter.OnItemLongClickListener) {
+        itemView.setOnClickListener { clickListener.onItemClick(cocktailEntity) }
+        itemView.setOnLongClickListener {
+            longClickListener.onItemLongClick(cocktailEntity!!.id)
+            false
+        }
     }
 
 }

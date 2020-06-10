@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.viewmodel.searchlist
+package com.mirogal.cocktail.ui.searchlist
 
 import android.app.Application
 import android.content.Context
@@ -12,7 +12,7 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.data.repository.NetworkState
 
-class CocktailSearchListViewModel(application: Application) : AndroidViewModel(application) {
+class ViewModel(application: Application) : AndroidViewModel(application) {
 
     val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
     private val repository: CocktailRepository = CocktailRepository.getInstance(application)

@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.viewmodel.savelist
+package com.mirogal.cocktail.ui.savelist
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -7,7 +7,7 @@ import androidx.paging.PagedList
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 
-class CocktailSaveListViewModel(application: Application) : AndroidViewModel(application) {
+class ViewModel(application: Application) : AndroidViewModel(application) {
 
     val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
     private val repository: CocktailRepository = CocktailRepository.getInstance(application)

@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.util
+package com.mirogal.cocktail.ui.util
 
 import android.graphics.Rect
 import android.view.View
