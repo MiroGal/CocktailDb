@@ -8,6 +8,7 @@ import android.widget.Toast
 class DrinkService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        Toast.makeText(this, "Text", Toast.LENGTH_SHORT).show()
         try {
             for(i in 0..3) {
                 Thread.sleep(3000)

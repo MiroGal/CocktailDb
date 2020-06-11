@@ -4,20 +4,24 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import androidx.core.app.JobIntentService.enqueueWork
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import com.mirogal.cocktail.study.receiver.AirplaneModReceiver
+import com.mirogal.cocktail.study.receiver.ChargeRestateReceiver
+import com.mirogal.cocktail.study.service.BootService
+import com.mirogal.cocktail.study.service.DrinkService
+import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.CocktailDetailActivity
 import com.mirogal.cocktail.ui.searchlist.CocktailSearchListActivity
 import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
-import com.mirogal.cocktail.study.receiver.BootRestateReceiver
-import com.mirogal.cocktail.study.service.DrinkService
 import kotlinx.android.synthetic.main.activity_cocktail_save_list.*
 import kotlinx.android.synthetic.main.content_cocktail_save_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
@@ -25,6 +29,7 @@ import kotlinx.android.synthetic.main.layout_save_list_empty.*
 class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAdapter.OnItemLongClickListener {
 
     private lateinit var viewModel: ViewModel
+    private val chargeRestateReceiver = ChargeRestateReceiver()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
@@ -61,13 +66,9 @@ class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener
         recyclerView.adapter = listAdapter
     }
 
-    private lateinit var broadcastReceiver: BootRestateReceiver
-    private lateinit var service: DrinkService
-
     override fun onStart() {
         super.onStart()
-        broadcastReceiver = BootRestateReceiver()
-        registerReceiver(broadcastReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        registerReceiver(chargeRestateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
         IntentFilter().apply {
             addAction("android.intent.action.BATTERY_LOW")
             addAction("android.intent.action.BATTERY_OK")
@@ -75,12 +76,11 @@ class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener
     }
 
     override fun onStop() {
-        unregisterReceiver(broadcastReceiver)
+        unregisterReceiver(chargeRestateReceiver)
         super.onStop()
     }
 
     override fun onDestroy() {
-        service = DrinkService()
         startService(Intent(this, DrinkService::class.java))
         super.onDestroy()
     }

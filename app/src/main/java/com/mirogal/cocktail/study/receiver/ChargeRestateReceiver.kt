@@ -6,7 +6,7 @@ import android.content.Intent
 import android.os.BatteryManager
 import android.widget.Toast
 
-class BootRestateReceiver : BroadcastReceiver() {
+class ChargeRestateReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         val status: Int = intent?.getIntExtra(BatteryManager.EXTRA_STATUS, -1) ?: -1
