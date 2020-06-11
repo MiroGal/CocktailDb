@@ -76,7 +76,7 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
 
         proposeDrinkReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                showProposeDrink(intent!!.getIntExtra("KEY", 20).toString())
+                showProposeDrink(intent!!.getIntExtra("KEY", 20))
             }
         }
         registerReceiver(proposeDrinkReceiver, IntentFilter("ACTION_SNACKBAR"))
@@ -127,9 +127,22 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         }
     }
 
-    private fun showProposeDrink(message: String) {
-        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
-                .setAction("refresh", View.OnClickListener {  }).show()
+    private fun showProposeDrink(id: Int) {
+        var entity: CocktailDbEntity? = null
+        viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity> ->
+            if (!pagedList.isEmpty()) {
+                entity = pagedList[1]!!
+                if (entity!!.id == id) {
+                    entity = pagedList[2]!!
+                }
+            }
+        })
+        if (entity != null) {
+            Snackbar.make(findViewById(android.R.id.content),
+                    "Переглянути " + entity!!.name, Snackbar.LENGTH_LONG)
+                    .setAction("Переглянути", View.OnClickListener {
+                        openCocktailDetailActivity(entity!!) }).show()
+        }
     }
 
 }
