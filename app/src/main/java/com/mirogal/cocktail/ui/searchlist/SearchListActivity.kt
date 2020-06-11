@@ -15,21 +15,21 @@ import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
 import com.mirogal.cocktail.ui.constant.IntentTag
-import com.mirogal.cocktail.ui.detail.CocktailDetailActivity
+import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
-import kotlinx.android.synthetic.main.activity_cocktail_save_list.*
-import kotlinx.android.synthetic.main.content_cocktail_save_list.*
+import kotlinx.android.synthetic.main.activity_save_list.*
+import kotlinx.android.synthetic.main.content_save_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 import kotlinx.android.synthetic.main.layout_search_list_start.*
 
-class CocktailSearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
+class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
     private lateinit var viewModel: ViewModel
     private var requestQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cocktail_search_list)
+        setContentView(R.layout.activity_search_list)
 
         setSupportActionBar(toolbar)
 
@@ -102,7 +102,7 @@ class CocktailSearchListActivity : BaseActivity(), ListAdapter.OnItemClickListen
     }
 
     private fun openCocktailDetailActivity(cocktail: CocktailDbEntity?) {
-        val intent = Intent(this@CocktailSearchListActivity, CocktailDetailActivity::class.java)
+        val intent = Intent(this@SearchListActivity, DetailActivity::class.java)
         intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail)
         startActivity(intent)
     }

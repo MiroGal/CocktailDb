@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.study.service
+package com.mirogal.cocktail.study.boot
 
 import android.content.Context
 import android.content.Intent
@@ -7,15 +7,15 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.core.app.JobIntentService
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.ui.savelist.CocktailSaveListActivity
+import com.mirogal.cocktail.ui.savelist.SaveListActivity
 
 
-class BootService : JobIntentService() {
+class BootCompleteService : JobIntentService() {
 
     companion object {
-        val JOB_ID = 1001
+        val JOB_ID = 1
         fun enqueueWork(context: Context, work: Intent) {
-            enqueueWork(context, BootService::class.java, JOB_ID, work)
+            enqueueWork(context, BootCompleteService::class.java, JOB_ID, work)
         }
     }
 
@@ -37,7 +37,7 @@ class BootService : JobIntentService() {
             Handler(Looper.getMainLooper()).post {
                 Toast.makeText(applicationContext, builder.toString(), Toast.LENGTH_SHORT).show() }
         }
-        startActivity(Intent(this@BootService, CocktailSaveListActivity::class.java))
+        startActivity(Intent(this@BootCompleteService, SaveListActivity::class.java))
     }
 
 }

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.searchlist.CocktailSearchListActivity">
+    tools:context=".ui.savelist.SaveListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         style="@style/AppBarLayout">
@@ -15,6 +15,14 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <include layout="@layout/content_cocktail_search_list" />
+    <include layout="@layout/content_save_list" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:onClick="onFabClick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/ic_fab_search" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

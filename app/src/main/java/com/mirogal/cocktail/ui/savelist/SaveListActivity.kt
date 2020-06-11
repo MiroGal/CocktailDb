@@ -1,40 +1,40 @@
 package com.mirogal.cocktail.ui.savelist
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import androidx.core.app.JobIntentService.enqueueWork
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.study.receiver.AirplaneModReceiver
-import com.mirogal.cocktail.study.receiver.ChargeRestateReceiver
-import com.mirogal.cocktail.study.service.BootService
-import com.mirogal.cocktail.study.service.DrinkService
+import com.mirogal.cocktail.study.charge.ChargeRestateReceiver
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
-import com.mirogal.cocktail.ui.detail.CocktailDetailActivity
-import com.mirogal.cocktail.ui.searchlist.CocktailSearchListActivity
+import com.mirogal.cocktail.ui.detail.DetailActivity
+import com.mirogal.cocktail.ui.searchlist.SearchListActivity
 import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
-import kotlinx.android.synthetic.main.activity_cocktail_save_list.*
-import kotlinx.android.synthetic.main.content_cocktail_save_list.*
+import kotlinx.android.synthetic.main.activity_save_list.*
+import kotlinx.android.synthetic.main.content_save_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 
-class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAdapter.OnItemLongClickListener {
+
+class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAdapter.OnItemLongClickListener {
 
     private lateinit var viewModel: ViewModel
-    private val chargeRestateReceiver = ChargeRestateReceiver()
+//    private val chargeRestateReceiver = ChargeRestateReceiver()
+    private var proposeDrinkReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cocktail_save_list)
+        setContentView(R.layout.activity_save_list)
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(R.string.save_list_label)
@@ -68,21 +68,24 @@ class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener
 
     override fun onStart() {
         super.onStart()
-        registerReceiver(chargeRestateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-        IntentFilter().apply {
-            addAction("android.intent.action.BATTERY_LOW")
-            addAction("android.intent.action.BATTERY_OK")
+//        registerReceiver(chargeRestateReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+//        IntentFilter().apply {
+//            addAction("android.intent.action.BATTERY_LOW")
+//            addAction("android.intent.action.BATTERY_OK")
+//        }
+
+        proposeDrinkReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                showProposeDrink(intent!!.getIntExtra("KEY", 20).toString())
+            }
         }
+        registerReceiver(proposeDrinkReceiver, IntentFilter("ACTION_SNACKBAR"))
     }
 
     override fun onStop() {
-        unregisterReceiver(chargeRestateReceiver)
+//        unregisterReceiver(chargeRestateReceiver)
+        unregisterReceiver(proposeDrinkReceiver)
         super.onStop()
-    }
-
-    override fun onDestroy() {
-        startService(Intent(this, DrinkService::class.java))
-        super.onDestroy()
     }
 
 
@@ -100,12 +103,12 @@ class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener
 
 
     private fun openCocktailSearchListActivity() {
-        val intent = Intent(this@CocktailSaveListActivity, CocktailSearchListActivity::class.java)
+        val intent = Intent(this@SaveListActivity, SearchListActivity::class.java)
         startActivity(intent)
     }
 
     private fun openCocktailDetailActivity(cocktail: CocktailDbEntity) {
-        val intent = Intent(this@CocktailSaveListActivity, CocktailDetailActivity::class.java)
+        val intent = Intent(this@SaveListActivity, DetailActivity::class.java)
         intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail)
         startActivity(intent)
     }
@@ -122,6 +125,11 @@ class CocktailSaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener
             recyclerView.visibility = View.INVISIBLE
             layoutEmpty.visibility = View.VISIBLE
         }
+    }
+
+    private fun showProposeDrink(message: String) {
+        Snackbar.make(findViewById(android.R.id.content), message, Snackbar.LENGTH_LONG)
+                .setAction("refresh", View.OnClickListener {  }).show()
     }
 
 }

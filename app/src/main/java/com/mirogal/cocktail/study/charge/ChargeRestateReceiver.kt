@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.study.receiver
+package com.mirogal.cocktail.study.charge
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -18,7 +18,7 @@ class ChargeRestateReceiver : BroadcastReceiver() {
         val usbCharge: Boolean = chargePlug == BatteryManager.BATTERY_PLUGGED_USB
         val acCharge: Boolean = chargePlug == BatteryManager.BATTERY_PLUGGED_AC
 
-        Toast.makeText(context, "is Charging", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Is Charging", Toast.LENGTH_SHORT).show()
     }
 
 }

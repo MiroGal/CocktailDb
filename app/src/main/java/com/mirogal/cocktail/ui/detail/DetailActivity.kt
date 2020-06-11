@@ -1,24 +1,31 @@
 package com.mirogal.cocktail.ui.detail
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import com.mirogal.cocktail.study.boot.BootCompleteService
+import com.mirogal.cocktail.study.charge.ChargeRestateReceiver
+import com.mirogal.cocktail.study.drink.ProposeDrinkService
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.ingredientlist.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.ui.detail.ingredientlist.ListAdapter
-import kotlinx.android.synthetic.main.activity_cocktail_detail.*
-import kotlinx.android.synthetic.main.content_cocktail_detail.*
+import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.content_detail.*
 
-class CocktailDetailActivity : BaseActivity() {
+class DetailActivity : BaseActivity() {
+
+    var entityId = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cocktail_detail)
+        setContentView(R.layout.activity_detail)
 
         val cocktailEntity = intent.getSerializableExtra(IntentTag.COCKTAIL_ENTITY.toString()) as CocktailDbEntity
+        entityId = cocktailEntity.id
 
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
@@ -45,6 +52,13 @@ class CocktailDetailActivity : BaseActivity() {
                 .placeholder(R.drawable.anim_placeholder_progress)
                 .error(R.drawable.ic_placeholder_error)
                 .into(ivImage)
+    }
+
+    override fun onDestroy() {
+        val intent = Intent(this, ProposeDrinkService::class.java)
+        intent.putExtra("KEY", entityId)
+        ProposeDrinkService.enqueueWork(this, intent)
+        super.onDestroy()
     }
 
 }

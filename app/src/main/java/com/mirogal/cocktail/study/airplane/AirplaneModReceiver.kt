@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.study.receiver
+package com.mirogal.cocktail.study.airplane
 
 import android.content.BroadcastReceiver
 import android.content.Context
