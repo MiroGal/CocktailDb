@@ -11,8 +11,12 @@
     <!--region Radius-->
     <dimen name="radius_4">4dp</dimen>
     <dimen name="radius_8">8dp</dimen>
+    <dimen name="radius_28">28dp</dimen>
     <!--endregion-->
 
+    <!--region Text-->
     <dimen name="text_16">16sp</dimen>
+    <dimen name="text_18">18sp</dimen>
+    <!--endregion-->
 
 </resources>

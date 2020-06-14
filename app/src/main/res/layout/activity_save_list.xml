@@ -17,6 +17,14 @@
 
     <include layout="@layout/content_save_list" />
 
+    <include layout="@layout/layout_charge_indicator"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_gravity="bottom"
+        android:layout_marginStart="@dimen/fab_margin"
+        android:layout_marginEnd="88dp"
+        android:layout_marginBottom="@dimen/fab_margin"/>
+
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:onClick="onFabClick"
         android:layout_width="wrap_content"

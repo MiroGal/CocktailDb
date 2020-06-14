@@ -8,7 +8,6 @@
     tools:context=".ui.savelist.SaveListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/abl_save_list"
         android:elevation="0dp"
         app:elevation="0dp"
         style="@style/AppBarLayout">
