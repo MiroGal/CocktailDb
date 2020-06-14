@@ -17,7 +17,7 @@
         android:allowBackup="true">
         <activity
             android:name="com.mirogal.cocktail.ui.auth.AuthActivity"
-            android:label="@string/launch_label"
+            android:label="@string/app_name"
             android:theme="@style/AppTheme.Launcher"
             android:noHistory="true">
             <intent-filter>

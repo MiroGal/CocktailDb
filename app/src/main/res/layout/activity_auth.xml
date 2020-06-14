@@ -26,12 +26,12 @@
         android:id="@+id/txt_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/login_hint"/>
+        android:hint="@string/auth_login_hint"/>
     <EditText
         android:id="@+id/txt_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/password_hint"/>
+        android:hint="@string/auth_password_hint"/>
 
     <Space
         android:layout_width="match_parent"
