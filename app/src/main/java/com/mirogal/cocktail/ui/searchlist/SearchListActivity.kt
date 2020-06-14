@@ -11,14 +11,14 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
+import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_save_list.*
-import kotlinx.android.synthetic.main.content_save_list.*
+import kotlinx.android.synthetic.main.content_search_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 import kotlinx.android.synthetic.main.layout_search_list_start.*
 
@@ -38,11 +38,11 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
             Configuration.ORIENTATION_LANDSCAPE -> 3
             else -> 1
         }
-        recyclerView.layoutManager = GridLayoutManager(this, listColumn)
+        rv_search_list.layoutManager = GridLayoutManager(this, listColumn)
 
-        val spaceInPixel = resources.getDimensionPixelSize(R.dimen.padding_horizontal)
+        val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
         val itemDecoration = GridSpaceItemDecoration(listColumn, spaceInPixel, true, 0)
-        recyclerView.addItemDecoration(itemDecoration)
+        rv_search_list.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this, R.layout.item_cocktail)
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
@@ -52,7 +52,7 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
             } catch (ignored: Exception) {
             }
         })
-        recyclerView.adapter = listAdapter
+        rv_search_list.adapter = listAdapter
 
         viewModel.networkStatus.observe(this, Observer { status: NetworkState.Status ->
             if (status == NetworkState.EMPTY) {
@@ -108,8 +108,8 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
     }
 
     private fun showData() {
-        if (recyclerView.visibility == View.INVISIBLE) {
-            recyclerView.visibility = View.VISIBLE
+        if (rv_search_list.visibility == View.INVISIBLE) {
+            rv_search_list.visibility = View.VISIBLE
             layoutEmpty.visibility = View.INVISIBLE
             layoutStart.visibility = View.INVISIBLE
         }
@@ -117,7 +117,7 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
     private fun showEmpty() {
         if (layoutEmpty.visibility == View.INVISIBLE) {
-            recyclerView.visibility = View.INVISIBLE
+            rv_search_list.visibility = View.INVISIBLE
             layoutEmpty.visibility = View.VISIBLE
             layoutStart.visibility = View.INVISIBLE
         }
@@ -125,7 +125,7 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
     private fun showStart() {
         if (layoutStart.visibility == View.INVISIBLE) {
-            recyclerView.visibility = View.INVISIBLE
+            rv_search_list.visibility = View.INVISIBLE
             layoutEmpty.visibility = View.INVISIBLE
             layoutStart.visibility = View.VISIBLE
         }

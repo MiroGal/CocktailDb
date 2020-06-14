@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".ui.detail.DetailActivity">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".ui.savelist.SaveListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/abl_save_list"
+        android:elevation="0dp"
+        app:elevation="0dp"
         style="@style/AppBarLayout">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            style="@style/Toolbar" />
+        <FrameLayout
+            android:minHeight="48dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|snap|exitUntilCollapsed">
+            <ImageView
+                android:id="@+id/ivImage"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:scaleType="centerCrop" />
+        </FrameLayout>
 
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/iv_back"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:scaleType="centerInside"/>
+
     <include layout="@layout/content_detail" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/item_cocktail_card_corner_radius"
+    app:cardCornerRadius="@dimen/radius_8"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -17,17 +17,17 @@
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_cocktail_image_height"
+            android:layout_height="120dp"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_cocktail_vertical_margin"
-            android:layout_marginBottom="@dimen/item_cocktail_vertical_margin"
-            android:layout_marginLeft="@dimen/item_cocktail_horizontal_margin"
-            android:layout_marginRight="@dimen/item_cocktail_horizontal_margin"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
+            android:layout_marginLeft="@dimen/offset_16"
+            android:layout_marginRight="@dimen/offset_16"
             tools:text="Name" />
 
     </LinearLayout>

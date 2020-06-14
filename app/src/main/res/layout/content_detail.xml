@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fillViewport="false"
+    android:paddingBottom="@dimen/offset_8"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
     xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
@@ -13,68 +16,56 @@
         android:orientation="vertical"
         android:descendantFocusability="blocksDescendants">
 
-        <androidx.cardview.widget.CardView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="@dimen/detail_horizontal_margin"
-            app:cardCornerRadius="@dimen/detail_image_corner_radius">
-            <ImageView
-                android:id="@+id/ivImage"
-                android:layout_width="@dimen/detail_image_width"
-                android:layout_height="@dimen/detail_image_height"
-                tools:ignore="ContentDescription" />
-        </androidx.cardview.widget.CardView>
-
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/detail_vertical_margin"
-            android:layout_marginBottom="@dimen/detail_vertical_margin"
-            android:layout_marginLeft="@dimen/detail_horizontal_margin"
-            android:layout_marginRight="@dimen/detail_horizontal_margin">
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
+            android:layout_marginLeft="@dimen/offset_16"
+            android:layout_marginRight="@dimen/offset_16">
             <TableRow>
                 <TextView
-                    style="@style/TextDetailInfoTitle"
+                    style="@style/TextInfoTitle"
                     android:text="@string/detail_info_name" />
                 <TextView
-                    android:id="@+id/tvInfoName"
-                    style="@style/TextDetailInfoBody" />
+                    android:id="@+id/tv_info_name"
+                    style="@style/TextInfoBody" />
             </TableRow>
             <TableRow>
                 <TextView
-                    style="@style/TextDetailInfoTitle"
+                    style="@style/TextInfoTitle"
                     android:text="@string/detail_info_alcoholic" />
                 <TextView
-                    android:id="@+id/tvInfoAlcoholic"
-                    style="@style/TextDetailInfoBody" />
+                    android:id="@+id/tv_info_alcoholic"
+                    style="@style/TextInfoBody" />
             </TableRow>
             <TableRow>
                 <TextView
-                    style="@style/TextDetailInfoTitle"
+                    style="@style/TextInfoTitle"
                     android:text="@string/detail_info_glass" />
                 <TextView
-                    android:id="@+id/tvInfoGlass"
-                    style="@style/TextDetailInfoBody" />
+                    android:id="@+id/tv_info_glass"
+                    style="@style/TextInfoBody" />
             </TableRow>
         </TableLayout>
 
         <TextView
-            style="@style/TextDetailInstructionTitle"
+            style="@style/TextInstructionTitle"
             android:text="@string/detail_ingredient_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            style="@style/RecyclerViewIngredient" />
+            android:id="@+id/rv_ingredient_list"
+            style="@style/RecyclerView"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8" />
 
         <TextView
-            style="@style/TextDetailInstructionTitle"
+            style="@style/TextInstructionTitle"
             android:text="@string/detail_instruction_title" />
 
         <TextView
             android:id="@+id/tvInstructionBody"
-            style="@style/TextDetailInstructionBody"
-            android:layout_marginBottom="@dimen/detail_vertical_margin"
+            style="@style/TextInstructionBody"
             tools:text="Instruction body" />
 
     </LinearLayout>

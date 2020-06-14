@@ -18,7 +18,7 @@ class ChargeRestateReceiver : BroadcastReceiver() {
         val usbCharge: Boolean = chargePlug == BatteryManager.BATTERY_PLUGGED_USB
         val acCharge: Boolean = chargePlug == BatteryManager.BATTERY_PLUGGED_AC
 
-        Toast.makeText(context, "Is Charging", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Is charging $isCharging", Toast.LENGTH_SHORT).show()
     }
 
 }

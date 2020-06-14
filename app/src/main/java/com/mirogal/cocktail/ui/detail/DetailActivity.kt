@@ -5,11 +5,9 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.study.boot.BootCompleteService
-import com.mirogal.cocktail.study.charge.ChargeRestateReceiver
 import com.mirogal.cocktail.study.drink.ProposeDrinkService
+import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.ingredientlist.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.ui.detail.ingredientlist.ListAdapter
@@ -18,7 +16,7 @@ import kotlinx.android.synthetic.main.content_detail.*
 
 class DetailActivity : BaseActivity() {
 
-    var entityId = 100
+    private var entityId = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,24 +25,24 @@ class DetailActivity : BaseActivity() {
         val cocktailEntity = intent.getSerializableExtra(IntentTag.COCKTAIL_ENTITY.toString()) as CocktailDbEntity
         entityId = cocktailEntity.id
 
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
-        if (cocktailEntity.name!!.isNotEmpty()) {
-            toolbar.title = cocktailEntity.name
-        }
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        toolbar.setNavigationOnClickListener { onBackPressed() }
+//        if (cocktailEntity.name!!.isNotEmpty()) {
+//            toolbar.title = cocktailEntity.name
+//        }
 
-        tvInfoName.text = cocktailEntity.name
-        tvInfoAlcoholic.text = cocktailEntity.alcoholic
-        tvInfoGlass.text = cocktailEntity.glass
+        iv_back.setOnClickListener {
+            onBackPressed()
+        }
+
+        tv_info_name.text = cocktailEntity.name
+        tv_info_alcoholic.text = cocktailEntity.alcoholic
+        tv_info_glass.text = cocktailEntity.glass
         tvInstructionBody.text = cocktailEntity.instruction
 
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        rv_ingredient_list.layoutManager = LinearLayoutManager(this)
         val ingredientList = toIngredientList(
                 cocktailEntity.ingredientList, cocktailEntity.measureList)
         val listAdapter = ListAdapter(ingredientList, R.layout.item_ingredient)
-        recyclerView.adapter = listAdapter
+        rv_ingredient_list.adapter = listAdapter
 
         Glide.with(this)
                 .load(cocktailEntity.imagePath)

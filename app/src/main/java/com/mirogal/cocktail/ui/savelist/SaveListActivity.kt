@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.study.charge.ChargeRestateReceiver
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.DetailActivity
@@ -32,7 +31,6 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
     private var proposeDrinkReceiver: BroadcastReceiver? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setTheme(R.style.AppTheme_NoActionBar)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_list)
 
@@ -44,11 +42,11 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
             Configuration.ORIENTATION_LANDSCAPE -> 3
             else -> 1
         }
-        recyclerView.layoutManager = GridLayoutManager(this, listColumn)
+        rv_save_list.layoutManager = GridLayoutManager(this, listColumn)
 
-        val spaceInPixel = resources.getDimensionPixelSize(R.dimen.padding_horizontal)
+        val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
         val itemDecoration = GridSpaceItemDecoration(listColumn, spaceInPixel, true, 0)
-        recyclerView.addItemDecoration(itemDecoration)
+        rv_save_list.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this, this, R.layout.item_cocktail)
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
@@ -63,7 +61,7 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
             } catch (ignored: Exception) {
             }
         })
-        recyclerView.adapter = listAdapter
+        rv_save_list.adapter = listAdapter
     }
 
     override fun onStart() {
@@ -114,15 +112,15 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
     }
 
     private fun showData() {
-        if (recyclerView.visibility == View.INVISIBLE) {
-            recyclerView.visibility = View.VISIBLE
+        if (rv_save_list.visibility == View.INVISIBLE) {
+            rv_save_list.visibility = View.VISIBLE
             layoutEmpty.visibility = View.INVISIBLE
         }
     }
 
     private fun showEmpty() {
         if (layoutEmpty.visibility == View.INVISIBLE) {
-            recyclerView.visibility = View.INVISIBLE
+            rv_save_list.visibility = View.INVISIBLE
             layoutEmpty.visibility = View.VISIBLE
         }
     }
@@ -140,8 +138,8 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         if (entity != null) {
             Snackbar.make(findViewById(android.R.id.content),
                     "Переглянути " + entity!!.name, Snackbar.LENGTH_LONG)
-                    .setAction("Переглянути", View.OnClickListener {
-                        openCocktailDetailActivity(entity!!) }).show()
+                    .setAction("Переглянути") {
+                        openCocktailDetailActivity(entity!!) }.show()
         }
     }
 

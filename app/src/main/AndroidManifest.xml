@@ -16,15 +16,20 @@
         android:fullBackupContent="@xml/backup_descriptor"
         android:allowBackup="true">
         <activity
-            android:name="com.mirogal.cocktail.ui.savelist.SaveListActivity"
+            android:name="com.mirogal.cocktail.ui.auth.AuthActivity"
             android:label="@string/launch_label"
-            android:theme="@style/AppTheme.Launcher">
+            android:theme="@style/AppTheme.Launcher"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.mirogal.cocktail.ui.savelist.SaveListActivity"
+            android:label="@string/save_list_label"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity
             android:name="com.mirogal.cocktail.ui.searchlist.SearchListActivity"
             android:label="@string/search_list_label"
@@ -33,6 +38,7 @@
             android:name="com.mirogal.cocktail.ui.detail.DetailActivity"
             android:label="@string/detail_label"
             android:theme="@style/AppTheme.NoActionBar"/>
+
         <service
             android:name="com.mirogal.cocktail.study.drink.ProposeDrinkService"
             android:permission="android.permission.BIND_JOB_SERVICE"
@@ -41,6 +47,7 @@
             android:name="com.mirogal.cocktail.study.boot.BootCompleteService"
             android:permission="android.permission.BIND_JOB_SERVICE"
             android:exported="false" />
+
         <receiver
             android:name=".study.boot.BootCompleteReceiver"
             android:exported="true">

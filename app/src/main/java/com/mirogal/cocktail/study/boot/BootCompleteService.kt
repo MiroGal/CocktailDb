@@ -13,7 +13,7 @@ import com.mirogal.cocktail.ui.savelist.SaveListActivity
 class BootCompleteService : JobIntentService() {
 
     companion object {
-        val JOB_ID = 1
+        private const val JOB_ID = 1
         fun enqueueWork(context: Context, work: Intent) {
             enqueueWork(context, BootCompleteService::class.java, JOB_ID, work)
         }

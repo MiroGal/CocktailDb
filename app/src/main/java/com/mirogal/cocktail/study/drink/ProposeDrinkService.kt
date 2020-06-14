@@ -9,7 +9,7 @@ import androidx.core.app.JobIntentService
 class ProposeDrinkService : JobIntentService() {
 
     companion object {
-        val JOB_ID = 1
+        private const val JOB_ID = 1
         fun enqueueWork(context: Context, work: Intent) {
             enqueueWork(context, ProposeDrinkService::class.java, JOB_ID, work)
         }
