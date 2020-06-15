@@ -21,13 +21,7 @@ class BootCompleteService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
 
-        for (i in 0..3) {
-
-            try {
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
-            }
+        for (i in 0..2) {
 
             val builder = StringBuilder()
             builder.append("Додаток ")
@@ -36,6 +30,12 @@ class BootCompleteService : JobIntentService() {
                     .append((3 - i).toString())
             Handler(Looper.getMainLooper()).post {
                 Toast.makeText(applicationContext, builder.toString(), Toast.LENGTH_SHORT).show() }
+
+            try {
+                Thread.sleep(3000)
+            } catch (e: InterruptedException) {
+                e.printStackTrace()
+            }
         }
         startActivity(Intent(this@BootCompleteService, SaveListActivity::class.java))
     }
