@@ -8,7 +8,10 @@ import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -182,9 +185,11 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         var entity: CocktailDbEntity? = null
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity> ->
             if (!pagedList.isEmpty()) {
-                entity = pagedList[1]!!
-                if (entity!!.id == id) {
-                    entity = pagedList[2]!!
+                if (pagedList.size > 1) {
+                    entity = pagedList[0]!!
+                    if (entity!!.id == id) {
+                        entity = pagedList[1]!!
+                    }
                 }
             }
         })
