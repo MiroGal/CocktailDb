@@ -198,6 +198,7 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
                     "Переглянути " + entity!!.name, Snackbar.LENGTH_LONG)
                     .setAction("Переглянути") {
                         openCocktailDetailActivity(entity!!) }.show()
+            //
         }
     }
 
