@@ -1,8 +1,7 @@
 <resources>
 
-    <dimen name="fab_margin">16dp</dimen>
-
     <!--region Offset-->
+    <dimen name="offset_4">4dp</dimen>
     <dimen name="offset_8">8dp</dimen>
     <dimen name="offset_16">16dp</dimen>
     <dimen name="offset_32">32dp</dimen>
@@ -15,8 +14,11 @@
     <!--endregion-->
 
     <!--region Text-->
-    <dimen name="text_16">16sp</dimen>
-    <dimen name="text_18">18sp</dimen>
+    <dimen name="text_14">14sp</dimen>
+    <dimen name="text_17">17sp</dimen>
+    <dimen name="text_19">19sp</dimen>
     <!--endregion-->
+
+    <dimen name="fab_margin">16dp</dimen>
 
 </resources>

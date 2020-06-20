@@ -16,8 +16,8 @@ import com.mirogal.cocktail.data.repository.NetworkState
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.DetailActivity
-import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
-import kotlinx.android.synthetic.main.activity_save_list.*
+import com.mirogal.cocktail.ui.util.SpaceItemDecoration
+import kotlinx.android.synthetic.main.activity_search_list.*
 import kotlinx.android.synthetic.main.content_search_list.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 import kotlinx.android.synthetic.main.layout_search_list_start.*
@@ -41,10 +41,10 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         rv_search_list.layoutManager = GridLayoutManager(this, listColumn)
 
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
-        val itemDecoration = GridSpaceItemDecoration(listColumn, spaceInPixel, true, 0)
+        val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
         rv_search_list.addItemDecoration(itemDecoration)
 
-        val listAdapter = ListAdapter(this, this, R.layout.item_cocktail)
+        val listAdapter = ListAdapter(this, this)
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
             try {
@@ -96,10 +96,12 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         return true
     }
 
+
     override fun onItemClick(cocktail: CocktailDbEntity?) {
         viewModel.saveCocktail(cocktail)
         openCocktailDetailActivity(cocktail)
     }
+
 
     private fun openCocktailDetailActivity(cocktail: CocktailDbEntity?) {
         val intent = Intent(this@SearchListActivity, DetailActivity::class.java)

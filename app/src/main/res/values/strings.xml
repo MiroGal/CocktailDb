@@ -3,9 +3,9 @@
     <string name="app_name">Cocktail</string>
 
     <!--region Auth-->
-    <string name="auth_btn_authorization">Authorization</string>
     <string name="auth_login_hint">Login</string>
     <string name="auth_password_hint">Password</string>
+    <string name="auth_btn_login">Login</string>
     <!--endregion-->
 
     <!--region SaveList-->
@@ -22,6 +22,7 @@
 
     <!--region Detail-->
     <string name="detail_label">Cocktail Details</string>
+    <string name="detail_info_title">Basic information</string>
     <string name="detail_info_name">Name:</string>
     <string name="detail_info_alcoholic">Alcoholic:</string>
     <string name="detail_info_glass">Glass:</string>

@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.study.battery
+package com.mirogal.cocktail.receiver
 
 import android.content.BroadcastReceiver
 import android.content.Context

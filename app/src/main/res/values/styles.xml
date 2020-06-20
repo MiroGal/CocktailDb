@@ -20,58 +20,27 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AppBarLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
-    </style>
-
-    <style name="Toolbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:theme">@style/AppTheme.PopupOverlay</item>
-    </style>
-
-    <style name="RecyclerView">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="TextBody">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
-
     <style name="TextTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/txt_title</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextInfoTitle" parent="TextTitle">
-        <item name="android:layout_marginRight">@dimen/offset_16</item>
-        <item name="android:layout_marginEnd">@dimen/offset_16</item>
+    <style name="TextBody">
+        <item name="android:textColor">@color/txt_body</item>
+        <item name="android:textSize">@dimen/text_14</item>
     </style>
 
-    <style name="TextInfoBody" parent="TextBody">
+    <style name="EditText">
+        <item name="android:textColor">@color/txt_title</item>
+        <item name="android:textSize">@dimen/text_17</item>
     </style>
 
-    <style name="TextInstructionTitle" parent="TextTitle">
-        <item name="android:paddingTop">@dimen/offset_8</item>
-        <item name="android:paddingBottom">@dimen/offset_8</item>
-        <item name="android:paddingLeft">@dimen/offset_16</item>
-        <item name="android:paddingRight">@dimen/offset_16</item>
+    <style name="Button">
         <item name="android:gravity">center</item>
-        <item name="android:textSize">@dimen/text_16</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
-    </style>
-
-    <style name="TextInstructionBody" parent="TextBody">
-        <item name="android:paddingTop">@dimen/offset_8</item>
-        <item name="android:paddingBottom">@dimen/offset_8</item>
-        <item name="android:paddingLeft">@dimen/offset_16</item>
-        <item name="android:paddingRight">@dimen/offset_16</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:textColor">@color/txt_button</item>
+        <item name="android:textSize">@dimen/text_17</item>
     </style>
 
 </resources>

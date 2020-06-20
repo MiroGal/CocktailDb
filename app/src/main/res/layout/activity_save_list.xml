@@ -4,29 +4,35 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_primary"
     tools:context=".ui.savelist.SaveListActivity">
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/AppBarLayout">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/Toolbar" />
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            android:theme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include layout="@layout/content_save_list" />
 
-    <include layout="@layout/layout_charge_indicator"
+    <include layout="@layout/layout_battery_indicator"
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/fab_margin"
         android:layout_marginStart="@dimen/fab_margin"
-        android:layout_marginEnd="88dp"
-        android:layout_marginBottom="@dimen/fab_margin"/>
+        android:layout_marginEnd="88dp" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:onClick="onFabClick"
+        android:id="@+id/fab_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"

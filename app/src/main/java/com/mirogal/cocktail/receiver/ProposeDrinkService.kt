@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.study.drink
+package com.mirogal.cocktail.receiver
 
 import android.content.Context
 import android.content.Intent

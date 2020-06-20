@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.study.boot
+package com.mirogal.cocktail.service
 
 import android.content.Context
 import android.content.Intent
@@ -7,7 +7,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.core.app.JobIntentService
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.ui.savelist.SaveListActivity
+import com.mirogal.cocktail.ui.auth.AuthActivity
 
 
 class BootCompleteService : JobIntentService() {
@@ -37,7 +37,7 @@ class BootCompleteService : JobIntentService() {
                 e.printStackTrace()
             }
         }
-        startActivity(Intent(this@BootCompleteService, SaveListActivity::class.java))
+        startActivity(Intent(this@BootCompleteService, AuthActivity::class.java))
     }
 
 }

@@ -8,10 +8,7 @@ import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.os.Handler
-import android.os.Looper
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -20,15 +17,15 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.study.battery.BatteryChangeReceiver
+import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.searchlist.SearchListActivity
-import com.mirogal.cocktail.ui.util.GridSpaceItemDecoration
+import com.mirogal.cocktail.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_save_list.*
 import kotlinx.android.synthetic.main.content_save_list.*
-import kotlinx.android.synthetic.main.layout_charge_indicator.*
+import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 
 
@@ -45,6 +42,9 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         setSupportActionBar(toolbar)
         supportActionBar!!.setTitle(R.string.save_list_label)
 
+        fab_search.setOnClickListener(onClickListener)
+        btn_battery_indicator_close.setOnClickListener(onClickListener)
+
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -53,10 +53,10 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         rv_save_list.layoutManager = GridLayoutManager(this, listColumn)
 
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
-        val itemDecoration = GridSpaceItemDecoration(listColumn, spaceInPixel, true, 0)
+        val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
         rv_save_list.addItemDecoration(itemDecoration)
 
-        val listAdapter = ListAdapter(this, this, this, R.layout.item_cocktail)
+        val listAdapter = ListAdapter(this, this, this)
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity> ->
             if (!pagedList.isEmpty()) {
@@ -98,20 +98,19 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
     }
 
 
+    private val onClickListener = View.OnClickListener { view ->
+        when (view) {
+            fab_search -> openSearchListActivity()
+            btn_battery_indicator_close -> layout_charge_indicator.visibility = View.INVISIBLE
+        }
+    }
+
     override fun onItemClick(cocktail: CocktailDbEntity?) {
-        openCocktailDetailActivity(cocktail!!)
+        openDetailActivity(cocktail!!)
     }
 
     override fun onItemLongClick(cocktailId: Int) {
         viewModel.deleteCocktail(cocktailId)
-    }
-
-    fun onFabClick(view: View) {
-        openCocktailSearchListActivity()
-    }
-
-    fun onCloseChargeIndicatorClick(view: View) {
-        layout_charge_indicator.visibility = View.INVISIBLE
     }
 
     override fun onBatteryChange(level: Int, state: Int) {
@@ -120,12 +119,12 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
     }
 
 
-    private fun openCocktailSearchListActivity() {
+    private fun openSearchListActivity() {
         val intent = Intent(this@SaveListActivity, SearchListActivity::class.java)
         startActivity(intent)
     }
 
-    private fun openCocktailDetailActivity(cocktail: CocktailDbEntity) {
+    private fun openDetailActivity(cocktail: CocktailDbEntity) {
         val intent = Intent(this@SaveListActivity, DetailActivity::class.java)
         intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail)
         startActivity(intent)
@@ -157,25 +156,25 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         if (layout_charge_indicator.visibility == View.VISIBLE) {
             when (state) {
                 1 -> {
-                    tv_charge.setTextColor(ContextCompat.getColor(this, R.color.green))
+                    tv_charge.setTextColor(ContextCompat.getColor(this, R.color.battery_status_charging))
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         iv_charge.setImageResource(R.drawable.ic_battery_charging)
                     }
-                    iv_charge.setColorFilter(ContextCompat.getColor(this, R.color.green))
+                    iv_charge.setColorFilter(ContextCompat.getColor(this, R.color.battery_status_charging))
                 }
                 2 -> {
-                    tv_charge.setTextColor(ContextCompat.getColor(this, R.color.yellow))
+                    tv_charge.setTextColor(ContextCompat.getColor(this, R.color.battery_status_ok))
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         iv_charge.setImageResource(R.drawable.ic_battery_full)
                     }
-                    iv_charge.setColorFilter(ContextCompat.getColor(this, R.color.yellow))
+                    iv_charge.setColorFilter(ContextCompat.getColor(this, R.color.battery_status_ok))
                 }
                 3 -> {
-                    tv_charge.setTextColor(ContextCompat.getColor(this, R.color.red))
+                    tv_charge.setTextColor(ContextCompat.getColor(this, R.color.battery_status_low))
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                         iv_charge.setImageResource(R.drawable.ic_battery_alert)
                     }
-                    iv_charge.setColorFilter(ContextCompat.getColor(this, R.color.red))
+                    iv_charge.setColorFilter(ContextCompat.getColor(this, R.color.battery_status_low))
                 }
             }
         }
@@ -197,8 +196,7 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
             Snackbar.make(findViewById(android.R.id.content),
                     "Переглянути " + entity!!.name, Snackbar.LENGTH_LONG)
                     .setAction("Переглянути") {
-                        openCocktailDetailActivity(entity!!) }.show()
-            //
+                        openDetailActivity(entity!!) }.show()
         }
     }
 
