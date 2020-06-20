@@ -8,9 +8,19 @@
     <string name="auth_btn_login">Login</string>
     <!--endregion-->
 
+    <!--region Profile-->
+    <string name="profile_label">Profile</string>
+    <string name="profile_btn_logout">Logout</string>
+    <!--endregion-->
+
     <!--region SaveList-->
     <string name="save_list_label">Cocktail App</string>
     <string name="save_list_empty">History is empty</string>
+    <string name="save_list_action_filter">Filter</string>
+    <!--endregion-->
+
+    <!--region Filter-->
+    <string name="filter_label">Filter</string>
     <!--endregion-->
 
     <!--region SearchList-->
