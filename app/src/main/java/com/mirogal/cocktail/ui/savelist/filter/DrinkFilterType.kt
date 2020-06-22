@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.ui.constant
+package com.mirogal.cocktail.ui.savelist.filter
 
 enum class DrinkFilterType(val key: String) {
 

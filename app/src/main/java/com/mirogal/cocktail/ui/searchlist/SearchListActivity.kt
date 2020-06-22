@@ -14,7 +14,6 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
 import com.mirogal.cocktail.ui.base.BaseActivity
-import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_search_list.*
@@ -33,6 +32,12 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
         setSupportActionBar(toolbar)
 
+        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+
+        setList()
+    }
+
+    private fun setList() {
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -45,7 +50,6 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         rv_search_list.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this)
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
             try {
                 listAdapter.submitList(pagedList)
@@ -105,7 +109,7 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
     private fun openCocktailDetailActivity(cocktail: CocktailDbEntity?) {
         val intent = Intent(this@SearchListActivity, DetailActivity::class.java)
-        intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail)
+        intent.putExtra(DetailActivity::class.java.simpleName, cocktail)
         startActivity(intent)
     }
 

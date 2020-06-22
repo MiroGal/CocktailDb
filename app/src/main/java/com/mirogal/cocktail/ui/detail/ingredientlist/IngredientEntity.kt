@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.ui.detail.ingredientlist.entity
+package com.mirogal.cocktail.ui.detail.ingredientlist
 
 class IngredientEntity(
         var id: Int,

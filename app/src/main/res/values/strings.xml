@@ -21,6 +21,8 @@
 
     <!--region Filter-->
     <string name="filter_label">Filter</string>
+    <string name="filter_btn_cancel">Cancel</string>
+    <string name="filter_btn_apply">Apply</string>
     <!--endregion-->
 
     <!--region SearchList-->

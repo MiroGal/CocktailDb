@@ -23,7 +23,6 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.ui.base.BaseFragment
-import com.mirogal.cocktail.ui.constant.IntentTag
 import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.searchlist.SearchListActivity
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
@@ -37,7 +36,6 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener, BatteryChangeReceiver.OnBatteryChangeListener {
 
     override val contentLayoutResId = R.layout.fragment_save_list
-
     private var listener: OnFragmentActionListener? = null
 
     private lateinit var viewModel: ViewModel
@@ -63,9 +61,31 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.save_list_label)
         setHasOptionsMenu(true)
 
-        fab_search.setOnClickListener(onClickListener)
-        btn_battery_indicator_close.setOnClickListener(onClickListener)
+        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
+        setList()
+        setReceiver()
+
+        fab_search.setOnClickListener {
+            openSearchListActivity()
+        }
+
+        btn_battery_indicator_close.setOnClickListener {
+            layout_charge_indicator.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setReceiver() {
+        batteryChangeReceiver.setBatteryChangeListener(this)
+
+        proposeDrinkReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                showProposeDrink(intent!!.getIntExtra("KEY", 20))
+            }
+        }
+    }
+
+    private fun setList() {
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -77,7 +97,6 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
         rv_save_list.addItemDecoration(itemDecoration)
 
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
         val listAdapter = ListAdapter(requireContext(), this, this)
         viewModel.cocktailList.observe(viewLifecycleOwner, Observer { pagedList: PagedList<CocktailDbEntity> ->
             if (!pagedList.isEmpty()) {
@@ -91,14 +110,6 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
             }
         })
         rv_save_list.adapter = listAdapter
-
-        proposeDrinkReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                showProposeDrink(intent!!.getIntExtra("KEY", 20))
-            }
-        }
-
-        batteryChangeReceiver.setBatteryChangeListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
@@ -131,13 +142,6 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
     }
 
 
-    private val onClickListener = View.OnClickListener { view ->
-        when (view) {
-            fab_search -> openSearchListActivity()
-            btn_battery_indicator_close -> layout_charge_indicator.visibility = View.INVISIBLE
-        }
-    }
-
     override fun onItemClick(cocktail: CocktailDbEntity?) {
         openDetailActivity(cocktail!!)
     }
@@ -159,7 +163,7 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
     private fun openDetailActivity(cocktail: CocktailDbEntity) {
         val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra(IntentTag.COCKTAIL_ENTITY.toString(), cocktail)
+        intent.putExtra(DetailActivity::class.java.simpleName, cocktail)
         startActivity(intent)
     }
 
@@ -232,6 +236,10 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
                         openDetailActivity(entity!!)
                     }.show()
         }
+    }
+
+    fun setFilter(filter: Bundle) {
+        layout_charge_indicator.visibility = View.INVISIBLE
     }
 
     interface OnFragmentActionListener {
