@@ -15,11 +15,11 @@ abstract class CocktailDatabase : RoomDatabase() {
         private var INSTANCE: CocktailDatabase? = null
 
         fun getInstance(context: Context): CocktailDatabase? {
-            if (INSTANCE == null){
-                synchronized(CocktailDatabase::class){
+            if (INSTANCE == null) {
+                synchronized(CocktailDatabase::class) {
                     INSTANCE = Room.databaseBuilder(context.applicationContext,
                             CocktailDatabase::class.java,
-                            "cocktail_database_test").build()
+                            "cocktail_database_test_2").build()
                 }
             }
             return INSTANCE

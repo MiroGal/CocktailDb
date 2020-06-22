@@ -9,6 +9,8 @@ object NetDbMapper {
         return CocktailDbEntity(
                 netEntity.id,
                 netEntity.name,
+                false,
+                netEntity.category,
                 netEntity.alcoholic,
                 netEntity.glass,
                 netEntity.instruction,

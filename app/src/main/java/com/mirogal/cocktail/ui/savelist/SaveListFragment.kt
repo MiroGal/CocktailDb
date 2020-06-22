@@ -106,13 +106,16 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         listAdapter = ListAdapter(requireContext(), this, this)
         viewModel.cocktailList.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
             cocktailList = list
-            val filteredList = filterAlcohol(list, alcoholFilter)
-            if (filteredList.isNotEmpty()) {
+
+            val filteredList1 = filterAlcohol(cocktailList, alcoholFilter)
+            val filteredList2 = filterCategory(filteredList1, categoryFilter)
+
+            if (filteredList2.isNotEmpty()) {
                 showData()
             } else {
                 showEmpty()
             }
-            listAdapter.refreshData(filteredList)
+            listAdapter.refreshData(filteredList2)
         })
         rv_save_list.adapter = listAdapter
     }
@@ -246,8 +249,11 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
     fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         this.alcoholFilter = alcoholFilter
         this.categoryFilter = categoryFilter
-        val filteredList = filterAlcohol(cocktailList, alcoholFilter)
-        listAdapter.refreshData(filteredList)
+
+        val filteredList1 = filterAlcohol(cocktailList, alcoholFilter)
+        val filteredList2 = filterCategory(filteredList1, categoryFilter)
+
+        listAdapter.refreshData(filteredList2)
     }
 
     private fun filterAlcohol(cocktailList: List<CocktailDbEntity>, filter: AlcoholDrinkFilter?): List<CocktailDbEntity> {
@@ -259,22 +265,22 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         }
     }
 
-//    private fun filterCategory(cocktailList: List<CocktailDbEntity>, filter: CategoryDrinkFilter?): List<CocktailDbEntity> {
-//        return when (filter) {
-//            CategoryDrinkFilter.ORDINARY_DRINK -> cocktailList.filter { it.category == CategoryDrinkFilter.ORDINARY_DRINK.key }
-//            CategoryDrinkFilter.COCKTAIL -> cocktailList.filter { it.category == CategoryDrinkFilter.COCKTAIL.key }
-//            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> cocktailList.filter { it.category == CategoryDrinkFilter.MILK_FLOAT_SHAKE.key }
-//            CategoryDrinkFilter.OTHER_UNKNOWN -> cocktailList.filter { it.category == CategoryDrinkFilter.OTHER_UNKNOWN.key }
-//            CategoryDrinkFilter.COCOA -> cocktailList.filter { it.category == CategoryDrinkFilter.COCOA.key }
-//            CategoryDrinkFilter.SHOT -> cocktailList.filter { it.category == CategoryDrinkFilter.SHOT.key }
-//            CategoryDrinkFilter.COFFEE_TEA -> cocktailList.filter { it.category == CategoryDrinkFilter.COFFEE_TEA.key }
-//            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> cocktailList.filter { it.category == CategoryDrinkFilter.HOMEMADE_LIQUEUR.key }
-//            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> cocktailList.filter { it.category == CategoryDrinkFilter.PUNCH_PARTY_DRINK.key }
-//            CategoryDrinkFilter.BEER -> cocktailList.filter { it.category == CategoryDrinkFilter.BEER.key }
-//            CategoryDrinkFilter.SOFT_DRINK_SODA -> cocktailList.filter { it.category == CategoryDrinkFilter.SOFT_DRINK_SODA.key }
-//            else -> cocktailList
-//        }
-//    }
+    private fun filterCategory(cocktailList: List<CocktailDbEntity>, filter: CategoryDrinkFilter?): List<CocktailDbEntity> {
+        return when (filter) {
+            CategoryDrinkFilter.ORDINARY_DRINK -> cocktailList.filter { it.category == CategoryDrinkFilter.ORDINARY_DRINK.key }
+            CategoryDrinkFilter.COCKTAIL -> cocktailList.filter { it.category == CategoryDrinkFilter.COCKTAIL.key }
+            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> cocktailList.filter { it.category == CategoryDrinkFilter.MILK_FLOAT_SHAKE.key }
+            CategoryDrinkFilter.OTHER_UNKNOWN -> cocktailList.filter { it.category == CategoryDrinkFilter.OTHER_UNKNOWN.key }
+            CategoryDrinkFilter.COCOA -> cocktailList.filter { it.category == CategoryDrinkFilter.COCOA.key }
+            CategoryDrinkFilter.SHOT -> cocktailList.filter { it.category == CategoryDrinkFilter.SHOT.key }
+            CategoryDrinkFilter.COFFEE_TEA -> cocktailList.filter { it.category == CategoryDrinkFilter.COFFEE_TEA.key }
+            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> cocktailList.filter { it.category == CategoryDrinkFilter.HOMEMADE_LIQUEUR.key }
+            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> cocktailList.filter { it.category == CategoryDrinkFilter.PUNCH_PARTY_DRINK.key }
+            CategoryDrinkFilter.BEER -> cocktailList.filter { it.category == CategoryDrinkFilter.BEER.key }
+            CategoryDrinkFilter.SOFT_DRINK_SODA -> cocktailList.filter { it.category == CategoryDrinkFilter.SOFT_DRINK_SODA.key }
+            else -> cocktailList
+        }
+    }
 
     interface OnFragmentActionListener {
         fun onButtonFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
