@@ -15,21 +15,41 @@
 
     <!--region SaveList-->
     <string name="save_list_label">Cocktail App</string>
-    <string name="save_list_empty">History is empty</string>
-    <string name="save_list_action_filter">Filter</string>
+    <string name="save_list_message_empty">History is empty</string>
+    <string name="save_list_snackbar_btn_open_cocktail">Open</string>
     <!--endregion-->
 
     <!--region Filter-->
     <string name="filter_label">Filter</string>
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
+
+    <string name="filter_alcohol_title">Alcohol</string>
+    <string name="filter_alcohol_disable">Disable filter</string>
+    <string name="filter_alcohol_alcoholic">Alcoholic</string>
+    <string name="filter_alcohol_non_alcoholic">Non alcoholic</string>
+    <string name="filter_alcohol_optional_alcohol">Optional alcohol</string>
+
+    <string name="filter_category_title">Category</string>
+    <string name="filter_category_disable">Disable filter</string>
+    <string name="filter_category_ordinary_drink">Ordinary Drink</string>
+    <string name="filter_category_cocktail">Cocktail</string>
+    <string name="filter_category_milk_float_shake">Milk / Float / Shake</string>
+    <string name="filter_category_other_unknown">Other / Unknown</string>
+    <string name="filter_category_cocoa">Cocoa</string>
+    <string name="filter_category_shot">Shot</string>
+    <string name="filter_category_coffee_tea">Coffee / Tea</string>
+    <string name="filter_category_homemade_liqueur">Homemade Liqueur</string>
+    <string name="filter_category_punch_party_drink">Punch / Party Drink</string>
+    <string name="filter_category_beer">Beer</string>
+    <string name="filter_category_soft_drink_soda">Soft Drink / Soda</string>
     <!--endregion-->
 
     <!--region SearchList-->
     <string name="search_list_label">Search Cocktail</string>
-    <string name="search_list_empty">No cocktails found</string>
-    <string name="search_list_start">Enter text to start search</string>
-    <string name="search_list_action_search">Search</string>
+    <string name="search_list_message_empty">No cocktails found</string>
+    <string name="search_list_message_start">Enter text to start search</string>
+    <string name="search_list_toolbar_btn_search">Search</string>
     <!--endregion-->
 
     <!--region Detail-->

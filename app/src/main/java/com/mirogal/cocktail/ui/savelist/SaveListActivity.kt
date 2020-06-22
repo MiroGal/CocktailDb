@@ -22,7 +22,7 @@ class SaveListActivity : BaseActivity(),
     }
 
 
-    override fun onButtonFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
+    override fun onToolbarBtnFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         addFilterFragment(alcoholFilter, categoryFilter)
     }
 

@@ -10,7 +10,7 @@ import com.mirogal.cocktail.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.fragment_save_list.toolbar
 
-class ProfileFragment() : BaseFragment() {
+class ProfileFragment : BaseFragment() {
 
     override val contentLayoutResId = R.layout.fragment_profile
 

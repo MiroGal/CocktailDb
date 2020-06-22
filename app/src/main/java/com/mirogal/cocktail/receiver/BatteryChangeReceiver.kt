@@ -34,7 +34,7 @@ class BatteryChangeReceiver : BroadcastReceiver() {
     }
 
     fun setBatteryChangeListener(context: SaveListFragment) {
-        listener = context as OnBatteryChangeListener?
+        listener = context
     }
 
     interface OnBatteryChangeListener {

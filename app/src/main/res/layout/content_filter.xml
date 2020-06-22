@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="?attr/actionBarSize"
+    android:orientation="vertical">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/background_primary">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/offset_8"
+                android:paddingBottom="@dimen/offset_8"
+                android:paddingStart="@dimen/offset_16"
+                android:paddingEnd="@dimen/offset_16"
+                android:background="@color/background_secondary"
+                android:text="@string/filter_alcohol_title"
+                style="@style/TextTitle"/>
+            <RadioGroup
+                android:id="@+id/rg_alcohol_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/offset_8"
+                android:paddingBottom="@dimen/offset_8"
+                android:paddingStart="@dimen/offset_16"
+                android:paddingEnd="@dimen/offset_16"
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/rb_alcoholic_filter_disable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_alcohol_disable" />
+                <RadioButton
+                    android:id="@+id/rb_alcoholic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_alcohol_alcoholic" />
+                <RadioButton
+                    android:id="@+id/rb_non_alcoholic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_alcohol_non_alcoholic" />
+                <RadioButton
+                    android:id="@+id/rb_optional_alcohol"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_alcohol_optional_alcohol" />
+            </RadioGroup>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/offset_8"
+                android:paddingBottom="@dimen/offset_8"
+                android:paddingStart="@dimen/offset_16"
+                android:paddingEnd="@dimen/offset_16"
+                android:background="@color/background_secondary"
+                android:text="@string/filter_category_title"
+                style="@style/TextTitle"/>
+            <RadioGroup
+                android:id="@+id/rg_category_filter"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/offset_8"
+                android:paddingBottom="@dimen/offset_8"
+                android:paddingStart="@dimen/offset_16"
+                android:paddingEnd="@dimen/offset_16"
+                android:orientation="vertical">
+                <RadioButton
+                    android:id="@+id/rb_category_filter_disable"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_disable" />
+                <RadioButton
+                    android:id="@+id/rb_ordinary_drink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_ordinary_drink" />
+                <RadioButton
+                    android:id="@+id/rb_cocktail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_cocktail" />
+                <RadioButton
+                    android:id="@+id/rb_milk_float_shake"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_milk_float_shake" />
+                <RadioButton
+                    android:id="@+id/rb_other_unknown"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_other_unknown" />
+                <RadioButton
+                    android:id="@+id/rb_cocoa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_cocoa" />
+                <RadioButton
+                    android:id="@+id/rb_shot"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_shot" />
+                <RadioButton
+                    android:id="@+id/rb_coffee_tea"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_coffee_tea" />
+                <RadioButton
+                    android:id="@+id/rb_homemade_liqueur"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_homemade_liqueur" />
+                <RadioButton
+                    android:id="@+id/rb_punch_arty_drink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_punch_party_drink" />
+                <RadioButton
+                    android:id="@+id/rb_beer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_beer" />
+                <RadioButton
+                    android:id="@+id/rb_soft_drink_soda"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/filter_category_soft_drink_soda" />
+            </RadioGroup>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/offset_8"
+        android:paddingBottom="@dimen/offset_8"
+        android:paddingStart="@dimen/offset_16"
+        android:paddingEnd="@dimen/offset_16"
+        android:orientation="horizontal"
+        android:background="@color/background_primary"
+        android:focusable="true"
+        android:clickable="true">
+        <TextView
+            android:id="@+id/btn_reset"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:clickable="false"
+            android:text="@string/filter_btn_reset"
+            style="@style/Button" />
+        <TextView
+            android:id="@+id/btn_apply"
+            android:layout_width="0dp"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/offset_16"
+            android:clickable="false"
+            android:text="@string/filter_btn_apply"
+            style="@style/Button" />
+    </LinearLayout>
+
+</LinearLayout>

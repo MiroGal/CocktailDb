@@ -20,5 +20,6 @@
     <!--endregion-->
 
     <dimen name="fab_margin">16dp</dimen>
+    <dimen name="offset_48">48dp</dimen>
 
 </resources>

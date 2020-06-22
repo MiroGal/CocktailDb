@@ -3,14 +3,17 @@ package com.mirogal.cocktail.ui.savelist
 import android.content.Context
 import android.os.Bundle
 import android.view.View
+import androidx.appcompat.app.AppCompatActivity
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
+import kotlinx.android.synthetic.main.content_filter.*
 import kotlinx.android.synthetic.main.fragment_filter.*
+import kotlinx.android.synthetic.main.fragment_save_list.toolbar
 
 
-class FilterFragment() : BaseFragment() {
+class FilterFragment : BaseFragment() {
 
     override val contentLayoutResId = R.layout.fragment_filter
     private var listener: OnFragmentActionListener? = null
@@ -21,7 +24,7 @@ class FilterFragment() : BaseFragment() {
         private const val ALCOHOL_DRINK_FILTER = "alcohol_drink_filter"
         private const val CATEGORY_DRINK_FILTER = "category_drink_filter"
 
-        fun newInstance(alcoholDrinkFilter: AlcoholDrinkFilter?, categoryDrinkFilter: CategoryDrinkFilter?) : FilterFragment {
+        fun newInstance(alcoholDrinkFilter: AlcoholDrinkFilter?, categoryDrinkFilter: CategoryDrinkFilter?): FilterFragment {
             val fragment = FilterFragment()
             val bundle = Bundle()
             bundle.putSerializable(ALCOHOL_DRINK_FILTER, alcoholDrinkFilter)
@@ -35,7 +38,7 @@ class FilterFragment() : BaseFragment() {
         super.onAttach(context)
         listener = context as? OnFragmentActionListener
         if (listener == null) {
-            throw ClassCastException("$context must implement OnArticleSelectedListener")
+            throw ClassCastException("$context must implement Listener")
         }
 
         alcoholFilter = arguments?.getSerializable(ALCOHOL_DRINK_FILTER) as AlcoholDrinkFilter?
@@ -45,19 +48,25 @@ class FilterFragment() : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.filter_label)
+
         initFiler()
         setOnCheckListener()
+
+        btn_toolbar_back.setOnClickListener {
+            (activity as AppCompatActivity).onBackPressed()
+        }
 
         btn_apply.setOnClickListener {
             listener?.onActionButtonClick(alcoholFilter, categoryFilter)
             requireActivity().onBackPressed()
         }
 
-        btn_cancel.setOnClickListener {
+        btn_reset.setOnClickListener {
             listener?.onActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
             requireActivity().onBackPressed()
         }
-
     }
 
     private fun initFiler() {

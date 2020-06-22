@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
-import android.view.View
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.savelist.SaveListActivity
@@ -30,7 +29,9 @@ class AuthActivity : BaseActivity() {
         txt_login.addTextChangedListener(textWatcherLogin)
         txt_password.addTextChangedListener(textWatcherPassword)
 
-        btn_authorization.setOnClickListener(onClickListener)
+        btn_authorization.setOnClickListener {
+            checkAuthData()
+        }
 
         fillInputField()
     }
@@ -50,7 +51,7 @@ class AuthActivity : BaseActivity() {
         return@InputFilter null
     }
 
-    private val textWatcherLogin: TextWatcher = object: TextWatcher {
+    private val textWatcherLogin: TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {}
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -61,7 +62,7 @@ class AuthActivity : BaseActivity() {
         }
     }
 
-    private val textWatcherPassword: TextWatcher = object: TextWatcher {
+    private val textWatcherPassword: TextWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {}
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -72,7 +73,7 @@ class AuthActivity : BaseActivity() {
         }
     }
 
-    private val onClickListener = View.OnClickListener {
+    private fun checkAuthData() {
         val login = txt_login.text.toString()
         val password = txt_password.text.toString()
         if (login == this.login && password == this.password) {
@@ -83,7 +84,7 @@ class AuthActivity : BaseActivity() {
             txt_login.setTextColor(resources.getColor(R.color.txt_error))
         } else if (login == this.login && password != this.password) {
             txt_password.requestFocus()
-            txt_password.setSelection(txt_password.text?.length !!)
+            txt_password.setSelection(txt_password.text?.length!!)
             txt_password.setTextColor(resources.getColor(R.color.txt_error))
         } else {
             txt_login.requestFocus()

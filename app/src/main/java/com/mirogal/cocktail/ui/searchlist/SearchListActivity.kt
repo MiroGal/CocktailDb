@@ -75,7 +75,7 @@ class SearchListActivity : BaseActivity(), ListAdapter.OnItemClickListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.search_list_function, menu)
+        menuInflater.inflate(R.menu.search_list_toolbar, menu)
         val searchMenuItem = menu.findItem(R.id.action_search)
         val searchView = searchMenuItem.actionView as SearchView
         searchView.setIconifiedByDefault(false) // set inner icon

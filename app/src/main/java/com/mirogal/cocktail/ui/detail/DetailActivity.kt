@@ -40,7 +40,7 @@ class DetailActivity : BaseActivity() {
         setAppBar()
         setData()
 
-        iv_back.setOnClickListener {
+        btn_toolbar_back.setOnClickListener {
             onBackPressed()
         }
     }

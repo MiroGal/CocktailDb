@@ -8,9 +8,6 @@ import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuInflater
-import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -42,8 +39,8 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
     private lateinit var viewModel: ViewModel
     private lateinit var listAdapter: ListAdapter
     private lateinit var cocktailList: List<CocktailDbEntity>
-    var alcoholFilter: AlcoholDrinkFilter? = null
-    var categoryFilter: CategoryDrinkFilter? = null
+    private var alcoholFilter: AlcoholDrinkFilter? = null
+    private var categoryFilter: CategoryDrinkFilter? = null
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
@@ -56,7 +53,7 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         super.onAttach(context)
         listener = context as? OnFragmentActionListener
         if (listener == null) {
-            throw ClassCastException("$context must implement OnArticleSelectedListener")
+            throw ClassCastException("$context must implement Listener")
         }
     }
 
@@ -65,12 +62,21 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.save_list_label)
-        setHasOptionsMenu(true)
 
         viewModel = ViewModelProvider(this).get(ViewModel::class.java)
 
         setList()
         setReceiver()
+        setBtnFilterIcon()
+
+        btn_toolbar_filter.setOnClickListener {
+            listener?.onToolbarBtnFilterClick(alcoholFilter, categoryFilter)
+        }
+
+        btn_toolbar_filter.setOnLongClickListener {
+            setFilter(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
+            true
+        }
 
         fab_search.setOnClickListener {
             openSearchListActivity()
@@ -78,6 +84,15 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
         btn_battery_indicator_close.setOnClickListener {
             layout_charge_indicator.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun setBtnFilterIcon() {
+        if ((alcoholFilter == null || alcoholFilter == AlcoholDrinkFilter.DISABLE)
+                && (categoryFilter == null || categoryFilter == CategoryDrinkFilter.DISABLE)) {
+            btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_disable)
+        } else {
+            btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_enable)
         }
     }
 
@@ -118,19 +133,6 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
             listAdapter.refreshData(filteredList2)
         })
         rv_save_list.adapter = listAdapter
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.save_list_function, menu)
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_filter -> { listener?.onButtonFilterClick(alcoholFilter, categoryFilter)
-                return true }
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onStart() {
@@ -227,23 +229,18 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
     private fun showProposeDrink(id: Int) {
         var entity: CocktailDbEntity? = null
-        viewModel.cocktailList.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-            if (list.isNotEmpty()) {
-                if (list.size > 1) {
-                    entity = list[0]
-                    if (entity!!.id == id) {
-                        entity = list[1]
-                    }
-                }
+        if (cocktailList.isNotEmpty()) {
+            if (cocktailList.size > 1) {
+                do {
+                    entity = cocktailList.shuffled()[0]
+                } while (entity!!.id == id)
             }
-        })
-        if (entity != null) {
-            Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                    "Переглянути " + entity!!.name, Snackbar.LENGTH_LONG)
-                    .setAction("Переглянути") {
-                        openDetailActivity(entity!!)
-                    }.show()
         }
+        Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                "Переглянути ${entity!!.name}", Snackbar.LENGTH_LONG)
+                .setAction(getString(R.string.save_list_snackbar_btn_open_cocktail)) {
+                    openDetailActivity(entity)
+                }.show()
     }
 
     fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
@@ -254,6 +251,8 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         val filteredList2 = filterCategory(filteredList1, categoryFilter)
 
         listAdapter.refreshData(filteredList2)
+
+        setBtnFilterIcon()
     }
 
     private fun filterAlcohol(cocktailList: List<CocktailDbEntity>, filter: AlcoholDrinkFilter?): List<CocktailDbEntity> {
@@ -283,7 +282,7 @@ class SaveListFragment : BaseFragment(), ListAdapter.OnItemClickListener,
     }
 
     interface OnFragmentActionListener {
-        fun onButtonFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
+        fun onToolbarBtnFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
     }
 
 }

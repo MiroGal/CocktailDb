@@ -8,10 +8,8 @@
     <color name="background_primary">#FFFFFF</color>
     <color name="background_secondary">#F0F0F0</color>
 
-    <color name="surface">#FFFFFF</color>
-
     <color name="bg_button">#102F54</color>
-    <color name="bg_toolbar_back">#80FFFFFF</color>
+    <color name="bg_toolbar_back">#A0FFFFFF</color>
 
     <color name="txt_title">#202020</color>
     <color name="txt_body">#303030</color>

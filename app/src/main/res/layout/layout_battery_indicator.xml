@@ -40,9 +40,10 @@
             android:layout_weight="1" />
         <ImageView
             android:id="@+id/btn_battery_indicator_close"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_margin="16dp"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="4dp"
+            android:padding="12dp"
             android:src="@drawable/ic_close"
             tools:ignore="ContentDescription" />
 

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".ui.savelist.SaveListFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -19,6 +21,19 @@
             android:theme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/btn_toolbar_filter"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/offset_4"
+        android:layout_gravity="end"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_filter_list_disable"
+        android:longClickable="true"
+        android:elevation="4dp"
+        app:elevation="4dp"
+        tools:ignore="ContentDescription" />
 
     <include layout="@layout/content_save_list" />
 
