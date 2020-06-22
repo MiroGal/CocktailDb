@@ -1,5 +1,6 @@
 package com.mirogal.cocktail.data.database
 
+import androidx.lifecycle.LiveData
 import androidx.paging.DataSource
 import androidx.room.Dao
 import androidx.room.Insert
@@ -14,7 +15,10 @@ interface CocktailDao {
     fun insertCocktail(cocktail: CocktailDbEntity)
 
     @get:Query("SELECT * FROM " + CocktailDbEntity.TABLE_NAME)
-    val cocktailList: DataSource.Factory<Int, CocktailDbEntity>
+    val dsCocktailList: DataSource.Factory<Int, CocktailDbEntity>
+
+    @get:Query("SELECT * FROM " + CocktailDbEntity.TABLE_NAME)
+    val lvCocktailList: LiveData<List<CocktailDbEntity>>
 
     @Query("DELETE FROM " + CocktailDbEntity.TABLE_NAME
             + " WHERE " + CocktailDbEntity.COLUMN_ID + " = :cocktailId")

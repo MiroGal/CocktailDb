@@ -4,6 +4,7 @@ import android.os.Bundle
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
+import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
 
 class SaveListActivity : BaseActivity(),
         SaveListFragment.OnFragmentActionListener,
@@ -21,18 +22,18 @@ class SaveListActivity : BaseActivity(),
     }
 
 
-    override fun onFilterSelected() {
-        addFilterFragment()
+    override fun onButtonFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
+        addFilterFragment(alcoholFilter, categoryFilter)
     }
 
-    override fun onApplyClick(filter: Bundle) {
+    override fun onActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         val fragment = supportFragmentManager.findFragmentByTag(SaveListFragment::class.java.simpleName) as SaveListFragment
-        fragment.setFilter(filter)
+        fragment.setFilter(alcoholFilter, categoryFilter)
     }
 
 
-    private fun addFilterFragment() {
-        val newFragment = FilterFragment.newInstance(AlcoholDrinkFilter.UNABLE)
+    private fun addFilterFragment(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
+        val newFragment = FilterFragment.newInstance(alcoholFilter, categoryFilter)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.add(R.id.fragment_container, newFragment, FilterFragment::class.java.simpleName)
         transaction.addToBackStack(null)

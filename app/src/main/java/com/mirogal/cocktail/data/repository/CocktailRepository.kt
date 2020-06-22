@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import androidx.paging.toLiveData
 import com.mirogal.cocktail.data.database.CocktailDatabase
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.netpagedlist.BoundaryCallback
@@ -14,7 +13,7 @@ import com.mirogal.cocktail.data.repository.netpagedlist.DataSourceFactory
 
 class CocktailRepository private constructor(context: Context) {
 
-    var saveCocktailList: LiveData<PagedList<CocktailDbEntity>>? = null
+    var saveCocktailList: LiveData<List<CocktailDbEntity>>? = null
         private set
     var selectCocktailList: LiveData<PagedList<CocktailDbEntity?>> = MutableLiveData()
         private set
@@ -24,7 +23,7 @@ class CocktailRepository private constructor(context: Context) {
     private val db = CocktailDatabase.getInstance(context)
 
     private fun initSaveCocktailList() {
-        saveCocktailList = db?.cocktailDao()?.cocktailList?.toLiveData(pageSize = 20)
+        saveCocktailList = db?.cocktailDao()?.lvCocktailList
     }
 
     private fun initSelectCocktailList() {

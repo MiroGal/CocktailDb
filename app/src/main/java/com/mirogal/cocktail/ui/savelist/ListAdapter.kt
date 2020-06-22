@@ -4,29 +4,36 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import java.util.*
 
 class ListAdapter(private val context: Context,
                   private val onItemClickListener: OnItemClickListener,
                   private val onItemLongClickListener: OnItemLongClickListener)
-    : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
+    : RecyclerView.Adapter<ItemHolder>() {
 
-    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        if (position <= -1) {
-            return
-        }
-        val item = getItem(position)
-        holder.bind(item!!)
-        holder.setListener(onItemClickListener, onItemLongClickListener)
-    }
+    private var cocktailList: List<CocktailDbEntity> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view: View = inflater.inflate(R.layout.item_cocktail, parent, false)
         return ItemHolder(context, view)
+    }
+
+    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+        holder.bind(cocktailList[position])
+        holder.setListener(onItemClickListener, onItemLongClickListener)
+    }
+
+    override fun getItemCount(): Int {
+        return cocktailList.size
+    }
+
+    fun refreshData(newData: List<CocktailDbEntity>) {
+        cocktailList = newData
+        notifyDataSetChanged()
     }
 
     interface OnItemClickListener {
@@ -35,17 +42,6 @@ class ListAdapter(private val context: Context,
 
     interface OnItemLongClickListener {
         fun onItemLongClick(cocktailId: Int)
-    }
-
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbEntity>() {
-
-            override fun areItemsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
-                    = oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
-                    = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
-        }
     }
 
 }
