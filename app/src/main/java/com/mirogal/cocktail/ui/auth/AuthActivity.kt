@@ -57,8 +57,11 @@ class AuthActivity : BaseActivity() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (txt_login_layout.isErrorEnabled) {
+                txt_login_layout.isErrorEnabled = false
+//                txt_login.setTextColor(resources.getColor(R.color.txt_body))
+            }
             invalidateAuthData()
-            txt_login.setTextColor(resources.getColor(R.color.txt_body))
         }
     }
 
@@ -68,8 +71,11 @@ class AuthActivity : BaseActivity() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (txt_password_layout.isErrorEnabled) {
+                txt_password_layout.isErrorEnabled = false
+//                txt_password.setTextColor(resources.getColor(R.color.txt_body))
+            }
             invalidateAuthData()
-            txt_password.setTextColor(resources.getColor(R.color.txt_body))
         }
     }
 
@@ -81,16 +87,20 @@ class AuthActivity : BaseActivity() {
         } else if (login != this.login && password == this.password) {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)
-            txt_login.setTextColor(resources.getColor(R.color.txt_error))
+//            txt_login.setTextColor(resources.getColor(R.color.txt_error))
+            txt_login_layout.error = "Incorrect login"
         } else if (login == this.login && password != this.password) {
             txt_password.requestFocus()
             txt_password.setSelection(txt_password.text?.length!!)
-            txt_password.setTextColor(resources.getColor(R.color.txt_error))
+//            txt_password.setTextColor(resources.getColor(R.color.txt_error))
+            txt_password_layout.error = "Incorrect password"
         } else {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)
-            txt_login.setTextColor(resources.getColor(R.color.txt_error))
-            txt_password.setTextColor(resources.getColor(R.color.txt_error))
+//            txt_login.setTextColor(resources.getColor(R.color.txt_error))
+//            txt_password.setTextColor(resources.getColor(R.color.txt_error))
+            txt_login_layout.error = "Incorrect login"
+            txt_password_layout.error = "Incorrect password"
         }
 //            ll_root.requestFocus()
 //            val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
@@ -101,19 +111,8 @@ class AuthActivity : BaseActivity() {
     private fun invalidateAuthData() {
         val login = txt_login.text.toString()
         val password = txt_password.text.toString()
-        var isDigit = false
-        var isLetter = false
-        for (c in password.toCharArray()) {
-            if (Character.isDigit(c)) {
-                isDigit = true
-            }
-        }
-        for (c in password.toCharArray()) {
-            if (Character.isLetter(c)) {
-                isLetter = true
-            }
-        }
-        btn_authorization.isClickable = login.length >= 6 && password.length >= 6 && isDigit && isLetter
+        btn_authorization.isClickable = login.length >= 6 && password.length >= 6
+                && password.any { it.isDigit() } && password.any { it.isLetter() }
     }
 
     private fun fillInputField() {
