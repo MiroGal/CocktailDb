@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fillViewport="false">
+    android:fillViewport="false"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -16,112 +16,65 @@
         <androidx.cardview.widget.CardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/padding_horizontal"
             android:layout_gravity="center"
-            app:cardCornerRadius="8dp">
+            android:layout_margin="@dimen/detail_horizontal_margin"
+            app:cardCornerRadius="@dimen/detail_image_corner_radius">
             <ImageView
-                android:id="@+id/iv_image"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:id="@+id/ivImage"
+                android:layout_width="@dimen/detail_image_width"
+                android:layout_height="@dimen/detail_image_height"
                 tools:ignore="ContentDescription" />
         </androidx.cardview.widget.CardView>
 
         <TableLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_vertical"
-            android:layout_marginBottom="@dimen/padding_vertical"
-            android:layout_marginLeft="@dimen/padding_horizontal"
-            android:layout_marginRight="@dimen/padding_horizontal">
+            android:layout_marginTop="@dimen/detail_vertical_margin"
+            android:layout_marginBottom="@dimen/detail_vertical_margin"
+            android:layout_marginLeft="@dimen/detail_horizontal_margin"
+            android:layout_marginRight="@dimen/detail_horizontal_margin">
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/padding_horizontal"
-                    android:layout_marginEnd="@dimen/padding_horizontal"
-                    android:textStyle="bold"
+                    style="@style/TextDetailInfoTitle"
                     android:text="@string/detail_info_name" />
                 <TextView
-                    android:id="@+id/tv_info_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/padding_horizontal"
-                    android:layout_marginEnd="@dimen/padding_horizontal" />
+                    android:id="@+id/tvInfoName"
+                    style="@style/TextDetailInfoBody" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/padding_horizontal"
-                    android:layout_marginEnd="@dimen/padding_horizontal"
-                    android:textStyle="bold"
+                    style="@style/TextDetailInfoTitle"
                     android:text="@string/detail_info_alcoholic" />
                 <TextView
-                    android:id="@+id/tv_info_alcoholic"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/padding_horizontal"
-                    android:layout_marginEnd="@dimen/padding_horizontal" />
+                    android:id="@+id/tvInfoAlcoholic"
+                    style="@style/TextDetailInfoBody" />
             </TableRow>
             <TableRow>
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/padding_horizontal"
-                    android:layout_marginEnd="@dimen/padding_horizontal"
-                    android:textStyle="bold"
+                    style="@style/TextDetailInfoTitle"
                     android:text="@string/detail_info_glass" />
                 <TextView
-                    android:id="@+id/tv_info_glass"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/padding_horizontal"
-                    android:layout_marginEnd="@dimen/padding_horizontal" />
+                    android:id="@+id/tvInfoGlass"
+                    style="@style/TextDetailInfoBody" />
             </TableRow>
         </TableLayout>
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_vertical"
-            android:paddingBottom="@dimen/padding_vertical"
-            android:paddingLeft="@dimen/padding_horizontal"
-            android:paddingRight="@dimen/padding_horizontal"
-            android:gravity="center"
-            android:background="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:textSize="16sp"
+            style="@style/TextDetailInstructionTitle"
             android:text="@string/detail_ingredient_title" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rw_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/padding_vertical"
-            android:layout_marginBottom="@dimen/padding_vertical" />
+            android:id="@+id/recyclerView"
+            style="@style/RecyclerViewIngredient" />
 
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_vertical"
-            android:paddingBottom="@dimen/padding_vertical"
-            android:paddingLeft="@dimen/padding_horizontal"
-            android:paddingRight="@dimen/padding_horizontal"
-            android:gravity="center"
-            android:background="@color/colorPrimaryDark"
-            android:textStyle="bold"
-            android:textSize="16sp"
+            style="@style/TextDetailInstructionTitle"
             android:text="@string/detail_instruction_title" />
 
         <TextView
-            android:id="@+id/tv_instruction_body"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/padding_vertical"
-            android:paddingBottom="@dimen/padding_vertical"
-            android:paddingLeft="@dimen/padding_horizontal"
-            android:paddingRight="@dimen/padding_horizontal"
-            android:layout_marginBottom="@dimen/padding_vertical"
+            android:id="@+id/tvInstructionBody"
+            style="@style/TextDetailInstructionBody"
+            android:layout_marginBottom="@dimen/detail_vertical_margin"
             tools:text="Instruction body" />
 
     </LinearLayout>

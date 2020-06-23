@@ -11,7 +11,6 @@
     <string name="search_list_empty">No cocktails found</string>
     <string name="search_list_start">Enter text to start search</string>
     <string name="search_list_action_search">Search</string>
-    <string name="search_list_action_search_hint">Enter cocktail name</string>
 
     <string name="detail_label">Cocktail Details</string>
     <string name="detail_info_name">Name:</string>

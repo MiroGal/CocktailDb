@@ -1,6 +1,31 @@
 <resources>
+
+    <!-- Universal -->
+    <dimen name="zero_dp">0dp</dimen>
+
+    <!-- FloatingActionButton -->
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="grid_layout_margin">16dp</dimen>
-    <dimen name="padding_horizontal">16dp</dimen>
+
+    <!-- RecyclerView -->
     <dimen name="padding_vertical">8dp</dimen>
+    <dimen name="padding_horizontal">16dp</dimen>
+
+    <!-- Item cocktail -->
+    <dimen name="item_cocktail_vertical_margin">8dp</dimen>
+    <dimen name="item_cocktail_horizontal_margin">16dp</dimen>
+    <dimen name="item_cocktail_card_corner_radius">8dp</dimen>
+    <dimen name="item_cocktail_image_height">120dp</dimen>
+
+    <!-- Item ingredient -->
+    <dimen name="item_ingredient_horizontal_margin">16dp</dimen>
+    <dimen name="item_ingredient_min_width">20dp</dimen>
+
+    <!-- Cocktail detail -->
+    <dimen name="detail_vertical_margin">8dp</dimen>
+    <dimen name="detail_horizontal_margin">16dp</dimen>
+    <dimen name="detail_image_width">200dp</dimen>
+    <dimen name="detail_image_height">200dp</dimen>
+    <dimen name="detail_image_corner_radius">8dp</dimen>
+    <dimen name="detail_text_title">16sp</dimen>
+
 </resources>
