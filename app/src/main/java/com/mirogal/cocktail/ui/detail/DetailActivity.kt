@@ -80,10 +80,10 @@ class DetailActivity : BaseActivity() {
         val expandedWidth = size.x
         val expandedHeight = fl_image_container.layoutParams.height
 
-        val collapsedMarginLeft = convertDpToPixel(52.0F, context = applicationContext)
-        val collapsedMarginBottom = convertDpToPixel(4.0F, context = applicationContext)
+        val collapsedMarginLeft = convertDpToPixel(56.0F, context = applicationContext)
+        val collapsedMarginBottom = convertDpToPixel(8.0F, context = applicationContext)
 
-        val collapsedMarginLeftToolbar = convertDpToPixel(88.0F, context = applicationContext)
+        val collapsedMarginLeftToolbar = convertDpToPixel(96.0F, context = applicationContext)
 
         var lastHeight = expandedHeight
         val layoutParams = iv_image.layoutParams as FrameLayout.LayoutParams
