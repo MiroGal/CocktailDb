@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
+import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 
 internal class ListAdapter(private val context: Context,
-                           private val onItemClickListener: OnItemClickListener,
-                           private val itemLayoutId: Int) : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
+                           private val onItemClickListener: OnItemClickListener)
+    : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         if (position <= -1) {
@@ -23,7 +24,7 @@ internal class ListAdapter(private val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view: View = inflater.inflate(itemLayoutId, parent, false)
+        val view: View = inflater.inflate(R.layout.item_cocktail, parent, false)
         return ItemHolder(context, view)
     }
 

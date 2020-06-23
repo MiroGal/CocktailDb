@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardCornerRadius="@dimen/item_cocktail_card_corner_radius"
-    xmlns:tools="http://schemas.android.com/tools">
+    app:cardCornerRadius="@dimen/radius_8">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:gravity="center_vertical"
         android:background="?attr/selectableItemBackground">
 
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/item_cocktail_image_height"
+            android:layout_height="120dp"
             tools:ignore="ContentDescription" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/item_cocktail_vertical_margin"
-            android:layout_marginBottom="@dimen/item_cocktail_vertical_margin"
-            android:layout_marginLeft="@dimen/item_cocktail_horizontal_margin"
-            android:layout_marginRight="@dimen/item_cocktail_horizontal_margin"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
+            android:layout_marginStart="@dimen/offset_16"
+            android:layout_marginEnd="@dimen/offset_16"
+            style="@style/TextBody"
             tools:text="Name" />
 
     </LinearLayout>

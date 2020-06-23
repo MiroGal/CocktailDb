@@ -16,71 +16,31 @@
         <item name="colorPrimaryDark">@color/colorPrimary</item>
     </style>
 
-    <style name="AppTheme.LightStatusBar">
-    </style>
-
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.ActionBar" />
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="AppBarLayout">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:theme">@style/AppTheme.AppBarOverlay</item>
-    </style>
-
-    <style name="Toolbar">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">?attr/actionBarSize</item>
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="android:theme">@style/AppTheme.PopupOverlay</item>
-    </style>
-
-    <style name="RecyclerViewCocktail">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-    </style>
-
-    <style name="RecyclerViewIngredient">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginTop">@dimen/padding_vertical</item>
-        <item name="android:layout_marginBottom">@dimen/padding_vertical</item>
-    </style>
-
-    <style name="TextDetailInfoTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_marginRight">@dimen/detail_horizontal_margin</item>
-        <item name="android:layout_marginEnd">@dimen/detail_horizontal_margin</item>
+    <style name="TextTitle">
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/txt_title</item>
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextDetailInfoBody">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="TextBody">
+        <item name="android:textColor">@color/txt_body</item>
+        <item name="android:textSize">@dimen/text_14</item>
     </style>
 
-    <style name="TextDetailInstructionTitle">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">@dimen/detail_vertical_margin</item>
-        <item name="android:paddingBottom">@dimen/detail_vertical_margin</item>
-        <item name="android:paddingLeft">@dimen/detail_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/detail_horizontal_margin</item>
+    <style name="EditText">
+        <item name="android:textColor">@color/txt_title</item>
+        <item name="android:textSize">@dimen/text_17</item>
+    </style>
+
+    <style name="Button">
         <item name="android:gravity">center</item>
-        <item name="android:background">@color/colorPrimaryDark</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:textSize">@dimen/detail_text_title</item>
-    </style>
-
-    <style name="TextDetailInstructionBody">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">@dimen/detail_vertical_margin</item>
-        <item name="android:paddingBottom">@dimen/detail_vertical_margin</item>
-        <item name="android:paddingLeft">@dimen/detail_horizontal_margin</item>
-        <item name="android:paddingRight">@dimen/detail_horizontal_margin</item>
+        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:textColor">@color/txt_button</item>
+        <item name="android:textSize">@dimen/text_17</item>
     </style>
 
 </resources>

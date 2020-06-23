@@ -2,21 +2,34 @@
 
     <string name="app_name">Cocktail</string>
 
-    <string name="launch_label">Cocktails</string>
+    <!--region Auth-->
+    <string name="auth_login_hint">Login</string>
+    <string name="auth_password_hint">Password</string>
+    <string name="auth_btn_login">Login</string>
+    <!--endregion-->
 
+    <!--region SaveList-->
     <string name="save_list_label">Cocktail App</string>
     <string name="save_list_empty">History is empty</string>
+    <!--endregion-->
 
+    <!--region SearchList-->
     <string name="search_list_label">Search Cocktail</string>
     <string name="search_list_empty">No cocktails found</string>
     <string name="search_list_start">Enter text to start search</string>
     <string name="search_list_action_search">Search</string>
+    <!--endregion-->
 
+    <!--region Detail-->
     <string name="detail_label">Cocktail Details</string>
+    <string name="detail_info_title">Basic information</string>
     <string name="detail_info_name">Name:</string>
     <string name="detail_info_alcoholic">Alcoholic:</string>
     <string name="detail_info_glass">Glass:</string>
     <string name="detail_ingredient_title">Ingredients</string>
     <string name="detail_instruction_title">Instructions</string>
+    <!--endregion-->
+
+    <string name="receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
 
 </resources>

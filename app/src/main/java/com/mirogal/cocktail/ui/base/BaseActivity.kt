@@ -16,14 +16,14 @@ abstract class BaseActivity : AppCompatActivity() {
         Log.d(this.javaClass.simpleName, "onStart")
     }
 
-    override fun onStop() {
-        Log.d(this.javaClass.simpleName, "onStop")
-        super.onStop()
-    }
-
     override fun onPause() {
         Log.d(this.javaClass.simpleName, "onPause")
         super.onPause()
+    }
+
+    override fun onStop() {
+        Log.d(this.javaClass.simpleName, "onStop")
+        super.onStop()
     }
 
     override fun onDestroy() {

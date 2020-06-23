@@ -1,31 +1,24 @@
 <resources>
 
-    <!-- Universal -->
-    <dimen name="zero_dp">0dp</dimen>
+    <!--region Offset-->
+    <dimen name="offset_4">4dp</dimen>
+    <dimen name="offset_8">8dp</dimen>
+    <dimen name="offset_16">16dp</dimen>
+    <dimen name="offset_32">32dp</dimen>
+    <!--endregion-->
 
-    <!-- FloatingActionButton -->
+    <!--region Radius-->
+    <dimen name="radius_4">4dp</dimen>
+    <dimen name="radius_8">8dp</dimen>
+    <dimen name="radius_28">28dp</dimen>
+    <!--endregion-->
+
+    <!--region Text-->
+    <dimen name="text_14">14sp</dimen>
+    <dimen name="text_17">17sp</dimen>
+    <dimen name="text_19">19sp</dimen>
+    <!--endregion-->
+
     <dimen name="fab_margin">16dp</dimen>
-
-    <!-- RecyclerView -->
-    <dimen name="padding_vertical">8dp</dimen>
-    <dimen name="padding_horizontal">16dp</dimen>
-
-    <!-- Item cocktail -->
-    <dimen name="item_cocktail_vertical_margin">8dp</dimen>
-    <dimen name="item_cocktail_horizontal_margin">16dp</dimen>
-    <dimen name="item_cocktail_card_corner_radius">8dp</dimen>
-    <dimen name="item_cocktail_image_height">120dp</dimen>
-
-    <!-- Item ingredient -->
-    <dimen name="item_ingredient_horizontal_margin">16dp</dimen>
-    <dimen name="item_ingredient_min_width">20dp</dimen>
-
-    <!-- Cocktail detail -->
-    <dimen name="detail_vertical_margin">8dp</dimen>
-    <dimen name="detail_horizontal_margin">16dp</dimen>
-    <dimen name="detail_image_width">200dp</dimen>
-    <dimen name="detail_image_height">200dp</dimen>
-    <dimen name="detail_image_corner_radius">8dp</dimen>
-    <dimen name="detail_text_title">16sp</dimen>
 
 </resources>
