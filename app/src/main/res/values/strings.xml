@@ -22,7 +22,7 @@
     <!--endregion-->
 
     <!--region Filter-->
-    <string name="filter_label">Filter</string>
+    <string name="filter_label">Filters</string>
     <string name="filter_btn_reset">Reset</string>
     <string name="filter_btn_apply">Apply</string>
 

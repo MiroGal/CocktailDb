@@ -3,6 +3,7 @@
     <!--region Offset-->
     <dimen name="offset_4">4dp</dimen>
     <dimen name="offset_8">8dp</dimen>
+    <dimen name="offset_12">12dp</dimen>
     <dimen name="offset_16">16dp</dimen>
     <dimen name="offset_32">32dp</dimen>
     <!--endregion-->

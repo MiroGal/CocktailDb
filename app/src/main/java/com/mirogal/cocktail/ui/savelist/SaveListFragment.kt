@@ -5,9 +5,9 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -26,6 +26,8 @@ import com.mirogal.cocktail.ui.searchlist.SearchListActivity
 import kotlinx.android.synthetic.main.content_save_list.*
 import kotlinx.android.synthetic.main.fragment_save_list.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
+import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
+import java.util.*
 
 
 class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
@@ -84,6 +86,16 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
         btn_battery_indicator_close.setOnClickListener {
             layout_charge_indicator.visibility = View.INVISIBLE
         }
+
+        btn_item_filter_alcohol_close.setOnClickListener {
+            setFilter(AlcoholDrinkFilter.DISABLE, categoryFilter)
+        }
+
+        btn_item_filter_category_close.setOnClickListener {
+            setFilter(alcoholFilter, CategoryDrinkFilter.DISABLE)
+        }
+
+        setFilter(alcoholFilter, categoryFilter)
     }
 
     private fun setPagerFragments() {
@@ -213,7 +225,10 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
     fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         this.alcoholFilter = alcoholFilter
         this.categoryFilter = categoryFilter
+
         setBtnFilterIcon()
+        showFilterAlcohol()
+        showFilterCategory()
 
         val fragment1 = pagerAdapter.fragment1
         if (fragment1 is DrinkHistoryFragment) {
@@ -224,6 +239,55 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
         if (fragment2 is FavoriteDrinkFragment) {
             (fragment2 as FavoriteDrinkFragment?)!!.setFilter(alcoholFilter, categoryFilter)
         }
+    }
+
+    private fun showFilterAlcohol() {
+        if (alcoholFilter != null && alcoholFilter != AlcoholDrinkFilter.DISABLE) {
+            item_alcohol_filter.visibility = View.VISIBLE
+            item_alcohol_filter.setCardBackgroundColor(randomColor())
+        }
+        when (alcoholFilter) {
+            AlcoholDrinkFilter.ALCOHOLIC -> {
+                iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_alcoholic)
+                tv_filter_alcohol_name.text = AlcoholDrinkFilter.ALCOHOLIC.key
+            }
+            AlcoholDrinkFilter.NON_ALCOHOLIC -> {
+                iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_non)
+                tv_filter_alcohol_name.text = AlcoholDrinkFilter.NON_ALCOHOLIC.key
+            }
+            AlcoholDrinkFilter.OPTIONAL_ALCOHOL -> {
+                iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_optional)
+                tv_filter_alcohol_name.text = AlcoholDrinkFilter.OPTIONAL_ALCOHOL.key
+            }
+            else -> item_alcohol_filter.visibility = View.GONE
+        }
+    }
+
+    private fun showFilterCategory() {
+        if (categoryFilter != null && categoryFilter != CategoryDrinkFilter.DISABLE) {
+            item_category_filter.visibility = View.VISIBLE
+            item_category_filter.setCardBackgroundColor(randomColor())
+            iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
+        }
+        when (categoryFilter) {
+            CategoryDrinkFilter.ORDINARY_DRINK -> { tv_filter_category_name.text = CategoryDrinkFilter.ORDINARY_DRINK.key }
+            CategoryDrinkFilter.COCKTAIL -> { tv_filter_category_name.text = CategoryDrinkFilter.COCKTAIL.key }
+            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> { tv_filter_category_name.text = CategoryDrinkFilter.MILK_FLOAT_SHAKE.key }
+            CategoryDrinkFilter.OTHER_UNKNOWN -> { tv_filter_category_name.text = CategoryDrinkFilter.OTHER_UNKNOWN.key }
+            CategoryDrinkFilter.COCOA -> { tv_filter_category_name.text = CategoryDrinkFilter.COCOA.key }
+            CategoryDrinkFilter.SHOT -> { tv_filter_category_name.text = CategoryDrinkFilter.SHOT.key }
+            CategoryDrinkFilter.COFFEE_TEA -> { tv_filter_category_name.text = CategoryDrinkFilter.COFFEE_TEA.key }
+            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> { tv_filter_category_name.text = CategoryDrinkFilter.HOMEMADE_LIQUEUR.key }
+            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> { tv_filter_category_name.text = CategoryDrinkFilter.PUNCH_PARTY_DRINK.key }
+            CategoryDrinkFilter.BEER -> { tv_filter_category_name.text = CategoryDrinkFilter.BEER.key }
+            CategoryDrinkFilter.SOFT_DRINK_SODA -> { tv_filter_category_name.text = CategoryDrinkFilter.SOFT_DRINK_SODA.key }
+            else -> item_category_filter.visibility = View.GONE
+        }
+    }
+
+    private fun randomColor(): Int {
+        val rnd = Random()
+        return Color.argb(85, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
     }
 
     interface OnFragmentActionListener {
