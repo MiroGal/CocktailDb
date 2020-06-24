@@ -15,10 +15,16 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
     private var cocktailEntity: CocktailDbEntity? = null
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
+    private val ivFavorite: ImageView = itemView.findViewById(R.id.iv_favorite)
 
     fun bind(cocktailEntity: CocktailDbEntity) {
         this.cocktailEntity = cocktailEntity
         tvName.text = cocktailEntity.name
+        if (cocktailEntity.isFavorite) {
+            ivFavorite.setImageResource(R.drawable.ic_star)
+        } else {
+            ivFavorite.setImageResource(R.drawable.ic_star_border)
+        }
         Glide.with(context)
                 .load(cocktailEntity.imagePath)
                 .centerCrop()
@@ -31,6 +37,7 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
     fun setListener(clickListener: ListAdapter.OnItemClickListener,
                     longClickListener: ListAdapter.OnItemLongClickListener) {
         itemView.setOnClickListener { clickListener.onItemClick(cocktailEntity) }
+        ivFavorite.setOnClickListener { clickListener.onFavoriteClick(cocktailEntity) }
         itemView.setOnLongClickListener {
             longClickListener.onItemLongClick(cocktailEntity!!.id)
             false

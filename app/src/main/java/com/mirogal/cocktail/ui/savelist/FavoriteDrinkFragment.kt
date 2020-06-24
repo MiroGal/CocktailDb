@@ -14,7 +14,6 @@ import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
-import kotlinx.android.synthetic.main.content_save_list.*
 import kotlinx.android.synthetic.main.fragment_favorite_drink.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 
@@ -57,7 +56,8 @@ class FavoriteDrinkFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         viewModel.cocktailList.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
             cocktailList = list
 
-            val filteredList1 = filterAlcohol(cocktailList, alcoholFilter)
+            val filteredList0 = filterFavorite(cocktailList)
+            val filteredList1 = filterAlcohol(filteredList0, alcoholFilter)
             val filteredList2 = filterCategory(filteredList1, categoryFilter)
 
             if (filteredList2.isNotEmpty()) {
@@ -72,6 +72,10 @@ class FavoriteDrinkFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
     override fun onItemClick(cocktail: CocktailDbEntity?) {
         openDetailActivity(cocktail!!)
+    }
+
+    override fun onFavoriteClick(cocktail: CocktailDbEntity?) {
+        viewModel.switchFavorite(cocktail)
     }
 
     override fun onItemLongClick(cocktailId: Int) {
@@ -102,10 +106,15 @@ class FavoriteDrinkFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         this.alcoholFilter = alcoholFilter
         this.categoryFilter = categoryFilter
 
-        val filteredList1 = filterAlcohol(cocktailList, alcoholFilter)
+        val filteredList0 = filterFavorite(cocktailList)
+        val filteredList1 = filterAlcohol(filteredList0, alcoholFilter)
         val filteredList2 = filterCategory(filteredList1, categoryFilter)
 
         listAdapter.refreshData(filteredList2)
+    }
+
+    private fun filterFavorite(cocktailList: List<CocktailDbEntity>): List<CocktailDbEntity> {
+        return cocktailList.filter { it.isFavorite }
     }
 
     private fun filterAlcohol(cocktailList: List<CocktailDbEntity>, filter: AlcoholDrinkFilter?): List<CocktailDbEntity> {

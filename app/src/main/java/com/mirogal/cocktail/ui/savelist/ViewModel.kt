@@ -11,12 +11,20 @@ class ViewModel(application: Application) : AndroidViewModel(application) {
     private val repository = CocktailRepository.getInstance(application)
     val cocktailList: LiveData<List<CocktailDbEntity>>
 
+    init {
+        cocktailList = repository?.saveCocktailList!!
+    }
+
     fun deleteCocktail(id: Int) {
         repository?.deleteCocktail(id)
     }
 
-    init {
-        cocktailList = repository?.saveCocktailList!!
+    fun switchFavorite(cocktail: CocktailDbEntity?) {
+        if (cocktail!!.isFavorite) {
+            repository?.setFavorite(cocktail.id, false)
+        } else {
+            repository?.setFavorite(cocktail.id, true)
+        }
     }
 
 }

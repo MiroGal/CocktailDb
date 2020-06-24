@@ -18,7 +18,7 @@ class ListAdapter(private val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view: View = inflater.inflate(R.layout.item_cocktail, parent, false)
+        val view: View = inflater.inflate(R.layout.item_save_list_cocktail, parent, false)
         return ItemHolder(context, view)
     }
 
@@ -38,6 +38,7 @@ class ListAdapter(private val context: Context,
 
     interface OnItemClickListener {
         fun onItemClick(cocktail: CocktailDbEntity?)
+        fun onFavoriteClick(cocktail: CocktailDbEntity?)
     }
 
     interface OnItemLongClickListener {

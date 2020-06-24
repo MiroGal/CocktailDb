@@ -17,7 +17,7 @@ class CocktailDbEntity : Serializable {
     var name: String? = null
 
     @ColumnInfo(name = COLUMN_FAVORITE)
-    var favorite: Boolean = false
+    var isFavorite: Boolean = false
 
     @ColumnInfo(name = COLUMN_CATEGORY)
     var category: String? = null
@@ -140,7 +140,7 @@ class CocktailDbEntity : Serializable {
                 measure12: String?, measure13: String?, measure14: String?, measure15: String?) {
         this.id = id
         this.name = name
-        this.favorite = favorite
+        this.isFavorite = favorite
         this.category = category
         this.alcoholic = alcoholic
         this.glass = glass

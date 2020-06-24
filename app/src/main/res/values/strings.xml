@@ -65,5 +65,6 @@
     <!--endregion-->
 
     <string name="receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+    <string name="save_list_item_btn_favorite_description">Add/Delete from favorite</string>
 
 </resources>

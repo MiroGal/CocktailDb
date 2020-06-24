@@ -56,6 +56,10 @@ class CocktailRepository private constructor(context: Context) {
         Thread(Runnable { db?.cocktailDao()?.deleteCocktail(cocktailId) }).start()
     }
 
+    fun setFavorite(cocktailId: Int, isFavorite: Boolean) {
+        Thread(Runnable { db?.cocktailDao()?.setFavorite(cocktailId, isFavorite) }).start()
+    }
+
     init {
         initSaveCocktailList()
         initSelectCocktailList()

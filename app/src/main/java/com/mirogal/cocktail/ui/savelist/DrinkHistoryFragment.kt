@@ -14,7 +14,6 @@ import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
-import kotlinx.android.synthetic.main.content_save_list.*
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_save_list_empty.*
 
@@ -72,6 +71,10 @@ class DrinkHistoryFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
     override fun onItemClick(cocktail: CocktailDbEntity?) {
         openDetailActivity(cocktail!!)
+    }
+
+    override fun onFavoriteClick(cocktail: CocktailDbEntity?) {
+        viewModel.switchFavorite(cocktail)
     }
 
     override fun onItemLongClick(cocktailId: Int) {
