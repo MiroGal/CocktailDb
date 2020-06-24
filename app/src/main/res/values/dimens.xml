@@ -6,6 +6,7 @@
     <dimen name="offset_12">12dp</dimen>
     <dimen name="offset_16">16dp</dimen>
     <dimen name="offset_32">32dp</dimen>
+    <dimen name="offset_48">48dp</dimen>
     <!--endregion-->
 
     <!--region Radius-->
@@ -21,6 +22,5 @@
     <!--endregion-->
 
     <dimen name="fab_margin">16dp</dimen>
-    <dimen name="offset_48">48dp</dimen>
 
 </resources>

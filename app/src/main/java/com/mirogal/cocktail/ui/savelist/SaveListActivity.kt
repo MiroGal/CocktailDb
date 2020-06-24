@@ -5,6 +5,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
+import kotlinx.android.synthetic.main.activity_save_list.*
 
 class SaveListActivity : BaseActivity(),
         SaveListFragment.OnFragmentActionListener,
@@ -13,6 +14,19 @@ class SaveListActivity : BaseActivity(),
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_save_list)
+
+        bottom_nav_view.selectedItemId = R.id.bottom_nav_drink
+        bottom_nav_view.setOnNavigationItemSelectedListener {item ->
+            when (item.itemId) {
+                R.id.bottom_nav_drink -> {
+                    replaceSaveListFragment()
+                }
+                R.id.bottom_nav_profile -> {
+                    replaceProfileFragment()
+                }
+            }
+            true
+        }
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
@@ -31,6 +45,20 @@ class SaveListActivity : BaseActivity(),
         fragment.setFilter(alcoholFilter, categoryFilter)
     }
 
+
+    private fun replaceSaveListFragment() {
+        val newFragment = SaveListFragment.newInstance()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, newFragment, SaveListFragment::class.java.simpleName)
+        transaction.commit()
+    }
+
+    private fun replaceProfileFragment() {
+        val newFragment = ProfileFragment.newInstance()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.replace(R.id.fragment_container, newFragment, ProfileFragment::class.java.simpleName)
+        transaction.commit()
+    }
 
     private fun addFilterFragment(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         val newFragment = FilterFragment.newInstance(alcoholFilter, categoryFilter)

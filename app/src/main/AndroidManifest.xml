@@ -18,8 +18,8 @@
             android:name=".ui.auth.AuthActivity"
             android:label="@string/app_name"
             android:noHistory="true"
-            android:windowSoftInputMode="stateAlwaysHidden|adjustResize"
-            android:theme="@style/AppTheme.Launcher">
+            android:theme="@style/AppTheme.Launcher"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

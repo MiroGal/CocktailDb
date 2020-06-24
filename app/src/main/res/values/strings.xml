@@ -19,6 +19,8 @@
     <string name="save_list_tab_favorite">Favorite</string>
     <string name="save_list_message_empty">History is empty</string>
     <string name="save_list_snackbar_btn_open_cocktail">Open</string>
+    <string name="save_list_bottom_nav_profile">Account</string>
+    <string name="save_list_bottom_nav_drink">Drinks</string>
     <!--endregion-->
 
     <!--region Filter-->
