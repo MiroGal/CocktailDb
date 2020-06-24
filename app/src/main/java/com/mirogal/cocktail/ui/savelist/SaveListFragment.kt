@@ -5,16 +5,14 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import android.content.res.Configuration
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
@@ -25,12 +23,9 @@ import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.searchlist.SearchListActivity
-import com.mirogal.cocktail.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.content_save_list.*
-import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.fragment_save_list.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
-import kotlinx.android.synthetic.main.layout_save_list_empty.*
 
 
 class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
@@ -219,6 +214,16 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
         this.alcoholFilter = alcoholFilter
         this.categoryFilter = categoryFilter
         setBtnFilterIcon()
+
+        val fragment1 = pagerAdapter.fragment1
+        if (fragment1 is DrinkHistoryFragment) {
+            (fragment1 as DrinkHistoryFragment?)!!.setFilter(alcoholFilter, categoryFilter)
+        }
+
+        val fragment2 = pagerAdapter.fragment2
+        if (fragment2 is FavoriteDrinkFragment) {
+            (fragment2 as FavoriteDrinkFragment?)!!.setFilter(alcoholFilter, categoryFilter)
+        }
     }
 
     interface OnFragmentActionListener {
