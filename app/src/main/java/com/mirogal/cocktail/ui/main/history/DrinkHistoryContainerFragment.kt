@@ -25,12 +25,10 @@ import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
-import kotlinx.android.synthetic.main.content_drink_history_container.*
 import kotlinx.android.synthetic.main.fragment_drink_history_container.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
-
 
 class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
 
@@ -110,11 +108,11 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
 
     private fun setViewPager() {
         pagerAdapter = PagerAdapter(this)
-        pager.setPageTransformer(ZoomOutPageTransformer())
+        view_pager.setPageTransformer(ZoomOutPageTransformer())
 //        pager.setPageTransformer(DepthPageTransformer())
-        pager.adapter = pagerAdapter
+        view_pager.adapter = pagerAdapter
 
-        TabLayoutMediator(tab_layout, pager) { tab, position ->
+        TabLayoutMediator(tab_layout, view_pager) { tab, position ->
             if (position == 0) {
                 tab.text = getString(R.string.drink_history_container_tab_history)
             } else if (position == 1) {

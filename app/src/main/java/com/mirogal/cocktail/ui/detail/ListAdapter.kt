@@ -9,7 +9,7 @@ class ListAdapter(private val ingredientList: List<IngredientEntity>) : Recycler
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_detail_drink, parent, false)
+        val view = inflater.inflate(R.layout.item_drink_detail, parent, false)
         return ItemHolder(view)
     }
 
