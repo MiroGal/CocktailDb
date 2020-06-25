@@ -8,6 +8,7 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
+    app:cardBackgroundColor="@color/background_translucent"
     app:cardCornerRadius="@dimen/radius_28">
 
     <LinearLayout

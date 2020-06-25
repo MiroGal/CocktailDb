@@ -52,8 +52,8 @@
         android:background="@drawable/bg_toolbar_back"
         android:scaleType="centerInside"
         android:src="@drawable/ic_back"
-        android:elevation="4dp"
-        app:elevation="4dp"
+        android:elevation="@dimen/elevation_4"
+        app:elevation="@dimen/elevation_4"
         tools:ignore="ContentDescription" />
 
     <include layout="@layout/content_drink_detail" />

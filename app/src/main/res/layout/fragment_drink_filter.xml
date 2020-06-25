@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/background_primary"
     android:fitsSystemWindows="true"
+    android:clickable="true"
+    android:focusable="true"
     tools:context=".ui.main.filter.DrinkFilterFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -32,8 +34,8 @@
         android:layout_margin="@dimen/offset_4"
         android:scaleType="centerInside"
         android:src="@drawable/ic_back"
-        android:elevation="4dp"
-        app:elevation="4dp"
+        android:elevation="@dimen/elevation_4"
+        app:elevation="@dimen/elevation_4"
         tools:ignore="ContentDescription" />
 
     <include layout="@layout/content_drink_filter" />
