@@ -103,7 +103,7 @@ class MainActivity : BaseActivity(),
         val testFragment = supportFragmentManager.findFragmentByTag(TestFragment::class.java.simpleName)
         val transaction = supportFragmentManager.beginTransaction()
         transaction.detach(testFragment!!)
-        transaction.addToBackStack(null)
+//        transaction.addToBackStack(null)
         transaction.commit()
     }
 

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.ui.main.history.ListAdapter
 
 class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 

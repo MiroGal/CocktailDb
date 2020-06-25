@@ -23,7 +23,7 @@ class TestFragment : BaseFragment() {
     private var number = 0
     private var message: String? = null
 
-    private val TAG = TestFragment::class.java.simpleName
+    private val logTag = "${TestFragment::class.java.simpleName} $number"
 
 
     companion object {
@@ -46,7 +46,7 @@ class TestFragment : BaseFragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        Log.d(TAG, "onAttach")
+        Log.d(logTag, "onAttach")
 
         listener = context as? OnFragmentActionListener
         if (listener == null) {
@@ -60,18 +60,18 @@ class TestFragment : BaseFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate")
+        Log.d(logTag, "onCreate")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        Log.d(TAG, "onCreateView")
+        Log.d(logTag, "onCreateView")
         return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        Log.d(TAG, "onViewCreated")
+        Log.d(logTag, "onViewCreated")
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_filter_label)
@@ -95,12 +95,12 @@ class TestFragment : BaseFragment() {
 
     override fun onStart() {
         super.onStart()
-        Log.d(TAG, "onStart")
+        Log.d(logTag, "onStart")
     }
 
     override fun onResume() {
         super.onResume()
-        Log.d(TAG, "onResume")
+        Log.d(logTag, "onResume")
     }
 
 
@@ -108,27 +108,27 @@ class TestFragment : BaseFragment() {
 
 
     override fun onPause() {
-        Log.d(TAG, "onPause")
+        Log.d(logTag, "onPause")
         super.onPause()
     }
 
     override fun onStop() {
-        Log.d(TAG, "onStop")
+        Log.d(logTag, "onStop")
         super.onStop()
     }
 
     override fun onDestroyView() {
-        Log.d(TAG, "onDestroyView")
+        Log.d(logTag, "onDestroyView")
         super.onDestroyView()
     }
 
     override fun onDestroy() {
-        Log.d(TAG, "onDestroy")
+        Log.d(logTag, "onDestroy")
         super.onDestroy()
     }
 
     override fun onDetach() {
-        Log.d(TAG, "onDetach")
+        Log.d(logTag, "onDetach")
         super.onDetach()
     }
 
