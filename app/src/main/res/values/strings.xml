@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">Cocktail</string>
+    <string name="app_name">CocktailDB</string>
 
     <!--region Auth-->
     <string name="auth_login_hint">Login</string>
@@ -13,60 +13,62 @@
     <string name="profile_btn_logout">Logout</string>
     <!--endregion-->
 
-    <!--region SaveList-->
-    <string name="save_list_label">Cocktail App</string>
-    <string name="save_list_tab_history">History</string>
-    <string name="save_list_tab_favorite">Favorite</string>
-    <string name="save_list_message_empty">History is empty</string>
-    <string name="save_list_snackbar_btn_open_cocktail">Open</string>
-    <string name="save_list_bottom_nav_profile">Account</string>
-    <string name="save_list_bottom_nav_drink">Drinks</string>
+    <!--region Main-->
+    <string name="main_bottom_nav_drink">Drinks</string>
+    <string name="main_bottom_nav_profile">Profile</string>
+    <!--endregion-->
+
+    <!--region DrinkHistoryContainer-->
+    <string name="drink_history_container_label">CocktailDB</string>
+    <string name="drink_history_container_tab_history">History</string>
+    <string name="drink_history_container_tab_favorite">Favorite</string>
+    <string name="drink_history_container_snackbar_btn_open_cocktail">Open</string>
+    <string name="drink_history_container_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+    <string name="drink_history_message_empty">History is empty</string>
+    <string name="drink_history_item_btn_favorite_description">Add/Delete from favorite</string>
     <!--endregion-->
 
     <!--region Filter-->
-    <string name="filter_label">Filters</string>
-    <string name="filter_btn_reset">Reset</string>
-    <string name="filter_btn_apply">Apply</string>
+    <string name="drink_filter_label">Filters</string>
+    <string name="drink_filter_btn_reset">Reset</string>
+    <string name="drink_filter_btn_apply">Apply</string>
 
-    <string name="filter_alcohol_title">Alcohol</string>
-    <string name="filter_alcohol_disable">Disable filter</string>
-    <string name="filter_alcohol_alcoholic">Alcoholic</string>
-    <string name="filter_alcohol_non_alcoholic">Non alcoholic</string>
-    <string name="filter_alcohol_optional_alcohol">Optional alcohol</string>
+    <string name="drink_filter_alcohol_title">Alcohol</string>
+    <string name="drink_filter_alcohol_disable">Disable filter</string>
+    <string name="drink_filter_alcohol_alcoholic">Alcoholic</string>
+    <string name="drink_filter_alcohol_non_alcoholic">Non alcoholic</string>
+    <string name="drink_filter_alcohol_optional_alcohol">Optional alcohol</string>
 
-    <string name="filter_category_title">Category</string>
-    <string name="filter_category_disable">Disable filter</string>
-    <string name="filter_category_ordinary_drink">Ordinary Drink</string>
-    <string name="filter_category_cocktail">Cocktail</string>
-    <string name="filter_category_milk_float_shake">Milk / Float / Shake</string>
-    <string name="filter_category_other_unknown">Other / Unknown</string>
-    <string name="filter_category_cocoa">Cocoa</string>
-    <string name="filter_category_shot">Shot</string>
-    <string name="filter_category_coffee_tea">Coffee / Tea</string>
-    <string name="filter_category_homemade_liqueur">Homemade Liqueur</string>
-    <string name="filter_category_punch_party_drink">Punch / Party Drink</string>
-    <string name="filter_category_beer">Beer</string>
-    <string name="filter_category_soft_drink_soda">Soft Drink / Soda</string>
+    <string name="drink_filter_category_title">Category</string>
+    <string name="drink_filter_category_disable">Disable filter</string>
+    <string name="drink_filter_category_ordinary_drink">Ordinary Drink</string>
+    <string name="drink_filter_category_cocktail">Cocktail</string>
+    <string name="drink_filter_category_milk_float_shake">Milk / Float / Shake</string>
+    <string name="drink_filter_category_other_unknown">Other / Unknown</string>
+    <string name="drink_filter_category_cocoa">Cocoa</string>
+    <string name="drink_filter_category_shot">Shot</string>
+    <string name="drink_filter_category_coffee_tea">Coffee / Tea</string>
+    <string name="drink_filter_category_homemade_liqueur">Homemade Liqueur</string>
+    <string name="drink_filter_category_punch_party_drink">Punch / Party Drink</string>
+    <string name="drink_filter_category_beer">Beer</string>
+    <string name="drink_filter_category_soft_drink_soda">Soft Drink / Soda</string>
     <!--endregion-->
 
     <!--region SearchList-->
-    <string name="search_list_label">Search Cocktail</string>
-    <string name="search_list_message_empty">No cocktails found</string>
-    <string name="search_list_message_start">Enter text to start search</string>
-    <string name="search_list_toolbar_btn_search">Search</string>
+    <string name="search_drink_label">Search Cocktail</string>
+    <string name="search_drink_message_empty">No cocktails found</string>
+    <string name="search_drink_message_start">Enter text to start search</string>
+    <string name="search_drink_toolbar_btn_search">Search</string>
     <!--endregion-->
 
     <!--region Detail-->
-    <string name="detail_label">Cocktail Details</string>
-    <string name="detail_info_title">Basic information</string>
-    <string name="detail_info_name">Name:</string>
-    <string name="detail_info_alcoholic">Alcoholic:</string>
-    <string name="detail_info_glass">Glass:</string>
-    <string name="detail_ingredient_title">Ingredients</string>
-    <string name="detail_instruction_title">Instructions</string>
+    <string name="drink_detail_label">Cocktail Details</string>
+    <string name="drink_detail_info_title">Basic information</string>
+    <string name="drink_detail_info_name">Name:</string>
+    <string name="drink_detail_info_alcoholic">Alcoholic:</string>
+    <string name="drink_detail_info_glass">Glass:</string>
+    <string name="drink_detail_ingredient_title">Ingredients</string>
+    <string name="drink_detail_instruction_title">Instructions</string>
     <!--endregion-->
-
-    <string name="receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
-    <string name="save_list_item_btn_favorite_description">Add/Delete from favorite</string>
 
 </resources>

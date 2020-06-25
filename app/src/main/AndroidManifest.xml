@@ -27,16 +27,16 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.savelist.SaveListActivity"
-            android:label="@string/save_list_label"
+            android:name=".ui.main.MainActivity"
+            android:label="@string/drink_history_container_label"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.searchlist.SearchListActivity"
-            android:label="@string/search_list_label"
+            android:name=".ui.search.SearchDrinkActivity"
+            android:label="@string/search_drink_label"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".ui.detail.DetailActivity"
-            android:label="@string/detail_label"
+            android:name=".ui.detail.DrinkDetailActivity"
+            android:label="@string/drink_detail_label"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/offset_8"
+    android:fillViewport="false"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:descendantFocusability="blocksDescendants">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/offset_8"
+            android:paddingBottom="@dimen/offset_8"
+            android:gravity="center"
+            android:background="@color/background_secondary"
+            android:text="@string/drink_detail_info_title"
+            style="@style/TextTitle" />
+
+        <TableLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8"
+            android:layout_marginLeft="@dimen/offset_16"
+            android:layout_marginRight="@dimen/offset_16">
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/offset_16"
+                    android:text="@string/drink_detail_info_name"
+                    android:textStyle="bold"
+                    style="@style/TextBody"/>
+                <TextView
+                    android:id="@+id/tv_info_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextBody" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/offset_16"
+                    android:text="@string/drink_detail_info_alcoholic"
+                    android:textStyle="bold"
+                    style="@style/TextBody"/>
+                <TextView
+                    android:id="@+id/tv_info_alcoholic"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextBody" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/offset_16"
+                    android:text="@string/drink_detail_info_glass"
+                    android:textStyle="bold"
+                    style="@style/TextBody"/>
+                <TextView
+                    android:id="@+id/tv_info_glass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/TextBody" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/offset_8"
+            android:paddingBottom="@dimen/offset_8"
+            android:gravity="center"
+            android:background="@color/background_secondary"
+            android:text="@string/drink_detail_ingredient_title"
+            style="@style/TextTitle" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_ingredient_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/offset_8"
+            android:layout_marginBottom="@dimen/offset_8" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/offset_8"
+            android:paddingBottom="@dimen/offset_8"
+            android:gravity="center"
+            android:background="@color/background_secondary"
+            android:text="@string/drink_detail_instruction_title"
+            style="@style/TextTitle" />
+
+        <TextView
+            android:id="@+id/tvInstructionBody"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/offset_8"
+            android:paddingBottom="@dimen/offset_8"
+            android:paddingStart="@dimen/offset_16"
+            android:paddingEnd="@dimen/offset_16"
+            style="@style/TextBody"
+            tools:text="Instruction body" />
+
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>

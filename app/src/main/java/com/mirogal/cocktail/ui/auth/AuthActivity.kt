@@ -7,7 +7,7 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
-import com.mirogal.cocktail.ui.savelist.SaveListActivity
+import com.mirogal.cocktail.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
 
@@ -83,7 +83,7 @@ class AuthActivity : BaseActivity() {
         val login = txt_login.text.toString()
         val password = txt_password.text.toString()
         if (login == this.login && password == this.password) {
-            startActivity(Intent(this@AuthActivity, SaveListActivity::class.java))
+            startActivity(Intent(this@AuthActivity, MainActivity::class.java))
         } else if (login != this.login && password == this.password) {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)

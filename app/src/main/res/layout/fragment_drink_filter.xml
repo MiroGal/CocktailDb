@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    tools:context=".ui.main.profile.ProfileFragment">
+    android:fitsSystemWindows="true"
+    tools:context=".ui.main.filter.DrinkFilterFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -16,19 +18,24 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
+            android:paddingStart="@dimen/offset_48"
             android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme.PopupOverlay" />
+            android:theme="@style/AppTheme.PopupOverlay"
+            tools:ignore="RtlSymmetry" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <TextView
-        android:id="@+id/btn_logout"
-        android:layout_width="match_parent"
+    <ImageView
+        android:id="@+id/btn_toolbar_back"
+        android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:layout_margin="@dimen/offset_16"
-        android:clickable="false"
-        android:text="@string/profile_btn_logout"
-        style="@style/Button" />
+        android:layout_margin="@dimen/offset_4"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_back"
+        android:elevation="4dp"
+        app:elevation="4dp"
+        tools:ignore="ContentDescription" />
+
+    <include layout="@layout/content_drink_filter" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
