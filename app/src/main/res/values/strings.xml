@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">CocktailDB</string>
+    <string name="app_name">MiroGal</string>
 
     <!--region Auth-->
     <string name="auth_login_hint">Login</string>
