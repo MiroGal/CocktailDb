@@ -59,12 +59,12 @@ class FilterFragment : BaseFragment() {
         }
 
         btn_apply.setOnClickListener {
-            listener?.onActionButtonClick(alcoholFilter, categoryFilter)
+            listener?.onFilterButtonClick(alcoholFilter, categoryFilter)
             requireActivity().onBackPressed()
         }
 
         btn_reset.setOnClickListener {
-            listener?.onActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
+            listener?.onFilterButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
             requireActivity().onBackPressed()
         }
     }
@@ -120,7 +120,7 @@ class FilterFragment : BaseFragment() {
     }
 
     interface OnFragmentActionListener {
-        fun onActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
+        fun onFilterButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
     }
 
 }

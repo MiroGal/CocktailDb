@@ -23,6 +23,7 @@ import com.mirogal.cocktail.ui.detail.DetailActivity
 import com.mirogal.cocktail.ui.savelist.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.savelist.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.searchlist.SearchListActivity
+import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.content_save_list.*
 import kotlinx.android.synthetic.main.fragment_save_list.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
@@ -71,7 +72,7 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
         setPagerFragments()
 
         btn_toolbar_filter.setOnClickListener {
-            listener?.onToolbarBtnFilterClick(alcoholFilter, categoryFilter)
+            listener?.onToolbarButtonFilterClick(alcoholFilter, categoryFilter)
         }
 
         btn_toolbar_filter.setOnLongClickListener {
@@ -100,6 +101,8 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
 
     private fun setPagerFragments() {
         pagerAdapter = SaveListPagerAdapter(this)
+        pager.setPageTransformer(ZoomOutPageTransformer())
+//        pager.setPageTransformer(DepthPageTransformer())
         pager.adapter = pagerAdapter
 
         TabLayoutMediator(tab_layout, pager) { tab, position ->
@@ -291,7 +294,7 @@ class SaveListFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeLi
     }
 
     interface OnFragmentActionListener {
-        fun onToolbarBtnFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
+        fun onToolbarButtonFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
     }
 
 }
