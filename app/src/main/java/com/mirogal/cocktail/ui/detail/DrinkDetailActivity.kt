@@ -134,7 +134,7 @@ class DrinkDetailActivity : BaseActivity() {
 
     override fun onDestroy() {
         val intent = Intent(this, ProposeDrinkService::class.java)
-        intent.putExtra("KEY", cocktailEntity.id)
+        intent.putExtra(ProposeDrinkService::class.java.simpleName, cocktailEntity.id)
         ProposeDrinkService.enqueueWork(this, intent)
         super.onDestroy()
     }
