@@ -135,7 +135,7 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
 
         proposeDrinkReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                showProposeDrink(intent!!.getIntExtra("KEY", 20))
+                showProposeDrink(intent!!.getIntExtra(ProposeDrinkService::class.java.simpleName, 20))
             }
         }
     }
