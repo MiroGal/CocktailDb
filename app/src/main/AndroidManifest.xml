@@ -40,7 +40,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
 
         <service
-            android:name=".receiver.ProposeDrinkService"
+            android:name=".service.ProposeDrinkService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service

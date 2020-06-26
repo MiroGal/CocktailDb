@@ -13,7 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
-import com.mirogal.cocktail.receiver.ProposeDrinkService
+import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.detail.IngredientMapper.toIngredientList
 import kotlinx.android.synthetic.main.activity_drink_detail.*
