@@ -16,6 +16,12 @@ class CocktailDbEntity : Serializable {
     @ColumnInfo(name = COLUMN_NAME)
     var name: String? = null
 
+    @ColumnInfo(name = COLUMN_FAVORITE)
+    var isFavorite: Boolean = false
+
+    @ColumnInfo(name = COLUMN_CATEGORY)
+    var category: String? = null
+
     @ColumnInfo(name = COLUMN_ALCOHOLIC)
     var alcoholic: String? = null
 
@@ -121,7 +127,8 @@ class CocktailDbEntity : Serializable {
     constructor()
 
     @Ignore
-    constructor(id: Int, name: String?, alcoholic: String?, glass: String?, instruction: String?,
+    constructor(id: Int, name: String?, isFavorite: Boolean, category: String?,
+                alcoholic: String?, glass: String?, instruction: String?,
                 imagePath: String?, ingredient1: String?, ingredient2: String?,
                 ingredient3: String?, ingredient4: String?, ingredient5: String?,
                 ingredient6: String?, ingredient7: String?, ingredient8: String?,
@@ -133,6 +140,8 @@ class CocktailDbEntity : Serializable {
                 measure12: String?, measure13: String?, measure14: String?, measure15: String?) {
         this.id = id
         this.name = name
+        this.isFavorite = favorite
+        this.category = category
         this.alcoholic = alcoholic
         this.glass = glass
         this.instruction = instruction
@@ -183,6 +192,8 @@ class CocktailDbEntity : Serializable {
         const val TABLE_NAME = "cocktail_entity"
         const val COLUMN_ID = "id"
         const val COLUMN_NAME = "name"
+        const val COLUMN_FAVORITE = "favorite"
+        const val COLUMN_CATEGORY = "category"
         const val COLUMN_ALCOHOLIC = "alcoholic"
         const val COLUMN_GLASS = "glass"
         const val COLUMN_INSTRUCTION = "instruction"

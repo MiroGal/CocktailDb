@@ -30,7 +30,7 @@ class ProposeDrinkService : JobIntentService() {
 
         val newIntent = Intent()
         newIntent.action = "ACTION_SNACKBAR"
-        newIntent.putExtra("KEY", intent.getIntExtra("KEY", 50))
+        newIntent.putExtra(ProposeDrinkService::class.java.simpleName, intent.getIntExtra(ProposeDrinkService::class.java.simpleName, 50))
         baseContext.sendBroadcast(newIntent)
     }
 

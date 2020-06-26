@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.Intent.ACTION_BATTERY_LOW
 import android.os.BatteryManager
+import com.mirogal.cocktail.ui.main.history.DrinkHistoryContainerFragment
 
 
 class BatteryChangeReceiver : BroadcastReceiver() {
@@ -32,8 +33,8 @@ class BatteryChangeReceiver : BroadcastReceiver() {
         listener!!.onBatteryChange(level, state)
     }
 
-    fun setBatteryChangeListener(context: Context?) {
-        listener = context as OnBatteryChangeListener?
+    fun setBatteryChangeListener(context: DrinkHistoryContainerFragment) {
+        listener = context
     }
 
     interface OnBatteryChangeListener {
