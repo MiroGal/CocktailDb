@@ -15,6 +15,9 @@ class AuthActivity : BaseActivity() {
 
     private val login = "MiroGal"
     private val password = "Miro89"
+    
+    private val minLoginLength = 6
+    private val minPasswordLength = 6
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -111,7 +114,7 @@ class AuthActivity : BaseActivity() {
     private fun invalidateAuthData() {
         val login = txt_login.text.toString()
         val password = txt_password.text.toString()
-        btn_authorization.isClickable = login.length >= 6 && password.length >= 6
+        btn_authorization.isClickable = login.length >= minLoginLength && password.length >= minPasswordLength
                 && password.any { it.isDigit() } && password.any { it.isLetter() }
     }
 
