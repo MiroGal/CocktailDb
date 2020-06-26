@@ -127,7 +127,7 @@ class CocktailDbEntity : Serializable {
     constructor()
 
     @Ignore
-    constructor(id: Int, name: String?, favorite: Boolean, category: String?,
+    constructor(id: Int, name: String?, isFavorite: Boolean, category: String?,
                 alcoholic: String?, glass: String?, instruction: String?,
                 imagePath: String?, ingredient1: String?, ingredient2: String?,
                 ingredient3: String?, ingredient4: String?, ingredient5: String?,
