@@ -140,7 +140,7 @@ class CocktailDbEntity : Serializable {
                 measure12: String?, measure13: String?, measure14: String?, measure15: String?) {
         this.id = id
         this.name = name
-        this.isFavorite = favorite
+        this.isFavorite = isFavorite
         this.category = category
         this.alcoholic = alcoholic
         this.glass = glass

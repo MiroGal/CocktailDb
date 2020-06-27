@@ -91,19 +91,19 @@ class AuthActivity : BaseActivity() {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)
 //            txt_login.setTextColor(resources.getColor(R.color.txt_error))
-            txt_login_layout.error = "Incorrect login"
+            txt_login_layout.error = getString(R.string.auth_message_incorrect_login)
         } else if (login == this.login && password != this.password) {
             txt_password.requestFocus()
             txt_password.setSelection(txt_password.text?.length!!)
 //            txt_password.setTextColor(resources.getColor(R.color.txt_error))
-            txt_password_layout.error = "Incorrect password"
+            txt_password_layout.error = getString(R.string.auth_message_incorrect_password)
         } else {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)
 //            txt_login.setTextColor(resources.getColor(R.color.txt_error))
 //            txt_password.setTextColor(resources.getColor(R.color.txt_error))
-            txt_login_layout.error = "Incorrect login"
-            txt_password_layout.error = "Incorrect password"
+            txt_login_layout.error = getString(R.string.auth_message_incorrect_login)
+            txt_password_layout.error = getString(R.string.auth_message_incorrect_password)
         }
 //            ll_root.requestFocus()
 //            val inputManager: InputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

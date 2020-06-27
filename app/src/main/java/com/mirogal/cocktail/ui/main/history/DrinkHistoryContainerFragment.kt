@@ -18,6 +18,7 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.receiver.BatteryChangeReceiver
+import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.ui.main.ViewModel
