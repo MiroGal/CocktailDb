@@ -6,6 +6,8 @@
     <string name="auth_login_hint">Login</string>
     <string name="auth_password_hint">Password</string>
     <string name="auth_btn_login">Login</string>
+    <string name="auth_message_incorrect_login">Incorrect login</string>
+    <string name="auth_message_incorrect_password">Incorrect password</string>
     <!--endregion-->
 
     <!--region Profile-->
