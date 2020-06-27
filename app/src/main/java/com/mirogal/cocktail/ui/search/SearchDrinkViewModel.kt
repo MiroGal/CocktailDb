@@ -12,7 +12,7 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.data.repository.NetworkState
 
-class ViewModel(application: Application) : AndroidViewModel(application) {
+class SearchDrinkViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = CocktailRepository.getInstance(application)
     private val sharedPreferences: SharedPreferences = getApplication<Application>().getSharedPreferences(

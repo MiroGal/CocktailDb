@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 
-class ViewModel(application: Application) : AndroidViewModel(application) {
+class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = CocktailRepository.getInstance(application)
     val cocktailList: LiveData<List<CocktailDbEntity>>

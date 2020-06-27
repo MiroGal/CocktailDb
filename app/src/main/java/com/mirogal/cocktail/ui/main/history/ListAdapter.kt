@@ -18,7 +18,7 @@ class ListAdapter(private val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view: View = inflater.inflate(R.layout.item_drink_history, parent, false)
+        val view: View = inflater.inflate(R.layout.item_cocktail_drink_history, parent, false)
         return ItemHolder(context, view)
     }
 

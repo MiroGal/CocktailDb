@@ -6,7 +6,7 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     var fragment1: DrinkHistoryFragment? = null
-    var fragment2: FavoriteDrinkFragment? = null
+    var fragment2: DrinkFavoriteFragment? = null
 
     override fun getItemCount(): Int = 2
 
@@ -17,8 +17,8 @@ class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
                 fragment1 as DrinkHistoryFragment
             }
             else -> {
-                fragment2 = FavoriteDrinkFragment.newInstance()
-                fragment2 as FavoriteDrinkFragment
+                fragment2 = DrinkFavoriteFragment.newInstance()
+                fragment2 as DrinkFavoriteFragment
             }
         }
     }

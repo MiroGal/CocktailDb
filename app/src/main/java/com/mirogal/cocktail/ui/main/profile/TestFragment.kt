@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_drink_history_container.*
+import kotlinx.android.synthetic.main.fragment_drink_history_pager.*
 import kotlinx.android.synthetic.main.fragment_test.*
 import java.util.*
 
@@ -90,7 +90,7 @@ class TestFragment : BaseFragment() {
             btn_next.text = "$number"
         }
 
-        btn_next.setOnClickListener { listener?.onTestButtonClick(number, message) }
+        btn_next.setOnClickListener { listener?.onTestActionButtonClick(number, message) }
     }
 
     override fun onStart() {
@@ -149,7 +149,7 @@ class TestFragment : BaseFragment() {
 
 
     interface OnFragmentActionListener {
-        fun onTestButtonClick(number: Int, message: String?)
+        fun onTestActionButtonClick(number: Int, message: String?)
     }
 
 }

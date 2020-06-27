@@ -28,7 +28,7 @@
         </activity>
         <activity
             android:name=".ui.main.MainActivity"
-            android:label="@string/drink_history_container_label"
+            android:label="@string/drink_history_pager_label"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ui.search.SearchDrinkActivity"

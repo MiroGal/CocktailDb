@@ -8,7 +8,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
-import kotlinx.android.synthetic.main.fragment_drink_history_container.toolbar
+import kotlinx.android.synthetic.main.fragment_drink_history_pager.toolbar
 
 
 class DrinkFilterFragment : BaseFragment() {
@@ -59,12 +59,12 @@ class DrinkFilterFragment : BaseFragment() {
         }
 
         btn_apply.setOnClickListener {
-            listener?.onFilterButtonClick(alcoholFilter, categoryFilter)
+            listener?.onFilterActionButtonClick(alcoholFilter, categoryFilter)
             requireActivity().onBackPressed()
         }
 
         btn_reset.setOnClickListener {
-            listener?.onFilterButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
+            listener?.onFilterActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
             requireActivity().onBackPressed()
         }
     }
@@ -121,7 +121,7 @@ class DrinkFilterFragment : BaseFragment() {
 
 
     interface OnFragmentActionListener {
-        fun onFilterButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
+        fun onFilterActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
     }
 
 }

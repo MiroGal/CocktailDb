@@ -11,19 +11,19 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.ui.main.ViewModel
+import com.mirogal.cocktail.ui.main.MainViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
-import kotlinx.android.synthetic.main.fragment_favorite_drink.*
+import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class FavoriteDrinkFragment : BaseFragment(), ListAdapter.OnItemClickListener,
+class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
-    override val contentLayoutResId = R.layout.fragment_favorite_drink
+    override val contentLayoutResId = R.layout.fragment_drink_favorite
 
-    private lateinit var viewModel: ViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var listAdapter: ListAdapter
     private lateinit var cocktailList: List<CocktailDbEntity>
     private var alcoholFilter: AlcoholDrinkFilter? = null
@@ -31,14 +31,14 @@ class FavoriteDrinkFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
 
     companion object {
-        fun newInstance() = FavoriteDrinkFragment()
+        fun newInstance() = DrinkFavoriteFragment()
     }
 
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setList()
     }
