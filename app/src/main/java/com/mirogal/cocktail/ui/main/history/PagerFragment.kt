@@ -26,14 +26,14 @@ import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
-import kotlinx.android.synthetic.main.fragment_drink_history_pager.*
+import kotlinx.android.synthetic.main.fragment_pager.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
-class DrinkHistoryPagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
+class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
 
-    override val contentLayoutResId = R.layout.fragment_drink_history_pager
+    override val contentLayoutResId = R.layout.fragment_pager
     private var listener: OnFragmentActionListener? = null
 
     private lateinit var viewModel: MainViewModel
@@ -48,7 +48,7 @@ class DrinkHistoryPagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatter
 
 
     companion object {
-        fun newInstance() = DrinkHistoryPagerFragment()
+        fun newInstance() = PagerFragment()
     }
 
 

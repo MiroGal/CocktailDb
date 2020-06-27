@@ -8,7 +8,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
-import kotlinx.android.synthetic.main.fragment_drink_history_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_pager.toolbar
 
 
 class DrinkFilterFragment : BaseFragment() {
@@ -55,7 +55,7 @@ class DrinkFilterFragment : BaseFragment() {
         setOnCheckListener()
 
         btn_toolbar_back.setOnClickListener {
-            (activity as AppCompatActivity).onBackPressed()
+            requireActivity().onBackPressed()
         }
 
         btn_apply.setOnClickListener {

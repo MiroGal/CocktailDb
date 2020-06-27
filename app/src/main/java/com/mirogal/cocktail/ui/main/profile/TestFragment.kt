@@ -11,7 +11,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_drink_history_pager.*
+import kotlinx.android.synthetic.main.fragment_pager.*
 import kotlinx.android.synthetic.main.fragment_test.*
 import java.util.*
 

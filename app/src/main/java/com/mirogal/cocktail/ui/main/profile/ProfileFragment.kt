@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.auth.AuthActivity
 import com.mirogal.cocktail.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_drink_history_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_pager.toolbar
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : BaseFragment() {

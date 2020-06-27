@@ -55,31 +55,31 @@ class AuthActivity : BaseActivity() {
     }
 
     private val textWatcherLogin: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        override fun afterTextChanged(s: Editable?) {
             if (txt_login_layout.isErrorEnabled) {
                 txt_login_layout.isErrorEnabled = false
 //                txt_login.setTextColor(resources.getColor(R.color.txt_body))
             }
             invalidateAuthData()
         }
-    }
-
-    private val textWatcherPassword: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {}
 
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    private val textWatcherPassword: TextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
             if (txt_password_layout.isErrorEnabled) {
                 txt_password_layout.isErrorEnabled = false
 //                txt_password.setTextColor(resources.getColor(R.color.txt_body))
             }
             invalidateAuthData()
         }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
 
     private fun checkAuthData() {

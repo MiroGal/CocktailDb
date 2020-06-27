@@ -3,27 +3,27 @@ package com.mirogal.cocktail.ui.main
 import android.os.Bundle
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
-import com.mirogal.cocktail.ui.main.history.DrinkHistoryPagerFragment
+import com.mirogal.cocktail.ui.main.history.PagerFragment
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
 import com.mirogal.cocktail.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.ui.main.profile.TestFragment
-import kotlinx.android.synthetic.main.activity_navigation.*
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity(),
-        DrinkHistoryPagerFragment.OnFragmentActionListener,
+        PagerFragment.OnFragmentActionListener,
         DrinkFilterFragment.OnFragmentActionListener,
         ProfileFragment.OnFragmentActionListener,
         TestFragment.OnFragmentActionListener {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_navigation)
+        setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            addDrinkHistoryPagerFragment()
+            addPagerFragment()
         }
 
         bottom_nav_view.selectedItemId = R.id.bottom_nav_drink
@@ -31,7 +31,7 @@ class MainActivity : BaseActivity(),
         bottom_nav_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_nav_drink -> {
-                    showDrinkHistoryPagerFragment()
+                    showPagerFragment()
                 }
                 R.id.bottom_nav_profile -> {
                     showProfileFragment()
@@ -47,7 +47,7 @@ class MainActivity : BaseActivity(),
     }
 
     override fun onFilterActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        val fragment = supportFragmentManager.findFragmentByTag(DrinkHistoryPagerFragment::class.java.simpleName) as DrinkHistoryPagerFragment
+        val fragment = supportFragmentManager.findFragmentByTag(PagerFragment::class.java.simpleName) as PagerFragment
         fragment.setFilter(alcoholFilter, categoryFilter)
     }
 
@@ -76,66 +76,81 @@ class MainActivity : BaseActivity(),
     }
 
 
-    private fun addDrinkHistoryPagerFragment() {
-        val newFragment = DrinkHistoryPagerFragment.newInstance()
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, newFragment, DrinkHistoryPagerFragment::class.java.simpleName)
-        transaction.commit()
+    private fun addPagerFragment() {
+        val newFragment = PagerFragment.newInstance()
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.fcv_container, newFragment, PagerFragment::class.java.simpleName)
+            commit()
+        }
     }
 
     private fun addFilterFragment(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         val newFragment = DrinkFilterFragment.newInstance(alcoholFilter, categoryFilter)
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, newFragment, DrinkFilterFragment::class.java.simpleName)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.fcv_container, newFragment, DrinkFilterFragment::class.java.simpleName)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     private fun addTestFragment(number: Int, message: String?) {
         val newFragment = TestFragment.newInstance(number, message)
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.add(R.id.fragment_container, newFragment, TestFragment::class.java.simpleName)
-        transaction.addToBackStack(null)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().apply {
+            add(R.id.fcv_container, newFragment, TestFragment::class.java.simpleName)
+            addToBackStack(null)
+            commit()
+        }
     }
 
     private fun deleteTestFragment() {
         val testFragment = supportFragmentManager.findFragmentByTag(TestFragment::class.java.simpleName)
-        val transaction = supportFragmentManager.beginTransaction()
-        transaction.detach(testFragment!!)
-//        transaction.addToBackStack(null)
-        transaction.commit()
+        supportFragmentManager.beginTransaction().apply {
+            remove(testFragment!!)
+//            addToBackStack(null)
+            commit()
+        }
     }
 
-    private fun showDrinkHistoryPagerFragment() {
-        val containerFragment = supportFragmentManager.findFragmentByTag(DrinkHistoryPagerFragment::class.java.simpleName)
+    private fun showPagerFragment() {
+        val pagerFragment = supportFragmentManager.findFragmentByTag(PagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
-        val transaction = supportFragmentManager.beginTransaction()
-        if (containerFragment != null && containerFragment.isAdded) {
-            transaction.setPrimaryNavigationFragment(profileFragment)
-            transaction.show(containerFragment)
+        if (pagerFragment != null && pagerFragment.isAdded) {
+            supportFragmentManager.beginTransaction().apply {
+                setPrimaryNavigationFragment(profileFragment)
+                show(pagerFragment)
+                commit()
+            }
         }
         if (profileFragment != null && profileFragment.isAdded) {
-            transaction.hide(profileFragment)
+            supportFragmentManager.beginTransaction().apply {
+                hide(profileFragment)
+                commit()
+            }
         }
-        transaction.commit()
     }
 
     private fun showProfileFragment() {
-        val containerFragment = supportFragmentManager.findFragmentByTag(DrinkHistoryPagerFragment::class.java.simpleName)
+        val pagerFragment = supportFragmentManager.findFragmentByTag(PagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
-        val transaction = supportFragmentManager.beginTransaction()
-        if (containerFragment != null && containerFragment.isAdded) {
-            transaction.hide(containerFragment)
+        if (pagerFragment != null && pagerFragment.isAdded) {
+            supportFragmentManager.beginTransaction().apply {
+                hide(pagerFragment)
+                commit()
+            }
         }
         if (profileFragment != null && profileFragment.isAdded) {
-            transaction.setPrimaryNavigationFragment(profileFragment)
-            transaction.show(profileFragment)
+            supportFragmentManager.beginTransaction().apply {
+                setPrimaryNavigationFragment(profileFragment)
+                show(profileFragment)
+                commit()
+            }
         } else {
             val newFragment = ProfileFragment.newInstance()
-            transaction.add(R.id.fragment_container, newFragment, ProfileFragment::class.java.simpleName)
+            supportFragmentManager.beginTransaction().apply {
+                add(R.id.fcv_container, newFragment, ProfileFragment::class.java.simpleName)
+                commit()
+            }
         }
-        transaction.commit()
     }
 
 }
