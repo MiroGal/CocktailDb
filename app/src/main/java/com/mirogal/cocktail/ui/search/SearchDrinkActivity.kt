@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
 class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
-    private lateinit var viewModel: ViewModel
+    private lateinit var viewModel: SearchDrinkViewModel
     private var requestQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
         setSupportActionBar(toolbar)
 
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchDrinkViewModel::class.java)
 
         setList()
     }

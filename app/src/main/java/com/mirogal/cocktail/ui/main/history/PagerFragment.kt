@@ -21,22 +21,22 @@ import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.ui.main.ViewModel
+import com.mirogal.cocktail.ui.main.MainViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
-import kotlinx.android.synthetic.main.fragment_drink_history_container.*
+import kotlinx.android.synthetic.main.fragment_pager.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
-class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
+class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
 
-    override val contentLayoutResId = R.layout.fragment_drink_history_container
+    override val contentLayoutResId = R.layout.fragment_pager
     private var listener: OnFragmentActionListener? = null
 
-    private lateinit var viewModel: ViewModel
+    private lateinit var viewModel: MainViewModel
     private lateinit var cocktailList: List<CocktailDbEntity>
     private var alcoholFilter: AlcoholDrinkFilter? = null
     private var categoryFilter: CategoryDrinkFilter? = null
@@ -48,7 +48,7 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
 
 
     companion object {
-        fun newInstance() = DrinkHistoryContainerFragment()
+        fun newInstance() = PagerFragment()
     }
 
 
@@ -64,9 +64,9 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
         super.onViewCreated(view, savedInstanceState)
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_container_label)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_pager_label)
 
-        viewModel = ViewModelProvider(this).get(ViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setList()
         setViewPager()
@@ -74,7 +74,7 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
         setReceiver()
 
         btn_toolbar_filter.setOnClickListener {
-            listener?.onToolbarButtonFilterClick(alcoholFilter, categoryFilter)
+            listener?.onToolbarFilterButtonClick(alcoholFilter, categoryFilter)
         }
 
         btn_toolbar_filter.setOnLongClickListener {
@@ -115,9 +115,9 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
 
         TabLayoutMediator(tab_layout, view_pager) { tab, position ->
             if (position == 0) {
-                tab.text = getString(R.string.drink_history_container_tab_history)
+                tab.text = getString(R.string.drink_history_pager_tab_history)
             } else if (position == 1) {
-                tab.text = getString(R.string.drink_history_container_tab_favorite)
+                tab.text = getString(R.string.drink_history_pager_tab_favorite)
             }
         }.attach()
     }
@@ -222,7 +222,7 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
         }
         Snackbar.make(requireActivity().findViewById(android.R.id.content),
                 "Переглянути ${entity!!.name}", Snackbar.LENGTH_LONG)
-                .setAction(getString(R.string.drink_history_container_snackbar_btn_open_cocktail)) {
+                .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
                     openDrinkDetailActivity(entity)
                 }.show()
     }
@@ -241,8 +241,8 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
         }
 
         val fragment2 = pagerAdapter.fragment2
-        if (fragment2 is FavoriteDrinkFragment) {
-            (fragment2 as FavoriteDrinkFragment?)!!.setFilter(alcoholFilter, categoryFilter)
+        if (fragment2 is DrinkFavoriteFragment) {
+            (fragment2 as DrinkFavoriteFragment?)!!.setFilter(alcoholFilter, categoryFilter)
         }
     }
 
@@ -297,7 +297,7 @@ class DrinkHistoryContainerFragment : BaseFragment(), BatteryChangeReceiver.OnBa
 
 
     interface OnFragmentActionListener {
-        fun onToolbarButtonFilterClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
+        fun onToolbarFilterButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
     }
 
 }

@@ -6,7 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    android:fitsSystemWindows="true"
     android:clickable="true"
     android:focusable="true"
     tools:context=".ui.main.filter.DrinkFilterFragment">

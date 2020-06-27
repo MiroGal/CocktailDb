@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.auth.AuthActivity
 import com.mirogal.cocktail.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_drink_history_container.toolbar
+import kotlinx.android.synthetic.main.fragment_pager.toolbar
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : BaseFragment() {
@@ -38,7 +38,7 @@ class ProfileFragment : BaseFragment() {
 
         btn_logout.setOnClickListener { openAuthActivity() }
 
-        btn_test.setOnClickListener { listener?.onButtonStartTestClick() }
+        btn_test.setOnClickListener { listener?.onStartTestButtonClick() }
     }
 
 
@@ -49,7 +49,7 @@ class ProfileFragment : BaseFragment() {
 
 
     interface OnFragmentActionListener {
-        fun onButtonStartTestClick()
+        fun onStartTestButtonClick()
     }
 
 }

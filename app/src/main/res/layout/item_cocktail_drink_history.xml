@@ -39,6 +39,6 @@
         android:layout_gravity="end"
         android:padding="@dimen/offset_8"
         android:src="@drawable/ic_back"
-        android:contentDescription="@string/drink_history_item_btn_favorite_description" />
+        android:contentDescription="@string/item_drink_history_btn_favorite_description" />
 
 </androidx.cardview.widget.CardView>

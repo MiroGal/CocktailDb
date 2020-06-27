@@ -24,7 +24,7 @@ internal class ListAdapter(private val context: Context,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view: View = inflater.inflate(R.layout.item_search_drink, parent, false)
+        val view: View = inflater.inflate(R.layout.item_cocktail_search_drink, parent, false)
         return ItemHolder(context, view)
     }
 

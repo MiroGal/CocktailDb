@@ -21,14 +21,15 @@
     <string name="main_bottom_nav_profile">Profile</string>
     <!--endregion-->
 
-    <!--region DrinkHistoryContainer-->
-    <string name="drink_history_container_label">CocktailDB</string>
-    <string name="drink_history_container_tab_history">History</string>
-    <string name="drink_history_container_tab_favorite">Favorite</string>
-    <string name="drink_history_container_snackbar_btn_open_cocktail">Open</string>
-    <string name="drink_history_container_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+    <!--region DrinkHistory-->
+    <string name="drink_history_pager_label">CocktailDB</string>
+    <string name="drink_history_pager_tab_history">History</string>
+    <string name="drink_history_pager_tab_favorite">Favorite</string>
+    <string name="drink_history_pager_snackbar_btn_open_cocktail">Open</string>
+    <string name="drink_history_pager_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
     <string name="drink_history_message_empty">History is empty</string>
-    <string name="drink_history_item_btn_favorite_description">Add/Delete from favorite</string>
+    <string name="drink_favorite_message_empty">Favorite is empty</string>
+    <string name="item_drink_history_btn_favorite_description">Add/Delete from favorite</string>
     <!--endregion-->
 
     <!--region Filter-->
