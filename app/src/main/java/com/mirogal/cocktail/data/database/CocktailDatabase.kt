@@ -1,5 +1,6 @@
 package com.mirogal.cocktail.data.database
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
@@ -12,17 +13,24 @@ abstract class CocktailDatabase : RoomDatabase() {
     abstract fun cocktailDao(): CocktailDao
 
     companion object {
+
+        @Volatile
         private var INSTANCE: CocktailDatabase? = null
 
-        fun getInstance(context: Context): CocktailDatabase? {
-            if (INSTANCE == null) {
-                synchronized(CocktailDatabase::class) {
-                    INSTANCE = Room.databaseBuilder(context.applicationContext,
-                            CocktailDatabase::class.java,
-                            "cocktail_database_test_2").build()
-                }
+        fun newInstance(application: Application): CocktailDatabase {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
             }
-            return INSTANCE
+            synchronized(this) {
+                val instance = Room.databaseBuilder(
+                        application,
+                        CocktailDatabase::class.java,
+                        "cocktail_database_test_2"
+                ).build()
+                INSTANCE = instance
+                return instance
+            }
         }
     }
 

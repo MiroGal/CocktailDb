@@ -14,7 +14,8 @@ import com.mirogal.cocktail.data.repository.NetworkState
 
 class SearchDrinkViewModel(application: Application) : AndroidViewModel(application) {
 
-    private val repository = CocktailRepository.getInstance(application)
+    private val repository = CocktailRepository.newInstance(application)
+
     private val sharedPreferences: SharedPreferences = getApplication<Application>().getSharedPreferences(
             getApplication<Application>().resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
@@ -23,11 +24,14 @@ class SearchDrinkViewModel(application: Application) : AndroidViewModel(applicat
     private val requestQuery: MutableLiveData<String?>
 
     val networkStatus: LiveData<NetworkState.Status>
-        get() = repository?.networkStatus!!
+        get() = repository.networkStatus
 
+    companion object {
+        private const val SAVE_REQUEST_QUERY = "save_request_query"
+    }
 
     init {
-        cocktailList = repository?.selectCocktailList!!
+        cocktailList = repository.selectCocktailList
         requestQuery = MutableLiveData()
         requestQuery.value = loadStringPreference()
         if (requestQuery.value != null && requestQuery.value != repository.requestQuery.value) {
@@ -43,7 +47,7 @@ class SearchDrinkViewModel(application: Application) : AndroidViewModel(applicat
     fun setRequestQuery(requestQuery: String) {
         saveStringPreference(requestQuery)
         this.requestQuery.value = requestQuery
-        repository?.requestQuery?.value = requestQuery
+        repository.requestQuery.value = requestQuery
     }
 
     private fun saveStringPreference(value: String) {
@@ -55,12 +59,7 @@ class SearchDrinkViewModel(application: Application) : AndroidViewModel(applicat
     }
 
     fun saveCocktail(cocktail: CocktailDbEntity?) {
-        repository?.saveCocktail(cocktail)
-    }
-
-
-    companion object {
-        private const val SAVE_REQUEST_QUERY = "save_request_query"
+        repository.saveCocktail(cocktail)
     }
 
 }

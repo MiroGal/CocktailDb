@@ -1,6 +1,6 @@
 package com.mirogal.cocktail.data.repository
 
-import android.content.Context
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
@@ -11,7 +11,9 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.netpagedlist.BoundaryCallback
 import com.mirogal.cocktail.data.repository.netpagedlist.DataSourceFactory
 
-class CocktailRepository private constructor(context: Context) {
+class CocktailRepository(application: Application) {
+
+    private val database = CocktailDatabase.newInstance(application)
 
     var saveCocktailList: LiveData<List<CocktailDbEntity>>? = null
         private set
@@ -20,10 +22,31 @@ class CocktailRepository private constructor(context: Context) {
     val networkStatus: MutableLiveData<NetworkState.Status> = MutableLiveData()
     val requestQuery: MutableLiveData<String?> = MutableLiveData()
 
-    private val db = CocktailDatabase.getInstance(context)
+    companion object {
+
+        @Volatile
+        private var INSTANCE: CocktailRepository? = null
+
+        fun newInstance(application: Application): CocktailRepository {
+            val tempInstance = INSTANCE
+            if (tempInstance != null) {
+                return tempInstance
+            }
+            synchronized(this) {
+                val instance = CocktailRepository(application)
+                INSTANCE = instance
+                return instance
+            }
+        }
+    }
+
+    init {
+        initSaveCocktailList()
+        initSelectCocktailList()
+    }
 
     private fun initSaveCocktailList() {
-        saveCocktailList = db?.cocktailDao()?.lvCocktailList
+        saveCocktailList = database.cocktailDao().lvCocktailList
     }
 
     private fun initSelectCocktailList() {
@@ -48,34 +71,17 @@ class CocktailRepository private constructor(context: Context) {
         }
     }
 
+
     fun saveCocktail(cocktail: CocktailDbEntity?) {
-        Thread(Runnable { db?.cocktailDao()?.insertCocktail(cocktail!!) }).start()
+        Thread(Runnable { database.cocktailDao().insertCocktail(cocktail!!) }).start()
     }
 
     fun deleteCocktail(cocktailId: Int) {
-        Thread(Runnable { db?.cocktailDao()?.deleteCocktail(cocktailId) }).start()
+        Thread(Runnable { database.cocktailDao().deleteCocktail(cocktailId) }).start()
     }
 
     fun setFavorite(cocktailId: Int, isFavorite: Boolean) {
-        Thread(Runnable { db?.cocktailDao()?.setFavorite(cocktailId, isFavorite) }).start()
-    }
-
-    init {
-        initSaveCocktailList()
-        initSelectCocktailList()
-    }
-
-    companion object {
-        private var INSTANCE: CocktailRepository? = null
-
-        fun getInstance(context: Context): CocktailRepository? {
-            if (INSTANCE == null){
-                synchronized(CocktailRepository::class){
-                    INSTANCE = CocktailRepository(context)
-                }
-            }
-            return INSTANCE
-        }
+        Thread(Runnable { database.cocktailDao().setFavorite(cocktailId, isFavorite) }).start()
     }
 
 }
