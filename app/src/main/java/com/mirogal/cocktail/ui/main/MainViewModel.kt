@@ -9,8 +9,6 @@ import com.mirogal.cocktail.ui.base.BaseViewModel
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
 
-    private val repository = CocktailRepository.newInstance(application)
-
     val cocktailListViewModel: LiveData<List<CocktailDbEntity>> = repository.saveCocktailListLiveData
 
     fun deleteCocktailFromDb(id: Int) {

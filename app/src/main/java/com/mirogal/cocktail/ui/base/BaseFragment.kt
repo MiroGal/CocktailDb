@@ -12,7 +12,6 @@ abstract class BaseFragment : Fragment() {
 //abstract class BaseFragment<BaseViewModel> : Fragment() {
 
     protected abstract val contentLayoutResId: Int
-
     protected abstract val viewModel: ViewModel
 
 
