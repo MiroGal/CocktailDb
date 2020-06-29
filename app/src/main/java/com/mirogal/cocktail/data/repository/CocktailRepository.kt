@@ -15,12 +15,10 @@ class CocktailRepository(application: Application) {
 
     private val database = CocktailDatabase.newInstance(application)
 
-    var saveCocktailList: LiveData<List<CocktailDbEntity>>? = null
-        private set
-    var selectCocktailList: LiveData<PagedList<CocktailDbEntity?>> = MutableLiveData()
-        private set
-    val networkStatus: MutableLiveData<NetworkState.Status> = MutableLiveData()
-    val requestQuery: MutableLiveData<String?> = MutableLiveData()
+    lateinit var saveCocktailListLiveData: LiveData<List<CocktailDbEntity>>
+    var loadCocktailListLiveData: LiveData<PagedList<CocktailDbEntity?>> = MutableLiveData()
+    val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
+    val networkStatusMutableLiveData: MutableLiveData<NetworkState.Status> = MutableLiveData()
 
     companion object {
 
@@ -42,14 +40,14 @@ class CocktailRepository(application: Application) {
 
     init {
         initSaveCocktailList()
-        initSelectCocktailList()
+        initLoadCocktailList()
     }
 
     private fun initSaveCocktailList() {
-        saveCocktailList = database.cocktailDao().lvCocktailList
+        saveCocktailListLiveData = database.dao().cocktailListLiveData
     }
 
-    private fun initSelectCocktailList() {
+    private fun initLoadCocktailList() {
         val pagedListConfig = PagedList.Config.Builder()
                 .setPageSize(20)
                 .setPrefetchDistance(40)
@@ -58,11 +56,11 @@ class CocktailRepository(application: Application) {
                 .build()
         val dataSourceFactory = DataSourceFactory()
         val boundaryCallback = BoundaryCallback(this)
-        selectCocktailList = Transformations.switchMap(requestQuery) {
-            if (requestQuery.value == null || requestQuery.value!!.isEmpty()) {
+        loadCocktailListLiveData = Transformations.switchMap(searchNameMutableLiveData) {
+            if (searchNameMutableLiveData.value == null || searchNameMutableLiveData.value!!.isEmpty()) {
                 dataSourceFactory.setCurrentQuery(null)
             } else {
-                dataSourceFactory.setCurrentQuery(requestQuery.value)
+                dataSourceFactory.setCurrentQuery(searchNameMutableLiveData.value)
             }
             dataSourceFactory.create()
             LivePagedListBuilder(dataSourceFactory, pagedListConfig)
@@ -72,16 +70,16 @@ class CocktailRepository(application: Application) {
     }
 
 
-    fun saveCocktail(cocktail: CocktailDbEntity?) {
-        Thread(Runnable { database.cocktailDao().insertCocktail(cocktail!!) }).start()
+    fun addCocktailToDb(cocktail: CocktailDbEntity?) {
+        Thread(Runnable { database.dao().addCocktail(cocktail!!) }).start()
     }
 
-    fun deleteCocktail(cocktailId: Int) {
-        Thread(Runnable { database.cocktailDao().deleteCocktail(cocktailId) }).start()
+    fun deleteCocktailFromDb(cocktailId: Int) {
+        Thread(Runnable { database.dao().deleteCocktail(cocktailId) }).start()
     }
 
-    fun setFavorite(cocktailId: Int, isFavorite: Boolean) {
-        Thread(Runnable { database.cocktailDao().setFavorite(cocktailId, isFavorite) }).start()
+    fun setCocktailFavoriteStatus(cocktailId: Int, isFavorite: Boolean) {
+        Thread(Runnable { database.dao().setFavorite(cocktailId, isFavorite) }).start()
     }
 
 }

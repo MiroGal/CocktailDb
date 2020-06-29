@@ -10,7 +10,7 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 @Database(entities = [CocktailDbEntity::class], version = 1, exportSchema = false)
 abstract class CocktailDatabase : RoomDatabase() {
 
-    abstract fun cocktailDao(): CocktailDao
+    abstract fun dao(): CocktailDao
 
     companion object {
 

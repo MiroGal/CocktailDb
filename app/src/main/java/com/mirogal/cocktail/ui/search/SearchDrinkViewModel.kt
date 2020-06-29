@@ -16,50 +16,43 @@ class SearchDrinkViewModel(application: Application) : AndroidViewModel(applicat
 
     private val repository = CocktailRepository.newInstance(application)
 
-    private val sharedPreferences: SharedPreferences = getApplication<Application>().getSharedPreferences(
-            getApplication<Application>().resources.getString(R.string.app_name), Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences = getApplication<Application>()
+            .getSharedPreferences(getApplication<Application>()
+                    .resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
 
-    val cocktailList: LiveData<PagedList<CocktailDbEntity?>>
-    private val requestQuery: MutableLiveData<String?>
-
-    val networkStatus: LiveData<NetworkState.Status>
-        get() = repository.networkStatus
+    val cocktailListViewModel: LiveData<PagedList<CocktailDbEntity?>> = repository.loadCocktailListLiveData
+    val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
+    val networkStatus: LiveData<NetworkState.Status> = repository.networkStatusMutableLiveData
 
     companion object {
-        private const val SAVE_REQUEST_QUERY = "save_request_query"
+        private const val KEY_SEARCH_NAME = "search_name"
     }
 
     init {
-        cocktailList = repository.selectCocktailList
-        requestQuery = MutableLiveData()
-        requestQuery.value = loadStringPreference()
-        if (requestQuery.value != null && requestQuery.value != repository.requestQuery.value) {
-            repository.requestQuery.value = requestQuery.value
+        searchNameMutableLiveData.value = loadSearchNameFromSharedPreferences()
+        if (searchNameMutableLiveData.value != null && searchNameMutableLiveData.value != repository.searchNameMutableLiveData.value) {
+            repository.searchNameMutableLiveData.value = searchNameMutableLiveData.value
         }
     }
 
 
-    fun getRequestQuery(): LiveData<String?> {
-        return requestQuery
+    fun setSearchName(searchName: String) {
+        saveSearchNameToSharedPreferences(searchName)
+        this.searchNameMutableLiveData.value = searchName
+        repository.searchNameMutableLiveData.value = searchName
     }
 
-    fun setRequestQuery(requestQuery: String) {
-        saveStringPreference(requestQuery)
-        this.requestQuery.value = requestQuery
-        repository.requestQuery.value = requestQuery
+    private fun saveSearchNameToSharedPreferences(value: String) {
+        sharedPreferencesEditor.putString(KEY_SEARCH_NAME, value).apply()
     }
 
-    private fun saveStringPreference(value: String) {
-        sharedPreferencesEditor.putString(SAVE_REQUEST_QUERY, value).apply()
+    private fun loadSearchNameFromSharedPreferences(): String? {
+        return sharedPreferences.getString(KEY_SEARCH_NAME, "")
     }
 
-    private fun loadStringPreference(): String? {
-        return sharedPreferences.getString(SAVE_REQUEST_QUERY, "")
-    }
-
-    fun saveCocktail(cocktail: CocktailDbEntity?) {
-        repository.saveCocktail(cocktail)
+    fun addCocktailToDb(cocktail: CocktailDbEntity?) {
+        repository.addCocktailToDb(cocktail)
     }
 
 }

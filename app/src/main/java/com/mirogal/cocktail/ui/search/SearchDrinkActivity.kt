@@ -50,7 +50,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         rv_search_list.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this)
-        viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
+        viewModel.cocktailListViewModel.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
             try {
                 listAdapter.submitList(pagedList)
             } catch (ignored: Exception) {
@@ -66,7 +66,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
             }
         })
 
-        viewModel.getRequestQuery().observe(this, Observer { query: String? ->
+        viewModel.searchNameMutableLiveData.observe(this, Observer { query: String? ->
             requestQuery = query
             if (!(query != null && query.isNotEmpty())) {
                 showPreview()
@@ -92,7 +92,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
                     }
 
                     override fun onQueryTextChange(s: String): Boolean {
-                        viewModel.setRequestQuery(s)
+                        viewModel.setSearchName(s)
                         return false
                     }
                 }
@@ -102,7 +102,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
 
     override fun onItemClick(cocktail: CocktailDbEntity?) {
-        viewModel.saveCocktail(cocktail)
+        viewModel.addCocktailToDb(cocktail)
         openDrinkDetailActivity(cocktail)
     }
 

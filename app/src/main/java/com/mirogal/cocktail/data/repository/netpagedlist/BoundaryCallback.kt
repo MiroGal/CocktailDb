@@ -9,17 +9,17 @@ class BoundaryCallback(private val repository: CocktailRepository) : PagedList.B
 
     override fun onItemAtFrontLoaded(itemAtFront: CocktailDbEntity) {
         super.onItemAtFrontLoaded(itemAtFront)
-        repository.networkStatus.postValue(NetworkState.LOADING)
+        repository.networkStatusMutableLiveData.postValue(NetworkState.LOADING)
     }
 
     override fun onItemAtEndLoaded(itemAtEnd: CocktailDbEntity) {
         super.onItemAtEndLoaded(itemAtEnd)
-        repository.networkStatus.postValue(NetworkState.LOADED)
+        repository.networkStatusMutableLiveData.postValue(NetworkState.LOADED)
     }
 
     override fun onZeroItemsLoaded() {
         super.onZeroItemsLoaded()
-        repository.networkStatus.postValue(NetworkState.EMPTY)
+        repository.networkStatusMutableLiveData.postValue(NetworkState.EMPTY)
     }
 
 }

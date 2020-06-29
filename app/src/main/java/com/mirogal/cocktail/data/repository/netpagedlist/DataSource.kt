@@ -13,7 +13,7 @@ import java.util.*
 class DataSource internal constructor(private val currentQuery: String?) : PositionalDataSource<CocktailDbEntity>() {
 
     override fun loadInitial(params: LoadInitialParams, callback: LoadInitialCallback<CocktailDbEntity>) {
-        val data = WebService.create().getCocktailContainer(currentQuery)
+        val data = WebService.create().loadCocktailList(currentQuery)
         data?.enqueue(object : Callback<ContainerNetEntity?> {
             override fun onResponse(call: Call<ContainerNetEntity?>, response: Response<ContainerNetEntity?>) {
                 if (response.isSuccessful) {

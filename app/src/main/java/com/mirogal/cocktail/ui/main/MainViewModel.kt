@@ -10,22 +10,17 @@ class MainViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 
-    val cocktailList: LiveData<List<CocktailDbEntity>>
+    val cocktailListViewModel: LiveData<List<CocktailDbEntity>> = repository.saveCocktailListLiveData
 
-    init {
-        cocktailList = repository.saveCocktailList!!
+    fun deleteCocktailFromDb(id: Int) {
+        repository.deleteCocktailFromDb(id)
     }
 
-
-    fun deleteCocktail(id: Int) {
-        repository.deleteCocktail(id)
-    }
-
-    fun switchFavorite(cocktail: CocktailDbEntity?) {
+    fun switchCocktailFavoriteStatus(cocktail: CocktailDbEntity?) {
         if (cocktail!!.isFavorite) {
-            repository.setFavorite(cocktail.id, false)
+            repository.setCocktailFavoriteStatus(cocktail.id, false)
         } else {
-            repository.setFavorite(cocktail.id, true)
+            repository.setCocktailFavoriteStatus(cocktail.id, true)
         }
     }
 

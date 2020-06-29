@@ -56,7 +56,7 @@ class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         rv_favorite_drink_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.cocktailList.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
+        viewModel.cocktailListViewModel.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
             cocktailList = list
 
             val filteredList0 = filterFavorite(cocktailList)
@@ -79,11 +79,11 @@ class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
     }
 
     override fun onFavoriteClick(cocktail: CocktailDbEntity?) {
-        viewModel.switchFavorite(cocktail)
+        viewModel.switchCocktailFavoriteStatus(cocktail)
     }
 
     override fun onItemLongClick(cocktailId: Int) {
-        viewModel.deleteCocktail(cocktailId)
+        viewModel.deleteCocktailFromDb(cocktailId)
     }
 
 
