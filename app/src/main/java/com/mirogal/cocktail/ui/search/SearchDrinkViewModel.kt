@@ -3,7 +3,6 @@ package com.mirogal.cocktail.ui.search
 import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
@@ -11,8 +10,10 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.data.repository.NetworkState
+import com.mirogal.cocktail.ui.base.BaseViewModel
 
-class SearchDrinkViewModel(application: Application) : AndroidViewModel(application) {
+
+class SearchDrinkViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 

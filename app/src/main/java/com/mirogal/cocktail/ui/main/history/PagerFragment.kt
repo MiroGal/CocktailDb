@@ -11,8 +11,8 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
@@ -31,12 +31,14 @@ import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
+
 class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
 
     override val contentLayoutResId = R.layout.fragment_pager
+    override val viewModel: MainViewModel by viewModels()
+
     private var listener: OnFragmentActionListener? = null
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var cocktailList: List<CocktailDbEntity>
     private var alcoholFilter: AlcoholDrinkFilter? = null
     private var categoryFilter: CategoryDrinkFilter? = null
@@ -65,8 +67,6 @@ class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListe
 
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_pager_label)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         setList()
         setViewPager()

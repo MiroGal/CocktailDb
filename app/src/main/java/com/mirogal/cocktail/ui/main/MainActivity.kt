@@ -1,12 +1,13 @@
 package com.mirogal.cocktail.ui.main
 
 import android.os.Bundle
+import androidx.activity.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
-import com.mirogal.cocktail.ui.main.history.PagerFragment
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
+import com.mirogal.cocktail.ui.main.history.PagerFragment
 import com.mirogal.cocktail.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.ui.main.profile.TestFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -17,6 +18,8 @@ class MainActivity : BaseActivity(),
         DrinkFilterFragment.OnFragmentActionListener,
         ProfileFragment.OnFragmentActionListener,
         TestFragment.OnFragmentActionListener {
+
+    override val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

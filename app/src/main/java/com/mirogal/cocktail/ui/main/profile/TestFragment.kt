@@ -9,8 +9,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
+import com.mirogal.cocktail.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_pager.*
 import kotlinx.android.synthetic.main.fragment_test.*
 import java.util.*
@@ -19,6 +21,8 @@ import java.util.*
 class TestFragment : BaseFragment() {
 
     override val contentLayoutResId = R.layout.fragment_test
+    override val viewModel: MainViewModel by viewModels()
+
     private var listener: OnFragmentActionListener? = null
     private var number = 0
     private var message: String? = null

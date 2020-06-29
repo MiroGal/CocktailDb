@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
+import com.mirogal.cocktail.ui.auth.AuthViewModel
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
@@ -21,19 +23,17 @@ import kotlinx.android.synthetic.main.content_search_drink.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
+
 class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
 
-    private lateinit var viewModel: SearchDrinkViewModel
+    override val viewModel: SearchDrinkViewModel by viewModels()
+
     private var requestQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_drink)
-
         setSupportActionBar(toolbar)
-
-        viewModel = ViewModelProvider(this).get(SearchDrinkViewModel::class.java)
-
         setList()
     }
 

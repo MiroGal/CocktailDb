@@ -4,14 +4,18 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
+import com.mirogal.cocktail.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_pager.toolbar
 
 
 class DrinkFilterFragment : BaseFragment() {
+
+    override val viewModel: MainViewModel by viewModels()
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
     private var listener: OnFragmentActionListener? = null

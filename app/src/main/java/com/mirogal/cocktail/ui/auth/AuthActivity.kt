@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import androidx.activity.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.main.MainActivity
@@ -12,6 +13,8 @@ import kotlinx.android.synthetic.main.activity_auth.*
 
 
 class AuthActivity : BaseActivity() {
+
+    override val viewModel: AuthViewModel by viewModels()
 
     private val login = "MiroGal"
     private val password = "Miro89"

@@ -1,12 +1,13 @@
 package com.mirogal.cocktail.ui.main
 
 import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
+import com.mirogal.cocktail.ui.base.BaseViewModel
 
-class MainViewModel(application: Application) : AndroidViewModel(application) {
+
+class MainViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 

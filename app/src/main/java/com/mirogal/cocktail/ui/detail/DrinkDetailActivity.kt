@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -22,6 +23,8 @@ import kotlin.math.abs
 
 
 class DrinkDetailActivity : BaseActivity() {
+
+    override val viewModel: DrinkDetailViewModel by viewModels()
 
     private lateinit var cocktailEntity: CocktailDbEntity
 

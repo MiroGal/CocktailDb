@@ -4,8 +4,8 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
@@ -18,12 +18,13 @@ import com.mirogal.cocktail.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
+
 class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_favorite
+    override val viewModel: MainViewModel by viewModels()
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var listAdapter: ListAdapter
     private lateinit var cocktailList: List<CocktailDbEntity>
     private var alcoholFilter: AlcoholDrinkFilter? = null
@@ -37,9 +38,6 @@ class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         setList()
     }
 
