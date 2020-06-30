@@ -3,6 +3,7 @@ package com.mirogal.cocktail.ui.main.history
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -54,18 +55,14 @@ class DrinkHistoryFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.cocktailListViewModel.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-            cocktailList = list
-
-            val filteredList1 = filterAlcohol(cocktailList, alcoholFilter)
-            val filteredList2 = filterCategory(filteredList1, categoryFilter)
-
-            if (filteredList2.isNotEmpty()) {
+        viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.DISABLE
+        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
+            if (list.isNotEmpty()) {
                 showData()
             } else {
                 showEmpty()
             }
-            listAdapter.refreshData(filteredList2)
+            listAdapter.refreshData(list)
         })
         rv_drink_history_list.adapter = listAdapter
     }
@@ -76,11 +73,13 @@ class DrinkHistoryFragment : BaseFragment(), ListAdapter.OnItemClickListener,
     }
 
     override fun onFavoriteClick(cocktail: CocktailDbEntity?) {
-        viewModel.switchCocktailFavoriteStatus(cocktail)
+//        viewModel.switchCocktailFavoriteStatus(cocktail)
+        viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.ALCOHOLIC
     }
 
     override fun onItemLongClick(cocktailId: Int) {
-        viewModel.deleteCocktailFromDb(cocktailId)
+//        viewModel.deleteCocktailFromDb(cocktailId)
+        viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.NON_ALCOHOLIC
     }
 
 

@@ -20,9 +20,9 @@ class SearchDrinkViewModel(application: Application) : BaseViewModel(application
                     .resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
 
-    val cocktailListViewModel: LiveData<PagedList<CocktailDbEntity?>> = repository.loadCocktailListLiveData
+    val cocktailListLiveData: LiveData<PagedList<CocktailDbEntity?>> = repository.loadCocktailListLiveData
     val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
-    val networkStatus: LiveData<NetworkState.Status> = repository.networkStatusMutableLiveData
+    val networkStatusLiveData: LiveData<NetworkState.Status> = repository.networkStatusMutableLiveData
 
     companion object {
         private const val KEY_SEARCH_NAME = "search_name"

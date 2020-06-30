@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.util.Log
 import androidx.activity.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
@@ -61,8 +62,8 @@ class AuthActivity : BaseActivity() {
         override fun afterTextChanged(s: Editable?) {
             if (txt_login_layout.isErrorEnabled) {
                 txt_login_layout.isErrorEnabled = false
-//                txt_login.setTextColor(resources.getColor(R.color.txt_body))
             }
+//            viewModel.inputLoginLiveData.value = s.toString()
             invalidateAuthData()
         }
 
@@ -75,8 +76,8 @@ class AuthActivity : BaseActivity() {
         override fun afterTextChanged(s: Editable?) {
             if (txt_password_layout.isErrorEnabled) {
                 txt_password_layout.isErrorEnabled = false
-//                txt_password.setTextColor(resources.getColor(R.color.txt_body))
             }
+//            viewModel.inputLoginLiveData.value = s.toString()
             invalidateAuthData()
         }
 
@@ -93,18 +94,14 @@ class AuthActivity : BaseActivity() {
         } else if (login != this.login && password == this.password) {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)
-//            txt_login.setTextColor(resources.getColor(R.color.txt_error))
             txt_login_layout.error = getString(R.string.auth_message_incorrect_login)
         } else if (login == this.login && password != this.password) {
             txt_password.requestFocus()
             txt_password.setSelection(txt_password.text?.length!!)
-//            txt_password.setTextColor(resources.getColor(R.color.txt_error))
             txt_password_layout.error = getString(R.string.auth_message_incorrect_password)
         } else {
             txt_login.requestFocus()
             txt_login.setSelection(txt_login.text?.length!!)
-//            txt_login.setTextColor(resources.getColor(R.color.txt_error))
-//            txt_password.setTextColor(resources.getColor(R.color.txt_error))
             txt_login_layout.error = getString(R.string.auth_message_incorrect_login)
             txt_password_layout.error = getString(R.string.auth_message_incorrect_password)
         }

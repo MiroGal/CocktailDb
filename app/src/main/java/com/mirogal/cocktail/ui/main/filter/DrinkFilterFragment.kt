@@ -2,10 +2,14 @@ package com.mirogal.cocktail.ui.main.filter
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.lifecycle.switchMap
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.content_drink_filter.*
@@ -15,9 +19,9 @@ import kotlinx.android.synthetic.main.fragment_pager.toolbar
 
 class DrinkFilterFragment : BaseFragment() {
 
+    override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: MainViewModel by viewModels()
 
-    override val contentLayoutResId = R.layout.fragment_drink_filter
     private var listener: OnFragmentActionListener? = null
     private var alcoholFilter: AlcoholDrinkFilter? = null
     private var categoryFilter: CategoryDrinkFilter? = null
@@ -71,6 +75,12 @@ class DrinkFilterFragment : BaseFragment() {
             listener?.onFilterActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
             requireActivity().onBackPressed()
         }
+
+//        viewModel.filterCocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
+//            if (list.isNotEmpty()) {
+//                1+2
+//            }
+//        })
     }
 
     private fun setFilerData() {
@@ -96,29 +106,40 @@ class DrinkFilterFragment : BaseFragment() {
         }
     }
 
+//    private fun setOnCheckListener() {
+//        rg_alcohol_filter.setOnCheckedChangeListener { _, checkedId ->
+//            alcoholFilter = when (checkedId) {
+//                rb_alcoholic.id -> AlcoholDrinkFilter.ALCOHOLIC
+//                rb_non_alcoholic.id -> AlcoholDrinkFilter.NON_ALCOHOLIC
+//                rb_optional_alcohol.id -> AlcoholDrinkFilter.OPTIONAL_ALCOHOL
+//                else -> AlcoholDrinkFilter.DISABLE
+//            }
+//        }
+//        rg_category_filter.setOnCheckedChangeListener { _, checkedId ->
+//            categoryFilter = when (checkedId) {
+//                rb_ordinary_drink.id -> CategoryDrinkFilter.ORDINARY_DRINK
+//                rb_cocktail.id -> CategoryDrinkFilter.COCKTAIL
+//                rb_milk_float_shake.id -> CategoryDrinkFilter.MILK_FLOAT_SHAKE
+//                rb_other_unknown.id -> CategoryDrinkFilter.OTHER_UNKNOWN
+//                rb_cocoa.id -> CategoryDrinkFilter.COCOA
+//                rb_shot.id -> CategoryDrinkFilter.SHOT
+//                rb_coffee_tea.id -> CategoryDrinkFilter.COFFEE_TEA
+//                rb_homemade_liqueur.id -> CategoryDrinkFilter.HOMEMADE_LIQUEUR
+//                rb_punch_arty_drink.id -> CategoryDrinkFilter.PUNCH_PARTY_DRINK
+//                rb_beer.id -> CategoryDrinkFilter.BEER
+//                rb_soft_drink_soda.id -> CategoryDrinkFilter.SOFT_DRINK_SODA
+//                else -> CategoryDrinkFilter.DISABLE
+//            }
+//        }
+//    }
+
     private fun setOnCheckListener() {
         rg_alcohol_filter.setOnCheckedChangeListener { _, checkedId ->
-            alcoholFilter = when (checkedId) {
-                rb_alcoholic.id -> AlcoholDrinkFilter.ALCOHOLIC
-                rb_non_alcoholic.id -> AlcoholDrinkFilter.NON_ALCOHOLIC
-                rb_optional_alcohol.id -> AlcoholDrinkFilter.OPTIONAL_ALCOHOL
-                else -> AlcoholDrinkFilter.DISABLE
-            }
-        }
-        rg_category_filter.setOnCheckedChangeListener { _, checkedId ->
-            categoryFilter = when (checkedId) {
-                rb_ordinary_drink.id -> CategoryDrinkFilter.ORDINARY_DRINK
-                rb_cocktail.id -> CategoryDrinkFilter.COCKTAIL
-                rb_milk_float_shake.id -> CategoryDrinkFilter.MILK_FLOAT_SHAKE
-                rb_other_unknown.id -> CategoryDrinkFilter.OTHER_UNKNOWN
-                rb_cocoa.id -> CategoryDrinkFilter.COCOA
-                rb_shot.id -> CategoryDrinkFilter.SHOT
-                rb_coffee_tea.id -> CategoryDrinkFilter.COFFEE_TEA
-                rb_homemade_liqueur.id -> CategoryDrinkFilter.HOMEMADE_LIQUEUR
-                rb_punch_arty_drink.id -> CategoryDrinkFilter.PUNCH_PARTY_DRINK
-                rb_beer.id -> CategoryDrinkFilter.BEER
-                rb_soft_drink_soda.id -> CategoryDrinkFilter.SOFT_DRINK_SODA
-                else -> CategoryDrinkFilter.DISABLE
+            when (checkedId) {
+                rb_alcoholic.id -> viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.ALCOHOLIC
+                rb_non_alcoholic.id -> viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.NON_ALCOHOLIC
+                rb_optional_alcohol.id -> viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.OPTIONAL_ALCOHOL
+                else -> viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.DISABLE
             }
         }
     }

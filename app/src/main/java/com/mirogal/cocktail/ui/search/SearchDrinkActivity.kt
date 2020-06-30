@@ -8,13 +8,11 @@ import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
-import com.mirogal.cocktail.ui.auth.AuthViewModel
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
@@ -50,7 +48,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         rv_search_list.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this)
-        viewModel.cocktailListViewModel.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
+        viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
             try {
                 listAdapter.submitList(pagedList)
             } catch (ignored: Exception) {
@@ -58,7 +56,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         })
         rv_search_list.adapter = listAdapter
 
-        viewModel.networkStatus.observe(this, Observer { status: NetworkState.Status ->
+        viewModel.networkStatusLiveData.observe(this, Observer { status: NetworkState.Status ->
             if (status == NetworkState.EMPTY) {
                 showEmpty()
             } else {

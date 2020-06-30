@@ -102,7 +102,7 @@ class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListe
     }
 
     private fun setList() {
-        viewModel.cocktailListViewModel.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
+        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
             cocktailList = list
         })
     }

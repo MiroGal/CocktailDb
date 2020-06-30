@@ -54,19 +54,13 @@ class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         rv_favorite_drink_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.cocktailListViewModel.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-            cocktailList = list
-
-            val filteredList0 = filterFavorite(cocktailList)
-            val filteredList1 = filterAlcohol(filteredList0, alcoholFilter)
-            val filteredList2 = filterCategory(filteredList1, categoryFilter)
-
-            if (filteredList2.isNotEmpty()) {
+        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
+            if (list.isNotEmpty()) {
                 showData()
             } else {
                 showEmpty()
             }
-            listAdapter.refreshData(filteredList2)
+            listAdapter.refreshData(list)
         })
         rv_favorite_drink_list.adapter = listAdapter
     }
