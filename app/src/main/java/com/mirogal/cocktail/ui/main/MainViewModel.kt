@@ -59,11 +59,11 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         repository.deleteCocktailFromDb(id)
     }
 
-    fun switchCocktailFavoriteStatus(cocktail: CocktailDbEntity?) {
-        if (cocktail!!.isFavorite) {
-            repository.setCocktailFavoriteStatus(cocktail.id, false)
+    fun switchCocktailFavoriteStatus(cocktailId: Int, isFavorite: Boolean) {
+        if (isFavorite) {
+            repository.setCocktailFavoriteStatus(cocktailId, false)
         } else {
-            repository.setCocktailFavoriteStatus(cocktail.id, true)
+            repository.setCocktailFavoriteStatus(cocktailId, true)
         }
     }
 

@@ -11,7 +11,7 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 
 internal class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var cocktailEntity: CocktailDbEntity? = null
+    private lateinit var cocktailEntity: CocktailDbEntity
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
 
@@ -27,7 +27,9 @@ internal class ItemHolder(private val context: Context, itemView: View) : Recycl
     }
 
     fun setListener(listener: ListAdapter.OnItemClickListener) {
-        itemView.setOnClickListener { listener.onItemClick(cocktailEntity) }
+        itemView.setOnClickListener {
+            listener.onItemClick(cocktailEntity)
+        }
     }
 
 }

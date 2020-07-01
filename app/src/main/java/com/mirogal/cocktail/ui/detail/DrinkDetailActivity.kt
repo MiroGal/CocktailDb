@@ -28,15 +28,18 @@ class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
     override val contentLayoutResId = R.layout.activity_drink_detail
     override val viewModel: DrinkDetailViewModel by viewModels()
 
-    private lateinit var cocktailEntity: CocktailDbEntity
+    private var cocktailId = 0
+    private var cocktailName: String? = ""
 
     override fun configureView(savedInstanceState: Bundle?) {
-        cocktailEntity = intent.getSerializableExtra(DrinkDetailActivity::class.java.simpleName) as CocktailDbEntity
-        viewModel.cocktailIdLiveData.value = cocktailEntity.id
+        cocktailId = intent.getIntExtra("cocktailId", 0)
+        cocktailName = intent.getStringExtra("cocktailName")
+
+        viewModel.cocktailIdLiveData.value = cocktailId
 
         setSupportActionBar(toolbar)
-        if (cocktailEntity.name!!.isNotEmpty()) {
-            supportActionBar!!.title = cocktailEntity.name
+        if (cocktailName!!.isNotEmpty()) {
+            supportActionBar!!.title = cocktailName
         }
 
         setScrollAppBar()
@@ -139,7 +142,7 @@ class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
 
     override fun onDestroy() {
         val intent = Intent(this, ProposeDrinkService::class.java)
-        intent.putExtra(ProposeDrinkService::class.java.simpleName, cocktailEntity.id)
+        intent.putExtra(ProposeDrinkService::class.java.simpleName, cocktailId)
         ProposeDrinkService.enqueueWork(this, intent)
         super.onDestroy()
     }

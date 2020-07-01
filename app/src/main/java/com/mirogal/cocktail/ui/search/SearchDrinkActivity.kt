@@ -98,15 +98,16 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
     }
 
 
-    override fun onItemClick(cocktail: CocktailDbEntity?) {
+    override fun onItemClick(cocktail: CocktailDbEntity) {
         viewModel.addCocktailToDb(cocktail)
-        openDrinkDetailActivity(cocktail)
+        openDrinkDetailActivity(cocktail.id, cocktail.name)
     }
 
 
-    private fun openDrinkDetailActivity(cocktail: CocktailDbEntity?) {
-        val intent = Intent(this@SearchDrinkActivity, DrinkDetailActivity::class.java)
-        intent.putExtra(DrinkDetailActivity::class.java.simpleName, cocktail)
+    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
+        val intent = Intent(this, DrinkDetailActivity::class.java)
+        intent.putExtra("cocktailId", cocktailId)
+        intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)
     }
 

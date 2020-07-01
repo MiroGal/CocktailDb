@@ -13,6 +13,17 @@ internal class ListAdapter(private val context: Context,
                            private val onItemClickListener: OnItemClickListener)
     : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
 
+    companion object {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbEntity>() {
+
+            override fun areItemsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
+                    = oldItem.id == newItem.id
+
+            override fun areContentsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
+                    = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
+        }
+    }
+
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
         if (position <= -1) {
             return
@@ -29,18 +40,7 @@ internal class ListAdapter(private val context: Context,
     }
 
     internal interface OnItemClickListener {
-        fun onItemClick(cocktail: CocktailDbEntity?)
-    }
-
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbEntity>() {
-
-            override fun areItemsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
-                    = oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
-                = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
-        }
+        fun onItemClick(cocktail: CocktailDbEntity)
     }
 
 }

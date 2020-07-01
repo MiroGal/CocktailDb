@@ -12,13 +12,19 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 
 class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private var cocktailEntity: CocktailDbEntity? = null
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
     private val ivFavorite: ImageView = itemView.findViewById(R.id.iv_favorite)
 
+    private var cocktailId = 0
+    private var cocktailName: String? = ""
+    private var isFavorite: Boolean = false
+
     fun bind(cocktailEntity: CocktailDbEntity) {
-        this.cocktailEntity = cocktailEntity
+        cocktailId = cocktailEntity.id
+        cocktailName = cocktailEntity.name
+        isFavorite = cocktailEntity.isFavorite
+
         tvName.text = cocktailEntity.name
         if (cocktailEntity.isFavorite) {
             ivFavorite.setImageResource(R.drawable.ic_star)
@@ -36,10 +42,14 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
 
     fun setListener(clickListener: ListAdapter.OnItemClickListener,
                     longClickListener: ListAdapter.OnItemLongClickListener) {
-        itemView.setOnClickListener { clickListener.onItemClick(cocktailEntity) }
-        ivFavorite.setOnClickListener { clickListener.onFavoriteClick(cocktailEntity) }
+        itemView.setOnClickListener {
+            clickListener.onItemClick(cocktailId, cocktailName)
+        }
+        ivFavorite.setOnClickListener {
+            clickListener.onFavoriteClick(cocktailId, isFavorite)
+        }
         itemView.setOnLongClickListener {
-            longClickListener.onItemLongClick(cocktailEntity!!.id)
+            longClickListener.onItemLongClick(cocktailId)
             false
         }
     }

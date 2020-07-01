@@ -37,8 +37,8 @@ class ListAdapter(private val context: Context,
     }
 
     interface OnItemClickListener {
-        fun onItemClick(cocktail: CocktailDbEntity?)
-        fun onFavoriteClick(cocktail: CocktailDbEntity?)
+        fun onItemClick(cocktailId: Int, cocktailName: String?)
+        fun onFavoriteClick(cocktailId: Int, isFavorite: Boolean)
     }
 
     interface OnItemLongClickListener {

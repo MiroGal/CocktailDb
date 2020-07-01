@@ -65,12 +65,12 @@ class DrinkFavoriteFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemC
     }
 
 
-    override fun onItemClick(cocktail: CocktailDbEntity?) {
-        openDrinkDetailActivity(cocktail!!)
+    override fun onItemClick(cocktailId: Int, cocktailName: String?) {
+        openDrinkDetailActivity(cocktailId, cocktailName)
     }
 
-    override fun onFavoriteClick(cocktail: CocktailDbEntity?) {
-        viewModel.switchCocktailFavoriteStatus(cocktail)
+    override fun onFavoriteClick(cocktailId: Int, isFavorite: Boolean) {
+        viewModel.switchCocktailFavoriteStatus(cocktailId, isFavorite)
     }
 
     override fun onItemLongClick(cocktailId: Int) {
@@ -78,9 +78,10 @@ class DrinkFavoriteFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemC
     }
 
 
-    private fun openDrinkDetailActivity(cocktail: CocktailDbEntity) {
+    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
         val intent = Intent(activity, DrinkDetailActivity::class.java)
-        intent.putExtra(DrinkDetailActivity::class.java.simpleName, cocktail)
+        intent.putExtra("cocktailId", cocktailId)
+        intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)
     }
 
