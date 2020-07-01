@@ -9,6 +9,7 @@ import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.activity.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -31,41 +32,44 @@ class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
 
     override fun configureView(savedInstanceState: Bundle?) {
         cocktailEntity = intent.getSerializableExtra(DrinkDetailActivity::class.java.simpleName) as CocktailDbEntity
+        viewModel.cocktailIdLiveData.value = cocktailEntity.id
 
         setSupportActionBar(toolbar)
         if (cocktailEntity.name!!.isNotEmpty()) {
             supportActionBar!!.title = cocktailEntity.name
         }
 
-        setAppBar()
-        setDrinkData()
+        setScrollAppBar()
+
+        setObservable()
 
         btn_toolbar_back.setOnClickListener {
             onBackPressed()
         }
     }
 
-    private fun setDrinkData() {
-        tv_info_name.text = cocktailEntity.name
-        tv_info_alcoholic.text = cocktailEntity.alcoholic
-        tv_info_glass.text = cocktailEntity.glass
-        tvInstructionBody.text = cocktailEntity.instruction
+    private fun setObservable() {
+        viewModel.cocktailLiveData.observe(this, Observer {
+            tv_info_name.text = it.name
+            tv_info_alcoholic.text = it.alcoholic
+            tv_info_glass.text = it.glass
+            tvInstructionBody.text = it.instruction
 
-        rv_ingredient_list.layoutManager = LinearLayoutManager(this)
-        val ingredientList = toIngredientList(
-                cocktailEntity.ingredientList, cocktailEntity.measureList)
-        val listAdapter = ListAdapter(ingredientList)
-        rv_ingredient_list.adapter = listAdapter
+            rv_ingredient_list.layoutManager = LinearLayoutManager(this)
+            val ingredientList = toIngredientList(it.ingredientList, it.measureList)
+            val listAdapter = ListAdapter(ingredientList)
+            rv_ingredient_list.adapter = listAdapter
 
-        Glide.with(this)
-                .load(cocktailEntity.imagePath)
-                .centerCrop()
-                .placeholder(R.drawable.anim_placeholder_progress)
-                .error(R.drawable.ic_placeholder_error)
-                .into(iv_image)
+            Glide.with(this)
+                    .load(it.imagePath)
+                    .centerCrop()
+                    .placeholder(R.drawable.anim_placeholder_progress)
+                    .error(R.drawable.ic_placeholder_error)
+                    .into(iv_image)
+        })
     }
 
-    private fun setAppBar() {
+    private fun setScrollAppBar() {
         // Init state
         toolbar_layout.setExpandedTitleColor(resources.getColor(R.color.txt_toolbar_expanded))
         toolbar_layout.setCollapsedTitleTextColor(resources.getColor(R.color.txt_toolbar_collapsed))

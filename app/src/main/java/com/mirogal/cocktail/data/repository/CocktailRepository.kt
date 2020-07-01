@@ -70,6 +70,10 @@ class CocktailRepository(application: Application) {
     }
 
 
+    fun getCocktailById(cocktailId: Int): LiveData<CocktailDbEntity> {
+        return database.dao().getCocktailById(cocktailId)
+    }
+
     fun addCocktailToDb(cocktail: CocktailDbEntity?) {
         Thread(Runnable { database.dao().addCocktail(cocktail!!) }).start()
     }
