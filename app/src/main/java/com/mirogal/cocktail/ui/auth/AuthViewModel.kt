@@ -4,10 +4,11 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import com.mirogal.cocktail.ui.base.BaseViewModel
 import kotlinx.android.synthetic.main.activity_auth.*
 
 
-class AuthViewModel(application: Application) : AndroidViewModel(application) {
+class AuthViewModel(application: Application) : BaseViewModel(application) {
 
     private val login = "MiroGal"
     private val password = "Miro89"

@@ -20,7 +20,7 @@ import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
 
-class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
+class DrinkFavoriteFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_favorite
@@ -36,9 +36,7 @@ class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         fun newInstance() = DrinkFavoriteFragment()
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun configureView(view: View, savedInstanceState: Bundle?) {
         setList()
     }
 

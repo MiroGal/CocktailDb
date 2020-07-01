@@ -9,22 +9,17 @@ import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
 import com.mirogal.cocktail.ui.main.history.HistoryPagerFragment
 import com.mirogal.cocktail.ui.main.profile.ProfileFragment
-import com.mirogal.cocktail.ui.main.profile.TestFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity(),
+class MainActivity : BaseActivity<MainViewModel>(),
         HistoryPagerFragment.OnFragmentActionListener,
-        DrinkFilterFragment.OnFragmentActionListener,
-        ProfileFragment.OnFragmentActionListener,
-        TestFragment.OnFragmentActionListener {
+        DrinkFilterFragment.OnFragmentActionListener {
 
+    override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
-
+    override fun configureView(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             addHistoryPagerFragment()
         }
@@ -54,30 +49,6 @@ class MainActivity : BaseActivity(),
         fragment.setFilter(alcoholFilter, categoryFilter)
     }
 
-    override fun onStartTestButtonClick() {
-        addTestFragment(1, null)
-    }
-
-    override fun onTestActionButtonClick(number: Int, message: String?) {
-        if (message != null) {
-            deleteTestFragment()
-            return
-        }
-        when (number) {
-            1 -> {
-                addTestFragment(number + 1, null)
-            }
-            2 -> {
-                addTestFragment(number + 1, null)
-                addTestFragment(number + 2, null)
-            }
-            4 -> {
-                addTestFragment(number + 1, null)
-                addTestFragment(number + 1, "END")
-            }
-        }
-    }
-
 
     private fun addHistoryPagerFragment() {
         val newFragment = HistoryPagerFragment.newInstance()
@@ -92,24 +63,6 @@ class MainActivity : BaseActivity(),
         supportFragmentManager.beginTransaction().apply {
             add(R.id.fcv_container, newFragment, DrinkFilterFragment::class.java.simpleName)
             addToBackStack(null)
-            commit()
-        }
-    }
-
-    private fun addTestFragment(number: Int, message: String?) {
-        val newFragment = TestFragment.newInstance(number, message)
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.fcv_container, newFragment, TestFragment::class.java.simpleName)
-            addToBackStack(null)
-            commit()
-        }
-    }
-
-    private fun deleteTestFragment() {
-        val testFragment = supportFragmentManager.findFragmentByTag(TestFragment::class.java.simpleName)
-        supportFragmentManager.beginTransaction().apply {
-            remove(testFragment!!)
-//            addToBackStack(null)
             commit()
         }
     }

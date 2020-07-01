@@ -6,10 +6,10 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.main.MainViewModel
 
-class SettingsFragment : BaseFragment() {
+class SettingsFragment : BaseFragment<SettingsViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_settings
     override val viewModel: SettingsViewModel by viewModels()
-    val mainViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
 }

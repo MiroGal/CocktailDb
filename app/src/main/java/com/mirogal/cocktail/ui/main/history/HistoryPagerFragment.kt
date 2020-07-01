@@ -32,7 +32,7 @@ import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
 
-class HistoryPagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
+class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
 
     override val contentLayoutResId = R.layout.fragment_history_pager
     override val viewModel: MainViewModel by activityViewModels()
@@ -53,7 +53,6 @@ class HistoryPagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChan
         fun newInstance() = HistoryPagerFragment()
     }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as? OnFragmentActionListener
@@ -62,9 +61,7 @@ class HistoryPagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChan
         }
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun configureView(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_pager_label)
 

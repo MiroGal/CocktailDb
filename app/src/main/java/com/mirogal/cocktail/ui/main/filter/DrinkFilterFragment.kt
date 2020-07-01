@@ -2,15 +2,10 @@ package com.mirogal.cocktail.ui.main.filter
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
-import androidx.lifecycle.switchMap
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.content_drink_filter.*
@@ -18,7 +13,7 @@ import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
 
 
-class DrinkFilterFragment : BaseFragment() {
+class DrinkFilterFragment : BaseFragment<MainViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: MainViewModel by activityViewModels()
@@ -42,7 +37,6 @@ class DrinkFilterFragment : BaseFragment() {
         }
     }
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         listener = context as? OnFragmentActionListener
@@ -54,13 +48,11 @@ class DrinkFilterFragment : BaseFragment() {
         categoryFilter = arguments?.getSerializable(CATEGORY_DRINK_FILTER) as CategoryDrinkFilter?
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun configureView(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_filter_label)
 
-        setFilerData()
+        setFilterState()
         setOnCheckListener()
 
         btn_toolbar_back.setOnClickListener {
@@ -76,15 +68,9 @@ class DrinkFilterFragment : BaseFragment() {
             listener?.onFilterActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
             requireActivity().onBackPressed()
         }
-
-//        viewModel.filterCocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-//            if (list.isNotEmpty()) {
-//                1+2
-//            }
-//        })
     }
 
-    private fun setFilerData() {
+    private fun setFilterState() {
         when (alcoholFilter) {
             AlcoholDrinkFilter.ALCOHOLIC -> rb_alcoholic.isChecked = true
             AlcoholDrinkFilter.NON_ALCOHOLIC -> rb_non_alcoholic.isChecked = true

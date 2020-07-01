@@ -8,12 +8,15 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.ui.base.BaseViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
+
+    private val repository = CocktailRepository.newInstance(application)
 
     val alcoholDrinkFilterLiveData: MutableLiveData<AlcoholDrinkFilter?> = MutableLiveData()
     val categoryDrinkFilterLiveData: MutableLiveData<CategoryDrinkFilter?> = MutableLiveData()

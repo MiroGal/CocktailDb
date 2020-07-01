@@ -15,6 +15,8 @@ import com.mirogal.cocktail.ui.base.BaseViewModel
 
 class SearchDrinkViewModel(application: Application) : BaseViewModel(application) {
 
+    private val repository = CocktailRepository.newInstance(application)
+
     private val sharedPreferences: SharedPreferences = getApplication<Application>()
             .getSharedPreferences(getApplication<Application>()
                     .resources.getString(R.string.app_name), Context.MODE_PRIVATE)

@@ -22,15 +22,14 @@ import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
 
-class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
+class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.OnItemClickListener {
 
+    override val contentLayoutResId = R.layout.activity_search_drink
     override val viewModel: SearchDrinkViewModel by viewModels()
 
-    private var requestQuery: String? = null
+    private var searchName: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_search_drink)
+    override fun configureView(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
         setList()
     }
@@ -65,7 +64,7 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         })
 
         viewModel.searchNameMutableLiveData.observe(this, Observer { query: String? ->
-            requestQuery = query
+            searchName = query
             if (!(query != null && query.isNotEmpty())) {
                 showPreview()
             }
@@ -80,8 +79,8 @@ class SearchDrinkActivity : BaseActivity(), ListAdapter.OnItemClickListener {
         searchView.isFocusable = true
         searchView.isIconified = false
         searchView.requestFocusFromTouch()
-        if (requestQuery != null) {
-            searchView.setQuery(requestQuery, false)
+        if (searchName != null) {
+            searchView.setQuery(searchName, false)
         }
         searchView.setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {

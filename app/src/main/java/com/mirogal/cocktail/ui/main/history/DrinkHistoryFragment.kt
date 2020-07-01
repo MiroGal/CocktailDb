@@ -21,7 +21,7 @@ import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
 
-class DrinkHistoryFragment : BaseFragment(), ListAdapter.OnItemClickListener,
+class DrinkHistoryFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
@@ -37,9 +37,7 @@ class DrinkHistoryFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         fun newInstance() = DrinkHistoryFragment()
     }
 
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
+    override fun configureView(view: View, savedInstanceState: Bundle?) {
         setList()
     }
 
@@ -56,7 +54,7 @@ class DrinkHistoryFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.DISABLE
+//        viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.DISABLE
         viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
             if (list.isNotEmpty()) {
                 showData()

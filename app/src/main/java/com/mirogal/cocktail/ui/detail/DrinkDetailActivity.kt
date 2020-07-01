@@ -22,16 +22,14 @@ import kotlinx.android.synthetic.main.content_drink_detail.*
 import kotlin.math.abs
 
 
-class DrinkDetailActivity : BaseActivity() {
+class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
 
+    override val contentLayoutResId = R.layout.activity_drink_detail
     override val viewModel: DrinkDetailViewModel by viewModels()
 
     private lateinit var cocktailEntity: CocktailDbEntity
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_drink_detail)
-
+    override fun configureView(savedInstanceState: Bundle?) {
         cocktailEntity = intent.getSerializableExtra(DrinkDetailActivity::class.java.simpleName) as CocktailDbEntity
 
         setSupportActionBar(toolbar)

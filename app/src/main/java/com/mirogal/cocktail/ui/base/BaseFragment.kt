@@ -8,10 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 
 
-abstract class BaseFragment : Fragment() {
-//abstract class BaseFragment<BaseViewModel> : Fragment() {
+abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment() {
 
     protected abstract val contentLayoutResId: Int
+
     protected abstract val viewModel: ViewModel
 
 
@@ -20,10 +20,11 @@ abstract class BaseFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        configureView(savedInstanceState)
+        super.onViewCreated(view, savedInstanceState)
+        configureView(view, savedInstanceState)
     }
 
-    protected open fun configureView(savedInstanceState: Bundle?) {
+    protected open fun configureView(view: View, savedInstanceState: Bundle?) {
         // stub
     }
 

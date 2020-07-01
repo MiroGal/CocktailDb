@@ -13,8 +13,9 @@ import com.mirogal.cocktail.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
 
-class AuthActivity : BaseActivity() {
+class AuthActivity : BaseActivity<AuthViewModel>() {
 
+    override val contentLayoutResId = R.layout.activity_auth
     override val viewModel: AuthViewModel by viewModels()
 
     private val login = "MiroGal"
@@ -23,13 +24,11 @@ class AuthActivity : BaseActivity() {
     private val minLoginLength = 6
     private val minPasswordLength = 6
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-
+    override fun setApplicationTheme() {
         setTheme(R.style.AppTheme_NoActionBar)
+    }
 
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_auth)
-
+    override fun configureView(savedInstanceState: Bundle?) {
         txt_login.filters = arrayOf(inputFilter)
         txt_password.filters = arrayOf(inputFilter)
 

@@ -16,40 +16,27 @@ import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
 import kotlinx.android.synthetic.main.fragment_profile.*
 
 
-class ProfileFragment : BaseFragment() {
+class ProfileFragment : BaseFragment<MainViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_profile
     override val viewModel: MainViewModel by activityViewModels()
-
-    private var listener: OnFragmentActionListener? = null
 
 
     companion object {
         fun newInstance() = ProfileFragment()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = context as? OnFragmentActionListener
-        if (listener == null) {
-            throw ClassCastException("$context must implement Listener")
-        }
-    }
-
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-
+    override fun configureView(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.profile_label)
 
         btn_logout.setOnClickListener { openAuthActivity() }
 
         btn_test.setOnClickListener {
-//            listener?.onStartTestButtonClick()
-            calculateMininumAmountOfWoodBars(90000)
+//            calculateMininumAmountOfWoodBars(90000)
         }
     }
+
 
     fun calculateMininumAmountOfWoodBars(vararg length: Int) {
         val stockWoodBarLength = 3000
@@ -110,11 +97,6 @@ class ProfileFragment : BaseFragment() {
     private fun openAuthActivity() {
         val intent = Intent(activity, AuthActivity::class.java)
         startActivity(intent)
-    }
-
-
-    interface OnFragmentActionListener {
-        fun onStartTestButtonClick()
     }
 
 }
