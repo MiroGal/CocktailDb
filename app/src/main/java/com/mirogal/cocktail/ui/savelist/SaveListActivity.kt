@@ -185,10 +185,9 @@ class SaveListActivity : BaseActivity(), ListAdapter.OnItemClickListener, ListAd
         viewModel.cocktailList.observe(this, Observer { pagedList: PagedList<CocktailDbEntity> ->
             if (!pagedList.isEmpty()) {
                 if (pagedList.size > 1) {
-                    entity = pagedList[0]!!
-                    if (entity!!.id == id) {
-                        entity = pagedList[1]!!
-                    }
+                    do {
+                        entity = pagedList.shuffled()[0]
+                    } while (entity!!.id == id)
                 }
             }
         })
