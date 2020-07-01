@@ -11,7 +11,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -26,16 +26,16 @@ import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
-import kotlinx.android.synthetic.main.fragment_pager.*
+import kotlinx.android.synthetic.main.fragment_history_pager.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
 
-class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
+class HistoryPagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListener {
 
-    override val contentLayoutResId = R.layout.fragment_pager
-    override val viewModel: MainViewModel by viewModels()
+    override val contentLayoutResId = R.layout.fragment_history_pager
+    override val viewModel: MainViewModel by activityViewModels()
 
     private var listener: OnFragmentActionListener? = null
 
@@ -50,7 +50,7 @@ class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListe
 
 
     companion object {
-        fun newInstance() = PagerFragment()
+        fun newInstance() = HistoryPagerFragment()
     }
 
 

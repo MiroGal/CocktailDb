@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.switchMap
@@ -14,13 +15,13 @@ import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
-import kotlinx.android.synthetic.main.fragment_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
 
 
 class DrinkFilterFragment : BaseFragment() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
-    override val viewModel: MainViewModel by viewModels()
+    override val viewModel: MainViewModel by activityViewModels()
 
     private var listener: OnFragmentActionListener? = null
     private var alcoholFilter: AlcoholDrinkFilter? = null

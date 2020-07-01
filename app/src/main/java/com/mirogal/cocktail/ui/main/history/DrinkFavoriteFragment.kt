@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,7 +24,7 @@ class DrinkFavoriteFragment : BaseFragment(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_favorite
-    override val viewModel: MainViewModel by viewModels()
+    override val viewModel: MainViewModel by activityViewModels()
 
     private lateinit var listAdapter: ListAdapter
     private lateinit var cocktailList: List<CocktailDbEntity>

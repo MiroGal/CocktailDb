@@ -7,14 +7,14 @@ import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
-import com.mirogal.cocktail.ui.main.history.PagerFragment
+import com.mirogal.cocktail.ui.main.history.HistoryPagerFragment
 import com.mirogal.cocktail.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.ui.main.profile.TestFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity(),
-        PagerFragment.OnFragmentActionListener,
+        HistoryPagerFragment.OnFragmentActionListener,
         DrinkFilterFragment.OnFragmentActionListener,
         ProfileFragment.OnFragmentActionListener,
         TestFragment.OnFragmentActionListener {
@@ -26,7 +26,7 @@ class MainActivity : BaseActivity(),
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            addPagerFragment()
+            addHistoryPagerFragment()
         }
 
         bottom_nav_view.selectedItemId = R.id.bottom_nav_drink
@@ -34,7 +34,7 @@ class MainActivity : BaseActivity(),
         bottom_nav_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.bottom_nav_drink -> {
-                    showPagerFragment()
+                    showHistoryPagerFragment()
                 }
                 R.id.bottom_nav_profile -> {
                     showProfileFragment()
@@ -46,11 +46,11 @@ class MainActivity : BaseActivity(),
 
 
     override fun onToolbarFilterButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        addFilterFragment(alcoholFilter, categoryFilter)
+        addDrinkFilterFragment(alcoholFilter, categoryFilter)
     }
 
     override fun onFilterActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        val fragment = supportFragmentManager.findFragmentByTag(PagerFragment::class.java.simpleName) as PagerFragment
+        val fragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName) as HistoryPagerFragment
         fragment.setFilter(alcoholFilter, categoryFilter)
     }
 
@@ -79,15 +79,15 @@ class MainActivity : BaseActivity(),
     }
 
 
-    private fun addPagerFragment() {
-        val newFragment = PagerFragment.newInstance()
+    private fun addHistoryPagerFragment() {
+        val newFragment = HistoryPagerFragment.newInstance()
         supportFragmentManager.beginTransaction().apply {
-            add(R.id.fcv_container, newFragment, PagerFragment::class.java.simpleName)
+            add(R.id.fcv_container, newFragment, HistoryPagerFragment::class.java.simpleName)
             commit()
         }
     }
 
-    private fun addFilterFragment(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
+    private fun addDrinkFilterFragment(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         val newFragment = DrinkFilterFragment.newInstance(alcoholFilter, categoryFilter)
         supportFragmentManager.beginTransaction().apply {
             add(R.id.fcv_container, newFragment, DrinkFilterFragment::class.java.simpleName)
@@ -114,8 +114,8 @@ class MainActivity : BaseActivity(),
         }
     }
 
-    private fun showPagerFragment() {
-        val pagerFragment = supportFragmentManager.findFragmentByTag(PagerFragment::class.java.simpleName)
+    private fun showHistoryPagerFragment() {
+        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
         if (pagerFragment != null && pagerFragment.isAdded) {
             supportFragmentManager.beginTransaction().apply {
@@ -133,7 +133,7 @@ class MainActivity : BaseActivity(),
     }
 
     private fun showProfileFragment() {
-        val pagerFragment = supportFragmentManager.findFragmentByTag(PagerFragment::class.java.simpleName)
+        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
         if (pagerFragment != null && pagerFragment.isAdded) {
             supportFragmentManager.beginTransaction().apply {
