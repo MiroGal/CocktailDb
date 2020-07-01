@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/background_button" />
-    <corners android:radius="@dimen/radius_4" />
-</shape>
+<ripple
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:color="@color/background_button_inactive">
+
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/background_button" />
+            <corners android:radius="@dimen/radius_4" />
+        </shape>
+    </item>
+
+</ripple>

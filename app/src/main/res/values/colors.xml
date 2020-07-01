@@ -9,6 +9,7 @@
     <color name="background_secondary">#F0F0F0</color>
     <color name="background_translucent">#C0FFFFFF</color>
     <color name="background_button">#102F54</color>
+    <color name="background_button_inactive">#809FC4</color>
 
     <color name="txt_title">#202020</color>
     <color name="txt_body">#303030</color>
