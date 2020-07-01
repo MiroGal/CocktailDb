@@ -57,11 +57,11 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
             }
         }
 
-        setObservers()
+        setObserver()
         fillInputField()
     }
 
-    private fun setObservers() {
+    private fun setObserver() {
         viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
             if (btn_authorization.isClickable != it) {
                 btn_authorization.isClickable = it

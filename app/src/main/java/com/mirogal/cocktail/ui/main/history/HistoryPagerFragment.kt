@@ -166,9 +166,10 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
         startActivity(intent)
     }
 
-    private fun openDrinkDetailActivity(cocktail: CocktailDbEntity) {
+    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
         val intent = Intent(activity, DrinkDetailActivity::class.java)
-        intent.putExtra(DrinkDetailActivity::class.java.simpleName, cocktail)
+        intent.putExtra("cocktailId", cocktailId)
+        intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)
     }
 
@@ -219,7 +220,7 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
-                            openDrinkDetailActivity(entity)
+                            openDrinkDetailActivity(entity.id, entity.name)
                         }.show()
             }
         }

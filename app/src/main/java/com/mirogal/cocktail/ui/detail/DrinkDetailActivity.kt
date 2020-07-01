@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseActivity
 import com.mirogal.cocktail.ui.detail.IngredientMapper.toIngredientList
@@ -44,14 +43,14 @@ class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
 
         setScrollAppBar()
 
-        setObservable()
-
         btn_toolbar_back.setOnClickListener {
             onBackPressed()
         }
+
+        setObserver()
     }
 
-    private fun setObservable() {
+    private fun setObserver() {
         viewModel.cocktailLiveData.observe(this, Observer {
             tv_info_name.text = it.name
             tv_info_alcoholic.text = it.alcoholic
