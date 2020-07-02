@@ -11,7 +11,7 @@ import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 interface CocktailDao {
 
     @get:Query("SELECT * FROM " + CocktailDbEntity.TABLE_NAME)
-    val cocktailListLiveData: LiveData<List<CocktailDbEntity>>
+    val cocktailListLiveData: LiveData<List<CocktailDbEntity>?>
 
     @Query("SELECT * FROM " + CocktailDbEntity.TABLE_NAME
             + " WHERE " + CocktailDbEntity.COLUMN_ID + " = :cocktailId")

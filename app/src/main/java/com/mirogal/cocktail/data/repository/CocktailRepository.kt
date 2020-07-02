@@ -15,7 +15,7 @@ class CocktailRepository(application: Application) {
 
     private val database = CocktailDatabase.newInstance(application)
 
-    lateinit var saveCocktailListLiveData: LiveData<List<CocktailDbEntity>>
+    lateinit var saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     var loadCocktailListLiveData: LiveData<PagedList<CocktailDbEntity?>> = MutableLiveData()
     val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
     val networkStatusMutableLiveData: MutableLiveData<NetworkState.Status> = MutableLiveData()

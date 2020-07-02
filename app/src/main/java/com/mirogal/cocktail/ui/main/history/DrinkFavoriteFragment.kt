@@ -53,8 +53,8 @@ class DrinkFavoriteFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemC
         rv_favorite_drink_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-            if (list.isNotEmpty()) {
+        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
+            if (list!!.isNotEmpty()) {
                 showData()
             } else {
                 showEmpty()

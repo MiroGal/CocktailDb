@@ -60,12 +60,13 @@ class DrinkFilterFragment : BaseFragment<MainViewModel>() {
         }
 
         btn_apply.setOnClickListener {
-            listener?.onFilterActionButtonClick(alcoholFilter, categoryFilter)
+//            listener?.onFilterActionButtonClick(alcoholFilter, categoryFilter)
             requireActivity().onBackPressed()
         }
 
         btn_reset.setOnClickListener {
-            listener?.onFilterActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
+//            listener?.onFilterActionButtonClick(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
+            viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.DISABLE
             requireActivity().onBackPressed()
         }
     }

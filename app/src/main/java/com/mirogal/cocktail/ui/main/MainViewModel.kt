@@ -2,13 +2,11 @@ package com.mirogal.cocktail.ui.main
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
 import androidx.paging.LivePagedListBuilder
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
+import com.mirogal.cocktail.ui.auth.AuthDataValidStatus
 import com.mirogal.cocktail.ui.base.BaseViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
@@ -18,41 +16,33 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 
+//    val cocktailListLiveData = repository.saveCocktailListLiveData
+    val cocktailListLiveData: MediatorLiveData<List<CocktailDbEntity>?>
+    private val saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val alcoholDrinkFilterLiveData: MutableLiveData<AlcoholDrinkFilter?> = MutableLiveData()
     val categoryDrinkFilterLiveData: MutableLiveData<CategoryDrinkFilter?> = MutableLiveData()
 
-//    val cocktailListLiveData: LiveData<List<CocktailDbEntity>> = MediatorLiveData<List<CocktailDbEntity>>().apply {
-//        addSource(alcoholDrinkFilterLiveData) {
-//            value = repository.saveCocktailListLiveData.value
-//        }
-//        addSource(categoryDrinkFilterLiveData) {
-//            value = repository.saveCocktailListLiveData.value
-//        }
-//    }
+    private val observer: Observer<in List<CocktailDbEntity>?> = Observer {  }
 
-    val cocktailListLiveData = Transformations.switchMap(alcoholDrinkFilterLiveData) { it ->
-        if (it == null || it == AlcoholDrinkFilter.DISABLE) {
-            repository.saveCocktailListLiveData
-        } else {
-            when (it) {
-                AlcoholDrinkFilter.ALCOHOLIC -> {
-                    Transformations.map(repository.saveCocktailListLiveData) { list ->
-                        list.filter { it.alcoholic!!.contains(AlcoholDrinkFilter.ALCOHOLIC.key) }
-                    }
+    init {
+        saveCocktailListLiveData = repository.saveCocktailListLiveData
+        saveCocktailListLiveData.observeForever(observer)
+        cocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
+            addSource(alcoholDrinkFilterLiveData) {
+                value = if (alcoholDrinkFilterLiveData.value != null || alcoholDrinkFilterLiveData.value != AlcoholDrinkFilter.DISABLE) {
+                    saveCocktailListLiveData.value!!.filter { it.alcoholic == alcoholDrinkFilterLiveData.value!!.key }
+                } else {
+                    saveCocktailListLiveData.value!!
                 }
-                AlcoholDrinkFilter.NON_ALCOHOLIC -> {
-                    Transformations.map(repository.saveCocktailListLiveData) { list ->
-                        list.filter { it.alcoholic!!.contains(AlcoholDrinkFilter.NON_ALCOHOLIC.key) }
-                    }
-                }
-                AlcoholDrinkFilter.OPTIONAL_ALCOHOL -> {
-                    Transformations.map(repository.saveCocktailListLiveData) { list ->
-                        list.filter { it.alcoholic!!.contains(AlcoholDrinkFilter.OPTIONAL_ALCOHOL.key) }
-                    }
-                }
-                else -> repository.saveCocktailListLiveData
             }
         }
+        cocktailListLiveData.observeForever(observer)
+    }
+
+    override fun onCleared() {
+        cocktailListLiveData.removeObserver(observer)
+        saveCocktailListLiveData.removeObserver(observer)
+        super.onCleared()
     }
 
     fun deleteCocktailFromDb(id: Int) {

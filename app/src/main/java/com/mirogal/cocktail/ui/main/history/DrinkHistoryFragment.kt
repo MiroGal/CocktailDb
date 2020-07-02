@@ -54,9 +54,8 @@ class DrinkHistoryFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemCl
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-//        viewModel.alcoholDrinkFilterLiveData.value = AlcoholDrinkFilter.DISABLE
-        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-            if (list.isNotEmpty()) {
+        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
+            if (list!!.isNotEmpty()) {
                 showData()
             } else {
                 showEmpty()

@@ -39,7 +39,7 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
 
     private var listener: OnFragmentActionListener? = null
 
-    private lateinit var cocktailList: List<CocktailDbEntity>
+//    private var cocktailList: List<CocktailDbEntity>? = null
     private var alcoholFilter: AlcoholDrinkFilter? = null
     private var categoryFilter: CategoryDrinkFilter? = null
 
@@ -99,9 +99,9 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
     }
 
     private fun setList() {
-        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list: List<CocktailDbEntity> ->
-            cocktailList = list
-        })
+//        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
+//            cocktailList = list
+//        })
     }
 
     private fun setViewPager() {
@@ -210,20 +210,20 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
     }
 
     private fun showProposeDrink(id: Int) {
-        if (cocktailList.isNotEmpty()) {
-            if (cocktailList.size > 1) {
-                var entity: CocktailDbEntity?
-                do {
-                    entity = cocktailList.shuffled()[0]
-                } while (entity!!.id == id)
-
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
-                            openDrinkDetailActivity(entity.id, entity.name)
-                        }.show()
-            }
-        }
+//        if (cocktailList!!.isNotEmpty()) {
+//            if (cocktailList!!.size > 1) {
+//                var entity: CocktailDbEntity?
+//                do {
+//                    entity = cocktailList!!.shuffled()[0]
+//                } while (entity!!.id == id)
+//
+//                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+//                        "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
+//                        .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
+//                            openDrinkDetailActivity(entity.id, entity.name)
+//                        }.show()
+//            }
+//        }
     }
 
     fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
