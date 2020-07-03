@@ -16,23 +16,31 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 
-//    val cocktailListLiveData = repository.saveCocktailListLiveData
     val cocktailListLiveData: MediatorLiveData<List<CocktailDbEntity>?>
-    private val saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
+    private val saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?> = repository.saveCocktailListLiveData
     val alcoholDrinkFilterLiveData: MutableLiveData<AlcoholDrinkFilter?> = MutableLiveData()
     val categoryDrinkFilterLiveData: MutableLiveData<CategoryDrinkFilter?> = MutableLiveData()
 
     private val observer: Observer<in List<CocktailDbEntity>?> = Observer {  }
 
     init {
-        saveCocktailListLiveData = repository.saveCocktailListLiveData
-        saveCocktailListLiveData.observeForever(observer)
         cocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
+            addSource(saveCocktailListLiveData) {
+                if (saveCocktailListLiveData.value != null) {
+                    if (alcoholDrinkFilterLiveData.value == null || alcoholDrinkFilterLiveData.value == AlcoholDrinkFilter.DISABLE) {
+                        value = saveCocktailListLiveData.value
+                    } else {
+                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == alcoholDrinkFilterLiveData.value?.key }
+                    }
+                }
+            }
             addSource(alcoholDrinkFilterLiveData) {
-                value = if (alcoholDrinkFilterLiveData.value != null || alcoholDrinkFilterLiveData.value != AlcoholDrinkFilter.DISABLE) {
-                    saveCocktailListLiveData.value!!.filter { it.alcoholic == alcoholDrinkFilterLiveData.value!!.key }
-                } else {
-                    saveCocktailListLiveData.value!!
+                if (saveCocktailListLiveData.value != null) {
+                    if (alcoholDrinkFilterLiveData.value == null || alcoholDrinkFilterLiveData.value == AlcoholDrinkFilter.DISABLE) {
+                        value = saveCocktailListLiveData.value
+                    } else {
+                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == alcoholDrinkFilterLiveData.value?.key }
+                    }
                 }
             }
         }
@@ -41,7 +49,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 
     override fun onCleared() {
         cocktailListLiveData.removeObserver(observer)
-        saveCocktailListLiveData.removeObserver(observer)
         super.onCleared()
     }
 
