@@ -12,11 +12,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
-import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
@@ -71,7 +68,7 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
         setReceiver()
 
         btn_toolbar_filter.setOnClickListener {
-            listener?.onToolbarFilterButtonClick(alcoholFilter, categoryFilter)
+            listener?.onToolbarBtnFilterClick()
         }
 
         btn_toolbar_filter.setOnLongClickListener {
@@ -296,7 +293,7 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
 
 
     interface OnFragmentActionListener {
-        fun onToolbarFilterButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
+        fun onToolbarBtnFilterClick()
     }
 
 }

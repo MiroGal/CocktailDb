@@ -3,52 +3,66 @@ package com.mirogal.cocktail.ui.main
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.*
-import androidx.paging.LivePagedListBuilder
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
-import com.mirogal.cocktail.ui.auth.AuthDataValidStatus
 import com.mirogal.cocktail.ui.base.BaseViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.filter.DrinkFilter
+import com.mirogal.cocktail.ui.main.filter.DrinkFilterType
 
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 
-    val cocktailListLiveData: MediatorLiveData<List<CocktailDbEntity>?>
     private val saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?> = repository.saveCocktailListLiveData
-    val alcoholDrinkFilterLiveData: MutableLiveData<AlcoholDrinkFilter?> = MutableLiveData()
-    val categoryDrinkFilterLiveData: MutableLiveData<CategoryDrinkFilter?> = MutableLiveData()
+    val historyCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
+    val favoriteCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
+    val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
 
-    private val observer: Observer<in List<CocktailDbEntity>?> = Observer {  }
+//    private val observer: Observer<in List<CocktailDbEntity>?> = Observer {  }
 
     init {
-        cocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
+        drinkFilterLiveData.value = hashMapOf(
+                Pair(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE),
+                Pair(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE))
+
+        historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
             addSource(saveCocktailListLiveData) {
                 if (saveCocktailListLiveData.value != null) {
-                    if (alcoholDrinkFilterLiveData.value == null || alcoholDrinkFilterLiveData.value == AlcoholDrinkFilter.DISABLE) {
+                    if (drinkFilterLiveData.value == null || drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == AlcoholDrinkFilter.DISABLE) {
                         value = saveCocktailListLiveData.value
                     } else {
-                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == alcoholDrinkFilterLiveData.value?.key }
+                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key }
                     }
                 }
             }
-            addSource(alcoholDrinkFilterLiveData) {
+            addSource(drinkFilterLiveData) {
                 if (saveCocktailListLiveData.value != null) {
-                    if (alcoholDrinkFilterLiveData.value == null || alcoholDrinkFilterLiveData.value == AlcoholDrinkFilter.DISABLE) {
+                    if (drinkFilterLiveData.value == null || drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == AlcoholDrinkFilter.DISABLE) {
                         value = saveCocktailListLiveData.value
                     } else {
-                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == alcoholDrinkFilterLiveData.value?.key }
+                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key }
                     }
                 }
             }
         }
-        cocktailListLiveData.observeForever(observer)
+
+        favoriteCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
+            addSource(historyCocktailListLiveData) {
+                if (historyCocktailListLiveData.value != null) {
+                    value = historyCocktailListLiveData.value?.filter { it.isFavorite }
+                }
+            }
+        }
+//        historyCocktailListLiveData.observeForever(observer)
+//        favoriteCocktailListLiveData.observeForever(observer)
     }
 
     override fun onCleared() {
-        cocktailListLiveData.removeObserver(observer)
+//        historyCocktailListLiveData.removeObserver(observer)
+//        favoriteCocktailListLiveData.removeObserver(observer)
         super.onCleared()
     }
 

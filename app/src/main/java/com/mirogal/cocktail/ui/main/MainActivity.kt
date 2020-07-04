@@ -40,8 +40,8 @@ class MainActivity : BaseActivity<MainViewModel>(),
     }
 
 
-    override fun onToolbarFilterButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        addDrinkFilterFragment(alcoholFilter, categoryFilter)
+    override fun onToolbarBtnFilterClick() {
+        addDrinkFilterFragment()
     }
 
     override fun onFilterActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
@@ -58,8 +58,8 @@ class MainActivity : BaseActivity<MainViewModel>(),
         }
     }
 
-    private fun addDrinkFilterFragment(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        val newFragment = DrinkFilterFragment.newInstance(alcoholFilter, categoryFilter)
+    private fun addDrinkFilterFragment() {
+        val newFragment = DrinkFilterFragment.newInstance()
         supportFragmentManager.beginTransaction().apply {
             add(R.id.fcv_container, newFragment, DrinkFilterFragment::class.java.simpleName)
             addToBackStack(null)

@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
@@ -53,7 +52,7 @@ class DrinkFavoriteFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemC
         rv_favorite_drink_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
+        viewModel.favoriteCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list!!.isNotEmpty()) {
                 showData()
             } else {
