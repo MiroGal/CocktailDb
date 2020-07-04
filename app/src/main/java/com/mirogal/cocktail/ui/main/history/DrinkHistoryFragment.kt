@@ -73,7 +73,7 @@ class DrinkHistoryFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemCl
     }
 
     override fun onItemLongClick(cocktailId: Int) {
-        viewModel.deleteCocktailFromDb(cocktailId)
+        viewModel.deleteCocktail(cocktailId)
     }
 
 

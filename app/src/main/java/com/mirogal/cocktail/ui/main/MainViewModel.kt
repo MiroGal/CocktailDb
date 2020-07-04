@@ -1,7 +1,6 @@
 package com.mirogal.cocktail.ui.main
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
@@ -24,38 +23,25 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
 //    private val observer: Observer<in List<CocktailDbEntity>?> = Observer {  }
 
     init {
+        historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
+            addSource(saveCocktailListLiveData) {
+                if (saveCocktailListLiveData.value != null)
+                    value = filterCocktailList(saveCocktailListLiveData.value)
+            }
+            addSource(drinkFilterLiveData) {
+                if (saveCocktailListLiveData.value != null)
+                    value = filterCocktailList(saveCocktailListLiveData.value)
+            }
+        }
+
+        favoriteCocktailListLiveData = Transformations.map(historyCocktailListLiveData) { list ->
+            list?.filter { it.isFavorite }
+        }
+
         drinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE),
                 Pair(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE))
 
-        historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
-            addSource(saveCocktailListLiveData) {
-                if (saveCocktailListLiveData.value != null) {
-                    if (drinkFilterLiveData.value == null || drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == AlcoholDrinkFilter.DISABLE) {
-                        value = saveCocktailListLiveData.value
-                    } else {
-                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key }
-                    }
-                }
-            }
-            addSource(drinkFilterLiveData) {
-                if (saveCocktailListLiveData.value != null) {
-                    if (drinkFilterLiveData.value == null || drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == AlcoholDrinkFilter.DISABLE) {
-                        value = saveCocktailListLiveData.value
-                    } else {
-                        value = saveCocktailListLiveData.value?.filter { it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key }
-                    }
-                }
-            }
-        }
-
-        favoriteCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
-            addSource(historyCocktailListLiveData) {
-                if (historyCocktailListLiveData.value != null) {
-                    value = historyCocktailListLiveData.value?.filter { it.isFavorite }
-                }
-            }
-        }
 //        historyCocktailListLiveData.observeForever(observer)
 //        favoriteCocktailListLiveData.observeForever(observer)
     }
@@ -66,7 +52,19 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         super.onCleared()
     }
 
-    fun deleteCocktailFromDb(id: Int) {
+    private fun filterCocktailList(list: List<CocktailDbEntity>?): List<CocktailDbEntity>? {
+        return list?.filter {
+                if (drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) != AlcoholDrinkFilter.DISABLE) {
+                    it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key
+                } else true
+            }?.filter {
+                if (drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) != CategoryDrinkFilter.DISABLE) {
+                    it.category == drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)?.key
+                } else true
+            }
+    }
+
+    fun deleteCocktail(id: Int) {
         repository.deleteCocktailFromDb(id)
     }
 

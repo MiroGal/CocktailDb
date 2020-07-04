@@ -73,7 +73,7 @@ class DrinkFavoriteFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemC
     }
 
     override fun onItemLongClick(cocktailId: Int) {
-        viewModel.deleteCocktailFromDb(cocktailId)
+        viewModel.deleteCocktail(cocktailId)
     }
 
 
