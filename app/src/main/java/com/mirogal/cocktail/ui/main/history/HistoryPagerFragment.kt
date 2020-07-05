@@ -14,8 +14,10 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
@@ -23,6 +25,7 @@ import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.ui.main.MainViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.filter.DrinkFilterType
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_history_pager.*
@@ -37,13 +40,11 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
     override val viewModel: HistoryPagerViewModel by viewModels()
     private val activityViewModel: MainViewModel by activityViewModels()
 
-    private lateinit var pagerAdapter: PagerAdapter
-
     private var listener: OnFragmentActionListener? = null
 
-//    private var cocktailList: List<CocktailDbEntity>? = null
-    private var alcoholFilter: AlcoholDrinkFilter? = null
-    private var categoryFilter: CategoryDrinkFilter? = null
+    private lateinit var pagerAdapter: PagerAdapter
+
+    private var cocktailList: List<CocktailDbEntity>? = null
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
@@ -64,7 +65,6 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_pager_label)
 
-        setList()
         setViewPager()
         setReceiver()
 
@@ -86,14 +86,16 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         }
 
         btn_item_filter_alcohol_close.setOnClickListener {
-            setFilter(AlcoholDrinkFilter.DISABLE, categoryFilter)
+            val drinkFilter = activityViewModel.drinkFilterLiveData.value
+            drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE)
+            activityViewModel.drinkFilterLiveData.value = drinkFilter
         }
 
         btn_item_filter_category_close.setOnClickListener {
-            setFilter(alcoholFilter, CategoryDrinkFilter.DISABLE)
+            val drinkFilter = activityViewModel.drinkFilterLiveData.value
+            drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
+            activityViewModel.drinkFilterLiveData.value = drinkFilter
         }
-
-        setFilter(alcoholFilter, categoryFilter)
 
         setObserver()
     }
@@ -106,17 +108,22 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
                 btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_enable)
             }
         })
-    }
 
-    private fun setList() {
-//        viewModel.cocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
-//            cocktailList = list
-//        })
+        activityViewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                showFilterAlcohol(it[DrinkFilterType.ALCOHOL] as AlcoholDrinkFilter)
+                showFilterCategory(it[DrinkFilterType.CATEGORY] as CategoryDrinkFilter)
+            }
+        })
+
+        activityViewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer {
+            cocktailList = it
+        })
     }
 
     private fun setViewPager() {
         pagerAdapter = PagerAdapter(this)
-        // Transition animation
+        // Animation of transition
         view_pager.setPageTransformer(ZoomOutPageTransformer())
         view_pager.adapter = pagerAdapter
 
@@ -211,40 +218,24 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
     }
 
     private fun showProposeDrink(id: Int) {
-//        if (cocktailList!!.isNotEmpty()) {
-//            if (cocktailList!!.size > 1) {
-//                var entity: CocktailDbEntity?
-//                do {
-//                    entity = cocktailList!!.shuffled()[0]
-//                } while (entity!!.id == id)
-//
-//                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-//                        "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
-//                        .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
-//                            openDrinkDetailActivity(entity.id, entity.name)
-//                        }.show()
-//            }
-//        }
+        if (cocktailList != null && cocktailList!!.isNotEmpty() && cocktailList!!.size > 1) {
+            val entity: CocktailDbEntity? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
+            if (entity != null) {
+                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                        "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
+                            openDrinkDetailActivity(entity.id, entity.name)
+                        }.show()
+            }
+        }
     }
 
-
-
-
-
-    fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        this.alcoholFilter = alcoholFilter
-        this.categoryFilter = categoryFilter
-
-        showFilterAlcohol()
-        showFilterCategory()
-    }
-
-    private fun showFilterAlcohol() {
-        if (alcoholFilter != null && alcoholFilter != AlcoholDrinkFilter.DISABLE) {
+    private fun showFilterAlcohol(filter: AlcoholDrinkFilter) {
+        if (filter != AlcoholDrinkFilter.DISABLE) {
             item_alcohol_filter.visibility = View.VISIBLE
             item_alcohol_filter.setCardBackgroundColor(randomColor())
         }
-        when (alcoholFilter) {
+        when (filter) {
             AlcoholDrinkFilter.ALCOHOLIC -> {
                 iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_alcoholic)
                 tv_filter_alcohol_name.text = AlcoholDrinkFilter.ALCOHOLIC.key
@@ -261,24 +252,24 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         }
     }
 
-    private fun showFilterCategory() {
-        if (categoryFilter != null && categoryFilter != CategoryDrinkFilter.DISABLE) {
+    private fun showFilterCategory(filter: CategoryDrinkFilter) {
+        if (filter != CategoryDrinkFilter.DISABLE) {
             item_category_filter.visibility = View.VISIBLE
             item_category_filter.setCardBackgroundColor(randomColor())
             iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
         }
-        when (categoryFilter) {
-            CategoryDrinkFilter.ORDINARY_DRINK -> { tv_filter_category_name.text = CategoryDrinkFilter.ORDINARY_DRINK.key }
-            CategoryDrinkFilter.COCKTAIL -> { tv_filter_category_name.text = CategoryDrinkFilter.COCKTAIL.key }
-            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> { tv_filter_category_name.text = CategoryDrinkFilter.MILK_FLOAT_SHAKE.key }
-            CategoryDrinkFilter.OTHER_UNKNOWN -> { tv_filter_category_name.text = CategoryDrinkFilter.OTHER_UNKNOWN.key }
-            CategoryDrinkFilter.COCOA -> { tv_filter_category_name.text = CategoryDrinkFilter.COCOA.key }
-            CategoryDrinkFilter.SHOT -> { tv_filter_category_name.text = CategoryDrinkFilter.SHOT.key }
-            CategoryDrinkFilter.COFFEE_TEA -> { tv_filter_category_name.text = CategoryDrinkFilter.COFFEE_TEA.key }
-            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> { tv_filter_category_name.text = CategoryDrinkFilter.HOMEMADE_LIQUEUR.key }
-            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> { tv_filter_category_name.text = CategoryDrinkFilter.PUNCH_PARTY_DRINK.key }
-            CategoryDrinkFilter.BEER -> { tv_filter_category_name.text = CategoryDrinkFilter.BEER.key }
-            CategoryDrinkFilter.SOFT_DRINK_SODA -> { tv_filter_category_name.text = CategoryDrinkFilter.SOFT_DRINK_SODA.key }
+        when (filter) {
+            CategoryDrinkFilter.ORDINARY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.ORDINARY_DRINK.key
+            CategoryDrinkFilter.COCKTAIL -> tv_filter_category_name.text = CategoryDrinkFilter.COCKTAIL.key
+            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> tv_filter_category_name.text = CategoryDrinkFilter.MILK_FLOAT_SHAKE.key
+            CategoryDrinkFilter.OTHER_UNKNOWN -> tv_filter_category_name.text = CategoryDrinkFilter.OTHER_UNKNOWN.key
+            CategoryDrinkFilter.COCOA -> tv_filter_category_name.text = CategoryDrinkFilter.COCOA.key
+            CategoryDrinkFilter.SHOT -> tv_filter_category_name.text = CategoryDrinkFilter.SHOT.key
+            CategoryDrinkFilter.COFFEE_TEA -> tv_filter_category_name.text = CategoryDrinkFilter.COFFEE_TEA.key
+            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> tv_filter_category_name.text = CategoryDrinkFilter.HOMEMADE_LIQUEUR.key
+            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.PUNCH_PARTY_DRINK.key
+            CategoryDrinkFilter.BEER -> tv_filter_category_name.text = CategoryDrinkFilter.BEER.key
+            CategoryDrinkFilter.SOFT_DRINK_SODA -> tv_filter_category_name.text = CategoryDrinkFilter.SOFT_DRINK_SODA.key
             else -> item_category_filter.visibility = View.GONE
         }
     }
