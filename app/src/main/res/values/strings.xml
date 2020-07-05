@@ -16,9 +16,15 @@
     <string name="profile_btn_test">Test</string>
     <!--endregion-->
 
+    <!--region Settings-->
+    <string name="settings_label">Settings</string>
+    <string name="settings_show_bottom_navigation_label">Show bottom navigation label</string>
+    <!--endregion-->
+
     <!--region Main-->
     <string name="main_bottom_nav_drink">Drinks</string>
     <string name="main_bottom_nav_profile">Profile</string>
+    <string name="main_bottom_nav_settings">Settings</string>
     <!--endregion-->
 
     <!--region DrinkHistory-->

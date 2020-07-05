@@ -19,24 +19,12 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:paddingStart="@dimen/offset_48"
             android:background="?attr/colorPrimary"
             android:theme="@style/AppTheme.PopupOverlay"
             tools:ignore="RtlSymmetry" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ImageView
-        android:id="@+id/btn_toolbar_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/offset_4"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_back"
-        android:elevation="@dimen/elevation_4"
-        app:elevation="@dimen/elevation_4"
-        tools:ignore="ContentDescription" />
-
-    <include layout="@layout/content_drink_filter" />
+    <include layout="@layout/content_settings" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

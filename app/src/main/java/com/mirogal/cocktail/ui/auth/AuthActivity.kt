@@ -1,10 +1,12 @@
 package com.mirogal.cocktail.ui.auth
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
@@ -57,8 +59,15 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
             }
         }
 
+        root_view.setOnFocusChangeListener { v, hasFocus -> hideKeyboard() }
+
         setObserver()
         fillInputField()
+    }
+
+    private fun hideKeyboard() {
+        val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
     }
 
     private fun setObserver() {

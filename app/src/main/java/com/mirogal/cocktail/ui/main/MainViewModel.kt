@@ -24,6 +24,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val favoriteCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
     val isDrinkFilterEmptyLiveData: LiveData<Boolean>
+    val isBottomNavLabelShowLiveData: MutableLiveData<Boolean> = MutableLiveData()
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
@@ -51,6 +52,8 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
                         && drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == CategoryDrinkFilter.DISABLE
             }
         }
+
+        isBottomNavLabelShowLiveData.value = true
     }
 
     private fun filterCocktailList(list: List<CocktailDbEntity>?): List<CocktailDbEntity>? {
