@@ -1,7 +1,6 @@
 package com.mirogal.cocktail.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
@@ -14,8 +13,7 @@ import com.mirogal.cocktail.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity<MainViewModel>(),
-        HistoryPagerFragment.OnFragmentActionListener {
+class MainActivity : BaseActivity<MainViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
@@ -55,20 +53,19 @@ class MainActivity : BaseActivity<MainViewModel>(),
         })
     }
 
-
-    override fun onToolbarBtnFilterClick() {
-        addDrinkFilterFragment()
-    }
-
-
-    private fun addDrinkFilterFragment() {
-        val newFragment = DrinkFilterFragment.newInstance()
-        supportFragmentManager.beginTransaction().apply {
-            add(R.id.fcv_container, newFragment, DrinkFilterFragment::class.java.simpleName)
-            addToBackStack(null)
-            commit()
+    override fun onBackPressed() {
+        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
+        val filterFragment = pagerFragment?.childFragmentManager?.findFragmentByTag(DrinkFilterFragment::class.java.simpleName)
+        if (pagerFragment != null && pagerFragment.isVisible && filterFragment != null && filterFragment.isVisible) {
+            pagerFragment.childFragmentManager.beginTransaction().apply {
+                remove(filterFragment)
+                commit()
+            }
+        } else {
+            super.onBackPressed()
         }
     }
+
 
     private fun showHistoryPagerFragment() {
         val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)

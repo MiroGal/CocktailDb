@@ -25,6 +25,7 @@ import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.ui.main.MainViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
 import com.mirogal.cocktail.ui.main.filter.DrinkFilterType
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
@@ -40,8 +41,6 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
     override val viewModel: HistoryPagerViewModel by viewModels()
     private val activityViewModel: MainViewModel by activityViewModels()
 
-    private var listener: OnFragmentActionListener? = null
-
     private lateinit var pagerAdapter: PagerAdapter
 
     private var cocktailList: List<CocktailDbEntity>? = null
@@ -53,14 +52,6 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         fun newInstance() = HistoryPagerFragment()
     }
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = context as? OnFragmentActionListener
-        if (listener == null) {
-            throw ClassCastException("$context must implement Listener")
-        }
-    }
-
     override fun configureView(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_pager_label)
@@ -69,7 +60,7 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         setReceiver()
 
         btn_toolbar_filter.setOnClickListener {
-            listener?.onToolbarBtnFilterClick()
+            addDrinkFilterFragment()
         }
 
         btn_toolbar_filter.setOnLongClickListener {
@@ -180,6 +171,14 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         startActivity(intent)
     }
 
+    private fun addDrinkFilterFragment() {
+        val newFragment = DrinkFilterFragment.newInstance()
+        childFragmentManager.beginTransaction().apply {
+            add(R.id.root_view, newFragment, DrinkFilterFragment::class.java.simpleName)
+            commit()
+        }
+    }
+
     @SuppressLint("SetTextI18n")
     private fun showChargeLevel(level: String) {
         if (layout_charge_indicator.visibility == View.VISIBLE) {
@@ -276,11 +275,6 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
     private fun randomColor(): Int {
         val rnd = Random()
         return Color.argb(85, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-    }
-
-
-    interface OnFragmentActionListener {
-        fun onToolbarBtnFilterClick()
     }
 
 }

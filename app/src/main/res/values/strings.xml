@@ -18,7 +18,7 @@
 
     <!--region Settings-->
     <string name="settings_label">Settings</string>
-    <string name="settings_show_bottom_navigation_label">Show bottom navigation label</string>
+    <string name="settings_show_bottom_navigation_label">Show Main Navigation Bar Titles</string>
     <!--endregion-->
 
     <!--region Main-->
