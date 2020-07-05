@@ -123,8 +123,7 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
 
     private fun setViewPager() {
         pagerAdapter = PagerAdapter(this)
-        // Animation of transition
-        view_pager.setPageTransformer(ZoomOutPageTransformer())
+        view_pager.setPageTransformer(ZoomOutPageTransformer()) // Animation of transition
         view_pager.adapter = pagerAdapter
 
         TabLayoutMediator(tab_layout, view_pager) { tab, position ->
