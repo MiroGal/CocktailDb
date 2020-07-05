@@ -11,14 +11,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.ui.main.MainViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
@@ -29,10 +28,10 @@ import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
 
-class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
+class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
 
     override val contentLayoutResId = R.layout.fragment_history_pager
-    override val viewModel: MainViewModel by activityViewModels()
+    override val viewModel: HistoryPagerViewModel by viewModels()
 
     private var listener: OnFragmentActionListener? = null
 
@@ -44,7 +43,6 @@ class HistoryPagerFragment : BaseFragment<MainViewModel>(), BatteryChangeReceive
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
-
 
     companion object {
         fun newInstance() = HistoryPagerFragment()

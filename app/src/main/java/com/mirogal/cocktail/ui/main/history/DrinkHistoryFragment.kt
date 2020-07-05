@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
@@ -19,17 +20,17 @@ import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
 
-class DrinkHistoryFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemClickListener,
+class DrinkHistoryFragment : BaseFragment<DrinkHistoryViewModel>(), ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
-    override val viewModel: MainViewModel by activityViewModels()
+    override val viewModel: DrinkHistoryViewModel by viewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
     private lateinit var listAdapter: ListAdapter
     private lateinit var cocktailList: List<CocktailDbEntity>
     private var alcoholFilter: AlcoholDrinkFilter? = null
     private var categoryFilter: CategoryDrinkFilter? = null
-
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
@@ -52,8 +53,8 @@ class DrinkHistoryFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemCl
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
         listAdapter = ListAdapter(requireContext(), this, this)
-        viewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
-            if (list!!.isNotEmpty()) {
+        activityViewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
+            if (list?.isNotEmpty()!!) {
                 showData()
             } else {
                 showEmpty()
@@ -69,11 +70,11 @@ class DrinkHistoryFragment : BaseFragment<MainViewModel>(), ListAdapter.OnItemCl
     }
 
     override fun onFavoriteClick(cocktailId: Int, isFavorite: Boolean) {
-        viewModel.switchCocktailFavoriteStatus(cocktailId, isFavorite)
+        activityViewModel.switchCocktailStateFavorite(cocktailId, isFavorite)
     }
 
     override fun onItemLongClick(cocktailId: Int) {
-        viewModel.deleteCocktail(cocktailId)
+        activityViewModel.deleteCocktail(cocktailId)
     }
 
 

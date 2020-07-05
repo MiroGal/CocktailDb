@@ -10,6 +10,6 @@ class SettingsFragment : BaseFragment<SettingsViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_settings
     override val viewModel: SettingsViewModel by viewModels()
-    private val mainViewModel: MainViewModel by activityViewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
 
 }

@@ -82,7 +82,7 @@ class CocktailRepository(application: Application) {
         Thread(Runnable { database.dao().deleteCocktail(cocktailId) }).start()
     }
 
-    fun setCocktailFavoriteStatus(cocktailId: Int, isFavorite: Boolean) {
+    fun setCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
         Thread(Runnable { database.dao().setFavorite(cocktailId, isFavorite) }).start()
     }
 

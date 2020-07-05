@@ -1,7 +1,10 @@
 package com.mirogal.cocktail.ui.main
 
 import android.app.Application
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.ui.base.BaseViewModel
@@ -19,8 +22,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val historyCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val favoriteCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
-
-//    private val observer: Observer<in List<CocktailDbEntity>?> = Observer {  }
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
@@ -41,15 +42,6 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         drinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE),
                 Pair(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE))
-
-//        historyCocktailListLiveData.observeForever(observer)
-//        favoriteCocktailListLiveData.observeForever(observer)
-    }
-
-    override fun onCleared() {
-//        historyCocktailListLiveData.removeObserver(observer)
-//        favoriteCocktailListLiveData.removeObserver(observer)
-        super.onCleared()
     }
 
     private fun filterCocktailList(list: List<CocktailDbEntity>?): List<CocktailDbEntity>? {
@@ -64,15 +56,22 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
             }
     }
 
+    fun resetDrinkFilter() {
+        val drinkFilter = drinkFilterLiveData.value
+        drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE)
+        drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
+        drinkFilterLiveData.value = drinkFilter
+    }
+
     fun deleteCocktail(id: Int) {
         repository.deleteCocktailFromDb(id)
     }
 
-    fun switchCocktailFavoriteStatus(cocktailId: Int, isFavorite: Boolean) {
+    fun switchCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
         if (isFavorite) {
-            repository.setCocktailFavoriteStatus(cocktailId, false)
+            repository.setCocktailStateFavorite(cocktailId, false)
         } else {
-            repository.setCocktailFavoriteStatus(cocktailId, true)
+            repository.setCocktailStateFavorite(cocktailId, true)
         }
     }
 
