@@ -1,6 +1,5 @@
 package com.mirogal.cocktail.ui.main.filter
 
-import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -20,18 +19,8 @@ class DrinkFilterFragment : BaseFragment<DrinkFilterViewModel>() {
     override val viewModel: DrinkFilterViewModel by viewModels()
     private val activityViewModel: MainViewModel by activityViewModels()
 
-    private var listener: OnFragmentActionListener? = null
-
     companion object {
         fun newInstance() = DrinkFilterFragment()
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        listener = context as? OnFragmentActionListener
-        if (listener == null) {
-            throw ClassCastException("$context must implement Listener")
-        }
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
@@ -107,11 +96,6 @@ class DrinkFilterFragment : BaseFragment<DrinkFilterViewModel>() {
             }
             activityViewModel.drinkFilterLiveData.value = drinkFilter
         }
-    }
-
-
-    interface OnFragmentActionListener {
-        fun onFilterActionButtonClick(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?)
     }
 
 }

@@ -11,13 +11,16 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
+import com.mirogal.cocktail.ui.main.MainViewModel
 import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
@@ -32,14 +35,15 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
 
     override val contentLayoutResId = R.layout.fragment_history_pager
     override val viewModel: HistoryPagerViewModel by viewModels()
+    private val activityViewModel: MainViewModel by activityViewModels()
+
+    private lateinit var pagerAdapter: PagerAdapter
 
     private var listener: OnFragmentActionListener? = null
 
 //    private var cocktailList: List<CocktailDbEntity>? = null
     private var alcoholFilter: AlcoholDrinkFilter? = null
     private var categoryFilter: CategoryDrinkFilter? = null
-
-    private lateinit var pagerAdapter: PagerAdapter
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
@@ -62,7 +66,6 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
 
         setList()
         setViewPager()
-        setToolbarButtonFilterIcon()
         setReceiver()
 
         btn_toolbar_filter.setOnClickListener {
@@ -70,7 +73,7 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         }
 
         btn_toolbar_filter.setOnLongClickListener {
-            setFilter(AlcoholDrinkFilter.DISABLE, CategoryDrinkFilter.DISABLE)
+            activityViewModel.resetDrinkFilter()
             true
         }
 
@@ -91,6 +94,18 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         }
 
         setFilter(alcoholFilter, categoryFilter)
+
+        setObserver()
+    }
+
+    private fun setObserver() {
+        activityViewModel.isDrinkFilterEmptyLiveData.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_disable)
+            } else {
+                btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_enable)
+            }
+        })
     }
 
     private fun setList() {
@@ -101,8 +116,8 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
 
     private fun setViewPager() {
         pagerAdapter = PagerAdapter(this)
+        // Transition animation
         view_pager.setPageTransformer(ZoomOutPageTransformer())
-//        pager.setPageTransformer(DepthPageTransformer())
         view_pager.adapter = pagerAdapter
 
         TabLayoutMediator(tab_layout, view_pager) { tab, position ->
@@ -112,15 +127,6 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
                 tab.text = getString(R.string.drink_history_pager_tab_favorite)
             }
         }.attach()
-    }
-
-    private fun setToolbarButtonFilterIcon() {
-        if ((alcoholFilter == null || alcoholFilter == AlcoholDrinkFilter.DISABLE)
-                && (categoryFilter == null || categoryFilter == CategoryDrinkFilter.DISABLE)) {
-            btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_disable)
-        } else {
-            btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_enable)
-        }
     }
 
     private fun setReceiver() {
@@ -221,23 +227,16 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
 //        }
     }
 
+
+
+
+
     fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
         this.alcoholFilter = alcoholFilter
         this.categoryFilter = categoryFilter
 
-        setToolbarButtonFilterIcon()
         showFilterAlcohol()
         showFilterCategory()
-
-        val fragment1 = pagerAdapter.fragment1
-        if (fragment1 is DrinkHistoryFragment) {
-            (fragment1 as DrinkHistoryFragment?)!!.setFilter(alcoholFilter, categoryFilter)
-        }
-
-        val fragment2 = pagerAdapter.fragment2
-        if (fragment2 is DrinkFavoriteFragment) {
-            (fragment2 as DrinkFavoriteFragment?)!!.setFilter(alcoholFilter, categoryFilter)
-        }
     }
 
     private fun showFilterAlcohol() {

@@ -9,12 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.ui.main.MainViewModel
-import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
@@ -28,9 +25,6 @@ class DrinkHistoryFragment : BaseFragment<DrinkHistoryViewModel>(), ListAdapter.
     private val activityViewModel: MainViewModel by activityViewModels()
 
     private lateinit var listAdapter: ListAdapter
-    private lateinit var cocktailList: List<CocktailDbEntity>
-    private var alcoholFilter: AlcoholDrinkFilter? = null
-    private var categoryFilter: CategoryDrinkFilter? = null
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
@@ -96,42 +90,6 @@ class DrinkHistoryFragment : BaseFragment<DrinkHistoryViewModel>(), ListAdapter.
         if (layoutEmpty.visibility == View.INVISIBLE) {
             rv_drink_history_list.visibility = View.INVISIBLE
             layoutEmpty.visibility = View.VISIBLE
-        }
-    }
-
-    fun setFilter(alcoholFilter: AlcoholDrinkFilter?, categoryFilter: CategoryDrinkFilter?) {
-        this.alcoholFilter = alcoholFilter
-        this.categoryFilter = categoryFilter
-
-        val filteredList1 = filterAlcohol(cocktailList, alcoholFilter)
-        val filteredList2 = filterCategory(filteredList1, categoryFilter)
-
-        listAdapter.refreshData(filteredList2)
-    }
-
-    private fun filterAlcohol(cocktailList: List<CocktailDbEntity>, filter: AlcoholDrinkFilter?): List<CocktailDbEntity> {
-        return when (filter) {
-            AlcoholDrinkFilter.ALCOHOLIC -> cocktailList.filter { it.alcoholic == AlcoholDrinkFilter.ALCOHOLIC.key }
-            AlcoholDrinkFilter.NON_ALCOHOLIC -> cocktailList.filter { it.alcoholic == AlcoholDrinkFilter.NON_ALCOHOLIC.key }
-            AlcoholDrinkFilter.OPTIONAL_ALCOHOL -> cocktailList.filter { it.alcoholic == AlcoholDrinkFilter.OPTIONAL_ALCOHOL.key }
-            else -> cocktailList
-        }
-    }
-
-    private fun filterCategory(cocktailList: List<CocktailDbEntity>, filter: CategoryDrinkFilter?): List<CocktailDbEntity> {
-        return when (filter) {
-            CategoryDrinkFilter.ORDINARY_DRINK -> cocktailList.filter { it.category == CategoryDrinkFilter.ORDINARY_DRINK.key }
-            CategoryDrinkFilter.COCKTAIL -> cocktailList.filter { it.category == CategoryDrinkFilter.COCKTAIL.key }
-            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> cocktailList.filter { it.category == CategoryDrinkFilter.MILK_FLOAT_SHAKE.key }
-            CategoryDrinkFilter.OTHER_UNKNOWN -> cocktailList.filter { it.category == CategoryDrinkFilter.OTHER_UNKNOWN.key }
-            CategoryDrinkFilter.COCOA -> cocktailList.filter { it.category == CategoryDrinkFilter.COCOA.key }
-            CategoryDrinkFilter.SHOT -> cocktailList.filter { it.category == CategoryDrinkFilter.SHOT.key }
-            CategoryDrinkFilter.COFFEE_TEA -> cocktailList.filter { it.category == CategoryDrinkFilter.COFFEE_TEA.key }
-            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> cocktailList.filter { it.category == CategoryDrinkFilter.HOMEMADE_LIQUEUR.key }
-            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> cocktailList.filter { it.category == CategoryDrinkFilter.PUNCH_PARTY_DRINK.key }
-            CategoryDrinkFilter.BEER -> cocktailList.filter { it.category == CategoryDrinkFilter.BEER.key }
-            CategoryDrinkFilter.SOFT_DRINK_SODA -> cocktailList.filter { it.category == CategoryDrinkFilter.SOFT_DRINK_SODA.key }
-            else -> cocktailList
         }
     }
 

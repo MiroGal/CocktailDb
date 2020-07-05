@@ -1,6 +1,7 @@
 package com.mirogal.cocktail.ui.main
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -22,6 +23,7 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
     val historyCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val favoriteCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
+    val isDrinkFilterEmptyLiveData: LiveData<Boolean>
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
@@ -42,6 +44,13 @@ class MainViewModel(application: Application) : BaseViewModel(application) {
         drinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE),
                 Pair(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE))
+
+        isDrinkFilterEmptyLiveData = MediatorLiveData<Boolean>().apply {
+            addSource(drinkFilterLiveData) {
+                value = drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == AlcoholDrinkFilter.DISABLE
+                        && drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == CategoryDrinkFilter.DISABLE
+            }
+        }
     }
 
     private fun filterCocktailList(list: List<CocktailDbEntity>?): List<CocktailDbEntity>? {
