@@ -1,23 +1,23 @@
-package com.mirogal.cocktail.ui.main.filter
+package com.mirogal.cocktail.ui.main.history
 
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
-import com.mirogal.cocktail.ui.main.MainViewModel
+import com.mirogal.cocktail.ui.main.history.filter.AlcoholDrinkFilter
+import com.mirogal.cocktail.ui.main.history.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.history.filter.DrinkFilterType
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
 
 
-class DrinkFilterFragment : BaseFragment<DrinkFilterViewModel>() {
+class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
-    override val viewModel: DrinkFilterViewModel by viewModels()
-    private val activityViewModel: MainViewModel by activityViewModels()
+    override val viewModel: HistoryViewModel by activityViewModels()
 
     companion object {
         fun newInstance() = DrinkFilterFragment()
@@ -39,19 +39,19 @@ class DrinkFilterFragment : BaseFragment<DrinkFilterViewModel>() {
         }
 
         btn_reset.setOnClickListener {
-            activityViewModel.resetDrinkFilter()
+            viewModel.resetDrinkFilter()
             requireActivity().onBackPressed()
         }
     }
 
     private fun setFilterState() {
-        when (activityViewModel.drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)) {
+        when (viewModel.drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)) {
             AlcoholDrinkFilter.ALCOHOLIC -> rb_alcoholic.isChecked = true
             AlcoholDrinkFilter.NON_ALCOHOLIC -> rb_non_alcoholic.isChecked = true
             AlcoholDrinkFilter.OPTIONAL_ALCOHOL -> rb_optional_alcohol.isChecked = true
             else -> rb_alcoholic_filter_disable.isChecked = true
         }
-        when (activityViewModel.drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)) {
+        when (viewModel.drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)) {
             CategoryDrinkFilter.ORDINARY_DRINK -> rb_ordinary_drink.isChecked = true
             CategoryDrinkFilter.COCKTAIL -> rb_cocktail.isChecked = true
             CategoryDrinkFilter.MILK_FLOAT_SHAKE -> rb_milk_float_shake.isChecked = true
@@ -69,17 +69,17 @@ class DrinkFilterFragment : BaseFragment<DrinkFilterViewModel>() {
 
     private fun setOnCheckListener() {
         rg_alcohol_filter.setOnCheckedChangeListener { _, checkedId ->
-            val drinkFilter = activityViewModel.drinkFilterLiveData.value
+            val drinkFilter = viewModel.drinkFilterLiveData.value
             when (checkedId) {
                 rb_alcoholic.id -> drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.ALCOHOLIC)
                 rb_non_alcoholic.id -> drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.NON_ALCOHOLIC)
                 rb_optional_alcohol.id -> drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.OPTIONAL_ALCOHOL)
                 else -> drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE)
             }
-            activityViewModel.drinkFilterLiveData.value = drinkFilter
+            viewModel.drinkFilterLiveData.value = drinkFilter
         }
         rg_category_filter.setOnCheckedChangeListener { _, checkedId ->
-            val drinkFilter = activityViewModel.drinkFilterLiveData.value
+            val drinkFilter = viewModel.drinkFilterLiveData.value
             when (checkedId) {
                 rb_ordinary_drink.id -> drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.ORDINARY_DRINK)
                 rb_cocktail.id -> drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.COCKTAIL)
@@ -94,7 +94,7 @@ class DrinkFilterFragment : BaseFragment<DrinkFilterViewModel>() {
                 rb_soft_drink_soda.id -> drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.SOFT_DRINK_SODA)
                 else -> drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
             }
-            activityViewModel.drinkFilterLiveData.value = drinkFilter
+            viewModel.drinkFilterLiveData.value = drinkFilter
         }
     }
 

@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.ui.main.filter
+package com.mirogal.cocktail.ui.main.history.filter
 
 enum class DrinkFilterType(val key: String) {
 

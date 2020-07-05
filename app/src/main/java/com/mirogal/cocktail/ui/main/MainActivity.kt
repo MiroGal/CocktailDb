@@ -6,7 +6,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseActivity
-import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
+import com.mirogal.cocktail.ui.main.history.DrinkFilterFragment
 import com.mirogal.cocktail.ui.main.history.HistoryPagerFragment
 import com.mirogal.cocktail.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.ui.main.settings.SettingsFragment

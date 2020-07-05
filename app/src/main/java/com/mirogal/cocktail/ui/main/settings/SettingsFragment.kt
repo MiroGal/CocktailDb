@@ -1,19 +1,16 @@
 package com.mirogal.cocktail.ui.main.settings
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.main.MainViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.content_settings.*
-import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_history_pager.*
 
 class SettingsFragment : BaseFragment<SettingsViewModel>() {
 

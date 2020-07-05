@@ -8,7 +8,7 @@
     android:background="@color/background_primary"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".ui.main.filter.DrinkFilterFragment">
+    tools:context=".ui.main.history.DrinkFilterFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"

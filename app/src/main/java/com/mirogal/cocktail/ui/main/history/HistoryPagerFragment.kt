@@ -12,7 +12,6 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -22,11 +21,9 @@ import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.ui.main.MainViewModel
-import com.mirogal.cocktail.ui.main.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.ui.main.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.ui.main.filter.DrinkFilterFragment
-import com.mirogal.cocktail.ui.main.filter.DrinkFilterType
+import com.mirogal.cocktail.ui.main.history.filter.AlcoholDrinkFilter
+import com.mirogal.cocktail.ui.main.history.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.history.filter.DrinkFilterType
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_history_pager.*
@@ -35,11 +32,10 @@ import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
 
-class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
+class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
 
     override val contentLayoutResId = R.layout.fragment_history_pager
-    override val viewModel: HistoryPagerViewModel by viewModels()
-    private val activityViewModel: MainViewModel by activityViewModels()
+    override val viewModel: HistoryViewModel by activityViewModels()
 
     private lateinit var pagerAdapter: PagerAdapter
 
@@ -64,7 +60,7 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         }
 
         btn_toolbar_filter.setOnLongClickListener {
-            activityViewModel.resetDrinkFilter()
+            viewModel.resetDrinkFilter()
             true
         }
 
@@ -77,22 +73,22 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
         }
 
         btn_item_filter_alcohol_close.setOnClickListener {
-            val drinkFilter = activityViewModel.drinkFilterLiveData.value
+            val drinkFilter = viewModel.drinkFilterLiveData.value
             drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE)
-            activityViewModel.drinkFilterLiveData.value = drinkFilter
+            viewModel.drinkFilterLiveData.value = drinkFilter
         }
 
         btn_item_filter_category_close.setOnClickListener {
-            val drinkFilter = activityViewModel.drinkFilterLiveData.value
+            val drinkFilter = viewModel.drinkFilterLiveData.value
             drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
-            activityViewModel.drinkFilterLiveData.value = drinkFilter
+            viewModel.drinkFilterLiveData.value = drinkFilter
         }
 
         setObserver()
     }
 
     private fun setObserver() {
-        activityViewModel.isDrinkFilterEmptyLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.isDrinkFilterEmptyLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
                 btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_disable)
             } else {
@@ -100,14 +96,14 @@ class HistoryPagerFragment : BaseFragment<HistoryPagerViewModel>(), BatteryChang
             }
         })
 
-        activityViewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 showFilterAlcohol(it[DrinkFilterType.ALCOHOL] as AlcoholDrinkFilter)
                 showFilterCategory(it[DrinkFilterType.CATEGORY] as CategoryDrinkFilter)
             }
         })
 
-        activityViewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer {
             cocktailList = it
         })
     }
