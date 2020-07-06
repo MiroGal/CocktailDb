@@ -22,7 +22,7 @@
     <!--endregion-->
 
     <!--region Main-->
-    <string name="main_bottom_nav_drink">Drinks</string>
+    <string name="main_bottom_nav_drink">Cocktails</string>
     <string name="main_bottom_nav_profile">Profile</string>
     <string name="main_bottom_nav_settings">Settings</string>
     <!--endregion-->
