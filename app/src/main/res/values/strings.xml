@@ -41,7 +41,7 @@
     <!--region Filter-->
     <string name="drink_filter_label">Filters</string>
     <string name="drink_filter_btn_reset">Reset</string>
-    <string name="drink_filter_btn_apply">Apply</string>
+    <string name="drink_filter_btn_result">Result</string>
 
     <string name="drink_filter_alcohol_title">Alcohol</string>
     <string name="drink_filter_alcohol_disable">Disable filter</string>

@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
@@ -21,9 +22,10 @@ import com.mirogal.cocktail.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.service.ProposeDrinkService
 import com.mirogal.cocktail.ui.base.BaseFragment
 import com.mirogal.cocktail.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.ui.main.history.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.DrinkFilterType
+import com.mirogal.cocktail.ui.main.history.constant.AlcoholDrinkFilter
+import com.mirogal.cocktail.ui.main.history.constant.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.history.constant.DrinkFilterType
+import com.mirogal.cocktail.ui.main.history.constant.HistoryPage
 import com.mirogal.cocktail.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_history_pager.*
@@ -83,6 +85,17 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
             drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
             viewModel.drinkFilterLiveData.value = drinkFilter
         }
+
+        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                if (position == 0) {
+                    viewModel.currentHistoryPage.value = HistoryPage.HISTORY
+                } else {
+                    viewModel.currentHistoryPage.value = HistoryPage.FAVORITE
+                }
+            }
+        })
 
         setObserver()
     }

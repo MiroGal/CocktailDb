@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize"
@@ -159,21 +160,37 @@
         android:clickable="true">
         <TextView
             android:id="@+id/btn_reset"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="48dp"
-            android:layout_weight="1"
+            android:paddingStart="@dimen/offset_16"
+            android:paddingEnd="@dimen/offset_16"
             android:clickable="false"
             android:text="@string/drink_filter_btn_reset"
             style="@style/Button" />
-        <TextView
-            android:id="@+id/btn_apply"
+        <LinearLayout
+            android:id="@+id/btn_result"
             android:layout_width="0dp"
             android:layout_height="48dp"
             android:layout_weight="1"
             android:layout_marginStart="@dimen/offset_16"
-            android:clickable="false"
-            android:text="@string/drink_filter_btn_apply"
-            style="@style/Button" />
+            android:gravity="center"
+            style="@style/Button">
+            <TextView
+                android:id="@+id/btn_result_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/offset_8"
+                android:clickable="false"
+                android:text="@string/drink_filter_btn_result"
+                style="@style/Button" />
+            <ImageView
+                android:id="@+id/btn_result_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="@dimen/offset_8"
+                android:src="@drawable/ic_button_history"
+                tools:ignore="ContentDescription" />
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

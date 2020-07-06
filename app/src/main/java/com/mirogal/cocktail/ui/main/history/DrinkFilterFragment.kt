@@ -4,11 +4,13 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.ui.base.BaseFragment
-import com.mirogal.cocktail.ui.main.history.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.DrinkFilterType
+import com.mirogal.cocktail.ui.main.history.constant.AlcoholDrinkFilter
+import com.mirogal.cocktail.ui.main.history.constant.CategoryDrinkFilter
+import com.mirogal.cocktail.ui.main.history.constant.DrinkFilterType
+import com.mirogal.cocktail.ui.main.history.constant.HistoryPage
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
@@ -34,7 +36,7 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
             requireActivity().onBackPressed()
         }
 
-        btn_apply.setOnClickListener {
+        btn_result.setOnClickListener {
             requireActivity().onBackPressed()
         }
 
@@ -42,6 +44,21 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
             viewModel.resetDrinkFilter()
             requireActivity().onBackPressed()
         }
+
+        setObserver()
+    }
+
+    private fun setObserver() {
+        viewModel.currentHistoryPage.observe(viewLifecycleOwner, Observer {
+            if (it == HistoryPage.HISTORY) {
+                btn_result_icon.setImageResource(R.drawable.ic_button_history)
+            } else {
+                btn_result_icon.setImageResource(R.drawable.ic_button_favorite)
+            }
+        })
+        viewModel.filterResultStringLiveData.observe(viewLifecycleOwner, Observer {
+            btn_result_text.text = it
+        })
     }
 
     private fun setFilterState() {

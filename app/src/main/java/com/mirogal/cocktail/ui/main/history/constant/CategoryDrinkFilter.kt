@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.ui.main.history.filter
+package com.mirogal.cocktail.ui.main.history.constant
 
 enum class CategoryDrinkFilter(override val type: DrinkFilterType, override val key: String): DrinkFilter {
 

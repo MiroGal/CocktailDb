@@ -27,9 +27,9 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
 
         tvName.text = cocktailEntity.name
         if (cocktailEntity.isFavorite) {
-            ivFavorite.setImageResource(R.drawable.ic_star)
+            ivFavorite.setImageResource(R.drawable.ic_item_favorite)
         } else {
-            ivFavorite.setImageResource(R.drawable.ic_star_border)
+            ivFavorite.setImageResource(R.drawable.ic_item_favorite_border)
         }
         Glide.with(context)
                 .load(cocktailEntity.imagePath)

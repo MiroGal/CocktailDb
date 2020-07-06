@@ -8,10 +8,7 @@ import androidx.lifecycle.Transformations
 import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.ui.base.BaseViewModel
-import com.mirogal.cocktail.ui.main.history.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.DrinkFilter
-import com.mirogal.cocktail.ui.main.history.filter.DrinkFilterType
+import com.mirogal.cocktail.ui.main.history.constant.*
 
 
 class HistoryViewModel(application: Application) : BaseViewModel(application) {
@@ -24,6 +21,8 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
     val favoriteCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
     val isDrinkFilterEmptyLiveData: LiveData<Boolean>
+    val currentHistoryPage: MutableLiveData<HistoryPage> = MutableLiveData()
+    val filterResultStringLiveData: LiveData<String>
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
@@ -51,6 +50,18 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
                         && drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == CategoryDrinkFilter.DISABLE
             }
         }
+
+        filterResultStringLiveData = MediatorLiveData<String>().apply {
+            addSource(currentHistoryPage) {
+                value = getFilterResultString()
+            }
+            addSource(historyCocktailListLiveData) {
+                value = getFilterResultString()
+            }
+            addSource(favoriteCocktailListLiveData) {
+                value = getFilterResultString()
+            }
+        }
     }
 
     private fun filterCocktailList(list: List<CocktailDbEntity>?): List<CocktailDbEntity>? {
@@ -62,6 +73,22 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) != CategoryDrinkFilter.DISABLE) {
                 it.category == drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)?.key
             } else true
+        }
+    }
+
+    private fun getFilterResultString(): String {
+        return if (currentHistoryPage.value == HistoryPage.HISTORY) {
+            if (historyCocktailListLiveData.value != null && historyCocktailListLiveData.value!!.isNotEmpty()) {
+                "Результати ${historyCocktailListLiveData.value!!.size}"
+            } else {
+                "Не знайдено"
+            }
+        } else {
+            if (favoriteCocktailListLiveData.value != null && favoriteCocktailListLiveData.value!!.isNotEmpty()) {
+                "Результати ${favoriteCocktailListLiveData.value!!.size}"
+            } else {
+                "Не знайдено"
+            }
         }
     }
 
