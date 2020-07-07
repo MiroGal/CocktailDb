@@ -212,13 +212,9 @@ class PagerFragment : BaseFragment(), BatteryChangeReceiver.OnBatteryChangeListe
     }
 
     private fun showProposeDrink(id: Int) {
-        if (cocktailList.isNotEmpty()) {
-            if (cocktailList.size > 1) {
-                var entity: CocktailDbEntity?
-                do {
-                    entity = cocktailList.shuffled()[0]
-                } while (entity!!.id == id)
-
+        if (cocktailList != null && cocktailList.size > 1) {
+            val entity: CocktailDbEntity? = cocktailList.filter{ it.id != id }.shuffled()[0]
+            if (entity != null) {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
