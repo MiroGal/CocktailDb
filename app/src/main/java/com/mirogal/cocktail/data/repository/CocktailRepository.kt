@@ -6,8 +6,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
-import com.mirogal.cocktail.data.database.CocktailDatabase
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.CocktailDatabase
+import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.netpagedlist.BoundaryCallback
 import com.mirogal.cocktail.data.repository.netpagedlist.DataSourceFactory
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_primary"
     android:fillViewport="true"
-    tools:context=".ui.auth.AuthActivity">
+    tools:context=".presentation.ui.auth.AuthActivity">
     <LinearLayout
         android:id="@+id/root_view"
         android:layout_width="match_parent"

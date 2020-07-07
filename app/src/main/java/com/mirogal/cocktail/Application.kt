@@ -3,7 +3,7 @@ package com.mirogal.cocktail
 import android.app.Application
 import android.content.Intent
 import android.content.IntentFilter
-import com.mirogal.cocktail.receiver.AirplaneModReceiver
+import com.mirogal.cocktail.presentation.receiver.AirplaneModReceiver
 
 class Application : Application() {
 

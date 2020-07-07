@@ -1,7 +1,7 @@
 package com.mirogal.cocktail.data.repository.netpagedlist
 
 import androidx.lifecycle.MutableLiveData
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
 
 class DataSourceFactory : androidx.paging.DataSource.Factory<Int?, CocktailDbEntity?>() {
 

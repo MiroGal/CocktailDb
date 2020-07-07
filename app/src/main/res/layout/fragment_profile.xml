@@ -7,7 +7,7 @@
     android:background="@color/background_primary"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".ui.main.profile.ProfileFragment">
+    tools:context=".presentation.ui.main.profile.ProfileFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,18 +24,10 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <TextView
-        android:id="@+id/tv_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:padding="@dimen/offset_16"
-        android:clickable="false"
-        style="@style/TextBody"/>
-    <TextView
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_gravity="bottom"
+        android:layout_gravity="center"
         android:layout_margin="@dimen/offset_16"
         android:clickable="false"
         android:text="@string/profile_btn_logout"

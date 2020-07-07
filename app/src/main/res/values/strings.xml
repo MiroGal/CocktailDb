@@ -13,7 +13,6 @@
     <!--region Profile-->
     <string name="profile_label">Profile</string>
     <string name="profile_btn_logout">Logout</string>
-    <string name="profile_btn_test">Test</string>
     <!--endregion-->
 
     <!--region Settings-->

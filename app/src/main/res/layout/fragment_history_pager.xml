@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    tools:context=".ui.main.history.HistoryPagerFragment">
+    tools:context=".presentation.ui.main.history.HistoryPagerFragment">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -1,7 +1,7 @@
 package com.mirogal.cocktail.data.repository.netpagedlist
 
 import androidx.paging.PagedList
-import com.mirogal.cocktail.data.database.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.data.repository.NetworkState
 
