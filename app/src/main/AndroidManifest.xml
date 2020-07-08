@@ -22,22 +22,36 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.mirogal.cocktail.presentation.ui.main.MainActivity"
             android:label="@string/drink_history_pager_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.mirogal.cocktail.presentation.ui.search.SearchDrinkActivity"
+            android:parentActivityName="com.mirogal.cocktail.presentation.ui.main.MainActivity"
             android:label="@string/search_drink_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mirogal.cocktail.presentation.ui.main.MainActivity" />
+        </activity>
         <activity
             android:name="com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity"
+            android:parentActivityName="com.mirogal.cocktail.presentation.ui.main.MainActivity"
             android:label="@string/drink_detail_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mirogal.cocktail.presentation.ui.main.MainActivity" />
+        </activity>
 
         <service
             android:name="com.mirogal.cocktail.presentation.service.ProposeDrinkService"

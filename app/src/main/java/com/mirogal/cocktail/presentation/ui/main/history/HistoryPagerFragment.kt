@@ -225,7 +225,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
     }
 
     private fun showProposeDrink(id: Int) {
-        if (cocktailList != null && cocktailList!!.isNotEmpty() && cocktailList!!.size > 1) {
+        if (cocktailList != null && cocktailList!!.size > 1) {
             val entity: CocktailDbEntity? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
             if (entity != null) {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),

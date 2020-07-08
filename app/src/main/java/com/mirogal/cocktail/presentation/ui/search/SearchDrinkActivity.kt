@@ -72,7 +72,7 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.drink_history_container_toolbar, menu)
+        menuInflater.inflate(R.menu.search_drink_toolbar, menu)
         val searchMenuItem = menu.findItem(R.id.action_search)
         val searchView = searchMenuItem.actionView as SearchView
         searchView.setIconifiedByDefault(false) // set inner icon

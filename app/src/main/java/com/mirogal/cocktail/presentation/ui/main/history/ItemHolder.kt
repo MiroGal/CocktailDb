@@ -16,11 +16,13 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
     private val ivFavorite: ImageView = itemView.findViewById(R.id.iv_favorite)
 
+    private lateinit var cocktailEntity: CocktailDbEntity
     private var cocktailId = 0
     private var cocktailName: String? = ""
     private var isFavorite: Boolean = false
 
     fun bind(cocktailEntity: CocktailDbEntity) {
+        this.cocktailEntity = cocktailEntity
         cocktailId = cocktailEntity.id
         cocktailName = cocktailEntity.name
         isFavorite = cocktailEntity.isFavorite
@@ -49,7 +51,7 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
             clickListener.onFavoriteClick(cocktailId, isFavorite)
         }
         itemView.setOnLongClickListener {
-            longClickListener.onItemLongClick(cocktailId)
+            longClickListener.onItemLongClick(itemView, cocktailEntity)
             false
         }
     }

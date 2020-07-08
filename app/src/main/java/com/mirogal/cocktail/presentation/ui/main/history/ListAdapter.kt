@@ -42,7 +42,7 @@ class ListAdapter(private val context: Context,
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(cocktailId: Int)
+        fun onItemLongClick(view: View, cocktailEntity: CocktailDbEntity)
     }
 
 }
