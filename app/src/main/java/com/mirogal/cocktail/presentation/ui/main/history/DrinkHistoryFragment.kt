@@ -143,7 +143,6 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
                             val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                             stackBuilder.addParentStack(DrinkDetailActivity::class.java)
                             stackBuilder.addNextIntent(intent)
-                            val resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT)
                             // Create ShortcutInfo
                             val shortcutInfo = ShortcutInfo.Builder(requireActivity(),
                                     cocktailEntity.id.toString())
@@ -157,7 +156,7 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
                             shortcutManager!!.dynamicShortcuts = listOf(shortcutInfo)
 
                             Toast.makeText(requireActivity(),
-                                    cocktailEntity.name.toString()
+                                    cocktailEntity.name.toString() + " "
                                             + getString(R.string.drink_history_toast_shortcut_added),
                                     Toast.LENGTH_SHORT).show()
                         }
@@ -209,7 +208,7 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
                                 shortcutManager.requestPinShortcut(shortcutInfo, successCallbackIntent.intentSender)
 
                                 Toast.makeText(requireActivity(),
-                                        cocktailEntity.name.toString()
+                                        cocktailEntity.name.toString() + " "
                                                 + getString(R.string.drink_history_toast_pin_shortcut_added),
                                         Toast.LENGTH_SHORT).show()
                             }

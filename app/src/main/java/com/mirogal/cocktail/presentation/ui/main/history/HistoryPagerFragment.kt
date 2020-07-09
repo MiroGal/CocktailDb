@@ -22,10 +22,8 @@ import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.presentation.ui.main.history.constant.AlcoholDrinkFilter
-import com.mirogal.cocktail.presentation.ui.main.history.constant.CategoryDrinkFilter
-import com.mirogal.cocktail.presentation.ui.main.history.constant.DrinkFilterType
-import com.mirogal.cocktail.presentation.ui.main.history.constant.HistoryPage
+import com.mirogal.cocktail.presentation.ui.main.MainViewModel
+import com.mirogal.cocktail.presentation.ui.main.history.constant.*
 import com.mirogal.cocktail.presentation.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.presentation.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_history_pager.*
@@ -38,6 +36,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
     override val contentLayoutResId = R.layout.fragment_history_pager
     override val viewModel: HistoryViewModel by activityViewModels()
+    val mainViewModel: MainViewModel by activityViewModels()
 
     private lateinit var pagerAdapter: PagerAdapter
 
@@ -57,12 +56,21 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
         setViewPager()
         setReceiver()
 
-        btn_toolbar_filter.setOnClickListener {
+        toolbar_action_filter.setOnClickListener {
             addDrinkFilterFragment()
         }
 
-        btn_toolbar_filter.setOnLongClickListener {
+        toolbar_action_filter.setOnLongClickListener {
             viewModel.resetDrinkFilter()
+            true
+        }
+
+        toolbar_action_sort.setOnClickListener {
+            viewModel.drinkSortLiveData.value = DrinkSort.NAME //TODO
+        }
+
+        toolbar_action_sort.setOnLongClickListener {
+            viewModel.drinkSortLiveData.value = DrinkSort.DISABLE
             true
         }
 
@@ -71,7 +79,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
         }
 
         btn_battery_indicator_close.setOnClickListener {
-            layout_charge_indicator.visibility = View.INVISIBLE
+            mainViewModel.isBatteryIndicatorVisibleLiveData.value = false
         }
 
         btn_item_filter_alcohol_close.setOnClickListener {
@@ -101,11 +109,19 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
     }
 
     private fun setObserver() {
-        viewModel.isDrinkFilterEmptyLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
-                btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_disable)
+                toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)
             } else {
-                btn_toolbar_filter.setImageResource(R.drawable.ic_filter_list_enable)
+                toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_enable)
+            }
+        })
+
+        viewModel.isDrinkSortEnableLiveData.observe(viewLifecycleOwner, Observer {
+            if (it) {
+                toolbar_action_sort.setImageResource(R.drawable.ic_sort_list_disable)
+            } else {
+                toolbar_action_sort.setImageResource(R.drawable.ic_sort_list_enable)
             }
         })
 
@@ -118,6 +134,14 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
         viewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer {
             cocktailList = it
+        })
+
+        mainViewModel.isBatteryIndicatorVisibleLiveData.observe(this, Observer {
+            if (it) {
+                layout_charge_indicator.visibility = View.VISIBLE
+            } else {
+                layout_charge_indicator.visibility = View.INVISIBLE
+            }
         })
     }
 

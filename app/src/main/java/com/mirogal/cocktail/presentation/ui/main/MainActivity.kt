@@ -1,11 +1,15 @@
 package com.mirogal.cocktail.presentation.ui.main
 
 import android.os.Bundle
+import android.provider.ContactsContract
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.history.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.history.HistoryPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment
@@ -13,7 +17,9 @@ import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity<MainViewModel>(),
+        BaseDialogFragment.OnDialogFragmentClickListener<ContactsContract.Contacts.Data>,
+        BaseDialogFragment.OnDialogFragmentDismissListener<ContactsContract.Contacts.Data> {
 
     override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
@@ -44,7 +50,7 @@ class MainActivity : BaseActivity<MainViewModel>() {
     }
 
     private fun setObserver() {
-        viewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
+        viewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
             if (it) {
                 bottom_nav_view.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
             } else {
@@ -158,6 +164,14 @@ class MainActivity : BaseActivity<MainViewModel>() {
                 commit()
             }
         }
+    }
+
+    override fun onBottomSheetDialogFragmentDismiss(dialog: DialogFragment, data: ContactsContract.Contacts.Data?) {
+        Toast.makeText(this, "Dismiss", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBottomSheetDialogFragmentClick(dialog: DialogFragment, data: ContactsContract.Contacts.Data?) {
+        Toast.makeText(this, "Click", Toast.LENGTH_LONG).show()
     }
 
 }

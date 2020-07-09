@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
+import com.mirogal.cocktail.presentation.ui.base.RegularBottomSheetDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.history.constant.AlcoholDrinkFilter
 import com.mirogal.cocktail.presentation.ui.main.history.constant.CategoryDrinkFilter
 import com.mirogal.cocktail.presentation.ui.main.history.constant.DrinkFilterType
@@ -37,7 +38,8 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         }
 
         btn_result.setOnClickListener {
-            requireActivity().onBackPressed()
+//            requireActivity().onBackPressed()
+            createDialog()
         }
 
         btn_reset.setOnClickListener {
@@ -113,6 +115,12 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
             }
             viewModel.drinkFilterLiveData.value = drinkFilter
         }
+    }
+
+    private fun createDialog() {
+        RegularBottomSheetDialogFragment.newInstance {
+            this.titleText="Test"
+        }.show(requireActivity().supportFragmentManager)
     }
 
 }

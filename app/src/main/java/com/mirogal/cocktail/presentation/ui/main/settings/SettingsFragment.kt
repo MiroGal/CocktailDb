@@ -16,7 +16,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_settings
     override val viewModel: SettingsViewModel by viewModels()
-    private val activityViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     companion object {
         fun newInstance() = SettingsFragment()
@@ -27,17 +27,26 @@ class SettingsFragment : BaseFragment<SettingsViewModel>() {
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.settings_label)
 
         chb_show_bottom_nav_label.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (activityViewModel.isBottomNavLabelShowLiveData.value != isChecked)
-                activityViewModel.isBottomNavLabelShowLiveData.value = isChecked
+            if (mainViewModel.isBottomNavLabelVisibleLiveData.value != isChecked)
+                mainViewModel.isBottomNavLabelVisibleLiveData.value = isChecked
+        }
+
+        chb_show_battery_indicator.setOnCheckedChangeListener { buttonView, isChecked ->
+            if (mainViewModel.isBatteryIndicatorVisibleLiveData.value != isChecked)
+                mainViewModel.isBatteryIndicatorVisibleLiveData.value = isChecked
         }
 
         setObserver()
     }
 
     private fun setObserver() {
-        activityViewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
+        mainViewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
             if (chb_show_bottom_nav_label.isChecked != it)
                 chb_show_bottom_nav_label.isChecked = it
+        })
+        mainViewModel.isBatteryIndicatorVisibleLiveData.observe(this, Observer {
+            if (chb_show_battery_indicator.isChecked != it)
+                chb_show_battery_indicator.isChecked = it
         })
     }
 

@@ -30,13 +30,23 @@
                 app:elevation="@dimen/elevation_4">
 
                 <ImageView
-                    android:id="@+id/btn_toolbar_filter"
+                    android:id="@+id/toolbar_action_filter"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:layout_margin="@dimen/offset_4"
                     android:layout_gravity="end"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_filter_list_disable"
+                    android:longClickable="true"
+                    tools:ignore="ContentDescription" />
+                <ImageView
+                    android:id="@+id/toolbar_action_sort"
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_margin="@dimen/offset_4"
+                    android:layout_gravity="end"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_sort_list_disable"
                     android:longClickable="true"
                     tools:ignore="ContentDescription" />
 

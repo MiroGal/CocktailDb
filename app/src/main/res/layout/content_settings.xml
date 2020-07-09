@@ -21,7 +21,13 @@
             android:id="@+id/chb_show_bottom_nav_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/settings_show_bottom_navigation_label"
+            android:text="@string/settings_show_bottom_nav_label"
+            style="@style/TextBody"/>
+        <CheckBox
+            android:id="@+id/chb_show_battery_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_show_battery_indicator"
             style="@style/TextBody"/>
 
 

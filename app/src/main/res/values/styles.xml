@@ -43,4 +43,24 @@
         <item name="android:textSize">@dimen/text_17</item>
     </style>
 
+    <style name="DialogFragment" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:layout_gravity">bottom</item>
+    </style>
+
+    <style name="BottomSheetDialog" >
+        <item name="android:background">#FFFFFF</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowBackground">#FFFFFF</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
 </resources>

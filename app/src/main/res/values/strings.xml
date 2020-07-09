@@ -17,7 +17,8 @@
 
     <!--region Settings-->
     <string name="settings_label">Settings</string>
-    <string name="settings_show_bottom_navigation_label">Show Main Navigation Bar Titles</string>
+    <string name="settings_show_bottom_nav_label">Show navigation bar titles</string>
+    <string name="settings_show_battery_indicator">Show battery indicator</string>
     <!--endregion-->
 
     <!--region Main-->
@@ -36,10 +37,10 @@
     <string name="drink_favorite_message_empty">Favorite is empty</string>
     <string name="drink_history_item_btn_favorite_description">Add/Delete from favorite</string>
 
-    <string name="drink_history_toast_shortcut_added"> cocktail shortcut added</string>
+    <string name="drink_history_toast_shortcut_added">cocktail shortcut added</string>
     <string name="drink_history_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>
 
-    <string name="drink_history_toast_pin_shortcut_added"> cocktail pin shortcut added</string>
+    <string name="drink_history_toast_pin_shortcut_added">cocktail pin shortcut added</string>
     <string name="drink_history_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
 
     <string name="drink_history_item_menu_action_open">Open</string>
@@ -57,7 +58,8 @@
     <!--region Filter-->
     <string name="drink_filter_label">Filters</string>
     <string name="drink_filter_btn_reset">Reset</string>
-    <string name="drink_filter_btn_result">Result</string>
+    <string name="drink_filter_btn_result_found">Results</string>
+    <string name="drink_filter_btn_result_not_found">Not found</string>
 
     <string name="drink_filter_alcohol_title">Alcohol</string>
     <string name="drink_filter_alcohol_disable">Disable filter</string>

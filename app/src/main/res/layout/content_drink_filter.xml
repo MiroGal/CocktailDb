@@ -179,10 +179,11 @@
                 android:id="@+id/btn_result_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/offset_8"
+                android:paddingStart="@dimen/offset_8"
                 android:clickable="false"
-                android:text="@string/drink_filter_btn_result"
-                style="@style/Button" />
+                android:text="@string/drink_filter_btn_result_found"
+                style="@style/Button"
+                tools:ignore="RtlSymmetry" />
             <ImageView
                 android:id="@+id/btn_result_icon"
                 android:layout_width="48dp"

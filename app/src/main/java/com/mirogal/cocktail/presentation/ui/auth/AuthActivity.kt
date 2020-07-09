@@ -3,19 +3,26 @@ package com.mirogal.cocktail.presentation.ui.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
+import com.mirogal.cocktail.presentation.ui.base.RegularBottomSheetDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
 
-class AuthActivity : BaseActivity<AuthViewModel>() {
+class AuthActivity : BaseActivity<AuthViewModel>(),
+        BaseDialogFragment.OnDialogFragmentClickListener<ContactsContract.Contacts.Data>,
+        BaseDialogFragment.OnDialogFragmentDismissListener<ContactsContract.Contacts.Data> {
 
     override val contentLayoutResId = R.layout.activity_auth
     override val viewModel: AuthViewModel by viewModels()
@@ -36,6 +43,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         btn_authorization.isClickable = false
         btn_authorization.setBackgroundResource(R.drawable.bg_button_inactive)
         btn_authorization.setOnClickListener {
+//            createDialog()
             when (isAuthDataValid) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
                     startActivity(Intent(this@AuthActivity, MainActivity::class.java))
@@ -127,6 +135,20 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         btn_authorization.setBackgroundResource(R.drawable.bg_button)
         txt_login.setText("MiroGal")
         txt_password.setText("Miro89")
+    }
+
+    private fun createDialog() {
+        RegularBottomSheetDialogFragment.newInstance {
+            this.titleText="Test"
+        }.show(supportFragmentManager)
+    }
+
+    override fun onBottomSheetDialogFragmentDismiss(dialog: DialogFragment, data: ContactsContract.Contacts.Data?) {
+        Toast.makeText(this, "Dismiss", Toast.LENGTH_LONG).show()
+    }
+
+    override fun onBottomSheetDialogFragmentClick(dialog: DialogFragment, data: ContactsContract.Contacts.Data?) {
+        Toast.makeText(this, "Click", Toast.LENGTH_LONG).show()
     }
 
 }
