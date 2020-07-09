@@ -78,7 +78,8 @@
                     android:id="@+id/lb_dialog_bs_left"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/offset_48"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    style="@style/Button" />
                 <Space
                     android:id="@+id/space_dialog_bs_buttons"
                     android:layout_width="@dimen/offset_16"
@@ -87,7 +88,8 @@
                     android:id="@+id/lb_dialog_bs_right"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/offset_48"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"
+                    style="@style/Button" />
             </LinearLayout>
 
         </LinearLayout>

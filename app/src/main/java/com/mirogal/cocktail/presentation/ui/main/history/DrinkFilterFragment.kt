@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.base.dialog.RegularBottomSheetDialogFragment
 import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
 import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.model.history.HistoryPage
+import com.mirogal.cocktail.presentation.ui.base.BaseFragment
+import com.mirogal.cocktail.presentation.ui.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
@@ -39,7 +39,7 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
 
         btn_result.setOnClickListener {
 //            requireActivity().onBackPressed()
-            createDialog()
+            showDrinkFilterDialog()
         }
 
         btn_reset.setOnClickListener {
@@ -117,10 +117,9 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         }
     }
 
-    private fun createDialog() {
-        RegularBottomSheetDialogFragment.newInstance {
-            this.titleText="Test"
-        }.show(requireActivity().supportFragmentManager)
+    private fun showDrinkFilterDialog() {
+        val dialogFragment = DrinkFilterDialogFragment.newInstance()
+        dialogFragment.show(requireActivity().supportFragmentManager, DrinkFilterDialogFragment::class.java.simpleName)
     }
 
 }
