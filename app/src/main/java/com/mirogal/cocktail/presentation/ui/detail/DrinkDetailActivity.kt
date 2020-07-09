@@ -16,7 +16,8 @@ import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detail.IngredientMapper.toIngredientList
+import com.mirogal.cocktail.presentation.ui.detail.mapper.IngredientMapper.toIngredientList
+import com.mirogal.cocktail.presentation.ui.detail.adapter.ListAdapter
 import kotlinx.android.synthetic.main.activity_drink_detail.*
 import kotlinx.android.synthetic.main.content_drink_detail.*
 import kotlin.math.abs

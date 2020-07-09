@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.search
+package com.mirogal.cocktail.presentation.ui.search.adapter
 
 import android.content.Context
 import android.view.LayoutInflater

@@ -15,6 +15,7 @@ import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
 import com.mirogal.cocktail.data.repository.NetworkState
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
+import com.mirogal.cocktail.presentation.ui.search.adapter.ListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_search_drink.*
 import kotlinx.android.synthetic.main.content_search_drink.*

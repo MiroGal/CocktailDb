@@ -1,5 +1,6 @@
-package com.mirogal.cocktail.presentation.ui.detail
+package com.mirogal.cocktail.presentation.ui.detail.mapper
 
+import com.mirogal.cocktail.presentation.ui.detail.model.IngredientEntity
 import java.util.*
 
 object IngredientMapper {

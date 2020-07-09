@@ -1,10 +1,11 @@
-package com.mirogal.cocktail.presentation.ui.detail
+package com.mirogal.cocktail.presentation.ui.detail.adapter
 
 import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.ui.detail.model.IngredientEntity
 
 class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

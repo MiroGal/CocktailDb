@@ -24,6 +24,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
+import com.mirogal.cocktail.presentation.ui.main.history.adapter.ListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*

@@ -1,9 +1,11 @@
-package com.mirogal.cocktail.presentation.ui.detail
+package com.mirogal.cocktail.presentation.ui.detail.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.ui.detail.adapter.ItemHolder
+import com.mirogal.cocktail.presentation.ui.detail.model.IngredientEntity
 
 class ListAdapter(private val ingredientList: List<IngredientEntity>) : RecyclerView.Adapter<ItemHolder>() {
 

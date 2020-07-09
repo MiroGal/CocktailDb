@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.search
+package com.mirogal.cocktail.presentation.ui.search.adapter
 
 import android.content.Context
 import android.view.View
@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.presentation.ui.search.adapter.ListAdapter
 
 internal class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 

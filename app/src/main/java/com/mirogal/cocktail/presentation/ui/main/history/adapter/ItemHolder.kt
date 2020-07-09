@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history
+package com.mirogal.cocktail.presentation.ui.main.history.adapter
 
 import android.content.Context
 import android.util.Log
@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.presentation.ui.main.history.adapter.ListAdapter
 
 class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
