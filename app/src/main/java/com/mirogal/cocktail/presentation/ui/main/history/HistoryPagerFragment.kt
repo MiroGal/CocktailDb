@@ -41,7 +41,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
     override val contentLayoutResId = R.layout.fragment_history_pager
     override val viewModel: HistoryViewModel by activityViewModels()
-    val mainViewModel: MainViewModel by activityViewModels()
+    private val mainViewModel: MainViewModel by activityViewModels()
 
     private lateinit var pagerAdapter: PagerAdapter
 
@@ -268,8 +268,10 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
     private fun showFilterAlcohol(filter: AlcoholDrinkFilter) {
         if (filter != AlcoholDrinkFilter.DISABLE) {
+            if (item_alcohol_filter.visibility != View.VISIBLE) {
+                item_alcohol_filter.setCardBackgroundColor(randomColor())
+            }
             item_alcohol_filter.visibility = View.VISIBLE
-            item_alcohol_filter.setCardBackgroundColor(randomColor())
         }
         when (filter) {
             AlcoholDrinkFilter.ALCOHOLIC -> {
@@ -290,8 +292,10 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
     private fun showFilterCategory(filter: CategoryDrinkFilter) {
         if (filter != CategoryDrinkFilter.DISABLE) {
+            if (item_category_filter.visibility != View.VISIBLE) {
+                item_category_filter.setCardBackgroundColor(randomColor())
+            }
             item_category_filter.visibility = View.VISIBLE
-            item_category_filter.setCardBackgroundColor(randomColor())
             iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
         }
         when (filter) {
