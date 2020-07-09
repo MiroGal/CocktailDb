@@ -11,8 +11,8 @@ import androidx.lifecycle.Observer
 import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
-import com.mirogal.cocktail.data.repository.NetworkState
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.network.model.NetworkStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.ListAdapter
@@ -48,7 +48,7 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
         rv_search_list.addItemDecoration(itemDecoration)
 
         val listAdapter = ListAdapter(this, this)
-        viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbEntity?> ->
+        viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbModel?> ->
             try {
                 listAdapter.submitList(pagedList)
             } catch (ignored: Exception) {
@@ -56,8 +56,8 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
         })
         rv_search_list.adapter = listAdapter
 
-        viewModel.networkStatusLiveData.observe(this, Observer { status: NetworkState.Status ->
-            if (status == NetworkState.EMPTY) {
+        viewModel.networkStatusLiveData.observe(this, Observer { status: NetworkStatus.Status ->
+            if (status == NetworkStatus.EMPTY) {
                 showEmpty()
             } else {
                 showData()
@@ -99,7 +99,7 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
     }
 
 
-    override fun onItemClick(cocktail: CocktailDbEntity) {
+    override fun onItemClick(cocktail: CocktailDbModel) {
         viewModel.addCocktailToDb(cocktail)
         openDrinkDetailActivity(cocktail.id, cocktail.name)
     }

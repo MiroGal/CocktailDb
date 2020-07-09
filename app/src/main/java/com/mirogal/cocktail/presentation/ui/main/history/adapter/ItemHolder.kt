@@ -8,8 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
-import com.mirogal.cocktail.presentation.ui.main.history.adapter.ListAdapter
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
 class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -17,25 +16,25 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
     private val ivFavorite: ImageView = itemView.findViewById(R.id.iv_favorite)
 
-    private lateinit var cocktailEntity: CocktailDbEntity
+    private lateinit var cocktailModel: CocktailDbModel
     private var cocktailId = 0
     private var cocktailName: String? = ""
     private var isFavorite: Boolean = false
 
-    fun bind(cocktailEntity: CocktailDbEntity) {
-        this.cocktailEntity = cocktailEntity
-        cocktailId = cocktailEntity.id
-        cocktailName = cocktailEntity.name
-        isFavorite = cocktailEntity.isFavorite
+    fun bind(cocktailModel: CocktailDbModel) {
+        this.cocktailModel = cocktailModel
+        cocktailId = cocktailModel.id
+        cocktailName = cocktailModel.name
+        isFavorite = cocktailModel.isFavorite
 
-        tvName.text = cocktailEntity.name
-        if (cocktailEntity.isFavorite) {
+        tvName.text = cocktailModel.name
+        if (cocktailModel.isFavorite) {
             ivFavorite.setImageResource(R.drawable.ic_item_favorite)
         } else {
             ivFavorite.setImageResource(R.drawable.ic_item_favorite_border)
         }
         Glide.with(context)
-                .load(cocktailEntity.imagePath)
+                .load(cocktailModel.imagePath)
                 .centerCrop()
                 .placeholder(R.drawable.anim_placeholder_progress)
                 .error(R.drawable.ic_placeholder_error)
@@ -52,7 +51,7 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
             clickListener.onFavoriteClick(cocktailId, isFavorite)
         }
         itemView.setOnLongClickListener {
-            longClickListener.onItemLongClick(itemView, cocktailEntity)
+            longClickListener.onItemLongClick(itemView, cocktailModel)
             false
         }
     }

@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
-import com.mirogal.cocktail.data.repository.NetworkState
+import com.mirogal.cocktail.data.network.model.NetworkStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 
@@ -22,9 +22,9 @@ class SearchDrinkViewModel(application: Application) : BaseViewModel(application
                     .resources.getString(R.string.app_name), Context.MODE_PRIVATE)
     private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
 
-    val cocktailListLiveData: LiveData<PagedList<CocktailDbEntity?>> = repository.loadCocktailListLiveData
+    val cocktailListLiveData: LiveData<PagedList<CocktailDbModel?>> = repository.loadCocktailListLiveData
     val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
-    val networkStatusLiveData: LiveData<NetworkState.Status> = repository.networkStatusMutableLiveData
+    val networkStatusLiveData: LiveData<NetworkStatus.Status> = repository.networkStatusMutableLiveData
 
     companion object {
         private const val KEY_SEARCH_NAME = "search_name"
@@ -52,7 +52,7 @@ class SearchDrinkViewModel(application: Application) : BaseViewModel(application
         return sharedPreferences.getString(KEY_SEARCH_NAME, "")
     }
 
-    fun addCocktailToDb(cocktail: CocktailDbEntity?) {
+    fun addCocktailToDb(cocktail: CocktailDbModel?) {
         repository.addCocktailToDb(cocktail)
     }
 

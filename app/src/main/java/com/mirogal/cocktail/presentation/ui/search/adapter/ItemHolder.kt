@@ -7,20 +7,19 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
-import com.mirogal.cocktail.presentation.ui.search.adapter.ListAdapter
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
 internal class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    private lateinit var cocktailEntity: CocktailDbEntity
+    private lateinit var cocktailModel: CocktailDbModel
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
 
-    fun bind(cocktailEntity: CocktailDbEntity) {
-        this.cocktailEntity = cocktailEntity
-        tvName.text = cocktailEntity.name
+    fun bind(cocktailModel: CocktailDbModel) {
+        this.cocktailModel = cocktailModel
+        tvName.text = cocktailModel.name
         Glide.with(context)
-                .load(cocktailEntity.imagePath)
+                .load(cocktailModel.imagePath)
                 .centerCrop()
                 .placeholder(R.drawable.anim_placeholder_progress)
                 .error(R.drawable.ic_placeholder_error)
@@ -29,7 +28,7 @@ internal class ItemHolder(private val context: Context, itemView: View) : Recycl
 
     fun setListener(listener: ListAdapter.OnItemClickListener) {
         itemView.setOnClickListener {
-            listener.onItemClick(cocktailEntity)
+            listener.onItemClick(cocktailModel)
         }
     }
 

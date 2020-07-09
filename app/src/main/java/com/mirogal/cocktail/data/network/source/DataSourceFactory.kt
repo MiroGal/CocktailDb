@@ -1,9 +1,9 @@
-package com.mirogal.cocktail.data.repository.netpagedlist
+package com.mirogal.cocktail.data.network.source
 
 import androidx.lifecycle.MutableLiveData
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
-class DataSourceFactory : androidx.paging.DataSource.Factory<Int?, CocktailDbEntity?>() {
+class DataSourceFactory : androidx.paging.DataSource.Factory<Int?, CocktailDbModel?>() {
 
     private val mutableLiveData = MutableLiveData<DataSource>()
     private var currentQuery: String? = null

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import java.util.*
 
 class ListAdapter(private val context: Context,
@@ -14,7 +14,7 @@ class ListAdapter(private val context: Context,
                   private val onItemLongClickListener: OnItemLongClickListener)
     : RecyclerView.Adapter<ItemHolder>() {
 
-    private var cocktailList: List<CocktailDbEntity> = ArrayList()
+    private var cocktailList: List<CocktailDbModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -31,7 +31,7 @@ class ListAdapter(private val context: Context,
         return cocktailList.size
     }
 
-    fun refreshData(newData: List<CocktailDbEntity>) {
+    fun refreshData(newData: List<CocktailDbModel>) {
         cocktailList = newData
         notifyDataSetChanged()
     }
@@ -42,7 +42,7 @@ class ListAdapter(private val context: Context,
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(view: View, cocktailEntity: CocktailDbEntity)
+        fun onItemLongClick(view: View, cocktailModel: CocktailDbModel)
     }
 
 }

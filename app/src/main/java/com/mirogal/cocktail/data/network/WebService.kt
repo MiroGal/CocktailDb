@@ -1,6 +1,6 @@
 package com.mirogal.cocktail.data.network
 
-import com.mirogal.cocktail.data.network.entity.ContainerNetEntity
+import com.mirogal.cocktail.data.network.model.ContainerNetModel
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface WebService {
 
     @GET("api/json/v1/1/search.php")
-    fun loadCocktailList(@Query("s") name: String?): Call<ContainerNetEntity?>?
+    fun loadCocktailList(@Query("s") name: String?): Call<ContainerNetModel?>?
 
     companion object Factory {
         fun create(): WebService {

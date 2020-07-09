@@ -7,18 +7,19 @@ import androidx.lifecycle.Transformations
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PagedList
 import com.mirogal.cocktail.data.db.CocktailDatabase
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
-import com.mirogal.cocktail.data.repository.netpagedlist.BoundaryCallback
-import com.mirogal.cocktail.data.repository.netpagedlist.DataSourceFactory
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.network.model.NetworkStatus
+import com.mirogal.cocktail.data.network.source.BoundaryCallback
+import com.mirogal.cocktail.data.network.source.DataSourceFactory
 
 class CocktailRepository(application: Application) {
 
     private val database = CocktailDatabase.newInstance(application)
 
-    lateinit var saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
-    var loadCocktailListLiveData: LiveData<PagedList<CocktailDbEntity?>> = MutableLiveData()
+    lateinit var saveCocktailListLiveData: LiveData<List<CocktailDbModel>?>
+    var loadCocktailListLiveData: LiveData<PagedList<CocktailDbModel?>> = MutableLiveData()
     val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
-    val networkStatusMutableLiveData: MutableLiveData<NetworkState.Status> = MutableLiveData()
+    val networkStatusMutableLiveData: MutableLiveData<NetworkStatus.Status> = MutableLiveData()
 
     companion object {
 
@@ -70,11 +71,11 @@ class CocktailRepository(application: Application) {
     }
 
 
-    fun getCocktailById(cocktailId: Int): LiveData<CocktailDbEntity> {
+    fun getCocktailById(cocktailId: Int): LiveData<CocktailDbModel> {
         return database.dao().getCocktailById(cocktailId)
     }
 
-    fun addCocktailToDb(cocktail: CocktailDbEntity?) {
+    fun addCocktailToDb(cocktail: CocktailDbModel?) {
         Thread(Runnable { database.dao().addCocktail(cocktail!!) }).start()
     }
 

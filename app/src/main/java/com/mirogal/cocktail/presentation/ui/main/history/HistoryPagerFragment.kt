@@ -17,7 +17,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -45,7 +45,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
     private lateinit var pagerAdapter: PagerAdapter
 
-    private var cocktailList: List<CocktailDbEntity>? = null
+    private var cocktailList: List<CocktailDbModel>? = null
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
@@ -255,12 +255,12 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
     private fun showProposeDrink(id: Int) {
         if (cocktailList != null && cocktailList!!.size > 1) {
-            val entity: CocktailDbEntity? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
-            if (entity != null) {
+            val model: CocktailDbModel? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
+            if (model != null) {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Переглянути ${entity.name}", Snackbar.LENGTH_LONG)
+                        "Переглянути ${model.name}", Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
-                            openDrinkDetailActivity(entity.id, entity.name)
+                            openDrinkDetailActivity(model.id, model.name)
                         }.show()
             }
         }

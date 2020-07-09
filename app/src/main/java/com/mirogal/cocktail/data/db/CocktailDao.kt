@@ -5,28 +5,28 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
 @Dao
 interface CocktailDao {
 
-    @get:Query("SELECT * FROM " + CocktailDbEntity.TABLE_NAME)
-    val cocktailListLiveData: LiveData<List<CocktailDbEntity>?>
+    @get:Query("SELECT * FROM " + CocktailDbModel.TABLE_NAME)
+    val cocktailListLiveData: LiveData<List<CocktailDbModel>?>
 
-    @Query("SELECT * FROM " + CocktailDbEntity.TABLE_NAME
-            + " WHERE " + CocktailDbEntity.COLUMN_ID + " = :cocktailId")
-    fun getCocktailById(cocktailId: Int): LiveData<CocktailDbEntity>
+    @Query("SELECT * FROM " + CocktailDbModel.TABLE_NAME
+            + " WHERE " + CocktailDbModel.COLUMN_ID + " = :cocktailId")
+    fun getCocktailById(cocktailId: Int): LiveData<CocktailDbModel>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addCocktail(cocktail: CocktailDbEntity)
+    fun addCocktail(cocktail: CocktailDbModel)
 
-    @Query("DELETE FROM " + CocktailDbEntity.TABLE_NAME
-            + " WHERE " + CocktailDbEntity.COLUMN_ID + " = :cocktailId")
+    @Query("DELETE FROM " + CocktailDbModel.TABLE_NAME
+            + " WHERE " + CocktailDbModel.COLUMN_ID + " = :cocktailId")
     fun deleteCocktail(cocktailId: Int)
 
-    @Query("UPDATE " + CocktailDbEntity.TABLE_NAME
-            + " SET " + CocktailDbEntity.COLUMN_FAVORITE + " = :isFavorite"
-            + " WHERE " + CocktailDbEntity.COLUMN_ID + " = :cocktailId")
+    @Query("UPDATE " + CocktailDbModel.TABLE_NAME
+            + " SET " + CocktailDbModel.COLUMN_FAVORITE + " = :isFavorite"
+            + " WHERE " + CocktailDbModel.COLUMN_ID + " = :cocktailId")
     fun setFavorite(cocktailId: Int, isFavorite: Boolean)
 
 }

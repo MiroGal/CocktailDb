@@ -1,9 +1,9 @@
-package com.mirogal.cocktail.data.network.entity
+package com.mirogal.cocktail.data.network.model
 
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class CocktailNetEntity : Serializable {
+class CocktailNetModel : Serializable {
 
     @SerializedName("idDrink")
     var id = 0

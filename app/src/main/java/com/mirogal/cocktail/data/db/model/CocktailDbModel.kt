@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.data.db.entity
+package com.mirogal.cocktail.data.db.model
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
@@ -6,8 +6,8 @@ import androidx.room.Ignore
 import androidx.room.PrimaryKey
 import java.io.Serializable
 
-@Entity(tableName = CocktailDbEntity.TABLE_NAME)
-class CocktailDbEntity : Serializable {
+@Entity(tableName = CocktailDbModel.TABLE_NAME)
+class CocktailDbModel : Serializable {
 
     @PrimaryKey
     @ColumnInfo(name = COLUMN_ID)

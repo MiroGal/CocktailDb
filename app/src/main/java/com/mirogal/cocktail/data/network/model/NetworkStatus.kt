@@ -1,6 +1,6 @@
-package com.mirogal.cocktail.data.repository
+package com.mirogal.cocktail.data.network.model
 
-object NetworkState {
+object NetworkStatus {
 
     val EMPTY = Status.SUCCESS_EMPTY
     val LOADED = Status.SUCCESS_LOADED

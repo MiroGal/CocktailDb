@@ -7,19 +7,19 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
 internal class ListAdapter(private val context: Context,
                            private val onItemClickListener: OnItemClickListener)
-    : PagedListAdapter<CocktailDbEntity, ItemHolder>(DIFF_CALLBACK) {
+    : PagedListAdapter<CocktailDbModel, ItemHolder>(DIFF_CALLBACK) {
 
     companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbEntity>() {
+        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbModel>() {
 
-            override fun areItemsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
+            override fun areItemsTheSame(oldItem: CocktailDbModel, newItem: CocktailDbModel)
                     = oldItem.id == newItem.id
 
-            override fun areContentsTheSame(oldItem: CocktailDbEntity, newItem: CocktailDbEntity)
+            override fun areContentsTheSame(oldItem: CocktailDbModel, newItem: CocktailDbModel)
                     = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
         }
     }
@@ -40,7 +40,7 @@ internal class ListAdapter(private val context: Context,
     }
 
     internal interface OnItemClickListener {
-        fun onItemClick(cocktail: CocktailDbEntity)
+        fun onItemClick(cocktail: CocktailDbModel)
     }
 
 }

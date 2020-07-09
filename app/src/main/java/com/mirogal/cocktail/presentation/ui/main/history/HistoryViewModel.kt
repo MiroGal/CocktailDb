@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
@@ -23,10 +23,10 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 
-    private val saveCocktailListLiveData: LiveData<List<CocktailDbEntity>?> = repository.saveCocktailListLiveData
+    private val saveCocktailListLiveData: LiveData<List<CocktailDbModel>?> = repository.saveCocktailListLiveData
 
-    val historyCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
-    val favoriteCocktailListLiveData: LiveData<List<CocktailDbEntity>?>
+    val historyCocktailListLiveData: LiveData<List<CocktailDbModel>?>
+    val favoriteCocktailListLiveData: LiveData<List<CocktailDbModel>?>
 
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
     val isDrinkFilterEnableLiveData: LiveData<Boolean>
@@ -38,7 +38,7 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
     val filterResultStringLiveData: LiveData<String>
 
     init {
-        historyCocktailListLiveData = MediatorLiveData<List<CocktailDbEntity>?>().apply {
+        historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
             addSource(saveCocktailListLiveData) {
                 if (saveCocktailListLiveData.value != null)
                     value = filterCocktailList(saveCocktailListLiveData.value)
@@ -85,7 +85,7 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    private fun filterCocktailList(list: List<CocktailDbEntity>?): List<CocktailDbEntity>? {
+    private fun filterCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
         return list?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) != AlcoholDrinkFilter.DISABLE) {
                 it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key

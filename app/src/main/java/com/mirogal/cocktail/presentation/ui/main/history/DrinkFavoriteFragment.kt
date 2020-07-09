@@ -21,7 +21,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.entity.CocktailDbEntity
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.presentation.ui.main.history.adapter.ListAdapter
@@ -79,8 +79,8 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
         viewModel.switchCocktailStateFavorite(cocktailId, isFavorite)
     }
 
-    override fun onItemLongClick(view: View, cocktailEntity: CocktailDbEntity) {
-        createAndOpenItemMenu(view, cocktailEntity)
+    override fun onItemLongClick(view: View, cocktailModel: CocktailDbModel) {
+        createAndOpenItemMenu(view, cocktailModel)
     }
 
 
@@ -105,28 +105,28 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
         }
     }
 
-    private fun createAndOpenItemMenu(view: View, cocktailEntity: CocktailDbEntity) {
+    private fun createAndOpenItemMenu(view: View, cocktailModel: CocktailDbModel) {
         val popupMenu = PopupMenu(requireActivity(), view)
         popupMenu.inflate(R.menu.drink_favorite_item_popup_menu)
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_open -> openDrinkDetailActivity(cocktailEntity.id, cocktailEntity.name)
-                R.id.action_shortcut -> addItemShortcut(cocktailEntity)
-                R.id.action_pin_shortcut -> addItemPinShortcut(cocktailEntity)
-                R.id.action_favorite -> viewModel.switchCocktailStateFavorite(cocktailEntity.id, cocktailEntity.isFavorite)
+                R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
+                R.id.action_shortcut -> addItemShortcut(cocktailModel)
+                R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
+                R.id.action_favorite -> viewModel.switchCocktailStateFavorite(cocktailModel.id, cocktailModel.isFavorite)
             }
             true
         }
         popupMenu.show()
     }
 
-    private fun addItemShortcut(cocktailEntity: CocktailDbEntity) {
+    private fun addItemShortcut(cocktailModel: CocktailDbModel) {
         // Check system version (must be Android 7.1 or higher)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             // Download image
             Glide.with(requireActivity())
                     .asBitmap()
-                    .load(cocktailEntity.imagePath)
+                    .load(cocktailModel.imagePath)
 //                    .centerCrop() // for square icon
                     .circleCrop() // for round icon
                     .into(object : CustomTarget<Bitmap>(){
@@ -137,17 +137,17 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
                             // Create intent
                             val intent = Intent(requireActivity(), DrinkDetailActivity::class.java)
                             intent.action = Intent.ACTION_VIEW
-                            intent.putExtra("cocktailId", cocktailEntity.id)
-                            intent.putExtra("cocktailName", cocktailEntity.name)
+                            intent.putExtra("cocktailId", cocktailModel.id)
+                            intent.putExtra("cocktailName", cocktailModel.name)
                             // Create intent stack (for correct work back button)
                             val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                             stackBuilder.addParentStack(DrinkDetailActivity::class.java)
                             stackBuilder.addNextIntent(intent)
                             // Create ShortcutInfo
                             val shortcutInfo = ShortcutInfo.Builder(requireActivity(),
-                                    cocktailEntity.id.toString())
-                                    .setShortLabel(cocktailEntity.name.toString())
-                                    .setLongLabel("${cocktailEntity.name} (${cocktailEntity.alcoholic})")
+                                    cocktailModel.id.toString())
+                                    .setShortLabel(cocktailModel.name.toString())
+                                    .setLongLabel("${cocktailModel.name} (${cocktailModel.alcoholic})")
                                     .setIcon(Icon.createWithBitmap(resource))
 //                                    .setIntent(intent) // for single activity
                                     .setIntents(stackBuilder.intents) // for activity stack
@@ -156,7 +156,7 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
                             shortcutManager!!.dynamicShortcuts = listOf(shortcutInfo)
 
                             Toast.makeText(requireActivity(),
-                                    cocktailEntity.name.toString() + " "
+                                    cocktailModel.name.toString() + " "
                                             + getString(R.string.drink_history_toast_shortcut_added),
                                     Toast.LENGTH_SHORT).show()
                         }
@@ -167,13 +167,13 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
         }
     }
 
-    private fun addItemPinShortcut(cocktailEntity: CocktailDbEntity) {
+    private fun addItemPinShortcut(cocktailModel: CocktailDbModel) {
         // Check system version (must be Android 8.0 or higher)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Download image
             Glide.with(requireActivity())
                     .asBitmap()
-                    .load(cocktailEntity.imagePath)
+                    .load(cocktailModel.imagePath)
 //                    .centerCrop() // for square icon
                     .circleCrop() // for round icon
                     .into(object : CustomTarget<Bitmap>(){
@@ -186,16 +186,16 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
                                 // Create ShortcutManager
                                 val intent = Intent(requireActivity(), DrinkDetailActivity::class.java)
                                 intent.action = Intent.ACTION_VIEW
-                                intent.putExtra("cocktailId", cocktailEntity.id)
-                                intent.putExtra("cocktailName", cocktailEntity.name)
+                                intent.putExtra("cocktailId", cocktailModel.id)
+                                intent.putExtra("cocktailName", cocktailModel.name)
                                 // Create intent stack (for correct work back button)
                                 val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                                 stackBuilder.addParentStack(DrinkDetailActivity::class.java)
                                 stackBuilder.addNextIntent(intent)
                                 // Create ShortcutInfo
-                                val shortcutInfo = ShortcutInfo.Builder(requireActivity(), cocktailEntity.id.toString())
-                                        .setShortLabel(cocktailEntity.name.toString())
-                                        .setLongLabel("${cocktailEntity.name} (${cocktailEntity.alcoholic})")
+                                val shortcutInfo = ShortcutInfo.Builder(requireActivity(), cocktailModel.id.toString())
+                                        .setShortLabel(cocktailModel.name.toString())
+                                        .setLongLabel("${cocktailModel.name} (${cocktailModel.alcoholic})")
                                         .setIcon(Icon.createWithBitmap(resource))
 //                                        .setIntent(intent) // for single activity
                                         .setIntents(stackBuilder.intents) // for activity stack
@@ -208,7 +208,7 @@ class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIt
                                 shortcutManager.requestPinShortcut(shortcutInfo, successCallbackIntent.intentSender)
 
                                 Toast.makeText(requireActivity(),
-                                        cocktailEntity.name.toString() + " "
+                                        cocktailModel.name.toString() + " "
                                                 + getString(R.string.drink_history_toast_pin_shortcut_added),
                                         Toast.LENGTH_SHORT).show()
                             }
