@@ -1,4 +1,4 @@
-package com.mirogal.cocktail
+package com.mirogal.cocktail.presentation
 
 import android.app.Application
 import android.content.Intent

@@ -24,11 +24,11 @@ import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.history.adapter.PagerAdapter
-import com.mirogal.cocktail.presentation.ui.main.history.model.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.presentation.ui.main.history.model.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.presentation.ui.main.history.model.filter.DrinkFilterType
-import com.mirogal.cocktail.presentation.ui.main.history.model.page.HistoryPage
-import com.mirogal.cocktail.presentation.ui.main.history.model.sort.DrinkSort
+import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.model.history.HistoryPage
+import com.mirogal.cocktail.presentation.model.filter.DrinkSort
 import com.mirogal.cocktail.presentation.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.presentation.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_history_pager.*

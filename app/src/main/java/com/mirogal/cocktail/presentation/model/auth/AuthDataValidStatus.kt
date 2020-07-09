@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.auth.model
+package com.mirogal.cocktail.presentation.model.auth
 
 enum class AuthDataValidStatus(val key: String) {
 

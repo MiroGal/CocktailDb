@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.detail.model.IngredientEntity
+import com.mirogal.cocktail.presentation.model.detail.IngredientEntity
 
 class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

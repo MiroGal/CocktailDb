@@ -7,11 +7,11 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.base.RegularBottomSheetDialogFragment
-import com.mirogal.cocktail.presentation.ui.main.history.model.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.presentation.ui.main.history.model.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.presentation.ui.main.history.model.filter.DrinkFilterType
-import com.mirogal.cocktail.presentation.ui.main.history.model.page.HistoryPage
+import com.mirogal.cocktail.presentation.ui.base.dialog.RegularBottomSheetDialogFragment
+import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_history_pager.toolbar

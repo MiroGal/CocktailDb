@@ -13,10 +13,10 @@ import androidx.activity.viewModels
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.auth.model.AuthDataValidStatus
+import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
-import com.mirogal.cocktail.presentation.ui.base.RegularBottomSheetDialogFragment
+import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
+import com.mirogal.cocktail.presentation.ui.base.dialog.RegularBottomSheetDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 

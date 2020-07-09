@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history.model.filter
+package com.mirogal.cocktail.presentation.model.filter
 
 enum class AlcoholDrinkFilter(override val type: DrinkFilterType, override val key: String): DrinkFilter {
 

@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history.model.sort
+package com.mirogal.cocktail.presentation.model.filter
 
 enum class DrinkSort(val key: String) {
 
