@@ -20,7 +20,7 @@ class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         this.drinkFilterType = drinkFilterType
         this.filterList = currentFilterList
 
-        tvFilterName.text = filter.key
+        tvFilterName.text = filter.key.replace("\\", "")
         if (filter == currentFilterList[drinkFilterType]) {
             itemView.isPressed = true
         }

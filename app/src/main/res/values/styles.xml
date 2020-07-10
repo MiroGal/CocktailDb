@@ -38,7 +38,7 @@
 
     <style name="Button">
         <item name="android:gravity">center</item>
-        <item name="android:background">@drawable/bg_button</item>
+        <item name="android:background">@drawable/bg_system_button</item>
         <item name="android:textColor">@color/txt_button</item>
         <item name="android:textSize">@dimen/text_17</item>
     </style>

@@ -276,15 +276,15 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
         when (filter) {
             AlcoholDrinkFilter.ALCOHOLIC -> {
                 iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_alcoholic)
-                tv_filter_alcohol_name.text = AlcoholDrinkFilter.ALCOHOLIC.key
+                tv_filter_alcohol_name.text = AlcoholDrinkFilter.ALCOHOLIC.key.replace("\\", "")
             }
             AlcoholDrinkFilter.NON_ALCOHOLIC -> {
                 iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_non)
-                tv_filter_alcohol_name.text = AlcoholDrinkFilter.NON_ALCOHOLIC.key
+                tv_filter_alcohol_name.text = AlcoholDrinkFilter.NON_ALCOHOLIC.key.replace("\\", "")
             }
             AlcoholDrinkFilter.OPTIONAL_ALCOHOL -> {
                 iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_optional)
-                tv_filter_alcohol_name.text = AlcoholDrinkFilter.OPTIONAL_ALCOHOL.key
+                tv_filter_alcohol_name.text = AlcoholDrinkFilter.OPTIONAL_ALCOHOL.key.replace("\\", "")
             }
             else -> item_alcohol_filter.visibility = View.GONE
         }
@@ -299,17 +299,17 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
             iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
         }
         when (filter) {
-            CategoryDrinkFilter.ORDINARY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.ORDINARY_DRINK.key
-            CategoryDrinkFilter.COCKTAIL -> tv_filter_category_name.text = CategoryDrinkFilter.COCKTAIL.key
-            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> tv_filter_category_name.text = CategoryDrinkFilter.MILK_FLOAT_SHAKE.key
-            CategoryDrinkFilter.OTHER_UNKNOWN -> tv_filter_category_name.text = CategoryDrinkFilter.OTHER_UNKNOWN.key
-            CategoryDrinkFilter.COCOA -> tv_filter_category_name.text = CategoryDrinkFilter.COCOA.key
-            CategoryDrinkFilter.SHOT -> tv_filter_category_name.text = CategoryDrinkFilter.SHOT.key
-            CategoryDrinkFilter.COFFEE_TEA -> tv_filter_category_name.text = CategoryDrinkFilter.COFFEE_TEA.key
-            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> tv_filter_category_name.text = CategoryDrinkFilter.HOMEMADE_LIQUEUR.key
-            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.PUNCH_PARTY_DRINK.key
-            CategoryDrinkFilter.BEER -> tv_filter_category_name.text = CategoryDrinkFilter.BEER.key
-            CategoryDrinkFilter.SOFT_DRINK_SODA -> tv_filter_category_name.text = CategoryDrinkFilter.SOFT_DRINK_SODA.key
+            CategoryDrinkFilter.ORDINARY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.ORDINARY_DRINK.key.replace("\\", "")
+            CategoryDrinkFilter.COCKTAIL -> tv_filter_category_name.text = CategoryDrinkFilter.COCKTAIL.key.replace("\\", "")
+            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> tv_filter_category_name.text = CategoryDrinkFilter.MILK_FLOAT_SHAKE.key.replace("\\", "")
+            CategoryDrinkFilter.OTHER_UNKNOWN -> tv_filter_category_name.text = CategoryDrinkFilter.OTHER_UNKNOWN.key.replace("\\", "")
+            CategoryDrinkFilter.COCOA -> tv_filter_category_name.text = CategoryDrinkFilter.COCOA.key.replace("\\", "")
+            CategoryDrinkFilter.SHOT -> tv_filter_category_name.text = CategoryDrinkFilter.SHOT.key.replace("\\", "")
+            CategoryDrinkFilter.COFFEE_TEA -> tv_filter_category_name.text = CategoryDrinkFilter.COFFEE_TEA.key.replace("\\", "")
+            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> tv_filter_category_name.text = CategoryDrinkFilter.HOMEMADE_LIQUEUR.key.replace("\\", "")
+            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.PUNCH_PARTY_DRINK.key.replace("\\", "")
+            CategoryDrinkFilter.BEER -> tv_filter_category_name.text = CategoryDrinkFilter.BEER.key.replace("\\", "")
+            CategoryDrinkFilter.SOFT_DRINK_SODA -> tv_filter_category_name.text = CategoryDrinkFilter.SOFT_DRINK_SODA.key.replace("\\", "")
             else -> item_category_filter.visibility = View.GONE
         }
     }

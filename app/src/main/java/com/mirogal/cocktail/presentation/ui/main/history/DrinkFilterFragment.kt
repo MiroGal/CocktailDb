@@ -31,6 +31,9 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_filter_label)
 
+        btn_filter_alcohol_text_1.text = DrinkFilterType.ALCOHOL.key
+        btn_filter_category_text_1.text = DrinkFilterType.CATEGORY.key
+
         btn_toolbar_back.setOnClickListener { requireActivity().onBackPressed() }
 
         btn_filter_alcohol.setOnClickListener { showDrinkFilterDialog(DrinkFilterType.ALCOHOL) }
@@ -61,6 +64,8 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 currentFilterList = it
+                btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""
+                btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
             }
         })
     }

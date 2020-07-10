@@ -42,7 +42,7 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
         txt_password.addTextChangedListener(textWatcherPassword)
 
         btn_authorization.isClickable = false
-        btn_authorization.setBackgroundResource(R.drawable.bg_button_inactive)
+        btn_authorization.setBackgroundResource(R.drawable.bg_system_button_inactive)
         btn_authorization.setOnClickListener {
 //            createDialog()
             when (isAuthDataValid) {
@@ -84,9 +84,9 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
             if (btn_authorization.isClickable != it) {
                 btn_authorization.isClickable = it
                 if (it) {
-                    btn_authorization.setBackgroundResource(R.drawable.bg_button)
+                    btn_authorization.setBackgroundResource(R.drawable.bg_system_button)
                 } else {
-                    btn_authorization.setBackgroundResource(R.drawable.bg_button_inactive)
+                    btn_authorization.setBackgroundResource(R.drawable.bg_system_button_inactive)
                 }
             }
         })
@@ -133,7 +133,7 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
     // Temporary method
     private fun fillInputField() {
         btn_authorization.isClickable = true
-        btn_authorization.setBackgroundResource(R.drawable.bg_button)
+        btn_authorization.setBackgroundResource(R.drawable.bg_system_button)
         txt_login.setText("MiroGal")
         txt_password.setText("Miro89")
     }
