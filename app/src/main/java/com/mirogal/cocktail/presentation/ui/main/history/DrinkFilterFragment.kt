@@ -11,7 +11,7 @@ import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.dialog.DrinkFilterDialogFragment
+import com.mirogal.cocktail.presentation.ui.main.history.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.content_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
@@ -39,7 +39,7 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
 
         btn_result.setOnClickListener {
 //            requireActivity().onBackPressed()
-            showDrinkFilterDialog()
+            showDrinkFilterDialog(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.NON_ALCOHOLIC)
         }
 
         btn_reset.setOnClickListener {
@@ -117,9 +117,9 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         }
     }
 
-    private fun showDrinkFilterDialog() {
-        val dialogFragment = DrinkFilterDialogFragment.newInstance()
-        dialogFragment.show(requireActivity().supportFragmentManager, DrinkFilterDialogFragment::class.java.simpleName)
+    private fun showDrinkFilterDialog(drinkFilterType: DrinkFilterType, currentFilter: AlcoholDrinkFilter) {
+        val dialogFragment = DrinkFilterDialogFragment.newInstance(drinkFilterType, currentFilter)
+        dialogFragment.show(childFragmentManager, DrinkFilterDialogFragment::class.java.simpleName)
     }
 
 }

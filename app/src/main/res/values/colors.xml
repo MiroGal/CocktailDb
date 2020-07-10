@@ -6,6 +6,7 @@
     <color name="colorAccent">#49B6AB</color>
 
     <color name="background_primary">#FFFFFF</color>
+    <color name="background_primary_ripple">#BBBBBB</color>
     <color name="background_secondary">#F0F0F0</color>
     <color name="background_translucent">#C0FFFFFF</color>
     <color name="background_button">#102F54</color>

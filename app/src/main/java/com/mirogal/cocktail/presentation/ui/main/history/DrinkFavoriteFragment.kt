@@ -30,7 +30,8 @@ import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
 
-class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnItemClickListener,
+class DrinkFavoriteFragment : BaseFragment<HistoryViewModel>(),
+        ListAdapter.OnItemClickListener,
         ListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_favorite
