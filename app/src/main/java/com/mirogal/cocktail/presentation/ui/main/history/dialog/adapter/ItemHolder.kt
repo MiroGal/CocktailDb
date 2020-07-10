@@ -1,31 +1,37 @@
 package com.mirogal.cocktail.presentation.ui.main.history.dialog.adapter
 
-import android.annotation.SuppressLint
 import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
-import okhttp3.internal.immutableListOf
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 
 class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val tvFilterName: TextView = itemView.findViewById(R.id.tv_filter_name)
 
-    private lateinit var filter: AlcoholDrinkFilter
+    private lateinit var filter: DrinkFilter
+    private lateinit var drinkFilterType: DrinkFilterType
+    private lateinit var filterList: HashMap<DrinkFilterType, DrinkFilter>
 
-    @SuppressLint("SetTextI18n")
-    fun bind(filter: AlcoholDrinkFilter, currentFilter: AlcoholDrinkFilter) {
+    fun bind(filter: DrinkFilter, drinkFilterType: DrinkFilterType, currentFilterList: HashMap<DrinkFilterType, DrinkFilter>) {
         this.filter = filter
+        this.drinkFilterType = drinkFilterType
+        this.filterList = currentFilterList
+
         tvFilterName.text = filter.key
-        if (filter == currentFilter) {
+        if (filter == currentFilterList[drinkFilterType]) {
             itemView.isPressed = true
         }
+
+
     }
 
     fun setListener(onClickListener: ListAdapter.OnItemClickListener) {
         itemView.setOnClickListener {
-            onClickListener.onItemClick(filter)
+            filterList[drinkFilterType] = filter
+            onClickListener.onItemClick(filterList)
         }
     }
 

@@ -99,6 +99,7 @@
     <string name="drink_detail_instruction_title">Instructions</string>
     <!--endregion-->
 
+    <string name="dialog_filter_title">drink filter</string>
     <string name="dialog_btn_cancel">Cancel</string>
 
 </resources>

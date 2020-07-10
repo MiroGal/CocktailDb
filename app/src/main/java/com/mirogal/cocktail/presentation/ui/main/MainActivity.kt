@@ -9,7 +9,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
+import com.mirogal.cocktail.presentation.ui.base.exemple.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.history.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.history.HistoryPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment

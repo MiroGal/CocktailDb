@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.base.dialog
+package com.mirogal.cocktail.presentation.ui.base.exemple
 
 import android.os.Bundle
 import androidx.core.os.bundleOf

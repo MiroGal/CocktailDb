@@ -5,11 +5,27 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 
-class ListAdapter(private val filterList: Array<AlcoholDrinkFilter>,
-                  private val onItemClickListener: OnItemClickListener,
-                  private val currentFilter: AlcoholDrinkFilter?
+class ListAdapter(private val drinkFilterType: DrinkFilterType,
+                  private val currentFilterList: HashMap<DrinkFilterType, DrinkFilter>,
+                  private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<ItemHolder>() {
+
+    private var innerCurrentFilterList = currentFilterList
+
+    fun refreshData(currentFilterList: HashMap<DrinkFilterType, DrinkFilter>) {
+        innerCurrentFilterList = currentFilterList
+        notifyDataSetChanged()
+    }
+
+    val list = when (drinkFilterType) {
+        DrinkFilterType.ALCOHOL -> AlcoholDrinkFilter.values()
+        DrinkFilterType.CATEGORY -> CategoryDrinkFilter.values()
+        else -> null
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -18,16 +34,18 @@ class ListAdapter(private val filterList: Array<AlcoholDrinkFilter>,
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.bind(filterList[position], currentFilter ?: AlcoholDrinkFilter.DISABLE)
-        holder.setListener(onItemClickListener)
+        if (list != null) {
+            holder.bind(list[position] as DrinkFilter, drinkFilterType, innerCurrentFilterList)
+            holder.setListener(onItemClickListener)
+        }
     }
 
     override fun getItemCount(): Int {
-        return filterList.size
+        return list?.size ?: 0
     }
 
     interface OnItemClickListener {
-        fun onItemClick(filter: AlcoholDrinkFilter)
+        fun onItemClick(filterList: HashMap<DrinkFilterType, DrinkFilter>)
     }
 
 }

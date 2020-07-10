@@ -11,12 +11,8 @@ class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun createFragment(position: Int): Fragment {
         return when (position) {
-            0 -> {
-                DrinkHistoryFragment.newInstance()
-            }
-            else -> {
-                DrinkFavoriteFragment.newInstance()
-            }
+            0 -> DrinkHistoryFragment.newInstance()
+            else -> DrinkFavoriteFragment.newInstance()
         }
     }
 

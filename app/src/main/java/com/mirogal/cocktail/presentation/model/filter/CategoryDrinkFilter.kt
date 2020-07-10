@@ -2,6 +2,7 @@ package com.mirogal.cocktail.presentation.model.filter
 
 enum class CategoryDrinkFilter(override val type: DrinkFilterType, override val key: String): DrinkFilter {
 
+    DISABLE(DrinkFilterType.CATEGORY, "Disable"),
     ORDINARY_DRINK(DrinkFilterType.CATEGORY, "Ordinary Drink"),
     COCKTAIL(DrinkFilterType.CATEGORY, "Cocktail"),
     MILK_FLOAT_SHAKE(DrinkFilterType.CATEGORY, "Milk \\/ Float \\/ Shake"),
@@ -12,7 +13,6 @@ enum class CategoryDrinkFilter(override val type: DrinkFilterType, override val 
     HOMEMADE_LIQUEUR(DrinkFilterType.CATEGORY, "Homemade Liqueur"),
     PUNCH_PARTY_DRINK(DrinkFilterType.CATEGORY, "Punch \\/ Party Drink"),
     BEER(DrinkFilterType.CATEGORY, "Beer"),
-    SOFT_DRINK_SODA(DrinkFilterType.CATEGORY, "Soft Drink \\/ Soda"),
-    DISABLE(DrinkFilterType.CATEGORY, "Disable")
+    SOFT_DRINK_SODA(DrinkFilterType.CATEGORY, "Soft Drink \\/ Soda")
 
 }
