@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
+import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
@@ -42,16 +43,19 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
                     startActivity(Intent(this@AuthActivity, MainActivity::class.java))
                 }
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_INVALID -> {
+                    showInvalidAuthDataDialog(isAuthDataValid)
                     txt_password.requestFocus()
                     txt_password.setSelection(txt_password.text?.length!!)
                     txt_password_layout.error = getString(R.string.auth_message_invalid_password)
                 }
                 AuthDataValidStatus.LOGIN_INVALID_PASSWORD_VALID -> {
+                    showInvalidAuthDataDialog(isAuthDataValid)
                     txt_login.requestFocus()
                     txt_login.setSelection(txt_login.text?.length!!)
                     txt_login_layout.error = getString(R.string.auth_message_invalid_login)
                 }
                 else -> {
+                    showInvalidAuthDataDialog(isAuthDataValid)
                     txt_login.requestFocus()
                     txt_login.setSelection(txt_login.text?.length!!)
                     txt_login_layout.error = getString(R.string.auth_message_invalid_login)
@@ -119,6 +123,11 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     private fun hideKeyboard() {
         val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
+    }
+
+    private fun showInvalidAuthDataDialog(authDataValidStatus: AuthDataValidStatus) {
+        val dialogFragment = InvalidAuthDataDialogFragment.newInstance(authDataValidStatus)
+        dialogFragment.show(supportFragmentManager, InvalidAuthDataDialogFragment::class.java.simpleName)
     }
 
     // Temporary method

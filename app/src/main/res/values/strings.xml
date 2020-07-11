@@ -2,17 +2,28 @@
 
     <string name="app_name">MiroGal</string>
 
+    <string name="dialog_btn_cancel">Cancel</string>
+    <string name="dialog_btn_ok">OK</string>
+
     <!--region Auth-->
     <string name="auth_login_hint">Login</string>
     <string name="auth_password_hint">Password</string>
     <string name="auth_btn_login">Login</string>
     <string name="auth_message_invalid_login">Invalid login</string>
     <string name="auth_message_invalid_password">Invalid password</string>
+    <string name="dialog_auth_title_valid_invalid">The password invalid</string>
+    <string name="dialog_auth_title_invalid_valid">The login invalid</string>
+    <string name="dialog_auth_title_invalid_invalid">Login and password invalid</string>
+    <string name="dialog_auth_message">Try re–entering your login and password using the letters a-z, A-Z, and numbers 0-9. Login and password must be at least 6 characters long. The password must have at least one uppercase and one lowercase letter and number.</string>
     <!--endregion-->
 
     <!--region Profile-->
     <string name="profile_label">Profile</string>
     <string name="profile_btn_logout">Logout</string>
+
+    <string name="dialog_profile_logout_title">Warning!</string>
+    <string name="dialog_profile_logout_message">Are you sure what you want to leave the profile?</string>
+    <string name="dialog_profile_btn_logout">Logout</string>
     <!--endregion-->
 
     <!--region Settings-->
@@ -63,6 +74,8 @@
     <string name="drink_filter_btn_result_found">Results</string>
     <string name="drink_filter_btn_result_not_found">Not found</string>
 
+    <string name="dialog_drink_filter_title">drink filter</string>
+    <string name="dialog_drink_sort_title">Sort cocktails</string>
     <!--endregion-->
 
     <!--region SearchList-->
@@ -81,9 +94,5 @@
     <string name="detail_ingredient_title">Ingredients</string>
     <string name="detail_instruction_title">Instructions</string>
     <!--endregion-->
-
-    <string name="dialog_drink_filter_title">drink filter</string>
-    <string name="dialog_drink_sort_title">Sort cocktails</string>
-    <string name="dialog_btn_cancel">Cancel</string>
 
 </resources>
