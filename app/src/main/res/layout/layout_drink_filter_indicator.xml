@@ -3,14 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/hsw_filter_indicator"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingStart="@dimen/offset_12"
     android:paddingEnd="@dimen/offset_12"
     android:clipToPadding="false"
     android:background="@color/background_primary"
-    tools:ignore="MissingConstraints">
+    tools:ignore="MissingConstraints,Overdraw">
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

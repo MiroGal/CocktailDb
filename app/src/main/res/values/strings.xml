@@ -40,7 +40,6 @@
     <string name="drink_history_item_btn_favorite_description">Add/Delete from favorite</string>
 
     <string name="drink_history_item_menu_action_open">Open</string>
-    <string name="drink_history_item_menu_shortcut">Add shortcut</string>
     <string name="drink_history_item_menu_pin_shortcut">Add pin shortcut</string>
     <string name="drink_history_item_menu_favorite">Add/Remove from favorite</string>
     <string name="drink_history_item_menu_delete">Delete from history</string>
@@ -64,25 +63,6 @@
     <string name="drink_filter_btn_result_found">Results</string>
     <string name="drink_filter_btn_result_not_found">Not found</string>
 
-    <string name="drink_filter_alcohol_title">Alcohol</string>
-    <string name="drink_filter_alcohol_disable">Disable filter</string>
-    <string name="drink_filter_alcohol_alcoholic">Alcoholic</string>
-    <string name="drink_filter_alcohol_non_alcoholic">Non alcoholic</string>
-    <string name="drink_filter_alcohol_optional_alcohol">Optional alcohol</string>
-
-    <string name="drink_filter_category_title">Category</string>
-    <string name="drink_filter_category_disable">Disable filter</string>
-    <string name="drink_filter_category_ordinary_drink">Ordinary Drink</string>
-    <string name="drink_filter_category_cocktail">Cocktail</string>
-    <string name="drink_filter_category_milk_float_shake">Milk / Float / Shake</string>
-    <string name="drink_filter_category_other_unknown">Other / Unknown</string>
-    <string name="drink_filter_category_cocoa">Cocoa</string>
-    <string name="drink_filter_category_shot">Shot</string>
-    <string name="drink_filter_category_coffee_tea">Coffee / Tea</string>
-    <string name="drink_filter_category_homemade_liqueur">Homemade Liqueur</string>
-    <string name="drink_filter_category_punch_party_drink">Punch / Party Drink</string>
-    <string name="drink_filter_category_beer">Beer</string>
-    <string name="drink_filter_category_soft_drink_soda">Soft Drink / Soda</string>
     <!--endregion-->
 
     <!--region SearchList-->

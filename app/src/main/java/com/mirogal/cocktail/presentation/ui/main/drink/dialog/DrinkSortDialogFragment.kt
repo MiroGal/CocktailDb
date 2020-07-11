@@ -66,8 +66,8 @@ class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortL
         return builder
     }
 
-    override fun onItemClick(drinkSort: DrinkSort) {
-        viewModel.drinkSortLiveData.value = drinkSort
+    override fun onItemClick(currentSort: DrinkSort) {
+        viewModel.drinkSortLiveData.value = currentSort
 //        listAdapter.refreshData(drinkSort)
         dismiss()
     }

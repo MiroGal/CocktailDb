@@ -1,5 +1,6 @@
 package com.mirogal.cocktail.presentation.ui.auth
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -121,6 +122,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     }
 
     // Temporary method
+    @SuppressLint("SetTextI18n")
     private fun fillInputField() {
         btn_authorization.isClickable = true
         btn_authorization.setBackgroundResource(R.drawable.bg_system_button)

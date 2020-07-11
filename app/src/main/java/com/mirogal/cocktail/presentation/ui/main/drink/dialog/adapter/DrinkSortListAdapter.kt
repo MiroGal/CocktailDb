@@ -23,7 +23,7 @@ class DrinkSortListAdapter(private val currentSort: DrinkSort,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_tipe_filter_sort_dialog, parent, false)
+        val view = inflater.inflate(R.layout.item_type_filter_sort_dialog, parent, false)
         return ItemHolder(view)
     }
 

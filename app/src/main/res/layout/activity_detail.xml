@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/background_primary"
     android:fitsSystemWindows="true"
-    tools:context=".presentation.ui.detail.DetailActivity">
+    tools:context=".presentation.ui.detail.DetailActivity"
+    tools:ignore="Overdraw">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
