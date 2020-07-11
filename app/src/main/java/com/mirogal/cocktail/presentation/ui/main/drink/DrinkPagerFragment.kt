@@ -26,6 +26,7 @@ import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkPagerAdapter
+import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkSortDialogFragment
 import com.mirogal.cocktail.presentation.ui.search.SearchActivity
 import com.mirogal.cocktail.presentation.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
@@ -42,6 +43,8 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private lateinit var drinkPagerAdapter: DrinkPagerAdapter
 
     private var cocktailList: List<CocktailDbModel>? = null
+
+    private lateinit var currentSort: DrinkSort
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
@@ -64,9 +67,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
             true
         }
 
-        toolbar_action_sort.setOnClickListener {
-            viewModel.drinkSortLiveData.value = DrinkSort.NAME //TODO
-        }
+        toolbar_action_sort.setOnClickListener { showDrinkSortDialog() }
 
         toolbar_action_sort.setOnLongClickListener {
             viewModel.drinkSortLiveData.value = DrinkSort.DISABLE
@@ -138,6 +139,12 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
                 showFilterAlcohol(it[DrinkFilterType.ALCOHOL] as DrinkFilterAlcohol)
                 showFilterIngredient(it[DrinkFilterType.INGREDIENT] as DrinkFilterIngredient)
                 showFilterGlass(it[DrinkFilterType.GLASS] as DrinkFilterGlass)
+            }
+        })
+
+        viewModel.drinkSortLiveData.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                currentSort = it
             }
         })
 
@@ -221,6 +228,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
         }
     }
 
+    private fun showDrinkSortDialog() {
+        val dialogFragment = DrinkSortDialogFragment.newInstance(currentSort)
+        dialogFragment.show(childFragmentManager, DrinkSortDialogFragment::class.java.simpleName)
+    }
+
     @SuppressLint("SetTextI18n")
     private fun showChargeLevel(level: String) {
         if (layout_charge_indicator.visibility == View.VISIBLE) {
@@ -292,7 +304,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
             when (filterAlcohol) {
                 DrinkFilterAlcohol.ALCOHOLIC -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_alcoholic)
                 DrinkFilterAlcohol.NON_ALCOHOLIC -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_non)
-                DrinkFilterAlcohol.OPTIONAL_Alcohol -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_optional)
+                DrinkFilterAlcohol.OPTIONAL_ALCOHOL -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_optional)
                 else -> item_filter_alcohol.visibility = View.GONE
             }
             tv_filter_alcohol_name.text = filterAlcohol.key.replace("\\", "")

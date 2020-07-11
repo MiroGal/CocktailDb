@@ -6,35 +6,29 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.filter.*
+import com.mirogal.cocktail.presentation.model.filter.DrinkSort
 
-class DrinkSortListAdapter(private val drinkFilterType: DrinkFilterType,
-                           private val currentFilterList: HashMap<DrinkFilterType, DrinkFilter>,
+class DrinkSortListAdapter(private val currentSort: DrinkSort,
                            private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<DrinkSortListAdapter.ItemHolder>() {
 
-    private var innerCurrentFilterList = currentFilterList
+    private var innerCurrentSort = currentSort
 
-    fun refreshData(currentFilterList: HashMap<DrinkFilterType, DrinkFilter>) {
-        innerCurrentFilterList = currentFilterList
+    fun refreshData(currentSort: DrinkSort) {
+        innerCurrentSort = currentSort
         notifyDataSetChanged()
     }
 
-    val list = when (drinkFilterType) {
-        DrinkFilterType.CATEGORY -> DrinkFilterCategory.values()
-        DrinkFilterType.ALCOHOL -> DrinkFilterAlcohol.values()
-        DrinkFilterType.INGREDIENT -> DrinkFilterIngredient.values()
-        DrinkFilterType.GLASS -> DrinkFilterGlass.values()
-    }
+    val list = DrinkSort.values()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.item_filter_filter_dialog, parent, false)
+        val view = inflater.inflate(R.layout.item_tipe_filter_sort_dialog, parent, false)
         return ItemHolder(view)
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.bind(list[position] as DrinkFilter, drinkFilterType, innerCurrentFilterList)
+        holder.bind(list[position], innerCurrentSort)
         holder.setListener(onItemClickListener)
     }
 
@@ -43,31 +37,26 @@ class DrinkSortListAdapter(private val drinkFilterType: DrinkFilterType,
     }
 
     interface OnItemClickListener {
-        fun onItemClick(filterList: HashMap<DrinkFilterType, DrinkFilter>)
+        fun onItemClick(currentSort: DrinkSort)
     }
 
 
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val tvFilterName: TextView = itemView.findViewById(R.id.tv_filter_name)
+        private val tvSortName: TextView = itemView.findViewById(R.id.tv_filter_name)
 
-        private lateinit var filter: DrinkFilter
-        private lateinit var drinkFilterType: DrinkFilterType
-        private lateinit var filterList: HashMap<DrinkFilterType, DrinkFilter>
+        private lateinit var sort: DrinkSort
 
-        fun bind(filter: DrinkFilter, drinkFilterType: DrinkFilterType, currentFilterList: HashMap<DrinkFilterType, DrinkFilter>) {
-            this.filter = filter
-            this.drinkFilterType = drinkFilterType
-            this.filterList = currentFilterList
+        fun bind(sort: DrinkSort, currentSort: DrinkSort) {
+            this.sort = sort
 
-            tvFilterName.text = filter.key.replace("\\", "")
-            itemView.isPressed = filter == currentFilterList[drinkFilterType]
+            tvSortName.text = sort.key.replace("\\", "")
+            itemView.isPressed = sort == currentSort
         }
 
         fun setListener(onClickListener: OnItemClickListener) {
             itemView.setOnClickListener {
-                filterList[drinkFilterType] = filter
-                onClickListener.onItemClick(filterList)
+                onClickListener.onItemClick(sort)
             }
         }
     }

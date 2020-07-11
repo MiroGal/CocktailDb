@@ -4,7 +4,7 @@ enum class DrinkFilterAlcohol(override val type: DrinkFilterType, override val k
 
     DISABLE(DrinkFilterType.ALCOHOL, "Disable"),
     ALCOHOLIC(DrinkFilterType.ALCOHOL, "Alcoholic"),
-    NON_ALCOHOLIC(DrinkFilterType.ALCOHOL, "Non alcoholic"),
-    OPTIONAL_Alcohol(DrinkFilterType.ALCOHOL, "Optional alcohol")
+    OPTIONAL_ALCOHOL(DrinkFilterType.ALCOHOL, "Optional alcohol"),
+    NON_ALCOHOLIC(DrinkFilterType.ALCOHOL, "Non alcoholic")
 
 }

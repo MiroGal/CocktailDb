@@ -11,34 +11,30 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.model.filter.DrinkSort
 import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkSortListAdapter
 
 class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortListAdapter.OnItemClickListener {
 
-    override val contentLayoutResId = R.layout.dialog_fragment_drink_filter
+    override val contentLayoutResId = R.layout.dialog_fragment_drink_filter_sort
     override val viewModel: DrinkViewModel by activityViewModels()
 
-    private lateinit var drinkFilterListAdapter: DrinkSortListAdapter
+    private lateinit var listAdapter: DrinkSortListAdapter
     private lateinit var rvFilter: RecyclerView
 
-    private lateinit var drinkFilterType: DrinkFilterType
-    private lateinit var currentFilterList: HashMap<DrinkFilterType, DrinkFilter>
+    private lateinit var currentSort: DrinkSort
 
     companion object {
-        private const val KEY_DRINK_FILTER_TYPE = "KEY_DRINK_FILTER_TYPE"
-        private const val KEY_CURRENT_FILTER_LIST = "KEY_CURRENT_FILTER_LIST"
+        private const val KEY_CURRENT_SORT = "KEY_CURRENT_SORT"
 
-        fun newInstance(drinkFilterType: DrinkFilterType,
-                        currentFilterList: HashMap<DrinkFilterType, DrinkFilter>
+        fun newInstance(
+                currentSort: DrinkSort
         ): DrinkSortDialogFragment {
             val fragment = DrinkSortDialogFragment()
             val bundle = Bundle()
-            bundle.putSerializable(KEY_DRINK_FILTER_TYPE, drinkFilterType)
-            bundle.putSerializable(KEY_CURRENT_FILTER_LIST, currentFilterList)
+            bundle.putSerializable(KEY_CURRENT_SORT, currentSort)
             fragment.arguments = bundle
             return fragment
         }
@@ -46,22 +42,21 @@ class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortL
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        drinkFilterType = arguments?.getSerializable(KEY_DRINK_FILTER_TYPE) as DrinkFilterType
-        currentFilterList = arguments?.getSerializable(KEY_CURRENT_FILTER_LIST) as HashMap<DrinkFilterType, DrinkFilter>
+        currentSort = arguments?.getSerializable(KEY_CURRENT_SORT) as DrinkSort
     }
 
     @SuppressLint("SetTextI18n")
     override fun configureView(view: View, savedInstanceState: Bundle?): View {
         val tvTitle = view.findViewById<TextView>(R.id.tv_title)
-        tvTitle.text = drinkFilterType.key + " " + getString(R.string.dialog_filter_title)
+        tvTitle.text = getString(R.string.dialog_drink_sort_title)
 
         rvFilter = view.findViewById(R.id.rv_filter_list)
         rvFilter.layoutManager = LinearLayoutManager(requireActivity())
         val dividerItemDecoration = DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL)
         rvFilter.addItemDecoration(dividerItemDecoration)
 
-        drinkFilterListAdapter = DrinkSortListAdapter(drinkFilterType, currentFilterList, this)
-        rvFilter.adapter = drinkFilterListAdapter
+        listAdapter = DrinkSortListAdapter(currentSort, this)
+        rvFilter.adapter = listAdapter
 
         return view
     }
@@ -71,9 +66,9 @@ class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortL
         return builder
     }
 
-    override fun onItemClick(filterList: HashMap<DrinkFilterType, DrinkFilter>) {
-        viewModel.drinkFilterLiveData.value = filterList
-//        listAdapter.refreshData(filterList)
+    override fun onItemClick(drinkSort: DrinkSort) {
+        viewModel.drinkSortLiveData.value = drinkSort
+//        listAdapter.refreshData(drinkSort)
         dismiss()
     }
 

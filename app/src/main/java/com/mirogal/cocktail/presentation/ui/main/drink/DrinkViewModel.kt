@@ -37,11 +37,15 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
             addSource(saveCocktailListLiveData) {
                 if (saveCocktailListLiveData.value != null)
-                    value = filterCocktailList(saveCocktailListLiveData.value)
+                    value = sortCocktailList(filterCocktailList(saveCocktailListLiveData.value))
             }
             addSource(drinkFilterLiveData) {
                 if (saveCocktailListLiveData.value != null)
-                    value = filterCocktailList(saveCocktailListLiveData.value)
+                    value = sortCocktailList(filterCocktailList(saveCocktailListLiveData.value))
+            }
+            addSource(drinkSortLiveData) {
+                if (saveCocktailListLiveData.value != null)
+                    value = sortCocktailList(filterCocktailList(saveCocktailListLiveData.value))
             }
         }
 
@@ -102,6 +106,28 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) != DrinkFilterGlass.DISABLE) {
                 it.glass?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.GLASS)?.key?.toLowerCase(Locale.ROOT)
             } else true
+        }
+    }
+
+    private fun sortCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
+        return when(drinkSortLiveData.value) {
+            DrinkSort.NAME_ASCENDING -> list?.sortedBy { it.name }
+            DrinkSort.NAME_DESCENDING -> list?.sortedByDescending { it.name }
+            DrinkSort.ALCOHOL_FIRST -> {
+                list?.sortedWith(compareBy(
+                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.OPTIONAL_ALCOHOL.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.ALCOHOLIC.key.toLowerCase(Locale.ROOT) }))
+            }
+            DrinkSort.NON_ALCOHOL_FIRST -> {
+                list?.sortedWith(compareBy(
+                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.ALCOHOLIC.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.OPTIONAL_ALCOHOL.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) }))
+            }
+            DrinkSort.INGREDIENT_COUNT_ASCENDING -> list?.sortedBy { it.ingredientList.filterNotNull().size }
+            DrinkSort.INGREDIENT_COUNT_DESCENDING -> list?.sortedByDescending { it.ingredientList.filterNotNull().size }
+            else -> list
         }
     }
 

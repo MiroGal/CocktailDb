@@ -19,7 +19,7 @@ import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkFilte
 
 class DrinkFilterDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkFilterListAdapter.OnItemClickListener {
 
-    override val contentLayoutResId = R.layout.dialog_fragment_drink_filter
+    override val contentLayoutResId = R.layout.dialog_fragment_drink_filter_sort
     override val viewModel: DrinkViewModel by activityViewModels()
 
     private lateinit var drinkFilterListAdapter: DrinkFilterListAdapter
@@ -53,7 +53,7 @@ class DrinkFilterDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkFil
     @SuppressLint("SetTextI18n")
     override fun configureView(view: View, savedInstanceState: Bundle?): View {
         val tvTitle = view.findViewById<TextView>(R.id.tv_title)
-        tvTitle.text = drinkFilterType.key + " " + getString(R.string.dialog_filter_title)
+        tvTitle.text = drinkFilterType.key + " " + getString(R.string.dialog_drink_filter_title)
 
         rvFilter = view.findViewById(R.id.rv_filter_list)
         rvFilter.layoutManager = LinearLayoutManager(requireActivity())
