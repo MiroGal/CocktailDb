@@ -14,7 +14,7 @@
     <string name="dialog_auth_title_valid_invalid">The password invalid</string>
     <string name="dialog_auth_title_invalid_valid">The login invalid</string>
     <string name="dialog_auth_title_invalid_invalid">Login and password invalid</string>
-    <string name="dialog_auth_message">Try re–entering your login and password using the letters a-z, A-Z, and numbers 0-9. Login and password must be at least 6 characters long. The password must have at least one uppercase and one lowercase letter and number.</string>
+    <string name="dialog_auth_message">Try re–entering your login and password using the letters a–z, A–Z, and numbers 0-9. Login and password must be at least 6 characters long. The password must have at least one uppercase and one lowercase letter and number.</string>
     <!--endregion-->
 
     <!--region Profile-->

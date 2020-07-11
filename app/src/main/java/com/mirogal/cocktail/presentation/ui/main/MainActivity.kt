@@ -1,18 +1,22 @@
 package com.mirogal.cocktail.presentation.ui.main
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment
+import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutProfileDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainViewModel>() {
+class MainActivity : BaseActivity<MainViewModel>(),
+        LogoutProfileDialogFragment.OnDialogLogoutActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
@@ -61,6 +65,18 @@ class MainActivity : BaseActivity<MainViewModel>() {
         } else {
             super.onBackPressed()
         }
+    }
+
+    override fun onButtonLogoutClick() {
+        openAuthActivity()
+    }
+
+    private fun openAuthActivity() {
+        val intent = Intent(this, AuthActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Close all activities
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) // Close all activities
+        }
+        startActivity(intent)
     }
 
     private fun showHistoryPagerFragment() {
