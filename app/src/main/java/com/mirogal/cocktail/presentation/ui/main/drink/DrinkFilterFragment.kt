@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
-import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
@@ -51,19 +51,17 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
             viewModel.resetDrinkFilter()
             requireActivity().onBackPressed()
         }
-
-        setObserver()
     }
 
-    private fun setObserver() {
-        viewModel.currentHistoryPage.observe(viewLifecycleOwner, Observer {
-            if (it == HistoryPage.HISTORY) {
+    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+        viewModel.currentDrinkPage.observe(viewLifecycleOwner, Observer {
+            if (it == DrinkPage.HISTORY) {
                 btn_result_icon.setImageResource(R.drawable.ic_button_history)
             } else {
                 btn_result_icon.setImageResource(R.drawable.ic_button_favorite)
             }
         })
-        viewModel.filterResultStringLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.filterButtonResultTextLiveData.observe(viewLifecycleOwner, Observer {
             btn_result_text.text = it
         })
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {

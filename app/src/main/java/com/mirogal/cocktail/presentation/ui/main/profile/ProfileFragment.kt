@@ -31,9 +31,8 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
 
     private fun openAuthActivity() {
         val intent = Intent(activity, AuthActivity::class.java).apply {
-            // Close all activities
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Close all activities
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) // Close all activities
         }
         startActivity(intent)
     }

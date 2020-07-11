@@ -8,8 +8,8 @@ import androidx.lifecycle.Transformations
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
+import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.*
-import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 import java.util.*
 
@@ -30,8 +30,8 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
     val drinkSortLiveData: MutableLiveData<DrinkSort> = MutableLiveData()
     val isDrinkSortEnableLiveData: LiveData<Boolean>
 
-    val currentHistoryPage: MutableLiveData<HistoryPage> = MutableLiveData()
-    val filterResultStringLiveData: LiveData<String>
+    val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
+    val filterButtonResultTextLiveData: LiveData<String>
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
@@ -76,15 +76,15 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-        filterResultStringLiveData = MediatorLiveData<String>().apply {
-            addSource(currentHistoryPage) {
-                value = getFilterResultString()
+        filterButtonResultTextLiveData = MediatorLiveData<String>().apply {
+            addSource(currentDrinkPage) {
+                value = getFilterButtonResultText()
             }
             addSource(historyCocktailListLiveData) {
-                value = getFilterResultString()
+                value = getFilterButtonResultText()
             }
             addSource(favoriteCocktailListLiveData) {
-                value = getFilterResultString()
+                value = getFilterButtonResultText()
             }
         }
     }
@@ -131,8 +131,8 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    private fun getFilterResultString(): String {
-        return if (currentHistoryPage.value == HistoryPage.HISTORY) {
+    private fun getFilterButtonResultText(): String {
+        return if (currentDrinkPage.value == DrinkPage.HISTORY) {
             if (historyCocktailListLiveData.value != null && historyCocktailListLiveData.value!!.isNotEmpty()) {
                 context.getString(R.string.drink_filter_btn_result_found) + " " + historyCocktailListLiveData.value!!.size.toString()
             } else {

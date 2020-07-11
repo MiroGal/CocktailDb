@@ -18,8 +18,8 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.*
-import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -43,7 +43,6 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private lateinit var drinkPagerAdapter: DrinkPagerAdapter
 
     private var cocktailList: List<CocktailDbModel>? = null
-
     private lateinit var currentSort: DrinkSort
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
@@ -56,9 +55,6 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     override fun configureView(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_pager_label)
-
-        setViewPager()
-        setReceiver()
 
         toolbar_action_filter.setOnClickListener { addDrinkFilterFragment() }
 
@@ -102,21 +98,46 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
             viewModel.drinkFilterLiveData.value = drinkFilter
         }
 
+        setViewPager()
+        setReceiver()
+    }
+
+    private fun setViewPager() {
+        drinkPagerAdapter = DrinkPagerAdapter(this)
+        view_pager.setPageTransformer(ZoomOutPageTransformer()) // Animation of transition
+        view_pager.adapter = drinkPagerAdapter
+
+        TabLayoutMediator(tab_layout, view_pager) { tab, position ->
+            if (position == 0) {
+                tab.text = getString(R.string.drink_pager_tab_history)
+            } else if (position == 1) {
+                tab.text = getString(R.string.drink_pager_tab_favorite)
+            }
+        }.attach()
+
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (position == 0) {
-                    viewModel.currentHistoryPage.value = HistoryPage.HISTORY
+                    viewModel.currentDrinkPage.value = DrinkPage.HISTORY
                 } else {
-                    viewModel.currentHistoryPage.value = HistoryPage.FAVORITE
+                    viewModel.currentDrinkPage.value = DrinkPage.FAVORITE
                 }
             }
         })
-
-        setObserver()
     }
 
-    private fun setObserver() {
+    private fun setReceiver() {
+        batteryChangeReceiver.setBatteryChangeListener(this)
+
+        proposeDrinkReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                showProposeDrink(intent!!.getIntExtra(ProposeDrinkService::class.java.simpleName, 20))
+            }
+        }
+    }
+
+    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
         viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
                 toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)
@@ -161,30 +182,6 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
         })
     }
 
-    private fun setViewPager() {
-        drinkPagerAdapter = DrinkPagerAdapter(this)
-        view_pager.setPageTransformer(ZoomOutPageTransformer()) // Animation of transition
-        view_pager.adapter = drinkPagerAdapter
-
-        TabLayoutMediator(tab_layout, view_pager) { tab, position ->
-            if (position == 0) {
-                tab.text = getString(R.string.drink_pager_tab_history)
-            } else if (position == 1) {
-                tab.text = getString(R.string.drink_pager_tab_favorite)
-            }
-        }.attach()
-    }
-
-    private fun setReceiver() {
-        batteryChangeReceiver.setBatteryChangeListener(this)
-
-        proposeDrinkReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                showProposeDrink(intent!!.getIntExtra(ProposeDrinkService::class.java.simpleName, 20))
-            }
-        }
-    }
-
     override fun onStart() {
         super.onStart()
         requireContext().registerReceiver(proposeDrinkReceiver, IntentFilter("ACTION_SNACKBAR"))
@@ -201,12 +198,10 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
         super.onStop()
     }
 
-
     override fun onBatteryChange(level: Int, state: Int) {
         showChargeLevel(level.toString())
         showChargeState(state)
     }
-
 
     private fun openSearchDrinkActivity() {
         val intent = Intent(activity, SearchActivity::class.java)
@@ -274,7 +269,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
             val model: CocktailDbModel? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
             if (model != null) {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        "Переглянути ${model.name}", Snackbar.LENGTH_LONG)
+                        getString(R.string.drink_pager_snackbar_message) + " " + model.name.toString(), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.drink_pager_snackbar_action_open_detail)) {
                             openDrinkDetailActivity(model.id, model.name)
                         }.show()
@@ -285,7 +280,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private fun showFilterCategory(filterCategory: DrinkFilterCategory) {
         if (filterCategory != DrinkFilterCategory.DISABLE) {
             if (item_filter_category.visibility != View.VISIBLE) {
-                item_filter_category.setCardBackgroundColor(randomColor())
+                item_filter_category.setCardBackgroundColor(getRandomColor())
             }
             item_filter_category.visibility = View.VISIBLE
             iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
@@ -298,7 +293,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private fun showFilterAlcohol(filterAlcohol: DrinkFilterAlcohol) {
         if (filterAlcohol != DrinkFilterAlcohol.DISABLE) {
             if (item_filter_alcohol.visibility != View.VISIBLE) {
-                item_filter_alcohol.setCardBackgroundColor(randomColor())
+                item_filter_alcohol.setCardBackgroundColor(getRandomColor())
             }
             item_filter_alcohol.visibility = View.VISIBLE
             when (filterAlcohol) {
@@ -316,7 +311,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private fun showFilterIngredient(filterIngredient: DrinkFilterIngredient) {
         if (filterIngredient != DrinkFilterIngredient.DISABLE) {
             if (item_filter_ingredient.visibility != View.VISIBLE) {
-                item_filter_ingredient.setCardBackgroundColor(randomColor())
+                item_filter_ingredient.setCardBackgroundColor(getRandomColor())
             }
             item_filter_ingredient.visibility = View.VISIBLE
             iv_filter_ingredient_icon.setImageResource(R.drawable.ic_drink_ingredient)
@@ -329,7 +324,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private fun showFilterGlass(filterGlass: DrinkFilterGlass) {
         if (filterGlass != DrinkFilterGlass.DISABLE) {
             if (item_filter_glass.visibility != View.VISIBLE) {
-                item_filter_glass.setCardBackgroundColor(randomColor())
+                item_filter_glass.setCardBackgroundColor(getRandomColor())
             }
             item_filter_glass.visibility = View.VISIBLE
             iv_filter_glass_icon.setImageResource(R.drawable.ic_drink_glass)
@@ -339,7 +334,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
         }
     }
 
-    private fun randomColor(): Int {
+    private fun getRandomColor(): Int {
         val rnd = Random()
         return Color.argb(85, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
     }

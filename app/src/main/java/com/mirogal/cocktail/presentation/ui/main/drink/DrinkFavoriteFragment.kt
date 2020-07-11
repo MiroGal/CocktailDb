@@ -43,10 +43,6 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
-        setList()
-    }
-
-    private fun setList() {
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -59,6 +55,9 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         rv_favorite_drink_list.addItemDecoration(itemDecoration)
 
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
+    }
+
+    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
         viewModel.favoriteCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list?.isNotEmpty()!!) {
                 showData()
@@ -83,27 +82,6 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         createAndOpenItemMenu(view, cocktailModel)
     }
 
-
-    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra("cocktailId", cocktailId)
-        intent.putExtra("cocktailName", cocktailName)
-        startActivity(intent)
-    }
-
-    private fun showData() {
-        if (rv_favorite_drink_list.visibility == View.INVISIBLE) {
-            rv_favorite_drink_list.visibility = View.VISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
-        }
-    }
-
-    private fun showEmpty() {
-        if (layoutEmpty.visibility == View.INVISIBLE) {
-            rv_favorite_drink_list.visibility = View.INVISIBLE
-            layoutEmpty.visibility = View.VISIBLE
-        }
-    }
 
     private fun createAndOpenItemMenu(view: View, cocktailModel: CocktailDbModel) {
         val popupMenu = PopupMenu(requireActivity(), view)
@@ -217,6 +195,27 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                     })
         } else {
             Toast.makeText(requireActivity(), getString(R.string.drink_item_menu_toast_pin_shortcut_not_added), Toast.LENGTH_LONG).show()
+        }
+    }
+
+    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
+        val intent = Intent(activity, DetailActivity::class.java)
+        intent.putExtra("cocktailId", cocktailId)
+        intent.putExtra("cocktailName", cocktailName)
+        startActivity(intent)
+    }
+
+    private fun showData() {
+        if (rv_favorite_drink_list.visibility == View.INVISIBLE) {
+            rv_favorite_drink_list.visibility = View.VISIBLE
+            layoutEmpty.visibility = View.INVISIBLE
+        }
+    }
+
+    private fun showEmpty() {
+        if (layoutEmpty.visibility == View.INVISIBLE) {
+            rv_favorite_drink_list.visibility = View.INVISIBLE
+            layoutEmpty.visibility = View.VISIBLE
         }
     }
 

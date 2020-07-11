@@ -19,9 +19,14 @@ abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configureView(view, savedInstanceState)
+        configureObserver(view, savedInstanceState)
     }
 
     protected open fun configureView(view: View, savedInstanceState: Bundle?) {
+        // stub
+    }
+
+    protected open fun configureObserver(view: View, savedInstanceState: Bundle?) {
         // stub
     }
 

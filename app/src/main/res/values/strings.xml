@@ -31,8 +31,10 @@
     <string name="drink_pager_label">Cocktails</string>
     <string name="drink_pager_tab_history">History</string>
     <string name="drink_pager_tab_favorite">Favorite</string>
+    <string name="drink_pager_snackbar_message">View</string>
     <string name="drink_pager_snackbar_action_open_detail">Open</string>
     <string name="drink_pager_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+
     <string name="drink_history_message_empty">History is empty</string>
     <string name="drink_favorite_message_empty">Favorite is empty</string>
     <string name="drink_history_item_btn_favorite_description">Add/Delete from favorite</string>

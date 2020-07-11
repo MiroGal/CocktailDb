@@ -27,14 +27,12 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
     override val contentLayoutResId = R.layout.activity_search
     override val viewModel: SearchViewModel by viewModels()
 
+    private val listAdapter = SearchListAdapter(this, this)
+
     private var searchName: String? = null
 
     override fun configureView(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
-        setList()
-    }
-
-    private fun setList() {
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -45,8 +43,9 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
         val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
         rv_search_list.addItemDecoration(itemDecoration)
+    }
 
-        val listAdapter = SearchListAdapter(this, this)
+    override fun configureObserver(savedInstanceState: Bundle?) {
         viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbModel?> ->
             try {
                 listAdapter.submitList(pagedList)

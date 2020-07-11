@@ -35,11 +35,9 @@ class SettingsFragment : BaseFragment<SettingsViewModel>() {
             if (mainViewModel.isBatteryIndicatorVisibleLiveData.value != isChecked)
                 mainViewModel.isBatteryIndicatorVisibleLiveData.value = isChecked
         }
-
-        setObserver()
     }
 
-    private fun setObserver() {
+    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
         mainViewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
             if (chb_show_bottom_nav_label.isChecked != it)
                 chb_show_bottom_nav_label.isChecked = it

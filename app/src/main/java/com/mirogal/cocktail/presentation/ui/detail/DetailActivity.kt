@@ -14,14 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.mapper.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.mapper.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
-
 
 class DetailActivity : BaseActivity<DetailViewModel>() {
 
@@ -35,23 +34,20 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         cocktailId = intent.getIntExtra("cocktailId", 0)
         cocktailName = intent.getStringExtra("cocktailName")
 
-        viewModel.cocktailIdLiveData.value = cocktailId
-
         setSupportActionBar(toolbar)
         if (cocktailName!!.isNotEmpty()) {
             supportActionBar!!.title = cocktailName
         }
 
-        setScrollAppBar()
-
         btn_toolbar_back.setOnClickListener {
             onBackPressed()
         }
 
-        setObserver()
+        setScrollAppBar()
     }
 
-    private fun setObserver() {
+    override fun configureObserver(savedInstanceState: Bundle?) {
+        viewModel.cocktailIdLiveData.value = cocktailId
         viewModel.cocktailLiveData.observe(this, Observer {
             tv_info_name.text = it.name
             tv_info_alcoholic.text = it.alcoholic

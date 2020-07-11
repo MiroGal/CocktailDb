@@ -3,26 +3,19 @@ package com.mirogal.cocktail.presentation.ui.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.base.exemple.BaseDialogFragment
-import com.mirogal.cocktail.presentation.ui.base.exemple.RegularBottomSheetDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
-class AuthActivity : BaseActivity<AuthViewModel>(),
-        BaseDialogFragment.OnDialogFragmentClickListener<ContactsContract.Contacts.Data>,
-        BaseDialogFragment.OnDialogFragmentDismissListener<ContactsContract.Contacts.Data> {
+class AuthActivity : BaseActivity<AuthViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_auth
     override val viewModel: AuthViewModel by viewModels()
@@ -43,7 +36,6 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
         btn_authorization.isClickable = false
         btn_authorization.setBackgroundResource(R.drawable.bg_system_button_inactive)
         btn_authorization.setOnClickListener {
-//            createDialog()
             when (isAuthDataValid) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
                     startActivity(Intent(this@AuthActivity, MainActivity::class.java))
@@ -68,17 +60,9 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
         }
 
         root_view.setOnFocusChangeListener { v, hasFocus -> hideKeyboard() }
-
-        setObserver()
-        fillInputField()
     }
 
-    private fun hideKeyboard() {
-        val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
-    }
-
-    private fun setObserver() {
+    override fun configureObserver(savedInstanceState: Bundle?) {
         viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
             if (btn_authorization.isClickable != it) {
                 btn_authorization.isClickable = it
@@ -92,6 +76,8 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
         viewModel.isAuthDataValidLiveData.observe(this, Observer {
             isAuthDataValid = it
         })
+
+        fillInputField()
     }
 
     private val inputFilter = InputFilter { source, start, end, dest, dstart, dend ->
@@ -129,26 +115,17 @@ class AuthActivity : BaseActivity<AuthViewModel>(),
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
     }
 
+    private fun hideKeyboard() {
+        val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(this.currentFocus?.windowToken, 0)
+    }
+
     // Temporary method
     private fun fillInputField() {
         btn_authorization.isClickable = true
         btn_authorization.setBackgroundResource(R.drawable.bg_system_button)
         txt_login.setText("MiroGal")
         txt_password.setText("Miro89")
-    }
-
-    private fun createDialog() {
-        RegularBottomSheetDialogFragment.newInstance {
-            this.titleText="Test"
-        }.show(supportFragmentManager)
-    }
-
-    override fun onBottomSheetDialogFragmentDismiss(dialog: DialogFragment, data: ContactsContract.Contacts.Data?) {
-        Toast.makeText(this, "Dismiss", Toast.LENGTH_LONG).show()
-    }
-
-    override fun onBottomSheetDialogFragmentClick(dialog: DialogFragment, data: ContactsContract.Contacts.Data?) {
-        Toast.makeText(this, "Click", Toast.LENGTH_LONG).show()
     }
 
 }

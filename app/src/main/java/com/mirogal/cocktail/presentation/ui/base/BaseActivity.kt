@@ -14,6 +14,7 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(contentLayoutResId)
         configureView(savedInstanceState)
+        configureObserver(savedInstanceState)
     }
 
     protected open fun setApplicationTheme() {
@@ -21,6 +22,10 @@ abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() {
     }
 
     protected open fun configureView(savedInstanceState: Bundle?) {
+        // stub
+    }
+
+    protected open fun configureObserver(savedInstanceState: Bundle?) {
         // stub
     }
 
