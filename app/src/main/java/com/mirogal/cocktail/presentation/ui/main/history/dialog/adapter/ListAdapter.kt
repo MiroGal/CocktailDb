@@ -4,10 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.model.filter.*
 
 class ListAdapter(private val drinkFilterType: DrinkFilterType,
                   private val currentFilterList: HashMap<DrinkFilterType, DrinkFilter>,
@@ -22,9 +19,10 @@ class ListAdapter(private val drinkFilterType: DrinkFilterType,
     }
 
     val list = when (drinkFilterType) {
-        DrinkFilterType.ALCOHOL -> AlcoholDrinkFilter.values()
-        DrinkFilterType.CATEGORY -> CategoryDrinkFilter.values()
-        else -> null
+        DrinkFilterType.CATEGORY -> DrinkFilterCategory.values()
+        DrinkFilterType.ALCOHOL -> DrinkFilterAlcohol.values()
+        DrinkFilterType.INGREDIENT -> DrinkFilterIngredient.values()
+        DrinkFilterType.GLASS -> DrinkFilterGlass.values()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
@@ -34,14 +32,12 @@ class ListAdapter(private val drinkFilterType: DrinkFilterType,
     }
 
     override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        if (list != null) {
-            holder.bind(list[position] as DrinkFilter, drinkFilterType, innerCurrentFilterList)
-            holder.setListener(onItemClickListener)
-        }
+        holder.bind(list[position] as DrinkFilter, drinkFilterType, innerCurrentFilterList)
+        holder.setListener(onItemClickListener)
     }
 
     override fun getItemCount(): Int {
-        return list?.size ?: 0
+        return list.size
     }
 
     interface OnItemClickListener {

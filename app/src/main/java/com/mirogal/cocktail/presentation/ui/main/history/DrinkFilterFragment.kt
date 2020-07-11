@@ -31,14 +31,20 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_filter_label)
 
-        btn_filter_alcohol_text_1.text = DrinkFilterType.ALCOHOL.key
         btn_filter_category_text_1.text = DrinkFilterType.CATEGORY.key
+        btn_filter_alcohol_text_1.text = DrinkFilterType.ALCOHOL.key
+        btn_filter_ingredient_text_1.text = DrinkFilterType.INGREDIENT.key
+        btn_filter_glass_text_1.text = DrinkFilterType.GLASS.key
 
         btn_toolbar_back.setOnClickListener { requireActivity().onBackPressed() }
 
+        btn_filter_category.setOnClickListener { showDrinkFilterDialog(DrinkFilterType.CATEGORY) }
+
         btn_filter_alcohol.setOnClickListener { showDrinkFilterDialog(DrinkFilterType.ALCOHOL) }
 
-        btn_filter_category.setOnClickListener { showDrinkFilterDialog(DrinkFilterType.CATEGORY) }
+        btn_filter_ingredient.setOnClickListener { showDrinkFilterDialog(DrinkFilterType.INGREDIENT) }
+
+        btn_filter_glass.setOnClickListener { showDrinkFilterDialog(DrinkFilterType.GLASS) }
 
         btn_result.setOnClickListener { requireActivity().onBackPressed() }
 
@@ -64,8 +70,10 @@ class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 currentFilterList = it
-                btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""
                 btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
+                btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""
+                btn_filter_ingredient_text_2.text = it[DrinkFilterType.INGREDIENT]?.key?.replace("\\", "") ?: ""
+                btn_filter_glass_text_2.text = it[DrinkFilterType.GLASS]?.key?.replace("\\", "") ?: ""
             }
         })
     }

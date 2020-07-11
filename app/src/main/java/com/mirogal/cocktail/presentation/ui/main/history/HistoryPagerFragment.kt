@@ -18,17 +18,14 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.model.filter.*
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.history.adapter.PagerAdapter
-import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.model.history.HistoryPage
-import com.mirogal.cocktail.presentation.model.filter.DrinkSort
 import com.mirogal.cocktail.presentation.ui.search.SearchDrinkActivity
 import com.mirogal.cocktail.presentation.ui.util.ZoomOutPageTransformer
 import kotlinx.android.synthetic.main.fragment_history_pager.*
@@ -61,9 +58,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
         setViewPager()
         setReceiver()
 
-        toolbar_action_filter.setOnClickListener {
-            addDrinkFilterFragment()
-        }
+        toolbar_action_filter.setOnClickListener { addDrinkFilterFragment() }
 
         toolbar_action_filter.setOnLongClickListener {
             viewModel.resetDrinkFilter()
@@ -79,23 +74,31 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
             true
         }
 
-        fab_search.setOnClickListener {
-            openSearchDrinkActivity()
-        }
+        fab_search.setOnClickListener { openSearchDrinkActivity() }
 
-        btn_battery_indicator_close.setOnClickListener {
-            mainViewModel.isBatteryIndicatorVisibleLiveData.value = false
+        btn_battery_indicator_close.setOnClickListener { mainViewModel.isBatteryIndicatorVisibleLiveData.value = false }
+
+        btn_item_filter_category_close.setOnClickListener {
+            val drinkFilter = viewModel.drinkFilterLiveData.value
+            drinkFilter?.put(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE)
+            viewModel.drinkFilterLiveData.value = drinkFilter
         }
 
         btn_item_filter_alcohol_close.setOnClickListener {
             val drinkFilter = viewModel.drinkFilterLiveData.value
-            drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE)
+            drinkFilter?.put(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE)
             viewModel.drinkFilterLiveData.value = drinkFilter
         }
 
-        btn_item_filter_category_close.setOnClickListener {
+        btn_item_filter_ingredient_close.setOnClickListener {
             val drinkFilter = viewModel.drinkFilterLiveData.value
-            drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
+            drinkFilter?.put(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE)
+            viewModel.drinkFilterLiveData.value = drinkFilter
+        }
+
+        btn_item_filter_glass_close.setOnClickListener {
+            val drinkFilter = viewModel.drinkFilterLiveData.value
+            drinkFilter?.put(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE)
             viewModel.drinkFilterLiveData.value = drinkFilter
         }
 
@@ -132,8 +135,10 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
             if (it != null) {
-                showFilterAlcohol(it[DrinkFilterType.ALCOHOL] as AlcoholDrinkFilter)
-                showFilterCategory(it[DrinkFilterType.CATEGORY] as CategoryDrinkFilter)
+                showFilterCategory(it[DrinkFilterType.CATEGORY] as DrinkFilterCategory)
+                showFilterAlcohol(it[DrinkFilterType.ALCOHOL] as DrinkFilterAlcohol)
+                showFilterIngredient(it[DrinkFilterType.INGREDIENT] as DrinkFilterIngredient)
+                showFilterGlass(it[DrinkFilterType.GLASS] as DrinkFilterGlass)
             }
         })
 
@@ -266,51 +271,60 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
         }
     }
 
-    private fun showFilterAlcohol(filter: AlcoholDrinkFilter) {
-        if (filter != AlcoholDrinkFilter.DISABLE) {
-            if (item_alcohol_filter.visibility != View.VISIBLE) {
-                item_alcohol_filter.setCardBackgroundColor(randomColor())
+    private fun showFilterCategory(filterCategory: DrinkFilterCategory) {
+        if (filterCategory != DrinkFilterCategory.DISABLE) {
+            if (item_filter_category.visibility != View.VISIBLE) {
+                item_filter_category.setCardBackgroundColor(randomColor())
             }
-            item_alcohol_filter.visibility = View.VISIBLE
-        }
-        when (filter) {
-            AlcoholDrinkFilter.ALCOHOLIC -> {
-                iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_alcoholic)
-                tv_filter_alcohol_name.text = AlcoholDrinkFilter.ALCOHOLIC.key.replace("\\", "")
-            }
-            AlcoholDrinkFilter.NON_ALCOHOLIC -> {
-                iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_non)
-                tv_filter_alcohol_name.text = AlcoholDrinkFilter.NON_ALCOHOLIC.key.replace("\\", "")
-            }
-            AlcoholDrinkFilter.OPTIONAL_ALCOHOL -> {
-                iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_optional)
-                tv_filter_alcohol_name.text = AlcoholDrinkFilter.OPTIONAL_ALCOHOL.key.replace("\\", "")
-            }
-            else -> item_alcohol_filter.visibility = View.GONE
+            item_filter_category.visibility = View.VISIBLE
+            iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
+            tv_filter_category_name.text = filterCategory.key.replace("\\", "")
+        } else {
+            item_filter_category.visibility = View.GONE
         }
     }
 
-    private fun showFilterCategory(filter: CategoryDrinkFilter) {
-        if (filter != CategoryDrinkFilter.DISABLE) {
-            if (item_category_filter.visibility != View.VISIBLE) {
-                item_category_filter.setCardBackgroundColor(randomColor())
+    private fun showFilterAlcohol(filterAlcohol: DrinkFilterAlcohol) {
+        if (filterAlcohol != DrinkFilterAlcohol.DISABLE) {
+            if (item_filter_alcohol.visibility != View.VISIBLE) {
+                item_filter_alcohol.setCardBackgroundColor(randomColor())
             }
-            item_category_filter.visibility = View.VISIBLE
-            iv_filter_category_icon.setImageResource(R.drawable.ic_drink_category)
+            item_filter_alcohol.visibility = View.VISIBLE
+            when (filterAlcohol) {
+                DrinkFilterAlcohol.ALCOHOLIC -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_alcoholic)
+                DrinkFilterAlcohol.NON_ALCOHOLIC -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_non)
+                DrinkFilterAlcohol.OPTIONAL_Alcohol -> iv_filter_alcohol_icon.setImageResource(R.drawable.ic_drink_alcohol_optional)
+                else -> item_filter_alcohol.visibility = View.GONE
+            }
+            tv_filter_alcohol_name.text = filterAlcohol.key.replace("\\", "")
+        } else {
+            item_filter_alcohol.visibility = View.GONE
         }
-        when (filter) {
-            CategoryDrinkFilter.ORDINARY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.ORDINARY_DRINK.key.replace("\\", "")
-            CategoryDrinkFilter.COCKTAIL -> tv_filter_category_name.text = CategoryDrinkFilter.COCKTAIL.key.replace("\\", "")
-            CategoryDrinkFilter.MILK_FLOAT_SHAKE -> tv_filter_category_name.text = CategoryDrinkFilter.MILK_FLOAT_SHAKE.key.replace("\\", "")
-            CategoryDrinkFilter.OTHER_UNKNOWN -> tv_filter_category_name.text = CategoryDrinkFilter.OTHER_UNKNOWN.key.replace("\\", "")
-            CategoryDrinkFilter.COCOA -> tv_filter_category_name.text = CategoryDrinkFilter.COCOA.key.replace("\\", "")
-            CategoryDrinkFilter.SHOT -> tv_filter_category_name.text = CategoryDrinkFilter.SHOT.key.replace("\\", "")
-            CategoryDrinkFilter.COFFEE_TEA -> tv_filter_category_name.text = CategoryDrinkFilter.COFFEE_TEA.key.replace("\\", "")
-            CategoryDrinkFilter.HOMEMADE_LIQUEUR -> tv_filter_category_name.text = CategoryDrinkFilter.HOMEMADE_LIQUEUR.key.replace("\\", "")
-            CategoryDrinkFilter.PUNCH_PARTY_DRINK -> tv_filter_category_name.text = CategoryDrinkFilter.PUNCH_PARTY_DRINK.key.replace("\\", "")
-            CategoryDrinkFilter.BEER -> tv_filter_category_name.text = CategoryDrinkFilter.BEER.key.replace("\\", "")
-            CategoryDrinkFilter.SOFT_DRINK_SODA -> tv_filter_category_name.text = CategoryDrinkFilter.SOFT_DRINK_SODA.key.replace("\\", "")
-            else -> item_category_filter.visibility = View.GONE
+    }
+
+    private fun showFilterIngredient(filterIngredient: DrinkFilterIngredient) {
+        if (filterIngredient != DrinkFilterIngredient.DISABLE) {
+            if (item_filter_ingredient.visibility != View.VISIBLE) {
+                item_filter_ingredient.setCardBackgroundColor(randomColor())
+            }
+            item_filter_ingredient.visibility = View.VISIBLE
+            iv_filter_ingredient_icon.setImageResource(R.drawable.ic_drink_ingredient)
+            tv_filter_ingredient_name.text = filterIngredient.key.replace("\\", "")
+        } else {
+            item_filter_ingredient.visibility = View.GONE
+        }
+    }
+
+    private fun showFilterGlass(filterGlass: DrinkFilterGlass) {
+        if (filterGlass != DrinkFilterGlass.DISABLE) {
+            if (item_filter_glass.visibility != View.VISIBLE) {
+                item_filter_glass.setCardBackgroundColor(randomColor())
+            }
+            item_filter_glass.visibility = View.VISIBLE
+            iv_filter_glass_icon.setImageResource(R.drawable.ic_drink_glass)
+            tv_filter_glass_name.text = filterGlass.key.replace("\\", "")
+        } else {
+            item_filter_glass.visibility = View.GONE
         }
     }
 

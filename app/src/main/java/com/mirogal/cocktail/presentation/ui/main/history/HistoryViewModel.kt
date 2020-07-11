@@ -8,13 +8,11 @@ import androidx.lifecycle.Transformations
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
-import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
-import com.mirogal.cocktail.presentation.model.filter.AlcoholDrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.CategoryDrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.model.filter.*
 import com.mirogal.cocktail.presentation.model.history.HistoryPage
-import com.mirogal.cocktail.presentation.model.filter.DrinkSort
+import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import java.util.*
+import kotlin.collections.HashMap
 
 
 class HistoryViewModel(application: Application) : BaseViewModel(application) {
@@ -54,13 +52,17 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
         }
 
         drinkFilterLiveData.value = hashMapOf(
-                Pair(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE),
-                Pair(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE))
+                Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
+                Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
+                Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
+                Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
         isDrinkFilterEnableLiveData = MediatorLiveData<Boolean>().apply {
             addSource(drinkFilterLiveData) {
-                value = drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == AlcoholDrinkFilter.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == CategoryDrinkFilter.DISABLE
+                value = drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == DrinkFilterCategory.DISABLE
+                        && drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == DrinkFilterAlcohol.DISABLE
+                        && drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) == DrinkFilterIngredient.DISABLE
+                        && drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) == DrinkFilterGlass.DISABLE
             }
         }
 
@@ -87,12 +89,20 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
 
     private fun filterCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
         return list?.filter {
-            if (drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) != AlcoholDrinkFilter.DISABLE) {
-                it.alcoholic == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key
+            if (drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) != DrinkFilterCategory.DISABLE) {
+                it.category?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)?.key?.toLowerCase(Locale.ROOT)
             } else true
         }?.filter {
-            if (drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) != CategoryDrinkFilter.DISABLE) {
-                it.category == drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)?.key
+            if (drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) != DrinkFilterAlcohol.DISABLE) {
+                it.alcoholic?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key?.toLowerCase(Locale.ROOT)
+            } else true
+        }?.filter {
+            if (drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) != DrinkFilterIngredient.DISABLE) {
+                it.ingredientList.contains(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key)
+            } else true
+        }?.filter {
+            if (drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) != DrinkFilterGlass.DISABLE) {
+                it.glass?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.GLASS)?.key?.toLowerCase(Locale.ROOT)
             } else true
         }
     }
@@ -114,10 +124,11 @@ class HistoryViewModel(application: Application) : BaseViewModel(application) {
     }
 
     fun resetDrinkFilter() {
-        val drinkFilter = drinkFilterLiveData.value
-        drinkFilter?.put(DrinkFilterType.ALCOHOL, AlcoholDrinkFilter.DISABLE)
-        drinkFilter?.put(DrinkFilterType.CATEGORY, CategoryDrinkFilter.DISABLE)
-        drinkFilterLiveData.value = drinkFilter
+        drinkFilterLiveData.value = hashMapOf(
+                Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
+                Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
+                Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
+                Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
     }
 
     fun deleteCocktail(id: Int) {
