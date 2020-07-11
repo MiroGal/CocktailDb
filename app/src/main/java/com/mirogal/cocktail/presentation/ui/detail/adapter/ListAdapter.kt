@@ -4,9 +4,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.detail.IngredientEntity
+import com.mirogal.cocktail.presentation.model.detail.IngredientModel
 
-class ListAdapter(private val ingredientList: List<IngredientEntity>) : RecyclerView.Adapter<ItemHolder>() {
+class ListAdapter(private val ingredientList: List<IngredientModel>) : RecyclerView.Adapter<ItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
         val inflater = LayoutInflater.from(parent.context)
