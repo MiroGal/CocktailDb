@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history
+package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.app.PendingIntent
 import android.content.Intent
@@ -23,20 +23,19 @@ import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.presentation.ui.main.history.adapter.ListAdapter
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
+import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-
-class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnItemClickListener,
-        ListAdapter.OnItemLongClickListener {
+class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.OnItemClickListener,
+        DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
-    override val viewModel: HistoryViewModel by activityViewModels()
+    override val viewModel: DrinkViewModel by activityViewModels()
 
-    private lateinit var listAdapter: ListAdapter
+    private lateinit var drinkListAdapter: DrinkListAdapter
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
@@ -58,16 +57,16 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
         val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
-        listAdapter = ListAdapter(requireContext(), this, this)
+        drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
         viewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list?.isNotEmpty()!!) {
                 showData()
             } else {
                 showEmpty()
             }
-            listAdapter.refreshData(list)
+            drinkListAdapter.refreshData(list)
         })
-        rv_drink_history_list.adapter = listAdapter
+        rv_drink_history_list.adapter = drinkListAdapter
     }
 
 
@@ -85,7 +84,7 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
 
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DrinkDetailActivity::class.java)
+        val intent = Intent(activity, DetailActivity::class.java)
         intent.putExtra("cocktailId", cocktailId)
         intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)
@@ -107,7 +106,7 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
 
     private fun createAndOpenItemMenu(view: View, cocktailModel: CocktailDbModel) {
         val popupMenu = PopupMenu(requireActivity(), view)
-        popupMenu.inflate(R.menu.drink_history_item_popup_menu)
+        popupMenu.inflate(R.menu.item_drink_history_popup_menu)
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
                 R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
@@ -136,13 +135,13 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
                             val shortcutManager = requireActivity()
                                     .getSystemService<ShortcutManager>(ShortcutManager::class.java)
                             // Create intent
-                            val intent = Intent(requireActivity(), DrinkDetailActivity::class.java)
+                            val intent = Intent(requireActivity(), DetailActivity::class.java)
                             intent.action = Intent.ACTION_VIEW
                             intent.putExtra("cocktailId", cocktailModel.id)
                             intent.putExtra("cocktailName", cocktailModel.name)
                             // Create intent stack (for correct work back button)
                             val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
-                            stackBuilder.addParentStack(DrinkDetailActivity::class.java)
+                            stackBuilder.addParentStack(DetailActivity::class.java)
                             stackBuilder.addNextIntent(intent)
                             // Create ShortcutInfo
                             val shortcutInfo = ShortcutInfo.Builder(requireActivity(),
@@ -158,13 +157,13 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
 
                             Toast.makeText(requireActivity(),
                                     cocktailModel.name.toString() + " "
-                                            + getString(R.string.drink_history_toast_shortcut_added),
+                                            + getString(R.string.drink_item_menu_toast_shortcut_added),
                                     Toast.LENGTH_SHORT).show()
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {}
                     })
         } else {
-            Toast.makeText(requireActivity(), getString(R.string.drink_history_toast_shortcut_not_added), Toast.LENGTH_LONG).show()
+            Toast.makeText(requireActivity(), getString(R.string.drink_item_menu_toast_shortcut_not_added), Toast.LENGTH_LONG).show()
         }
     }
 
@@ -185,13 +184,13 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
                             // Check supporting pin shortcut
                             if (shortcutManager!!.isRequestPinShortcutSupported) {
                                 // Create ShortcutManager
-                                val intent = Intent(requireActivity(), DrinkDetailActivity::class.java)
+                                val intent = Intent(requireActivity(), DetailActivity::class.java)
                                 intent.action = Intent.ACTION_VIEW
                                 intent.putExtra("cocktailId", cocktailModel.id)
                                 intent.putExtra("cocktailName", cocktailModel.name)
                                 // Create intent stack (for correct work back button)
                                 val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
-                                stackBuilder.addParentStack(DrinkDetailActivity::class.java)
+                                stackBuilder.addParentStack(DetailActivity::class.java)
                                 stackBuilder.addNextIntent(intent)
                                 // Create ShortcutInfo
                                 val shortcutInfo = ShortcutInfo.Builder(requireActivity(), cocktailModel.id.toString())
@@ -210,14 +209,14 @@ class DrinkHistoryFragment : BaseFragment<HistoryViewModel>(), ListAdapter.OnIte
 
                                 Toast.makeText(requireActivity(),
                                         cocktailModel.name.toString() + " "
-                                                + getString(R.string.drink_history_toast_pin_shortcut_added),
+                                                + getString(R.string.drink_item_menu_toast_pin_shortcut_added),
                                         Toast.LENGTH_SHORT).show()
                             }
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {}
                     })
         } else {
-            Toast.makeText(requireActivity(), getString(R.string.drink_history_toast_pin_shortcut_not_added), Toast.LENGTH_LONG).show()
+            Toast.makeText(requireActivity(), getString(R.string.drink_item_menu_toast_pin_shortcut_not_added), Toast.LENGTH_LONG).show()
         }
     }
 

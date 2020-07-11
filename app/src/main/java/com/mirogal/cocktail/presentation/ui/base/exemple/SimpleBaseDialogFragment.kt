@@ -11,13 +11,12 @@ import androidx.annotation.StringRes
 import androidx.core.view.isGone
 import androidx.core.view.isVisible
 import com.mirogal.cocktail.R
-import kotlinx.android.synthetic.main.layout_dialog_simple.*
-
+import kotlinx.android.synthetic.main.dialog_fragment_simple.*
 
 abstract class SimpleBaseDialogFragment<Data, Builder : SimpleBaseDialogFragment.SimpleDialogBuilder>
 protected constructor() : BaseDialogFragment<Data>() {
 
-    override val contentLayoutResId = R.layout.layout_dialog_simple
+    override val contentLayoutResId = R.layout.dialog_fragment_simple
     protected open val extraContentLayoutResId: Int = 0
 
     protected open lateinit var dialogBuilder: Builder

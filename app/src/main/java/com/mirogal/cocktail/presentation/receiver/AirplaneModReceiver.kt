@@ -11,7 +11,7 @@ class AirplaneModReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (isAirplaneModeOn(context!!)) {
-            Toast.makeText(context, context.getString(R.string.drink_history_pager_receiver_airplane_mod_message_on), Toast.LENGTH_LONG).show()
+            Toast.makeText(context, context.getString(R.string.drink_pager_receiver_airplane_mod_message_on), Toast.LENGTH_LONG).show()
         }
     }
 

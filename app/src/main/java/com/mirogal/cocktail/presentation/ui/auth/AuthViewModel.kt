@@ -7,7 +7,6 @@ import androidx.lifecycle.MutableLiveData
 import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
-
 class AuthViewModel(application: Application) : BaseViewModel(application) {
 
     private val validLogin = "MiroGal"

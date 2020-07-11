@@ -3,7 +3,6 @@ package com.mirogal.cocktail.presentation.ui.base
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
-
 abstract class BaseActivity<ViewModel : BaseViewModel> : AppCompatActivity() {
 
     protected abstract val contentLayoutResId: Int

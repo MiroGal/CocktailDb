@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.DiffUtil
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
-internal class ListAdapter(private val context: Context,
-                           private val onItemClickListener: OnItemClickListener)
-    : PagedListAdapter<CocktailDbModel, ItemHolder>(DIFF_CALLBACK) {
+internal class SearchListAdapter(private val context: Context,
+                                 private val onItemClickListener: OnItemClickListener)
+    : PagedListAdapter<CocktailDbModel, SearchItemHolder>(DIFF_CALLBACK) {
 
     companion object {
         private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbModel>() {
@@ -24,19 +24,19 @@ internal class ListAdapter(private val context: Context,
         }
     }
 
-    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
+    override fun onBindViewHolder(holderSearch: SearchItemHolder, position: Int) {
         if (position <= -1) {
             return
         }
         val item = getItem(position)
-        holder.bind(item!!)
-        holder.setListener(onItemClickListener)
+        holderSearch.bind(item!!)
+        holderSearch.setListener(onItemClickListener)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemHolder {
         val inflater = LayoutInflater.from(parent.context)
-        val view: View = inflater.inflate(R.layout.item_cocktail_search_drink, parent, false)
-        return ItemHolder(context, view)
+        val view: View = inflater.inflate(R.layout.item_cocktail_search, parent, false)
+        return SearchItemHolder(context, view)
     }
 
     internal interface OnItemClickListener {

@@ -17,16 +17,16 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.mapper.IngredientMapper.toIngredientList
-import com.mirogal.cocktail.presentation.ui.detail.adapter.ListAdapter
-import kotlinx.android.synthetic.main.activity_drink_detail.*
-import kotlinx.android.synthetic.main.content_drink_detail.*
+import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
+import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
 
-class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
+class DetailActivity : BaseActivity<DetailViewModel>() {
 
-    override val contentLayoutResId = R.layout.activity_drink_detail
-    override val viewModel: DrinkDetailViewModel by viewModels()
+    override val contentLayoutResId = R.layout.activity_detail
+    override val viewModel: DetailViewModel by viewModels()
 
     private var cocktailId = 0
     private var cocktailName: String? = ""
@@ -60,7 +60,7 @@ class DrinkDetailActivity : BaseActivity<DrinkDetailViewModel>() {
 
             rv_ingredient_list.layoutManager = LinearLayoutManager(this)
             val ingredientList = toIngredientList(it.ingredientList, it.measureList)
-            val listAdapter = ListAdapter(ingredientList)
+            val listAdapter = DetailListAdapter(ingredientList)
             rv_ingredient_list.adapter = listAdapter
 
             Glide.with(this)

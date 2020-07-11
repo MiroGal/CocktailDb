@@ -8,12 +8,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.data.network.model.NetworkStatus
+import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
-
-class SearchDrinkViewModel(application: Application) : BaseViewModel(application) {
+class SearchViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 

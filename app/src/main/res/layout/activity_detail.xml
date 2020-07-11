@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:background="@color/background_primary"
     android:fitsSystemWindows="true"
-    tools:context=".presentation.ui.detail.DrinkDetailActivity">
+    tools:context=".presentation.ui.detail.DetailActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar_layout"
@@ -56,6 +56,6 @@
         app:elevation="@dimen/elevation_4"
         tools:ignore="ContentDescription" />
 
-    <include layout="@layout/content_drink_detail" />
+    <include layout="@layout/activity_detail_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

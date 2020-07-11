@@ -28,20 +28,14 @@
     <!--endregion-->
 
     <!--region DrinkHistory-->
-    <string name="drink_history_pager_label">Cocktails</string>
-    <string name="drink_history_pager_tab_history">History</string>
-    <string name="drink_history_pager_tab_favorite">Favorite</string>
-    <string name="drink_history_pager_snackbar_btn_open_cocktail">Open</string>
-    <string name="drink_history_pager_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+    <string name="drink_pager_label">Cocktails</string>
+    <string name="drink_pager_tab_history">History</string>
+    <string name="drink_pager_tab_favorite">Favorite</string>
+    <string name="drink_pager_snackbar_action_open_detail">Open</string>
+    <string name="drink_pager_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
     <string name="drink_history_message_empty">History is empty</string>
     <string name="drink_favorite_message_empty">Favorite is empty</string>
     <string name="drink_history_item_btn_favorite_description">Add/Delete from favorite</string>
-
-    <string name="drink_history_toast_shortcut_added">cocktail shortcut added</string>
-    <string name="drink_history_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>
-
-    <string name="drink_history_toast_pin_shortcut_added">cocktail pin shortcut added</string>
-    <string name="drink_history_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
 
     <string name="drink_history_item_menu_action_open">Open</string>
     <string name="drink_history_item_menu_shortcut">Add shortcut</string>
@@ -53,6 +47,13 @@
     <string name="drink_favorite_item_menu_shortcut">Add shortcut</string>
     <string name="drink_favorite_item_menu_pin_shortcut">Add pin shortcut</string>
     <string name="drink_favorite_item_menu_favorite">Remove from favorite</string>
+
+    <string name="drink_item_menu_toast_shortcut_added">cocktail shortcut added</string>
+    <string name="drink_item_menu_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>
+
+    <string name="drink_item_menu_toast_pin_shortcut_added">cocktail pin shortcut added</string>
+    <string name="drink_item_menu_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
+
     <!--endregion-->
 
     <!--region Filter-->
@@ -83,20 +84,20 @@
     <!--endregion-->
 
     <!--region SearchList-->
-    <string name="search_drink_label">Search Cocktail</string>
-    <string name="search_drink_message_empty">No cocktails found</string>
-    <string name="search_drink_message_start">Enter text to start search</string>
-    <string name="search_drink_toolbar_btn_search">Search</string>
+    <string name="search_label">Search Cocktail</string>
+    <string name="search_message_empty">No cocktails found</string>
+    <string name="search_message_start">Enter text to start search</string>
+    <string name="search_toolbar_btn_search">Search</string>
     <!--endregion-->
 
     <!--region Detail-->
-    <string name="drink_detail_label">Cocktail Details</string>
-    <string name="drink_detail_info_title">Basic information</string>
-    <string name="drink_detail_info_name">Name:</string>
-    <string name="drink_detail_info_alcoholic">Alcoholic:</string>
-    <string name="drink_detail_info_glass">Glass:</string>
-    <string name="drink_detail_ingredient_title">Ingredients</string>
-    <string name="drink_detail_instruction_title">Instructions</string>
+    <string name="detail_label">Cocktail Details</string>
+    <string name="detail_info_title">Basic information</string>
+    <string name="detail_info_name">Name:</string>
+    <string name="detail_info_alcoholic">Alcoholic:</string>
+    <string name="detail_info_glass">Glass:</string>
+    <string name="detail_ingredient_title">Ingredients</string>
+    <string name="detail_instruction_title">Instructions</string>
     <!--endregion-->
 
     <string name="dialog_filter_title">drink filter</string>

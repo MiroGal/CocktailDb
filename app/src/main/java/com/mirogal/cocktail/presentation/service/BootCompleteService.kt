@@ -9,7 +9,6 @@ import androidx.core.app.JobIntentService
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 
-
 class BootCompleteService : JobIntentService() {
 
     companion object {

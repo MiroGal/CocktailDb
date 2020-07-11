@@ -14,19 +14,18 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.network.model.NetworkStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
-import com.mirogal.cocktail.presentation.ui.search.adapter.ListAdapter
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
+import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
-import kotlinx.android.synthetic.main.activity_search_drink.*
-import kotlinx.android.synthetic.main.content_search_drink.*
+import kotlinx.android.synthetic.main.activity_search.*
+import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
+class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItemClickListener {
 
-class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.OnItemClickListener {
-
-    override val contentLayoutResId = R.layout.activity_search_drink
-    override val viewModel: SearchDrinkViewModel by viewModels()
+    override val contentLayoutResId = R.layout.activity_search
+    override val viewModel: SearchViewModel by viewModels()
 
     private var searchName: String? = null
 
@@ -47,7 +46,7 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
         val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
         rv_search_list.addItemDecoration(itemDecoration)
 
-        val listAdapter = ListAdapter(this, this)
+        val listAdapter = SearchListAdapter(this, this)
         viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbModel?> ->
             try {
                 listAdapter.submitList(pagedList)
@@ -73,7 +72,7 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.search_drink_toolbar, menu)
+        menuInflater.inflate(R.menu.activity_search_toolbar_menu, menu)
         val searchMenuItem = menu.findItem(R.id.action_search)
         val searchView = searchMenuItem.actionView as SearchView
         searchView.setIconifiedByDefault(false) // set inner icon
@@ -106,7 +105,7 @@ class SearchDrinkActivity : BaseActivity<SearchDrinkViewModel>(), ListAdapter.On
 
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(this, DrinkDetailActivity::class.java)
+        val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("cocktailId", cocktailId)
         intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)

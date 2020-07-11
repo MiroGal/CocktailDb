@@ -22,7 +22,7 @@
             android:paddingBottom="@dimen/offset_8"
             android:gravity="center"
             android:background="@color/background_secondary"
-            android:text="@string/drink_detail_info_title"
+            android:text="@string/detail_info_title"
             style="@style/TextTitle" />
 
         <TableLayout
@@ -37,7 +37,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/offset_16"
-                    android:text="@string/drink_detail_info_name"
+                    android:text="@string/detail_info_name"
                     android:textStyle="bold"
                     style="@style/TextBody"/>
                 <TextView
@@ -51,7 +51,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/offset_16"
-                    android:text="@string/drink_detail_info_alcoholic"
+                    android:text="@string/detail_info_alcoholic"
                     android:textStyle="bold"
                     style="@style/TextBody"/>
                 <TextView
@@ -65,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/offset_16"
-                    android:text="@string/drink_detail_info_glass"
+                    android:text="@string/detail_info_glass"
                     android:textStyle="bold"
                     style="@style/TextBody"/>
                 <TextView
@@ -83,7 +83,7 @@
             android:paddingBottom="@dimen/offset_8"
             android:gravity="center"
             android:background="@color/background_secondary"
-            android:text="@string/drink_detail_ingredient_title"
+            android:text="@string/detail_ingredient_title"
             style="@style/TextTitle" />
 
         <androidx.recyclerview.widget.RecyclerView
@@ -100,7 +100,7 @@
             android:paddingBottom="@dimen/offset_8"
             android:gravity="center"
             android:background="@color/background_secondary"
-            android:text="@string/drink_detail_instruction_title"
+            android:text="@string/detail_instruction_title"
             style="@style/TextTitle" />
 
         <TextView

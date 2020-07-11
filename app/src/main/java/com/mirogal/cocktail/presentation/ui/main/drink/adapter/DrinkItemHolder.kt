@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history.adapter
+package com.mirogal.cocktail.presentation.ui.main.drink.adapter
 
 import android.content.Context
 import android.util.Log
@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
-class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
+class DrinkItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
@@ -42,8 +42,8 @@ class ItemHolder(private val context: Context, itemView: View) : RecyclerView.Vi
         Log.d("TAG", "holder")
     }
 
-    fun setListener(clickListener: ListAdapter.OnItemClickListener,
-                    longClickListener: ListAdapter.OnItemLongClickListener) {
+    fun setListener(clickListener: DrinkListAdapter.OnItemClickListener,
+                    longClickListener: DrinkListAdapter.OnItemLongClickListener) {
         itemView.setOnClickListener {
             clickListener.onItemClick(cocktailId, cocktailName)
         }

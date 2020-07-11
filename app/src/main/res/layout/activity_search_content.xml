@@ -12,7 +12,7 @@
         android:layout_height="match_parent"
         android:visibility="visible" />
 
-    <include layout="@layout/layout_search_drink_empty"
+    <include layout="@layout/layout_search_empty"
         android:visibility="invisible" />
 
     <include layout="@layout/layout_search_drink_preview"

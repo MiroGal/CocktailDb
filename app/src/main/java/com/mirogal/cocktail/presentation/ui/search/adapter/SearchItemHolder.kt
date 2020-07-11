@@ -9,7 +9,7 @@ import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
-internal class ItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
+internal class SearchItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     private lateinit var cocktailModel: CocktailDbModel
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
@@ -26,7 +26,7 @@ internal class ItemHolder(private val context: Context, itemView: View) : Recycl
                 .into(ivImage)
     }
 
-    fun setListener(listener: ListAdapter.OnItemClickListener) {
+    fun setListener(listener: SearchListAdapter.OnItemClickListener) {
         itemView.setOnClickListener {
             listener.onItemClick(cocktailModel)
         }

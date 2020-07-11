@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history.adapter
+package com.mirogal.cocktail.presentation.ui.main.drink.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,22 +9,22 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import java.util.*
 
-class ListAdapter(private val context: Context,
-                  private val onItemClickListener: OnItemClickListener,
-                  private val onItemLongClickListener: OnItemLongClickListener)
-    : RecyclerView.Adapter<ItemHolder>() {
+class DrinkListAdapter(private val context: Context,
+                       private val onItemClickListener: OnItemClickListener,
+                       private val onItemLongClickListener: OnItemLongClickListener)
+    : RecyclerView.Adapter<DrinkItemHolder>() {
 
     private var cocktailList: List<CocktailDbModel> = ArrayList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkItemHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view: View = inflater.inflate(R.layout.item_cocktail_drink_history, parent, false)
-        return ItemHolder(context, view)
+        return DrinkItemHolder(context, view)
     }
 
-    override fun onBindViewHolder(holder: ItemHolder, position: Int) {
-        holder.bind(cocktailList[position])
-        holder.setListener(onItemClickListener, onItemLongClickListener)
+    override fun onBindViewHolder(holderDrink: DrinkItemHolder, position: Int) {
+        holderDrink.bind(cocktailList[position])
+        holderDrink.setListener(onItemClickListener, onItemLongClickListener)
     }
 
     override fun getItemCount(): Int {

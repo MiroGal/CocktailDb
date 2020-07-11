@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history
+package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
@@ -19,28 +19,27 @@ import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.model.filter.*
+import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.detail.DrinkDetailActivity
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
-import com.mirogal.cocktail.presentation.ui.main.history.adapter.PagerAdapter
-import com.mirogal.cocktail.presentation.model.history.HistoryPage
-import com.mirogal.cocktail.presentation.ui.search.SearchDrinkActivity
+import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkPagerAdapter
+import com.mirogal.cocktail.presentation.ui.search.SearchActivity
 import com.mirogal.cocktail.presentation.ui.util.ZoomOutPageTransformer
-import kotlinx.android.synthetic.main.fragment_history_pager.*
+import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
+class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
 
-class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
-
-    override val contentLayoutResId = R.layout.fragment_history_pager
-    override val viewModel: HistoryViewModel by activityViewModels()
+    override val contentLayoutResId = R.layout.fragment_drink_pager
+    override val viewModel: DrinkViewModel by activityViewModels()
     private val mainViewModel: MainViewModel by activityViewModels()
 
-    private lateinit var pagerAdapter: PagerAdapter
+    private lateinit var drinkPagerAdapter: DrinkPagerAdapter
 
     private var cocktailList: List<CocktailDbModel>? = null
 
@@ -48,12 +47,12 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
     private val batteryChangeReceiver = BatteryChangeReceiver()
 
     companion object {
-        fun newInstance() = HistoryPagerFragment()
+        fun newInstance() = DrinkPagerFragment()
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_history_pager_label)
+        (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_pager_label)
 
         setViewPager()
         setReceiver()
@@ -156,15 +155,15 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
     }
 
     private fun setViewPager() {
-        pagerAdapter = PagerAdapter(this)
+        drinkPagerAdapter = DrinkPagerAdapter(this)
         view_pager.setPageTransformer(ZoomOutPageTransformer()) // Animation of transition
-        view_pager.adapter = pagerAdapter
+        view_pager.adapter = drinkPagerAdapter
 
         TabLayoutMediator(tab_layout, view_pager) { tab, position ->
             if (position == 0) {
-                tab.text = getString(R.string.drink_history_pager_tab_history)
+                tab.text = getString(R.string.drink_pager_tab_history)
             } else if (position == 1) {
-                tab.text = getString(R.string.drink_history_pager_tab_favorite)
+                tab.text = getString(R.string.drink_pager_tab_favorite)
             }
         }.attach()
     }
@@ -203,12 +202,12 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
 
 
     private fun openSearchDrinkActivity() {
-        val intent = Intent(activity, SearchDrinkActivity::class.java)
+        val intent = Intent(activity, SearchActivity::class.java)
         startActivity(intent)
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DrinkDetailActivity::class.java)
+        val intent = Intent(activity, DetailActivity::class.java)
         intent.putExtra("cocktailId", cocktailId)
         intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)
@@ -264,7 +263,7 @@ class HistoryPagerFragment : BaseFragment<HistoryViewModel>(), BatteryChangeRece
             if (model != null) {
                 Snackbar.make(requireActivity().findViewById(android.R.id.content),
                         "Переглянути ${model.name}", Snackbar.LENGTH_LONG)
-                        .setAction(getString(R.string.drink_history_pager_snackbar_btn_open_cocktail)) {
+                        .setAction(getString(R.string.drink_pager_snackbar_action_open_detail)) {
                             openDrinkDetailActivity(model.id, model.name)
                         }.show()
             }

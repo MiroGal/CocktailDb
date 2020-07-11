@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history
+package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.os.Bundle
 import android.view.View
@@ -10,16 +10,15 @@ import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.main.history.dialog.DrinkFilterDialogFragment
-import kotlinx.android.synthetic.main.content_drink_filter.*
+import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
-import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_drink_filter_content.*
+import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 
-
-class DrinkFilterFragment : BaseFragment<HistoryViewModel>() {
+class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
-    override val viewModel: HistoryViewModel by activityViewModels()
+    override val viewModel: DrinkViewModel by activityViewModels()
 
     private lateinit var currentFilterList: HashMap<DrinkFilterType, DrinkFilter>
 

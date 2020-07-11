@@ -8,9 +8,8 @@ import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_history_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 import kotlinx.android.synthetic.main.fragment_profile.*
-
 
 class ProfileFragment : BaseFragment<ProfileViewModel>() {
 

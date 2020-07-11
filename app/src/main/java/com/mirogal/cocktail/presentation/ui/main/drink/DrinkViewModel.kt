@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history
+package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.app.Application
 import androidx.lifecycle.LiveData
@@ -12,10 +12,8 @@ import com.mirogal.cocktail.presentation.model.filter.*
 import com.mirogal.cocktail.presentation.model.history.HistoryPage
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 import java.util.*
-import kotlin.collections.HashMap
 
-
-class HistoryViewModel(application: Application) : BaseViewModel(application) {
+class DrinkViewModel(application: Application) : BaseViewModel(application) {
 
     val context = application
 

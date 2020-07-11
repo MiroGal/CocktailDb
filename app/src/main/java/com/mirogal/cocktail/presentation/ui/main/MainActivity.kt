@@ -10,12 +10,11 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.base.exemple.BaseDialogFragment
-import com.mirogal.cocktail.presentation.ui.main.history.DrinkFilterFragment
-import com.mirogal.cocktail.presentation.ui.main.history.HistoryPagerFragment
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFilterFragment
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : BaseActivity<MainViewModel>(),
         BaseDialogFragment.OnDialogFragmentClickListener<ContactsContract.Contacts.Data>,
@@ -60,7 +59,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
     }
 
     override fun onBackPressed() {
-        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
+        val pagerFragment = supportFragmentManager.findFragmentByTag(DrinkPagerFragment::class.java.simpleName)
         val filterFragment = pagerFragment?.childFragmentManager?.findFragmentByTag(DrinkFilterFragment::class.java.simpleName)
         if (pagerFragment != null && pagerFragment.isVisible && filterFragment != null && filterFragment.isVisible) {
             pagerFragment.childFragmentManager.beginTransaction().apply {
@@ -74,7 +73,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
 
 
     private fun showHistoryPagerFragment() {
-        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
+        val pagerFragment = supportFragmentManager.findFragmentByTag(DrinkPagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
         val settingsFragment = supportFragmentManager.findFragmentByTag(SettingsFragment::class.java.simpleName)
         if (pagerFragment != null && pagerFragment.isAdded) {
@@ -90,9 +89,9 @@ class MainActivity : BaseActivity<MainViewModel>(),
                 commit()
             }
         } else {
-            val newFragment = HistoryPagerFragment.newInstance()
+            val newFragment = DrinkPagerFragment.newInstance()
             supportFragmentManager.beginTransaction().apply {
-                add(R.id.fcv_container, newFragment, HistoryPagerFragment::class.java.simpleName)
+                add(R.id.fcv_container, newFragment, DrinkPagerFragment::class.java.simpleName)
                 if (profileFragment != null) {
                     hide(profileFragment)
                 }
@@ -105,7 +104,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
     }
 
     private fun showProfileFragment() {
-        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
+        val pagerFragment = supportFragmentManager.findFragmentByTag(DrinkPagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
         val settingsFragment = supportFragmentManager.findFragmentByTag(SettingsFragment::class.java.simpleName)
         if (profileFragment != null && profileFragment.isAdded) {
@@ -136,7 +135,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
     }
 
     private fun showSettingsFragment() {
-        val pagerFragment = supportFragmentManager.findFragmentByTag(HistoryPagerFragment::class.java.simpleName)
+        val pagerFragment = supportFragmentManager.findFragmentByTag(DrinkPagerFragment::class.java.simpleName)
         val profileFragment = supportFragmentManager.findFragmentByTag(ProfileFragment::class.java.simpleName)
         val settingsFragment = supportFragmentManager.findFragmentByTag(SettingsFragment::class.java.simpleName)
         if (settingsFragment != null && settingsFragment.isAdded) {

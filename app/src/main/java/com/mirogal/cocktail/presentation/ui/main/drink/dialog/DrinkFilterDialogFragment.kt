@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.ui.main.history.dialog
+package com.mirogal.cocktail.presentation.ui.main.drink.dialog
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -14,16 +14,15 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
-import com.mirogal.cocktail.presentation.ui.main.history.HistoryViewModel
-import com.mirogal.cocktail.presentation.ui.main.history.dialog.adapter.ListAdapter
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
+import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkFilterListAdapter
 
+class DrinkFilterDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkFilterListAdapter.OnItemClickListener {
 
-class DrinkFilterDialogFragment : BaseDialogFragment<HistoryViewModel>(), ListAdapter.OnItemClickListener {
+    override val contentLayoutResId = R.layout.dialog_fragment_drink_filter
+    override val viewModel: DrinkViewModel by activityViewModels()
 
-    override val contentLayoutResId = R.layout.layout_dialog_drink_filter
-    override val viewModel: HistoryViewModel by activityViewModels()
-
-    private lateinit var listAdapter: ListAdapter
+    private lateinit var drinkFilterListAdapter: DrinkFilterListAdapter
     private lateinit var rvFilter: RecyclerView
 
     private lateinit var drinkFilterType: DrinkFilterType
@@ -61,8 +60,8 @@ class DrinkFilterDialogFragment : BaseDialogFragment<HistoryViewModel>(), ListAd
         val dividerItemDecoration = DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL)
         rvFilter.addItemDecoration(dividerItemDecoration)
 
-        listAdapter = ListAdapter(drinkFilterType, currentFilterList, this)
-        rvFilter.adapter = listAdapter
+        drinkFilterListAdapter = DrinkFilterListAdapter(drinkFilterType, currentFilterList, this)
+        rvFilter.adapter = drinkFilterListAdapter
 
         return view
     }

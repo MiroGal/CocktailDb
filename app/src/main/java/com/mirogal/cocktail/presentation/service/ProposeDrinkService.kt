@@ -5,7 +5,6 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.JobIntentService
 
-
 class ProposeDrinkService : JobIntentService() {
 
     companion object {

@@ -2,8 +2,8 @@ package com.mirogal.cocktail.data.network.source
 
 import androidx.paging.PagedList
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.data.network.model.NetworkStatus
+import com.mirogal.cocktail.data.repository.CocktailRepository
 
 class BoundaryCallback(private val repository: CocktailRepository) : PagedList.BoundaryCallback<CocktailDbModel?>() {
 

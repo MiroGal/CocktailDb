@@ -1,11 +1,11 @@
-package com.mirogal.cocktail.presentation.ui.main.history.adapter
+package com.mirogal.cocktail.presentation.ui.main.drink.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.mirogal.cocktail.presentation.ui.main.history.DrinkFavoriteFragment
-import com.mirogal.cocktail.presentation.ui.main.history.DrinkHistoryFragment
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFavoriteFragment
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkHistoryFragment
 
-class PagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
+class DrinkPagerAdapter(fragment: Fragment) : FragmentStateAdapter(fragment) {
 
     override fun getItemCount(): Int = 2
 

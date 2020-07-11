@@ -9,7 +9,7 @@ import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 
-class DrinkDetailViewModel(application: Application) : BaseViewModel(application) {
+class DetailViewModel(application: Application) : BaseViewModel(application) {
 
     private val repository = CocktailRepository.newInstance(application)
 

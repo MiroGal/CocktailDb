@@ -20,7 +20,6 @@ import com.mirogal.cocktail.presentation.ui.base.exemple.RegularBottomSheetDialo
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
-
 class AuthActivity : BaseActivity<AuthViewModel>(),
         BaseDialogFragment.OnDialogFragmentClickListener<ContactsContract.Contacts.Data>,
         BaseDialogFragment.OnDialogFragmentDismissListener<ContactsContract.Contacts.Data> {
