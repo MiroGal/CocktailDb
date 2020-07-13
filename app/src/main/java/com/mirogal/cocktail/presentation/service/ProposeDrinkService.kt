@@ -16,21 +16,22 @@ class ProposeDrinkService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
 
-        for (i in 0..3) {
-
-            try {
-                Thread.sleep(1000)
-            } catch (e: InterruptedException) {
-                e.printStackTrace()
+        Thread(Runnable {
+            for (i in 0..3) {
+                try {
+                    Thread.sleep(1000)
+                } catch (e: InterruptedException) {
+                    e.printStackTrace()
+                }
             }
 
-            Log.d(this.javaClass.simpleName, i.toString())
-        }
+            val newIntent = Intent()
+            newIntent.action = "ACTION_SNACKBAR_TIMER_FINISH"
+            newIntent.putExtra("isTimerFinish", true)
+            newIntent.putExtra("finishCocktailId", intent.getIntExtra("finishCocktailId", -2))
+            baseContext.sendBroadcast(newIntent)
 
-        val newIntent = Intent()
-        newIntent.action = "ACTION_SNACKBAR"
-        newIntent.putExtra(ProposeDrinkService::class.java.simpleName, intent.getIntExtra(ProposeDrinkService::class.java.simpleName, 50))
-        baseContext.sendBroadcast(newIntent)
+        }).start()
     }
 
 }

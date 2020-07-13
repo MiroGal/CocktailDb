@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
+import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -47,6 +48,8 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
 
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
+
+    private var startId: Int = -1
 
     companion object {
         fun newInstance() = DrinkPagerFragment()
@@ -132,7 +135,15 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
 
         proposeDrinkReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                showProposeDrink(intent!!.getIntExtra(ProposeDrinkService::class.java.simpleName, 20))
+                val isTimerFinish: Boolean = intent?.getBooleanExtra("isTimerFinish", false) ?: false
+                if (isTimerFinish) {
+                    val finishId: Int = intent?.getIntExtra("finishCocktailId", -2) ?: -2
+                    if (startId == finishId) {
+                        showProposeDrink(finishId)
+                    }
+                } else {
+                    startId = intent?.getIntExtra("startCocktailId", -1) ?: -1
+                }
             }
         }
     }
@@ -184,12 +195,15 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
 
     override fun onStart() {
         super.onStart()
-        requireContext().registerReceiver(proposeDrinkReceiver, IntentFilter("ACTION_SNACKBAR"))
-        requireContext().registerReceiver(batteryChangeReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
+        requireContext().registerReceiver(proposeDrinkReceiver,
         IntentFilter().apply {
+            addAction("ACTION_SNACKBAR_TIMER_START")
+            addAction("ACTION_SNACKBAR_TIMER_FINISH")
+        })
+        requireContext().registerReceiver(batteryChangeReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED).apply {
             addAction("android.intent.action.BATTERY_LOW")
             addAction("android.intent.action.BATTERY_OK")
-        }
+        })
     }
 
     override fun onStop() {
@@ -265,6 +279,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     }
 
     private fun showProposeDrink(id: Int) {
+
         if (cocktailList != null && cocktailList!!.size > 1) {
             val model: CocktailDbModel? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
             if (model != null) {

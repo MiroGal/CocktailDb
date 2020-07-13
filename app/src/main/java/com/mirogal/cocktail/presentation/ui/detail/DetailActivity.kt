@@ -137,9 +137,15 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
     }
 
     override fun onDestroy() {
-        val intent = Intent(this, ProposeDrinkService::class.java)
-        intent.putExtra(ProposeDrinkService::class.java.simpleName, cocktailId)
-        ProposeDrinkService.enqueueWork(this, intent)
+
+        val intentStart = Intent()
+        intentStart.action = "ACTION_SNACKBAR_TIMER_START"
+        intentStart.putExtra("startCocktailId", cocktailId)
+        baseContext.sendBroadcast(intentStart)
+
+        val intentFinish = Intent(this, ProposeDrinkService::class.java)
+        intentFinish.putExtra("finishCocktailId", cocktailId)
+        ProposeDrinkService.enqueueWork(this, intentFinish)
         super.onDestroy()
     }
 

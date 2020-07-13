@@ -33,6 +33,10 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
 
     override fun configureView(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
