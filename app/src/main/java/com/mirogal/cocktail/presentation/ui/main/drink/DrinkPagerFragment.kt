@@ -196,11 +196,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     override fun onStart() {
         super.onStart()
         requireContext().registerReceiver(proposeDrinkReceiver,
-        IntentFilter().apply {
+        IntentFilter().apply{
             addAction("ACTION_SNACKBAR_TIMER_START")
             addAction("ACTION_SNACKBAR_TIMER_FINISH")
         })
-        requireContext().registerReceiver(batteryChangeReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED).apply {
+        requireContext().registerReceiver(batteryChangeReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED).apply{
             addAction("android.intent.action.BATTERY_LOW")
             addAction("android.intent.action.BATTERY_OK")
         })

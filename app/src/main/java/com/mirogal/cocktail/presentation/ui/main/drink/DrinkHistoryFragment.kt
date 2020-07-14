@@ -25,7 +25,7 @@ import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
-import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
+import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMargin
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
@@ -50,7 +50,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
         rv_drink_history_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
 
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
-        val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
+        val itemDecoration = SpaceItemDecorationWithoutTopMargin(listColumn, spaceInPixel, true, 0)
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)

@@ -36,7 +36,15 @@ class BootCompleteService : JobIntentService() {
                 e.printStackTrace()
             }
         }
-        startActivity(Intent(this@BootCompleteService, AuthActivity::class.java))
+        openAuthActivity()
+    }
+
+    private fun openAuthActivity() {
+        val intent = Intent(this, AuthActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Close all activities
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) // Close all activities
+        }
+        startActivity(intent)
     }
 
 }

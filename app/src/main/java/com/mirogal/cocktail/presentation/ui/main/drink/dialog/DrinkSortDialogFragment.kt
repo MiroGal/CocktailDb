@@ -15,6 +15,7 @@ import com.mirogal.cocktail.presentation.model.filter.DrinkSort
 import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkSortListAdapter
+import com.mirogal.cocktail.presentation.ui.util.DividerItemDecorationWithoutUnderLine
 
 class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortListAdapter.OnItemClickListener {
 
@@ -52,7 +53,7 @@ class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortL
 
         rvFilter = view.findViewById(R.id.rv_filter_list)
         rvFilter.layoutManager = LinearLayoutManager(requireActivity())
-        val dividerItemDecoration = DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL)
+        val dividerItemDecoration = DividerItemDecorationWithoutUnderLine(requireActivity(), LinearLayoutManager.VERTICAL)
         rvFilter.addItemDecoration(dividerItemDecoration)
 
         listAdapter = DrinkSortListAdapter(currentSort, this)

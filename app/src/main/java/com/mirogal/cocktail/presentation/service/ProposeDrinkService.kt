@@ -16,6 +16,11 @@ class ProposeDrinkService : JobIntentService() {
 
     override fun onHandleWork(intent: Intent) {
 
+        val intentStart = Intent()
+        intentStart.action = "ACTION_SNACKBAR_TIMER_START"
+        intentStart.putExtra("startCocktailId", intent.getIntExtra("cocktailId", -2))
+        baseContext.sendBroadcast(intentStart)
+
         Thread(Runnable {
             for (i in 0..3) {
                 try {
@@ -28,7 +33,7 @@ class ProposeDrinkService : JobIntentService() {
             val newIntent = Intent()
             newIntent.action = "ACTION_SNACKBAR_TIMER_FINISH"
             newIntent.putExtra("isTimerFinish", true)
-            newIntent.putExtra("finishCocktailId", intent.getIntExtra("finishCocktailId", -2))
+            newIntent.putExtra("finishCocktailId", intent.getIntExtra("cocktailId", -3))
             baseContext.sendBroadcast(newIntent)
 
         }).start()
