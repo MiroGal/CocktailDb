@@ -47,10 +47,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
         btn_result.setOnClickListener { requireActivity().onBackPressed() }
 
-        btn_reset.setOnClickListener {
-            viewModel.resetDrinkFilter()
-            requireActivity().onBackPressed()
-        }
+        btn_reset.setOnClickListener { viewModel.resetDrinkFilter() }
     }
 
     override fun configureObserver(view: View, savedInstanceState: Bundle?) {

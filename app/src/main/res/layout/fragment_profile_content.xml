@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_alignParentTop="true"
+    android:background="#E9E5DC"
+    android:orientation="vertical"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    <TextView
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/offset_16"
+        android:clickable="false"
+        android:text="@string/profile_btn_logout"
+        style="@style/Button" />
+
+    <TextView
+        android:id="@+id/btn_logout_2"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="@dimen/offset_16"
+        android:clickable="false"
+        android:text="@string/profile_btn_logout"
+        style="@style/Button" />
+
+</LinearLayout>
