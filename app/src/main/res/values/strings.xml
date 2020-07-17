@@ -21,8 +21,8 @@
     <string name="profile_label">Profile</string>
     <string name="profile_btn_logout">Logout</string>
 
-    <string name="dialog_profile_logout_title">Warning!</string>
-    <string name="dialog_profile_logout_message">Are you sure what you want to leave the profile?</string>
+    <string name="dialog_profile_logout_title">Log out</string>
+    <string name="dialog_profile_logout_message">Do you really want to log out?</string>
     <string name="dialog_profile_btn_logout">Logout</string>
     <!--endregion-->
 
@@ -52,13 +52,13 @@
 
     <string name="drink_history_item_menu_action_open">Open</string>
     <string name="drink_history_item_menu_pin_shortcut">Add pin shortcut</string>
-    <string name="drink_history_item_menu_favorite">Add/Remove from favorite</string>
+    <string name="drink_history_item_menu_add_favorite">Add to favorite</string>
     <string name="drink_history_item_menu_delete">Delete from history</string>
 
     <string name="drink_favorite_item_menu_action_open">Open</string>
     <string name="drink_favorite_item_menu_shortcut">Add shortcut</string>
     <string name="drink_favorite_item_menu_pin_shortcut">Add pin shortcut</string>
-    <string name="drink_favorite_item_menu_favorite">Remove from favorite</string>
+    <string name="drink_favorite_item_menu_remove_favorite">Remove from favorite</string>
 
     <string name="drink_item_menu_toast_shortcut_added">cocktail shortcut added</string>
     <string name="drink_item_menu_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>

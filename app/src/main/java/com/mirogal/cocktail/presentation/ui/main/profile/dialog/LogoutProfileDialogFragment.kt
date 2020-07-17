@@ -30,6 +30,9 @@ class LogoutProfileDialogFragment : BaseBottomSheetDialogFragment<ProfileViewMod
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
+        tv_dialog_title.text = getString(R.string.dialog_profile_logout_title)
+        tv_dialog_message.text = getString(R.string.dialog_profile_logout_message)
+
         btn_dialog_cancel.setOnClickListener { dismiss() }
         btn_dialog_ok.setOnClickListener { listener?.onButtonLogoutClick() }
     }

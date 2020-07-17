@@ -91,7 +91,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                 R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
                 R.id.action_shortcut -> addItemShortcut(cocktailModel)
                 R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
-                R.id.action_favorite -> viewModel.switchCocktailStateFavorite(cocktailModel.id, cocktailModel.isFavorite)
+                R.id.action_remove_favorite -> viewModel.setCocktailStateFavorite(cocktailModel.id, false)
             }
             true
         }

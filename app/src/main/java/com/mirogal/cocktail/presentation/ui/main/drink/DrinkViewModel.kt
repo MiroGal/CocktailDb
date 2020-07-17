@@ -167,4 +167,8 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    fun setCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
+        repository.setCocktailStateFavorite(cocktailId, isFavorite)
+    }
+
 }

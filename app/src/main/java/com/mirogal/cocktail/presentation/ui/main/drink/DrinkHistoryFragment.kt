@@ -90,7 +90,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
                 R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
                 R.id.action_shortcut -> addItemShortcut(cocktailModel)
                 R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
-                R.id.action_favorite -> viewModel.switchCocktailStateFavorite(cocktailModel.id, cocktailModel.isFavorite)
+                R.id.action_add_favorite -> viewModel.setCocktailStateFavorite(cocktailModel.id, true)
                 R.id.action_delete -> viewModel.deleteCocktail(cocktailModel.id)
             }
             true
@@ -114,7 +114,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
                                     .getSystemService<ShortcutManager>(ShortcutManager::class.java)
                             // Create intent
                             val intent = Intent(requireActivity(), DetailActivity::class.java)
-                            intent.action = Intent.ACTION_VIEW
+                            intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                             intent.putExtra("cocktailId", cocktailModel.id)
                             intent.putExtra("cocktailName", cocktailModel.name)
                             // Create intent stack (for correct work back button)
@@ -163,7 +163,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
                             if (shortcutManager!!.isRequestPinShortcutSupported) {
                                 // Create ShortcutManager
                                 val intent = Intent(requireActivity(), DetailActivity::class.java)
-                                intent.action = Intent.ACTION_VIEW
+                                intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                                 intent.putExtra("cocktailId", cocktailModel.id)
                                 intent.putExtra("cocktailName", cocktailModel.name)
                                 // Create intent stack (for correct work back button)
