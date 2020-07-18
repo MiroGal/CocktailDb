@@ -36,11 +36,19 @@
         <item name="android:textSize">@dimen/text_17</item>
     </style>
 
-    <style name="Button">
+    <style name="AccentButton">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_accent_button</item>
+        <item name="android:textColor">@color/txt_button</item>
+        <item name="android:textSize">@dimen/text_17</item>
+    </style>
+
+    <style name="SystemButton">
         <item name="android:gravity">center</item>
         <item name="android:background">@drawable/bg_system_button</item>
         <item name="android:textColor">@color/txt_button</item>
-        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">@dimen/text_14</item>
     </style>
 
     <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">

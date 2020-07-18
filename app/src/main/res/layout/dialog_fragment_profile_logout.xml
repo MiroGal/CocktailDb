@@ -43,24 +43,24 @@
         <TextView
             android:id="@+id/btn_dialog_cancel"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/offset_36"
             android:layout_weight="1"
             android:paddingStart="@dimen/offset_16"
             android:paddingEnd="@dimen/offset_16"
             android:clickable="false"
             android:text="@string/dialog_btn_cancel"
-            style="@style/Button" />
+            style="@style/SystemButton" />
         <TextView
             android:id="@+id/btn_dialog_ok"
             android:layout_width="0dp"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/offset_36"
             android:layout_weight="1"
             android:layout_marginStart="@dimen/offset_16"
             android:paddingStart="@dimen/offset_16"
             android:paddingEnd="@dimen/offset_16"
             android:clickable="false"
             android:text="@string/dialog_profile_btn_logout"
-            style="@style/Button" />
+            style="@style/SystemButton" />
     </LinearLayout>
 
 </LinearLayout>
