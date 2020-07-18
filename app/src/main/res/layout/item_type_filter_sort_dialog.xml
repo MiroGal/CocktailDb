@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/offset_8"
+    android:paddingBottom="@dimen/offset_8"
+    android:paddingStart="@dimen/offset_16"
+    android:paddingEnd="@dimen/offset_16"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:clickable="true"
+    android:focusable="true"
+    android:background="@drawable/bg_list_item">
+
+    <TextView
+        android:id="@+id/tv_filter_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/TextBody"
+        tools:text="Filter name" />
+
+</LinearLayout>

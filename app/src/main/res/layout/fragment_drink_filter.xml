@@ -8,7 +8,8 @@
     android:background="@color/background_primary"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".ui.main.filter.DrinkFilterFragment">
+    tools:context=".presentation.ui.main.drink.DrinkFilterFragment"
+    tools:ignore="Overdraw">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -37,6 +38,6 @@
         app:elevation="@dimen/elevation_4"
         tools:ignore="ContentDescription" />
 
-    <include layout="@layout/content_drink_filter" />
+    <include layout="@layout/fragment_drink_filter_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

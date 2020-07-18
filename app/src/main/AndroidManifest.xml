@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.mirogal.cocktail">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
-        android:name=".Application"
+        android:name=".presentation.Application"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/ic_launcher"
@@ -15,41 +17,55 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".ui.auth.AuthActivity"
+            android:name="com.mirogal.cocktail.presentation.ui.auth.AuthActivity"
             android:label="@string/app_name"
             android:noHistory="true"
             android:theme="@style/AppTheme.Launcher"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.main.MainActivity"
-            android:label="@string/drink_history_pager_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name="com.mirogal.cocktail.presentation.ui.main.MainActivity"
+            android:label="@string/drink_pager_label"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
         <activity
-            android:name=".ui.search.SearchDrinkActivity"
-            android:label="@string/search_drink_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name="com.mirogal.cocktail.presentation.ui.search.SearchActivity"
+            android:parentActivityName="com.mirogal.cocktail.presentation.ui.main.MainActivity"
+            android:label="@string/search_label"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mirogal.cocktail.presentation.ui.main.MainActivity" />
+        </activity>
         <activity
-            android:name=".ui.detail.DrinkDetailActivity"
-            android:label="@string/drink_detail_label"
-            android:theme="@style/AppTheme.NoActionBar" />
+            android:name="com.mirogal.cocktail.presentation.ui.detail.DetailActivity"
+            android:parentActivityName="com.mirogal.cocktail.presentation.ui.main.MainActivity"
+            android:label="@string/detail_label"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mirogal.cocktail.presentation.ui.main.MainActivity" />
+        </activity>
 
         <service
-            android:name=".service.ProposeDrinkService"
+            android:name="com.mirogal.cocktail.presentation.service.ProposeDrinkService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name=".service.BootCompleteService"
+            android:name="com.mirogal.cocktail.presentation.service.BootCompleteService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 
         <receiver
-            android:name=".receiver.BootCompleteReceiver"
+            android:name="com.mirogal.cocktail.presentation.receiver.BootCompleteReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />

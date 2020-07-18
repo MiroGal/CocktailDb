@@ -1,0 +1,15 @@
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.ui.main.SearchListActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:title="@string/search_toolbar_btn_search"
+        android:icon="@drawable/ic_toolbar_search"
+        android:orderInCategory="1"
+        app:showAsAction="always"
+        app:actionViewClass="androidx.appcompat.widget.SearchView" />
+
+</menu>
