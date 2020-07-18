@@ -14,6 +14,7 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+@SuppressWarnings({"ALL", "unused"})
 public class DividerItemDecorationWithoutUnderLine extends RecyclerView.ItemDecoration {
 
     public static final int HORIZONTAL = LinearLayout.HORIZONTAL;
@@ -38,6 +39,7 @@ public class DividerItemDecorationWithoutUnderLine extends RecyclerView.ItemDeco
      * @param context Current context, it will be used to access resources.
      * @param orientation Divider orientation. Should be {@link #HORIZONTAL} or {@link #VERTICAL}.
      */
+    @SuppressWarnings("unused")
     public DividerItemDecorationWithoutUnderLine(Context context, int orientation) {
         final TypedArray a = context.obtainStyledAttributes(ATTRS);
         mDivider = a.getDrawable(0);

@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
-import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
@@ -24,14 +23,18 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
     val historyCocktailListLiveData: LiveData<List<CocktailDbModel>?>
     val favoriteCocktailListLiveData: LiveData<List<CocktailDbModel>?>
 
+    val cocktailListSizeLiveData: LiveData<Pair<Int, Int>>
+
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
+    private val saveDrinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
     val isDrinkFilterEnableLiveData: LiveData<Boolean>
 
     val drinkSortLiveData: MutableLiveData<DrinkSort> = MutableLiveData()
     val isDrinkSortEnableLiveData: LiveData<Boolean>
 
     val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
-    val filterButtonResultTextLiveData: LiveData<String>
+
+//    private val observer: Observer<in List<CocktailDbModel>?> = Observer {  }
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
@@ -53,7 +56,19 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             list?.filter { it.isFavorite }
         }
 
+        cocktailListSizeLiveData = MediatorLiveData<Pair<Int, Int>>().apply {
+            addSource(historyCocktailListLiveData) {
+                value = Pair(historyCocktailListLiveData.value?.size ?: 0, favoriteCocktailListLiveData.value?.size ?: 0)
+            }
+        }
+
         drinkFilterLiveData.value = hashMapOf(
+                Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
+                Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
+                Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
+                Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
+
+        saveDrinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
                 Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
                 Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
@@ -76,17 +91,12 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-        filterButtonResultTextLiveData = MediatorLiveData<String>().apply {
-            addSource(currentDrinkPage) {
-                value = getFilterButtonResultText()
-            }
-            addSource(historyCocktailListLiveData) {
-                value = getFilterButtonResultText()
-            }
-            addSource(favoriteCocktailListLiveData) {
-                value = getFilterButtonResultText()
-            }
-        }
+//        favoriteCocktailListLiveData.observeForever(observer)
+    }
+
+    override fun onCleared() {
+//        favoriteCocktailListLiveData.removeObserver(observer)
+        super.onCleared()
     }
 
     private fun filterCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
@@ -131,22 +141,6 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    private fun getFilterButtonResultText(): String {
-        return if (currentDrinkPage.value == DrinkPage.HISTORY) {
-            if (historyCocktailListLiveData.value != null && historyCocktailListLiveData.value!!.isNotEmpty()) {
-                context.getString(R.string.drink_filter_btn_result_found) + " " + historyCocktailListLiveData.value!!.size.toString()
-            } else {
-                context.getString(R.string.drink_filter_btn_result_not_found)
-            }
-        } else {
-            if (favoriteCocktailListLiveData.value != null && favoriteCocktailListLiveData.value!!.isNotEmpty()) {
-                context.getString(R.string.drink_filter_btn_result_found) + " " + favoriteCocktailListLiveData.value!!.size.toString()
-            } else {
-                context.getString(R.string.drink_filter_btn_result_not_found)
-            }
-        }
-    }
-
     fun resetDrinkFilter() {
         drinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
@@ -159,16 +153,16 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         repository.deleteCocktailFromDb(id)
     }
 
+    fun setCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
+        repository.setCocktailStateFavorite(cocktailId, isFavorite)
+    }
+
     fun switchCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
         if (isFavorite) {
             repository.setCocktailStateFavorite(cocktailId, false)
         } else {
             repository.setCocktailStateFavorite(cocktailId, true)
         }
-    }
-
-    fun setCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
-        repository.setCocktailStateFavorite(cocktailId, isFavorite)
     }
 
 }

@@ -2,7 +2,6 @@ package com.mirogal.cocktail.presentation.service
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.JobIntentService
 
 class ProposeDrinkService : JobIntentService() {

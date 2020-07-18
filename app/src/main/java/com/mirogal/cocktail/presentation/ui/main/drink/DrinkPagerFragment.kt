@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Color
-import android.os.BatteryManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
@@ -22,7 +21,6 @@ import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.*
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
-import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
@@ -279,11 +277,10 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     }
 
     private fun showProposeDrink(id: Int) {
-
         if (cocktailList != null && cocktailList!!.size > 1) {
             val model: CocktailDbModel? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
             if (model != null) {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
+                Snackbar.make(requireView().findViewById(R.id.container),
                         getString(R.string.drink_pager_snackbar_message) + " " + model.name.toString(), Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.drink_pager_snackbar_action_open_detail)) {
                             openDrinkDetailActivity(model.id, model.name)

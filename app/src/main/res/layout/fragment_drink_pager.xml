@@ -63,6 +63,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
@@ -98,7 +99,8 @@
                 android:layout_gravity="bottom"
                 android:layout_marginBottom="@dimen/fab_margin"
                 android:layout_marginStart="@dimen/fab_margin"
-                android:layout_marginEnd="88dp" />
+                android:layout_marginEnd="88dp"
+                app:layout_behavior="@string/fab_transformation_sheet_behavior" />
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/fab_search"

@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutProfileDialogFragment
-import kotlinx.android.synthetic.main.dialog_fragment_profile_logout.*
-import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
+import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.fragment_profile_content.*
 
 class ProfileFragment : BaseFragment<ProfileViewModel>() {

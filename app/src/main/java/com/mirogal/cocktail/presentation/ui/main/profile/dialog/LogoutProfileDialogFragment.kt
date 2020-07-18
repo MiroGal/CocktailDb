@@ -4,7 +4,6 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseBottomSheetDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileViewModel

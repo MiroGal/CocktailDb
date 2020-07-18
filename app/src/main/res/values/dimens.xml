@@ -7,6 +7,7 @@
     <dimen name="offset_16">16dp</dimen>
     <dimen name="offset_32">32dp</dimen>
     <dimen name="offset_48">48dp</dimen>
+    <dimen name="offset_72">72dp</dimen>
     <!--endregion-->
 
     <!--region Radius-->
