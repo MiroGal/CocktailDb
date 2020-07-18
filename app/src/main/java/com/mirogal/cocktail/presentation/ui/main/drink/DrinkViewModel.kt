@@ -1,10 +1,8 @@
 package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
+import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
@@ -26,7 +24,6 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
     val cocktailListSizeLiveData: LiveData<Pair<Int, Int>>
 
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
-    private val saveDrinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
     val isDrinkFilterEnableLiveData: LiveData<Boolean>
 
     val drinkSortLiveData: MutableLiveData<DrinkSort> = MutableLiveData()
@@ -34,7 +31,7 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
 
     val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
 
-//    private val observer: Observer<in List<CocktailDbModel>?> = Observer {  }
+    private val observer: Observer<in List<CocktailDbModel>?> = Observer { }
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
@@ -68,12 +65,6 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
                 Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
                 Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
-        saveDrinkFilterLiveData.value = hashMapOf(
-                Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
-                Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
-                Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
-                Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
-
         isDrinkFilterEnableLiveData = MediatorLiveData<Boolean>().apply {
             addSource(drinkFilterLiveData) {
                 value = drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == DrinkFilterCategory.DISABLE
@@ -91,11 +82,11 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-//        favoriteCocktailListLiveData.observeForever(observer)
+        favoriteCocktailListLiveData.observeForever(observer)
     }
 
     override fun onCleared() {
-//        favoriteCocktailListLiveData.removeObserver(observer)
+        favoriteCocktailListLiveData.removeObserver(observer)
         super.onCleared()
     }
 
