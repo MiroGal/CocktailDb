@@ -103,9 +103,12 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
                     } else {
                         getString(R.string.drink_filter_message_result_not_found)
                     }, Snackbar.LENGTH_LONG)
+                    .setBackgroundTint(resources.getColor(R.color.background_primary))
+                    .setTextColor(resources.getColor(R.color.txt_title))
                     .setAction(getString(R.string.drink_filter_btn_undo)) {
                         viewModel.drinkFilterLiveData.value = saveFilterList
-                    }.show()
+                    }
+                    .show()
         }
         isFirstTimeOpen = false
     }
