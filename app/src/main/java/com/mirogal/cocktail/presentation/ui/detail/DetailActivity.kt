@@ -60,7 +60,7 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
             Glide.with(this)
                     .load(it.imagePath)
                     .centerCrop()
-                    .placeholder(R.drawable.anim_placeholder_progress)
+                    .placeholder(R.drawable.ic_placeholder_drink)
                     .error(R.drawable.ic_placeholder_error)
                     .into(iv_image)
         })

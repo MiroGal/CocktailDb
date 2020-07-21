@@ -36,7 +36,7 @@ class DrinkItemHolder(private val context: Context, itemView: View) : RecyclerVi
         Glide.with(context)
                 .load(cocktailModel.imagePath)
                 .centerCrop()
-                .placeholder(R.drawable.anim_placeholder_progress)
+                .placeholder(R.drawable.ic_placeholder_drink)
                 .error(R.drawable.ic_placeholder_error)
                 .into(ivImage)
         Log.d("TAG", "holder")
