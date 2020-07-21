@@ -6,11 +6,9 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.DialogFragment
 
-abstract class BaseDialogFragment<ViewModel : BaseViewModel> : DialogFragment() {
+abstract class BaseDialogFragment : DialogFragment() {
 
     protected abstract val contentLayoutResId: Int
-
-    protected abstract val viewModel: ViewModel
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val builder = AlertDialog.Builder(requireActivity())

@@ -26,6 +26,6 @@
 
     <include layout="@layout/fragment_profile_content" />
 
-    <include layout="@layout/dialog_fragment_profile_logout" />
+    <include layout="@layout/dialog_fragment_logout" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

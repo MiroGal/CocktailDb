@@ -16,10 +16,11 @@ import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkSortListAdapter
 import com.mirogal.cocktail.presentation.ui.util.DividerItemDecorationWithoutUnderLine
 
-class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortListAdapter.OnItemClickListener {
+class DrinkSortDialogFragment : BaseDialogFragment(),
+        DrinkSortListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.dialog_fragment_drink_filter_sort
-    override val viewModel: DrinkViewModel by activityViewModels()
+    private val viewModel: DrinkViewModel by activityViewModels()
 
     private lateinit var listAdapter: DrinkSortListAdapter
     private lateinit var rvFilter: RecyclerView

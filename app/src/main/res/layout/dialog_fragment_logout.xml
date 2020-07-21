@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/dialog_bottom_sheet"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -23,14 +21,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/offset_16"
-        tools:text="Dialog Title"
+        android:text="@string/dialog_logout_title"
         style="@style/TextTitle" />
     <TextView
         android:id="@+id/tv_dialog_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/offset_32"
-        android:text="@string/dialog_profile_logout_message"
+        android:text="@string/dialog_logout_message"
         style="@style/TextBody" />
 
     <LinearLayout
@@ -59,7 +57,7 @@
             android:paddingStart="@dimen/offset_16"
             android:paddingEnd="@dimen/offset_16"
             android:clickable="false"
-            android:text="@string/dialog_profile_btn_logout"
+            android:text="@string/dialog_logout_btn_ok"
             style="@style/SystemButton" />
     </LinearLayout>
 

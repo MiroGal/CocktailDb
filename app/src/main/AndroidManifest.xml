@@ -56,11 +56,15 @@
         </activity>
 
         <service
+            android:name="com.mirogal.cocktail.presentation.service.BootCompleteService"
+            android:exported="false"
+            android:permission="android.permission.BIND_JOB_SERVICE" />
+        <service
             android:name="com.mirogal.cocktail.presentation.service.ProposeDrinkService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
         <service
-            android:name="com.mirogal.cocktail.presentation.service.BootCompleteService"
+            android:name="com.mirogal.cocktail.presentation.service.DayDrinkService"
             android:exported="false"
             android:permission="android.permission.BIND_JOB_SERVICE" />
 

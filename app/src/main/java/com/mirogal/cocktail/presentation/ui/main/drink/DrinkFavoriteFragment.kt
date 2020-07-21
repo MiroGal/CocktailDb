@@ -199,9 +199,10 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra("cocktailId", cocktailId)
-        intent.putExtra("cocktailName", cocktailName)
+        val intent = Intent(activity, DetailActivity::class.java).apply {
+            putExtra("cocktailId", cocktailId)
+            putExtra("cocktailName", cocktailName)
+        }
         startActivity(intent)
     }
 

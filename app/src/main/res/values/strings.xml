@@ -21,9 +21,9 @@
     <string name="profile_label">Profile</string>
     <string name="profile_btn_logout">Logout</string>
 
-    <string name="dialog_profile_logout_title">Log out</string>
-    <string name="dialog_profile_logout_message">Do you really want to log out?</string>
-    <string name="dialog_profile_btn_logout">Logout</string>
+    <string name="dialog_logout_title">Log out</string>
+    <string name="dialog_logout_message">Do you really want to log out?</string>
+    <string name="dialog_logout_btn_ok">Logout</string>
     <!--endregion-->
 
     <!--region Settings-->
@@ -38,7 +38,7 @@
     <string name="main_bottom_nav_settings">Settings</string>
     <!--endregion-->
 
-    <!--region DrinkHistory-->
+    <!--region Drink-->
     <string name="drink_pager_label">Cocktails</string>
     <string name="drink_pager_tab_history">History</string>
     <string name="drink_pager_tab_favorite">Favorite</string>
@@ -66,6 +66,10 @@
     <string name="drink_item_menu_toast_pin_shortcut_added">cocktail pin shortcut added</string>
     <string name="drink_item_menu_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
 
+    <string name="dialog_day_drink_title">Welcome back</string>
+    <string name="dialog_day_drink_message">View the drink of the day?</string>
+    <string name="dialog_day_drink_btn_cancel">No thanks</string>
+    <string name="dialog_day_drink_btn_ok">View</string>
     <!--endregion-->
 
     <!--region Filter-->

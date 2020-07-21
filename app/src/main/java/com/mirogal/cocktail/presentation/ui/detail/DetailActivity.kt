@@ -39,11 +39,9 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
             supportActionBar!!.title = cocktailName
         }
 
-        btn_toolbar_back.setOnClickListener {
-            onBackPressed()
-        }
-
         setScrollAppBar()
+
+        btn_toolbar_back.setOnClickListener { onBackPressed() }
     }
 
     override fun configureObserver(savedInstanceState: Bundle?) {

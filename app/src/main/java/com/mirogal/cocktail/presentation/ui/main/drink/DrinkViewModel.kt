@@ -13,7 +13,6 @@ import java.util.*
 class DrinkViewModel(application: Application) : BaseViewModel(application) {
 
     val context = application
-
     private val repository = CocktailRepository.newInstance(application)
 
     private val saveCocktailListLiveData: LiveData<List<CocktailDbModel>?> = repository.saveCocktailListLiveData
@@ -23,7 +22,7 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
 
     val cocktailListSizeLiveData: LiveData<Pair<Int, Int>>
 
-    val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
+    val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>> = MutableLiveData()
     val isDrinkFilterEnableLiveData: LiveData<Boolean>
 
     val drinkSortLiveData: MutableLiveData<DrinkSort> = MutableLiveData()
@@ -49,14 +48,12 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-        favoriteCocktailListLiveData = Transformations.map(historyCocktailListLiveData) { list ->
+        favoriteCocktailListLiveData = historyCocktailListLiveData.map { list ->
             list?.filter { it.isFavorite }
         }
 
-        cocktailListSizeLiveData = MediatorLiveData<Pair<Int, Int>>().apply {
-            addSource(historyCocktailListLiveData) {
-                value = Pair(historyCocktailListLiveData.value?.size ?: 0, favoriteCocktailListLiveData.value?.size ?: 0)
-            }
+        cocktailListSizeLiveData = historyCocktailListLiveData.map { list ->
+            (list?.size ?: 0) to (favoriteCocktailListLiveData.value?.size ?: 0)
         }
 
         drinkFilterLiveData.value = hashMapOf(
@@ -65,23 +62,20 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
                 Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
                 Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
-        isDrinkFilterEnableLiveData = MediatorLiveData<Boolean>().apply {
-            addSource(drinkFilterLiveData) {
-                value = drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == DrinkFilterCategory.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == DrinkFilterAlcohol.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) == DrinkFilterIngredient.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) == DrinkFilterGlass.DISABLE
-            }
-        }
+        isDrinkFilterEnableLiveData = drinkFilterLiveData.map {
+            it[DrinkFilterType.CATEGORY] == DrinkFilterCategory.DISABLE
+                    && it[DrinkFilterType.ALCOHOL] == DrinkFilterAlcohol.DISABLE
+                    && it[DrinkFilterType.INGREDIENT] == DrinkFilterIngredient.DISABLE
+                    && it[DrinkFilterType.GLASS] == DrinkFilterGlass.DISABLE
+        }.distinctUntilChanged()
 
         drinkSortLiveData.value = DrinkSort.DISABLE
 
-        isDrinkSortEnableLiveData = MediatorLiveData<Boolean>().apply {
-            addSource(drinkSortLiveData) {
-                value = drinkSortLiveData.value == DrinkSort.DISABLE
-            }
-        }
+        isDrinkSortEnableLiveData = drinkSortLiveData.map {
+            it == DrinkSort.DISABLE
+        }.distinctUntilChanged()
 
+        // For correct work cocktailListSizeLiveData
         favoriteCocktailListLiveData.observeForever(observer)
     }
 

@@ -7,11 +7,9 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.mirogal.cocktail.R
 
-abstract class BaseBottomSheetDialogFragment<ViewModel : BaseViewModel> : BottomSheetDialogFragment() {
+abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     protected abstract val contentLayoutResId: Int
-
-    protected abstract val viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

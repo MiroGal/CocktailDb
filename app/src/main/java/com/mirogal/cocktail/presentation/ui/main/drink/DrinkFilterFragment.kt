@@ -30,7 +30,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
             Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
             Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
-    private var isFirstTimeOpen = true
+    private var isFragmentNotJustCreated = false
 
     companion object {
         fun newInstance() = DrinkFilterFragment()
@@ -45,33 +45,41 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
         btn_filter_ingredient_text_1.text = DrinkFilterType.INGREDIENT.key
         btn_filter_glass_text_1.text = DrinkFilterType.GLASS.key
 
-        btn_toolbar_back.setOnClickListener { requireActivity().onBackPressed() }
+        btn_toolbar_back.setOnClickListener(onClickListener)
 
-        btn_filter_category.setOnClickListener {
-            copyFilterList(saveFilterList, currentFilterList)
-            showDrinkFilterDialog(DrinkFilterType.CATEGORY)
-        }
+        btn_filter_category.setOnClickListener(onClickListener)
+        btn_filter_alcohol.setOnClickListener(onClickListener)
+        btn_filter_ingredient.setOnClickListener(onClickListener)
+        btn_filter_glass.setOnClickListener(onClickListener)
 
-        btn_filter_alcohol.setOnClickListener {
-            copyFilterList(saveFilterList, currentFilterList)
-            showDrinkFilterDialog(DrinkFilterType.ALCOHOL)
-        }
+        btn_result.setOnClickListener(onClickListener)
+        btn_reset.setOnClickListener(onClickListener)
+    }
 
-        btn_filter_ingredient.setOnClickListener {
-            copyFilterList(saveFilterList, currentFilterList)
-            showDrinkFilterDialog(DrinkFilterType.INGREDIENT)
-        }
-
-        btn_filter_glass.setOnClickListener {
-            copyFilterList(saveFilterList, currentFilterList)
-            showDrinkFilterDialog(DrinkFilterType.GLASS)
-        }
-
-        btn_result.setOnClickListener { requireActivity().onBackPressed() }
-
-        btn_reset.setOnClickListener {
-            copyFilterList(saveFilterList, currentFilterList)
-            viewModel.resetDrinkFilter()
+    private val onClickListener = View.OnClickListener {
+        when (it) {
+            btn_toolbar_back -> requireActivity().onBackPressed()
+            btn_filter_category -> {
+                copyFilterList(saveFilterList, currentFilterList)
+                showDrinkFilterDialog(DrinkFilterType.CATEGORY)
+            }
+            btn_filter_alcohol -> {
+                copyFilterList(saveFilterList, currentFilterList)
+                showDrinkFilterDialog(DrinkFilterType.ALCOHOL)
+            }
+            btn_filter_ingredient -> {
+                copyFilterList(saveFilterList, currentFilterList)
+                showDrinkFilterDialog(DrinkFilterType.INGREDIENT)
+            }
+            btn_filter_glass -> {
+                copyFilterList(saveFilterList, currentFilterList)
+                showDrinkFilterDialog(DrinkFilterType.GLASS)
+            }
+            btn_result -> requireActivity().onBackPressed()
+            btn_reset -> {
+                copyFilterList(saveFilterList, currentFilterList)
+                viewModel.resetDrinkFilter()
+            }
         }
     }
 
@@ -96,7 +104,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
     }
 
     private fun showFilterSnackbar(historyListSize: Int, favoriteListSize: Int) {
-        if (!isFirstTimeOpen) {
+        if (isFragmentNotJustCreated) {
             Snackbar.make(requireView().findViewById(R.id.container),
                     if (historyListSize != 0) {
                         getString(R.string.drink_filter_message_result_found) + ": " + historyListSize + "\uD83D\uDD51" + " / " + favoriteListSize + "\u2665"
@@ -110,7 +118,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
                     }
                     .show()
         }
-        isFirstTimeOpen = false
+        isFragmentNotJustCreated = true
     }
 
     private fun copyFilterList(copyList: HashMap<DrinkFilterType, DrinkFilter>, originalList: HashMap<DrinkFilterType, DrinkFilter>) {

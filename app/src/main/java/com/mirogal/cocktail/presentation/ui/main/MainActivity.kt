@@ -8,15 +8,18 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
+import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment
-import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutProfileDialogFragment
+import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainViewModel>(),
-        LogoutProfileDialogFragment.OnDialogLogoutActionListener {
+        LogoutDialogFragment.OnActionListener,
+        DayDrinkDialogFragment.OnActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by viewModels()
@@ -27,18 +30,11 @@ class MainActivity : BaseActivity<MainViewModel>(),
         }
 
         bottom_nav_view.selectedItemId = R.id.bottom_nav_drink
-
         bottom_nav_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.bottom_nav_drink -> {
-                    showHistoryPagerFragment()
-                }
-                R.id.bottom_nav_profile -> {
-                    showProfileFragment()
-                }
-                R.id.bottom_nav_settings -> {
-                    showSettingsFragment()
-                }
+                R.id.bottom_nav_drink -> showHistoryPagerFragment()
+                R.id.bottom_nav_profile -> showProfileFragment()
+                R.id.bottom_nav_settings -> showSettingsFragment()
             }
             true
         }
@@ -67,14 +63,27 @@ class MainActivity : BaseActivity<MainViewModel>(),
         }
     }
 
-    override fun onButtonLogoutClick() {
+
+    override fun onDialogLogoutBtnLogoutClick() {
         openAuthActivity()
+    }
+
+    override fun onDialogDayDrinkBtnOkClick(cocktailId: Int, cocktailName: String?) {
+        openDrinkDetailActivity(cocktailId, cocktailName)
     }
 
     private fun openAuthActivity() {
         val intent = Intent(this, AuthActivity::class.java).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK) // Close all activities
-            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK) // Close all activities
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        }
+        startActivity(intent)
+    }
+
+    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
+        val intent = Intent(this, DetailActivity::class.java).apply {
+            putExtra("cocktailId", cocktailId)
+            putExtra("cocktailName", cocktailName)
         }
         startActivity(intent)
     }
