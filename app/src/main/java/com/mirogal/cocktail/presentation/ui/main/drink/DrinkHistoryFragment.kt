@@ -25,7 +25,7 @@ import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
-import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
+import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMargin
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
@@ -50,7 +50,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
         rv_drink_history_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
 
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
-        val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
+        val itemDecoration = SpaceItemDecorationWithoutTopMargin(listColumn, spaceInPixel, true, 0)
         rv_drink_history_list.addItemDecoration(itemDecoration)
 
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
@@ -90,7 +90,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
                 R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
                 R.id.action_shortcut -> addItemShortcut(cocktailModel)
                 R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
-                R.id.action_favorite -> viewModel.switchCocktailStateFavorite(cocktailModel.id, cocktailModel.isFavorite)
+                R.id.action_add_favorite -> viewModel.setCocktailStateFavorite(cocktailModel.id, true)
                 R.id.action_delete -> viewModel.deleteCocktail(cocktailModel.id)
             }
             true
@@ -114,7 +114,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
                                     .getSystemService<ShortcutManager>(ShortcutManager::class.java)
                             // Create intent
                             val intent = Intent(requireActivity(), DetailActivity::class.java)
-                            intent.action = Intent.ACTION_VIEW
+                            intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                             intent.putExtra("cocktailId", cocktailModel.id)
                             intent.putExtra("cocktailName", cocktailModel.name)
                             // Create intent stack (for correct work back button)
@@ -163,7 +163,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
                             if (shortcutManager!!.isRequestPinShortcutSupported) {
                                 // Create ShortcutManager
                                 val intent = Intent(requireActivity(), DetailActivity::class.java)
-                                intent.action = Intent.ACTION_VIEW
+                                intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                                 intent.putExtra("cocktailId", cocktailModel.id)
                                 intent.putExtra("cocktailName", cocktailModel.name)
                                 // Create intent stack (for correct work back button)
@@ -199,9 +199,10 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.On
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra("cocktailId", cocktailId)
-        intent.putExtra("cocktailName", cocktailName)
+        val intent = Intent(activity, DetailActivity::class.java).apply {
+            putExtra("cocktailId", cocktailId)
+            putExtra("cocktailName", cocktailName)
+        }
         startActivity(intent)
     }
 

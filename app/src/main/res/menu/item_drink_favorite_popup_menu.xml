@@ -16,8 +16,8 @@
         android:title="@string/drink_favorite_item_menu_pin_shortcut"
         app:showAsAction="never" />
     <item
-        android:id="@+id/action_favorite"
-        android:title="@string/drink_favorite_item_menu_favorite"
+        android:id="@+id/action_remove_favorite"
+        android:title="@string/drink_favorite_item_menu_remove_favorite"
         app:showAsAction="never" />
 
 </menu>

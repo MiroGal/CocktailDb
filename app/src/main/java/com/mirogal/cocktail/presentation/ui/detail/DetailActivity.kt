@@ -39,11 +39,9 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
             supportActionBar!!.title = cocktailName
         }
 
-        btn_toolbar_back.setOnClickListener {
-            onBackPressed()
-        }
-
         setScrollAppBar()
+
+        btn_toolbar_back.setOnClickListener { onBackPressed() }
     }
 
     override fun configureObserver(savedInstanceState: Bundle?) {
@@ -138,7 +136,7 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
 
     override fun onDestroy() {
         val intent = Intent(this, ProposeDrinkService::class.java)
-        intent.putExtra(ProposeDrinkService::class.java.simpleName, cocktailId)
+        intent.putExtra("cocktailId", cocktailId)
         ProposeDrinkService.enqueueWork(this, intent)
         super.onDestroy()
     }

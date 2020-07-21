@@ -6,16 +6,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.activityViewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
-import com.mirogal.cocktail.presentation.ui.auth.AuthViewModel
 import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
 
-class InvalidAuthDataDialogFragment : BaseDialogFragment<AuthViewModel>() {
+class InvalidAuthDataDialogFragment : BaseDialogFragment() {
 
     override val contentLayoutResId = R.layout.dialog_fragment_auth_data_invalid
-    override val viewModel: AuthViewModel by activityViewModels()
 
     private lateinit var authDataValidStatus: AuthDataValidStatus
 

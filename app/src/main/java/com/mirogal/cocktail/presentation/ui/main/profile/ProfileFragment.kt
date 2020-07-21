@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
-import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutProfileDialogFragment
-import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
-import kotlinx.android.synthetic.main.fragment_profile.*
+import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFragment
+import kotlinx.android.synthetic.main.fragment_drink_pager.*
+import kotlinx.android.synthetic.main.fragment_profile_content.*
 
 class ProfileFragment : BaseFragment<ProfileViewModel>() {
 
@@ -23,14 +23,12 @@ class ProfileFragment : BaseFragment<ProfileViewModel>() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.profile_label)
 
-        btn_logout.setOnClickListener {
-            showLogoutProfileDialog()
-        }
+        btn_logout.setOnClickListener { showLogoutDialog() }
     }
 
-    private fun showLogoutProfileDialog() {
-        val dialogFragment = LogoutProfileDialogFragment.newInstance()
-        dialogFragment.show(childFragmentManager, LogoutProfileDialogFragment::class.java.simpleName)
+    private fun showLogoutDialog() {
+        val dialogFragment = LogoutDialogFragment.newInstance()
+        dialogFragment.show(childFragmentManager, LogoutDialogFragment::class.java.simpleName)
     }
 
 }

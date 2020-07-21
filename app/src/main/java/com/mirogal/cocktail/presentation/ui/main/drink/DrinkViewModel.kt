@@ -1,11 +1,8 @@
 package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import com.mirogal.cocktail.R
+import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
@@ -16,7 +13,6 @@ import java.util.*
 class DrinkViewModel(application: Application) : BaseViewModel(application) {
 
     val context = application
-
     private val repository = CocktailRepository.newInstance(application)
 
     private val saveCocktailListLiveData: LiveData<List<CocktailDbModel>?> = repository.saveCocktailListLiveData
@@ -24,14 +20,17 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
     val historyCocktailListLiveData: LiveData<List<CocktailDbModel>?>
     val favoriteCocktailListLiveData: LiveData<List<CocktailDbModel>?>
 
-    val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>?> = MutableLiveData()
+    val cocktailListSizeLiveData: LiveData<Pair<Int, Int>>
+
+    val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>> = MutableLiveData()
     val isDrinkFilterEnableLiveData: LiveData<Boolean>
 
     val drinkSortLiveData: MutableLiveData<DrinkSort> = MutableLiveData()
     val isDrinkSortEnableLiveData: LiveData<Boolean>
 
     val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
-    val filterButtonResultTextLiveData: LiveData<String>
+
+    private val observer: Observer<in List<CocktailDbModel>?> = Observer { }
 
     init {
         historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
@@ -49,8 +48,12 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
             }
         }
 
-        favoriteCocktailListLiveData = Transformations.map(historyCocktailListLiveData) { list ->
+        favoriteCocktailListLiveData = historyCocktailListLiveData.map { list ->
             list?.filter { it.isFavorite }
+        }
+
+        cocktailListSizeLiveData = historyCocktailListLiveData.map { list ->
+            (list?.size ?: 0) to (favoriteCocktailListLiveData.value?.size ?: 0)
         }
 
         drinkFilterLiveData.value = hashMapOf(
@@ -59,34 +62,26 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
                 Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
                 Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
-        isDrinkFilterEnableLiveData = MediatorLiveData<Boolean>().apply {
-            addSource(drinkFilterLiveData) {
-                value = drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) == DrinkFilterCategory.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) == DrinkFilterAlcohol.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) == DrinkFilterIngredient.DISABLE
-                        && drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) == DrinkFilterGlass.DISABLE
-            }
-        }
+        isDrinkFilterEnableLiveData = drinkFilterLiveData.map {
+            it[DrinkFilterType.CATEGORY] == DrinkFilterCategory.DISABLE
+                    && it[DrinkFilterType.ALCOHOL] == DrinkFilterAlcohol.DISABLE
+                    && it[DrinkFilterType.INGREDIENT] == DrinkFilterIngredient.DISABLE
+                    && it[DrinkFilterType.GLASS] == DrinkFilterGlass.DISABLE
+        }.distinctUntilChanged()
 
         drinkSortLiveData.value = DrinkSort.DISABLE
 
-        isDrinkSortEnableLiveData = MediatorLiveData<Boolean>().apply {
-            addSource(drinkSortLiveData) {
-                value = drinkSortLiveData.value == DrinkSort.DISABLE
-            }
-        }
+        isDrinkSortEnableLiveData = drinkSortLiveData.map {
+            it == DrinkSort.DISABLE
+        }.distinctUntilChanged()
 
-        filterButtonResultTextLiveData = MediatorLiveData<String>().apply {
-            addSource(currentDrinkPage) {
-                value = getFilterButtonResultText()
-            }
-            addSource(historyCocktailListLiveData) {
-                value = getFilterButtonResultText()
-            }
-            addSource(favoriteCocktailListLiveData) {
-                value = getFilterButtonResultText()
-            }
-        }
+        // For correct work cocktailListSizeLiveData
+        favoriteCocktailListLiveData.observeForever(observer)
+    }
+
+    override fun onCleared() {
+        favoriteCocktailListLiveData.removeObserver(observer)
+        super.onCleared()
     }
 
     private fun filterCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
@@ -131,22 +126,6 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
-    private fun getFilterButtonResultText(): String {
-        return if (currentDrinkPage.value == DrinkPage.HISTORY) {
-            if (historyCocktailListLiveData.value != null && historyCocktailListLiveData.value!!.isNotEmpty()) {
-                context.getString(R.string.drink_filter_btn_result_found) + " " + historyCocktailListLiveData.value!!.size.toString()
-            } else {
-                context.getString(R.string.drink_filter_btn_result_not_found)
-            }
-        } else {
-            if (favoriteCocktailListLiveData.value != null && favoriteCocktailListLiveData.value!!.isNotEmpty()) {
-                context.getString(R.string.drink_filter_btn_result_found) + " " + favoriteCocktailListLiveData.value!!.size.toString()
-            } else {
-                context.getString(R.string.drink_filter_btn_result_not_found)
-            }
-        }
-    }
-
     fun resetDrinkFilter() {
         drinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
@@ -157,6 +136,10 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
 
     fun deleteCocktail(id: Int) {
         repository.deleteCocktailFromDb(id)
+    }
+
+    fun setCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
+        repository.setCocktailStateFavorite(cocktailId, isFavorite)
     }
 
     fun switchCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {

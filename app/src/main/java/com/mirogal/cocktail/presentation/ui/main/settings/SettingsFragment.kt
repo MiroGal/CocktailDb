@@ -2,6 +2,7 @@ package com.mirogal.cocktail.presentation.ui.main.settings
 
 import android.os.Bundle
 import android.view.View
+import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -26,15 +27,22 @@ class SettingsFragment : BaseFragment<SettingsViewModel>() {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.settings_label)
 
-        chb_show_bottom_nav_label.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (mainViewModel.isBottomNavLabelVisibleLiveData.value != isChecked)
-                mainViewModel.isBottomNavLabelVisibleLiveData.value = isChecked
+        chb_show_bottom_nav_label.setOnCheckedChangeListener(onCheckedChangeListener)
+        chb_show_battery_indicator.setOnCheckedChangeListener(onCheckedChangeListener)
+    }
+
+    private val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
+        when (buttonView) {
+            chb_show_bottom_nav_label -> {
+                if (mainViewModel.isBottomNavLabelVisibleLiveData.value != isChecked)
+                    mainViewModel.isBottomNavLabelVisibleLiveData.value = isChecked
+            }
+            chb_show_battery_indicator -> {
+                if (mainViewModel.isBatteryIndicatorVisibleLiveData.value != isChecked)
+                    mainViewModel.isBatteryIndicatorVisibleLiveData.value = isChecked
+            }
         }
 
-        chb_show_battery_indicator.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (mainViewModel.isBatteryIndicatorVisibleLiveData.value != isChecked)
-                mainViewModel.isBatteryIndicatorVisibleLiveData.value = isChecked
-        }
     }
 
     override fun configureObserver(view: View, savedInstanceState: Bundle?) {

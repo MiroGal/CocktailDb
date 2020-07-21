@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<androidx.coordinatorlayout.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="?attr/actionBarSize"
-    android:orientation="vertical">
+    android:paddingTop="?attr/actionBarSize">
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/offset_120"
+        android:clipToPadding="false"
         android:background="@color/background_primary">
         <LinearLayout
             android:layout_width="match_parent"
@@ -180,56 +182,49 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="?android:attr/listDivider" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/offset_8"
-        android:paddingBottom="@dimen/offset_8"
-        android:paddingStart="@dimen/offset_16"
-        android:paddingEnd="@dimen/offset_16"
-        android:orientation="horizontal"
-        android:background="@color/background_primary"
-        android:focusable="true"
-        android:clickable="true">
-        <TextView
-            android:id="@+id/btn_reset"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
+        android:layout_gravity="bottom"
+        android:orientation="vertical"
+        app:layout_behavior="@string/fab_transformation_sheet_behavior">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="?android:attr/listDivider" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/offset_8"
+            android:paddingBottom="@dimen/offset_8"
             android:paddingStart="@dimen/offset_16"
             android:paddingEnd="@dimen/offset_16"
-            android:clickable="false"
-            android:text="@string/drink_filter_btn_reset"
-            style="@style/Button" />
-        <LinearLayout
-            android:id="@+id/btn_result"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/offset_16"
-            android:gravity="center"
-            style="@style/Button">
+            android:orientation="horizontal"
+            android:background="@color/background_primary"
+            android:focusable="true"
+            android:clickable="true">
             <TextView
-                android:id="@+id/btn_result_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="@dimen/offset_8"
+                android:id="@+id/btn_reset"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/offset_36"
+                android:layout_weight="1"
+                android:paddingStart="@dimen/offset_16"
+                android:paddingEnd="@dimen/offset_16"
                 android:clickable="false"
-                android:text="@string/drink_filter_btn_result_found"
-                style="@style/Button"
-                tools:ignore="RtlSymmetry" />
-            <ImageView
-                android:id="@+id/btn_result_icon"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
-                android:padding="@dimen/offset_8"
-                android:src="@drawable/ic_button_history"
-                tools:ignore="ContentDescription" />
+                android:text="@string/drink_filter_btn_reset"
+                style="@style/SystemButton" />
+            <TextView
+                android:id="@+id/btn_result"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/offset_36"
+                android:layout_weight="1"
+                android:layout_marginStart="@dimen/offset_16"
+                android:paddingStart="@dimen/offset_16"
+                android:paddingEnd="@dimen/offset_16"
+                android:clickable="false"
+                android:text="@string/drink_filter_btn_result"
+                style="@style/SystemButton" />
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

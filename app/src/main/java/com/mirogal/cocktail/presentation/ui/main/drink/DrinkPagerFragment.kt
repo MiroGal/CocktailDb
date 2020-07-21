@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
@@ -21,11 +22,11 @@ import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.*
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiver
-import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkPagerAdapter
+import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkSortDialogFragment
 import com.mirogal.cocktail.presentation.ui.search.SearchActivity
 import com.mirogal.cocktail.presentation.ui.util.ZoomOutPageTransformer
@@ -34,7 +35,8 @@ import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
-class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver.OnBatteryChangeListener {
+class DrinkPagerFragment : BaseFragment<DrinkViewModel>(),
+        BatteryChangeReceiver.OnBatteryChangeListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_pager
     override val viewModel: DrinkViewModel by activityViewModels()
@@ -48,6 +50,8 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private lateinit var proposeDrinkReceiver: BroadcastReceiver
     private val batteryChangeReceiver = BatteryChangeReceiver()
 
+    private var startId: Int = -1
+
     companion object {
         fun newInstance() = DrinkPagerFragment()
     }
@@ -56,50 +60,69 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_pager_label)
 
-        toolbar_action_filter.setOnClickListener { addDrinkFilterFragment() }
-
-        toolbar_action_filter.setOnLongClickListener {
-            viewModel.resetDrinkFilter()
-            true
+        toolbar_action_filter.apply {
+            setOnClickListener(onClickListener)
+            setOnLongClickListener(onLongClickListener)
+        }
+        toolbar_action_sort.apply {
+            setOnClickListener(onClickListener)
+            setOnLongClickListener(onLongClickListener)
         }
 
-        toolbar_action_sort.setOnClickListener { showDrinkSortDialog() }
+        fab_search.setOnClickListener(onClickListener)
 
-        toolbar_action_sort.setOnLongClickListener {
-            viewModel.drinkSortLiveData.value = DrinkSort.DISABLE
-            true
-        }
+        btn_battery_indicator_close.setOnClickListener(onClickListener)
 
-        fab_search.setOnClickListener { openSearchDrinkActivity() }
-
-        btn_battery_indicator_close.setOnClickListener { mainViewModel.isBatteryIndicatorVisibleLiveData.value = false }
-
-        btn_item_filter_category_close.setOnClickListener {
-            val drinkFilter = viewModel.drinkFilterLiveData.value
-            drinkFilter?.put(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE)
-            viewModel.drinkFilterLiveData.value = drinkFilter
-        }
-
-        btn_item_filter_alcohol_close.setOnClickListener {
-            val drinkFilter = viewModel.drinkFilterLiveData.value
-            drinkFilter?.put(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE)
-            viewModel.drinkFilterLiveData.value = drinkFilter
-        }
-
-        btn_item_filter_ingredient_close.setOnClickListener {
-            val drinkFilter = viewModel.drinkFilterLiveData.value
-            drinkFilter?.put(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE)
-            viewModel.drinkFilterLiveData.value = drinkFilter
-        }
-
-        btn_item_filter_glass_close.setOnClickListener {
-            val drinkFilter = viewModel.drinkFilterLiveData.value
-            drinkFilter?.put(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE)
-            viewModel.drinkFilterLiveData.value = drinkFilter
-        }
+        btn_item_filter_category_close.setOnClickListener(onClickListener)
+        btn_item_filter_alcohol_close.setOnClickListener(onClickListener)
+        btn_item_filter_ingredient_close.setOnClickListener(onClickListener)
+        btn_item_filter_glass_close.setOnClickListener(onClickListener)
 
         setViewPager()
         setReceiver()
+    }
+
+    private val onClickListener = View.OnClickListener {
+        when (it) {
+            toolbar_action_filter -> addDrinkFilterFragment()
+            toolbar_action_sort -> showDrinkSortDialog()
+            fab_search -> openSearchDrinkActivity()
+            btn_battery_indicator_close -> mainViewModel.isBatteryIndicatorVisibleLiveData.value = false
+            btn_item_filter_category_close -> {
+                val drinkFilter = viewModel.drinkFilterLiveData.value
+                drinkFilter?.put(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE)
+                viewModel.drinkFilterLiveData.value = drinkFilter
+            }
+            btn_item_filter_alcohol_close -> {
+                val drinkFilter = viewModel.drinkFilterLiveData.value
+                drinkFilter?.put(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE)
+                viewModel.drinkFilterLiveData.value = drinkFilter
+            }
+            btn_item_filter_ingredient_close -> {
+                val drinkFilter = viewModel.drinkFilterLiveData.value
+                drinkFilter?.put(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE)
+                viewModel.drinkFilterLiveData.value = drinkFilter
+            }
+            btn_item_filter_glass_close -> {
+                val drinkFilter = viewModel.drinkFilterLiveData.value
+                drinkFilter?.put(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE)
+                viewModel.drinkFilterLiveData.value = drinkFilter
+            }
+        }
+    }
+
+    private val onLongClickListener = View.OnLongClickListener {
+        when (it) {
+            toolbar_action_filter -> {
+                viewModel.resetDrinkFilter()
+                true
+            }
+            toolbar_action_sort -> {
+                viewModel.drinkSortLiveData.value = DrinkSort.DISABLE
+                true
+            }
+            else -> false
+        }
     }
 
     private fun setViewPager() {
@@ -132,7 +155,15 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
 
         proposeDrinkReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                showProposeDrink(intent!!.getIntExtra(ProposeDrinkService::class.java.simpleName, 20))
+                val isTimerFinish: Boolean = intent?.getBooleanExtra("isTimerFinish", false) ?: false
+                if (isTimerFinish) {
+                    val finishId: Int = intent?.getIntExtra("finishCocktailId", -2) ?: -2
+                    if (startId == finishId) {
+                        showProposeDrink(finishId)
+                    }
+                } else {
+                    startId = intent?.getIntExtra("startCocktailId", -1) ?: -1
+                }
             }
         }
     }
@@ -180,16 +211,21 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
                 layout_charge_indicator.visibility = View.INVISIBLE
             }
         })
+
+        ProcessLifecycleOwner.get().lifecycle.addObserver(DrinkPagerObserver(requireActivity() as AppCompatActivity))
     }
 
     override fun onStart() {
         super.onStart()
-        requireContext().registerReceiver(proposeDrinkReceiver, IntentFilter("ACTION_SNACKBAR"))
-        requireContext().registerReceiver(batteryChangeReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED))
-        IntentFilter().apply {
+        requireContext().registerReceiver(proposeDrinkReceiver,
+        IntentFilter().apply{
+            addAction("ACTION_SNACKBAR_TIMER_START")
+            addAction("ACTION_SNACKBAR_TIMER_FINISH")
+        })
+        requireContext().registerReceiver(batteryChangeReceiver, IntentFilter(Intent.ACTION_BATTERY_CHANGED).apply{
             addAction("android.intent.action.BATTERY_LOW")
             addAction("android.intent.action.BATTERY_OK")
-        }
+        })
     }
 
     override fun onStop() {
@@ -209,9 +245,10 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra("cocktailId", cocktailId)
-        intent.putExtra("cocktailName", cocktailName)
+        val intent = Intent(activity, DetailActivity::class.java).apply {
+            putExtra("cocktailId", cocktailId)
+            putExtra("cocktailName", cocktailName)
+        }
         startActivity(intent)
     }
 
@@ -226,6 +263,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
     private fun showDrinkSortDialog() {
         val dialogFragment = DrinkSortDialogFragment.newInstance(currentSort)
         dialogFragment.show(childFragmentManager, DrinkSortDialogFragment::class.java.simpleName)
+    }
+
+    fun showDayDrinkDialog(cocktailId: Int, cocktailName: String?) {
+        val dialogFragment = DayDrinkDialogFragment.newInstance(cocktailId, cocktailName)
+        dialogFragment.show(childFragmentManager, DayDrinkDialogFragment::class.java.simpleName)
     }
 
     @SuppressLint("SetTextI18n")
@@ -264,12 +306,14 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>(), BatteryChangeReceiver
         }
     }
 
-    private fun showProposeDrink(id: Int) {
+    fun showProposeDrink(id: Int) {
         if (cocktailList != null && cocktailList!!.size > 1) {
             val model: CocktailDbModel? = cocktailList!!.filter{ it.id != id }.shuffled()[0]
             if (model != null) {
-                Snackbar.make(requireActivity().findViewById(android.R.id.content),
-                        getString(R.string.drink_pager_snackbar_message) + " " + model.name.toString(), Snackbar.LENGTH_LONG)
+                Snackbar.make(requireView().findViewById(R.id.container),
+                        getString(R.string.drink_pager_snackbar_message) + ": " + model.name.toString(), Snackbar.LENGTH_LONG)
+                        .setBackgroundTint(resources.getColor(R.color.background_primary))
+                        .setTextColor(resources.getColor(R.color.txt_title))
                         .setAction(getString(R.string.drink_pager_snackbar_action_open_detail)) {
                             openDrinkDetailActivity(model.id, model.name)
                         }.show()

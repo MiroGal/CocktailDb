@@ -7,7 +7,6 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.activityViewModels
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
@@ -15,11 +14,13 @@ import com.mirogal.cocktail.presentation.model.filter.DrinkSort
 import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkSortListAdapter
+import com.mirogal.cocktail.presentation.ui.util.DividerItemDecorationWithoutUnderLine
 
-class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortListAdapter.OnItemClickListener {
+class DrinkSortDialogFragment : BaseDialogFragment(),
+        DrinkSortListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.dialog_fragment_drink_filter_sort
-    override val viewModel: DrinkViewModel by activityViewModels()
+    private val viewModel: DrinkViewModel by activityViewModels()
 
     private lateinit var listAdapter: DrinkSortListAdapter
     private lateinit var rvFilter: RecyclerView
@@ -52,7 +53,7 @@ class DrinkSortDialogFragment : BaseDialogFragment<DrinkViewModel>(), DrinkSortL
 
         rvFilter = view.findViewById(R.id.rv_filter_list)
         rvFilter.layoutManager = LinearLayoutManager(requireActivity())
-        val dividerItemDecoration = DividerItemDecoration(requireActivity(), LinearLayoutManager.VERTICAL)
+        val dividerItemDecoration = DividerItemDecorationWithoutUnderLine(requireActivity(), LinearLayoutManager.VERTICAL)
         rvFilter.addItemDecoration(dividerItemDecoration)
 
         listAdapter = DrinkSortListAdapter(currentSort, this)

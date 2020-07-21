@@ -29,10 +29,14 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
 
     private val listAdapter = SearchListAdapter(this, this)
 
-    private var searchName: String? = null
+    private var searchText: String? = null
 
     override fun configureView(savedInstanceState: Bundle?) {
         setSupportActionBar(toolbar)
+
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar.setNavigationOnClickListener { onBackPressed() }
+
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -62,8 +66,8 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
             }
         })
 
-        viewModel.searchNameMutableLiveData.observe(this, Observer { query: String? ->
-            searchName = query
+        viewModel.searchTextMutableLiveData.observe(this, Observer { query: String? ->
+            searchText = query
             if (!(query != null && query.isNotEmpty())) {
                 showPreview()
             }
@@ -74,14 +78,14 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
         menuInflater.inflate(R.menu.activity_search_toolbar_menu, menu)
         val searchMenuItem = menu.findItem(R.id.action_search)
         val searchView = searchMenuItem.actionView as SearchView
-        searchView.setIconifiedByDefault(false) // set inner icon
-        searchView.isFocusable = true
-        searchView.isIconified = false
-        searchView.requestFocusFromTouch()
-        if (searchName != null) {
-            searchView.setQuery(searchName, false)
-        }
-        searchView.setOnQueryTextListener(
+        searchView.apply {
+            setIconifiedByDefault(false) // set inner icon
+            isFocusable = true
+            isIconified = false
+            requestFocusFromTouch() // set focus
+            if (searchText != null)
+                searchView.setQuery(searchText, false) // set searchText
+            setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(s: String): Boolean {
                         return false
@@ -92,7 +96,8 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
                         return false
                     }
                 }
-        )
+            )
+        }
         return true
     }
 

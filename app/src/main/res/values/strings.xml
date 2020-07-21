@@ -14,16 +14,16 @@
     <string name="dialog_auth_title_valid_invalid">The password invalid</string>
     <string name="dialog_auth_title_invalid_valid">The login invalid</string>
     <string name="dialog_auth_title_invalid_invalid">Login and password invalid</string>
-    <string name="dialog_auth_message">Try re–entering your login and password using the letters a–z, A–Z, and numbers 0-9. Login and password must be at least 6 characters long. The password must have at least one uppercase and one lowercase letter and number.</string>
+    <string name="dialog_auth_message">Try re–entering your login and password using the letters a–z, A–Z, and numbers 0–9. Login and password must be at least 6 characters long. The password must have at least one uppercase and one lowercase letter and number.</string>
     <!--endregion-->
 
     <!--region Profile-->
     <string name="profile_label">Profile</string>
     <string name="profile_btn_logout">Logout</string>
 
-    <string name="dialog_profile_logout_title">Warning!</string>
-    <string name="dialog_profile_logout_message">Are you sure what you want to leave the profile?</string>
-    <string name="dialog_profile_btn_logout">Logout</string>
+    <string name="dialog_logout_title">Log out</string>
+    <string name="dialog_logout_message">Do you really want to log out?</string>
+    <string name="dialog_logout_btn_ok">Logout</string>
     <!--endregion-->
 
     <!--region Settings-->
@@ -38,7 +38,7 @@
     <string name="main_bottom_nav_settings">Settings</string>
     <!--endregion-->
 
-    <!--region DrinkHistory-->
+    <!--region Drink-->
     <string name="drink_pager_label">Cocktails</string>
     <string name="drink_pager_tab_history">History</string>
     <string name="drink_pager_tab_favorite">Favorite</string>
@@ -52,13 +52,13 @@
 
     <string name="drink_history_item_menu_action_open">Open</string>
     <string name="drink_history_item_menu_pin_shortcut">Add pin shortcut</string>
-    <string name="drink_history_item_menu_favorite">Add/Remove from favorite</string>
+    <string name="drink_history_item_menu_add_favorite">Add to favorite</string>
     <string name="drink_history_item_menu_delete">Delete from history</string>
 
     <string name="drink_favorite_item_menu_action_open">Open</string>
     <string name="drink_favorite_item_menu_shortcut">Add shortcut</string>
     <string name="drink_favorite_item_menu_pin_shortcut">Add pin shortcut</string>
-    <string name="drink_favorite_item_menu_favorite">Remove from favorite</string>
+    <string name="drink_favorite_item_menu_remove_favorite">Remove from favorite</string>
 
     <string name="drink_item_menu_toast_shortcut_added">cocktail shortcut added</string>
     <string name="drink_item_menu_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>
@@ -66,13 +66,19 @@
     <string name="drink_item_menu_toast_pin_shortcut_added">cocktail pin shortcut added</string>
     <string name="drink_item_menu_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
 
+    <string name="dialog_day_drink_title">Welcome back</string>
+    <string name="dialog_day_drink_message">View the drink of the day?</string>
+    <string name="dialog_day_drink_btn_cancel">No thanks</string>
+    <string name="dialog_day_drink_btn_ok">View</string>
     <!--endregion-->
 
     <!--region Filter-->
     <string name="drink_filter_label">Filters</string>
     <string name="drink_filter_btn_reset">Reset</string>
-    <string name="drink_filter_btn_result_found">Results</string>
-    <string name="drink_filter_btn_result_not_found">Not found</string>
+    <string name="drink_filter_btn_result">To results</string>
+    <string name="drink_filter_btn_undo">Undo</string>
+    <string name="drink_filter_message_result_found">Results</string>
+    <string name="drink_filter_message_result_not_found">Not found</string>
 
     <string name="dialog_drink_filter_title">drink filter</string>
     <string name="dialog_drink_sort_title">Sort cocktails</string>

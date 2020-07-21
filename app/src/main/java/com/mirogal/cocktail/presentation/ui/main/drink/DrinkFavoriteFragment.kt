@@ -25,7 +25,7 @@ import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
-import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
+import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMargin
 import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
@@ -51,7 +51,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         rv_favorite_drink_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
 
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
-        val itemDecoration = SpaceItemDecoration(listColumn, spaceInPixel, true, 0)
+        val itemDecoration = SpaceItemDecorationWithoutTopMargin(listColumn, spaceInPixel, true, 0)
         rv_favorite_drink_list.addItemDecoration(itemDecoration)
 
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
@@ -91,7 +91,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                 R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
                 R.id.action_shortcut -> addItemShortcut(cocktailModel)
                 R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
-                R.id.action_favorite -> viewModel.switchCocktailStateFavorite(cocktailModel.id, cocktailModel.isFavorite)
+                R.id.action_remove_favorite -> viewModel.setCocktailStateFavorite(cocktailModel.id, false)
             }
             true
         }
@@ -199,9 +199,10 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(activity, DetailActivity::class.java)
-        intent.putExtra("cocktailId", cocktailId)
-        intent.putExtra("cocktailName", cocktailName)
+        val intent = Intent(activity, DetailActivity::class.java).apply {
+            putExtra("cocktailId", cocktailId)
+            putExtra("cocktailName", cocktailName)
+        }
         startActivity(intent)
     }
 

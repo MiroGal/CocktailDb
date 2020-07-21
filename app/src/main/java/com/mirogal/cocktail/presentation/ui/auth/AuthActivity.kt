@@ -36,7 +36,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         txt_password.addTextChangedListener(textWatcherPassword)
 
         btn_authorization.isClickable = false
-        btn_authorization.setBackgroundResource(R.drawable.bg_system_button_inactive)
+        btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
         btn_authorization.setOnClickListener {
             when (isAuthDataValid) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
@@ -72,9 +72,9 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
             if (btn_authorization.isClickable != it) {
                 btn_authorization.isClickable = it
                 if (it) {
-                    btn_authorization.setBackgroundResource(R.drawable.bg_system_button)
+                    btn_authorization.setBackgroundResource(R.drawable.bg_accent_button)
                 } else {
-                    btn_authorization.setBackgroundResource(R.drawable.bg_system_button_inactive)
+                    btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
                 }
             }
         })
@@ -134,7 +134,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     @SuppressLint("SetTextI18n")
     private fun fillInputField() {
         btn_authorization.isClickable = true
-        btn_authorization.setBackgroundResource(R.drawable.bg_system_button)
+        btn_authorization.setBackgroundResource(R.drawable.bg_accent_button)
         txt_login.setText("MiroGal")
         txt_password.setText("Miro89")
     }

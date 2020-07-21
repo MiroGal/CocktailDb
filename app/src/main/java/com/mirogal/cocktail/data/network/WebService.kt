@@ -10,7 +10,7 @@ import retrofit2.http.Query
 interface WebService {
 
     @GET("api/json/v1/1/search.php")
-    fun loadCocktailList(@Query("s") name: String?): Call<ContainerNetModel?>?
+    fun loadCocktailList(@Query("s") name: String? = null): Call<ContainerNetModel?>?
 
     companion object Factory {
         fun create(): WebService {

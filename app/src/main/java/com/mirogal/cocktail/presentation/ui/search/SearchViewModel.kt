@@ -22,7 +22,7 @@ class SearchViewModel(application: Application) : BaseViewModel(application) {
     private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
 
     val cocktailListLiveData: LiveData<PagedList<CocktailDbModel?>> = repository.loadCocktailListLiveData
-    val searchNameMutableLiveData: MutableLiveData<String?> = MutableLiveData()
+    val searchTextMutableLiveData: MutableLiveData<String?> = MutableLiveData()
     val networkStatusLiveData: LiveData<NetworkStatus.Status> = repository.networkStatusMutableLiveData
 
     companion object {
@@ -30,16 +30,16 @@ class SearchViewModel(application: Application) : BaseViewModel(application) {
     }
 
     init {
-        searchNameMutableLiveData.value = loadSearchNameFromSharedPreferences()
-        if (searchNameMutableLiveData.value != null && searchNameMutableLiveData.value != repository.searchNameMutableLiveData.value) {
-            repository.searchNameMutableLiveData.value = searchNameMutableLiveData.value
+        searchTextMutableLiveData.value = loadSearchNameFromSharedPreferences()
+        if (searchTextMutableLiveData.value != null && searchTextMutableLiveData.value != repository.searchNameMutableLiveData.value) {
+            repository.searchNameMutableLiveData.value = searchTextMutableLiveData.value
         }
     }
 
 
     fun setSearchName(searchName: String) {
         saveSearchNameToSharedPreferences(searchName)
-        this.searchNameMutableLiveData.value = searchName
+        this.searchTextMutableLiveData.value = searchName
         repository.searchNameMutableLiveData.value = searchName
     }
 

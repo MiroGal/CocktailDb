@@ -10,15 +10,16 @@
     <color name="background_primary_stroke">#4B4B4B</color>
     <color name="background_secondary">#F0F0F0</color>
     <color name="background_translucent">#C0FFFFFF</color>
-    <color name="background_button">#102F54</color>
-    <color name="background_button_inactive">#809FC4</color>
+    <color name="background_system_button">#202020</color>
+    <color name="background_system_button_ripple">#4B4B4B</color>
+    <color name="background_accent_button">#102F54</color>
+    <color name="background_accent_button_ripple">#809FC4</color>
 
     <color name="txt_title">#202020</color>
     <color name="txt_body">#303030</color>
     <color name="txt_button">#FFFFFF</color>
     <color name="txt_toolbar_collapsed">#202020</color>
     <color name="txt_toolbar_expanded">#FFFFFF</color>
-    <color name="txt_warning">#FFA500</color>
     <color name="txt_error">#B71C1C</color>
 
     <color name="battery_status_charging">#1B5E20</color>
