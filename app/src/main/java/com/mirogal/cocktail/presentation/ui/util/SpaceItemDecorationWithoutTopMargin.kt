@@ -5,10 +5,12 @@ import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 
-class SpaceItemDecorationWithoutTopMargin(private val spanCount: Int,
-                                          private val spacing: Int,
-                                          private val includeEdge: Boolean,
-                                          private val headerNum: Int) : ItemDecoration() {
+class SpaceItemDecorationWithoutTopMargin(
+        private val spanCount: Int,
+        private val spacing: Int,
+        private val includeEdge: Boolean,
+        private val headerNum: Int
+) : ItemDecoration() {
 
     override fun getItemOffsets(outRect: Rect, view: View, parent: RecyclerView, state: RecyclerView.State) {
         super.getItemOffsets(outRect, view, parent, state)

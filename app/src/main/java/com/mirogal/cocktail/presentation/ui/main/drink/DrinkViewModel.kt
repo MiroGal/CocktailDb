@@ -23,9 +23,10 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
     val cocktailListSizeLiveData: LiveData<Pair<Int, Int>>
 
     val drinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>> = MutableLiveData()
-    val isDrinkFilterEnableLiveData: LiveData<Boolean>
-
     val drinkSortLiveData: MutableLiveData<DrinkSort> = MutableLiveData()
+    private val savedDrinkFilterLiveData: MutableLiveData<HashMap<DrinkFilterType, DrinkFilter>> = MutableLiveData()
+
+    val isDrinkFilterEnableLiveData: LiveData<Boolean>
     val isDrinkSortEnableLiveData: LiveData<Boolean>
 
     val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
@@ -62,14 +63,16 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
                 Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
                 Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
+        savedDrinkFilterLiveData.value = drinkFilterLiveData.value
+
+        drinkSortLiveData.value = DrinkSort.DISABLE
+
         isDrinkFilterEnableLiveData = drinkFilterLiveData.map {
             it[DrinkFilterType.CATEGORY] == DrinkFilterCategory.DISABLE
                     && it[DrinkFilterType.ALCOHOL] == DrinkFilterAlcohol.DISABLE
                     && it[DrinkFilterType.INGREDIENT] == DrinkFilterIngredient.DISABLE
                     && it[DrinkFilterType.GLASS] == DrinkFilterGlass.DISABLE
         }.distinctUntilChanged()
-
-        drinkSortLiveData.value = DrinkSort.DISABLE
 
         isDrinkSortEnableLiveData = drinkSortLiveData.map {
             it == DrinkSort.DISABLE
@@ -126,12 +129,22 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
         }
     }
 
+    fun setDrinkFilter(filterList: HashMap<DrinkFilterType, DrinkFilter>) {
+        savedDrinkFilterLiveData.value = drinkFilterLiveData.value
+        drinkFilterLiveData.value = filterList
+    }
+
     fun resetDrinkFilter() {
+        savedDrinkFilterLiveData.value = drinkFilterLiveData.value
         drinkFilterLiveData.value = hashMapOf(
                 Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
                 Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
                 Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
                 Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
+    }
+
+    fun backDrinkFilter() {
+        drinkFilterLiveData.value = savedDrinkFilterLiveData.value
     }
 
     fun deleteCocktail(id: Int) {

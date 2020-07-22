@@ -7,7 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.filter.*
+import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
@@ -18,17 +18,6 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: DrinkViewModel by activityViewModels()
-
-    private val currentFilterList: HashMap<DrinkFilterType, DrinkFilter> = hashMapOf(
-            Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
-            Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
-            Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
-            Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
-    private val saveFilterList: HashMap<DrinkFilterType, DrinkFilter> = hashMapOf(
-            Pair(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE),
-            Pair(DrinkFilterType.ALCOHOL, DrinkFilterAlcohol.DISABLE),
-            Pair(DrinkFilterType.INGREDIENT, DrinkFilterIngredient.DISABLE),
-            Pair(DrinkFilterType.GLASS, DrinkFilterGlass.DISABLE))
 
     private var isFragmentNotJustCreated = false
 
@@ -59,39 +48,21 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
     private val onClickListener = View.OnClickListener {
         when (it) {
             btn_toolbar_back -> requireActivity().onBackPressed()
-            btn_filter_category -> {
-                copyFilterList(saveFilterList, currentFilterList)
-                showDrinkFilterDialog(DrinkFilterType.CATEGORY)
-            }
-            btn_filter_alcohol -> {
-                copyFilterList(saveFilterList, currentFilterList)
-                showDrinkFilterDialog(DrinkFilterType.ALCOHOL)
-            }
-            btn_filter_ingredient -> {
-                copyFilterList(saveFilterList, currentFilterList)
-                showDrinkFilterDialog(DrinkFilterType.INGREDIENT)
-            }
-            btn_filter_glass -> {
-                copyFilterList(saveFilterList, currentFilterList)
-                showDrinkFilterDialog(DrinkFilterType.GLASS)
-            }
+            btn_filter_category -> showDrinkFilterDialog(DrinkFilterType.CATEGORY)
+            btn_filter_alcohol -> showDrinkFilterDialog(DrinkFilterType.ALCOHOL)
+            btn_filter_ingredient -> showDrinkFilterDialog(DrinkFilterType.INGREDIENT)
+            btn_filter_glass -> showDrinkFilterDialog(DrinkFilterType.GLASS)
             btn_result -> requireActivity().onBackPressed()
-            btn_reset -> {
-                copyFilterList(saveFilterList, currentFilterList)
-                viewModel.resetDrinkFilter()
-            }
+            btn_reset -> viewModel.resetDrinkFilter()
         }
     }
 
     override fun configureObserver(view: View, savedInstanceState: Bundle?) {
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                copyFilterList(currentFilterList, it)
-                btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
-                btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""
-                btn_filter_ingredient_text_2.text = it[DrinkFilterType.INGREDIENT]?.key?.replace("\\", "") ?: ""
-                btn_filter_glass_text_2.text = it[DrinkFilterType.GLASS]?.key?.replace("\\", "") ?: ""
-            }
+            btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
+            btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""
+            btn_filter_ingredient_text_2.text = it[DrinkFilterType.INGREDIENT]?.key?.replace("\\", "") ?: ""
+            btn_filter_glass_text_2.text = it[DrinkFilterType.GLASS]?.key?.replace("\\", "") ?: ""
         })
         viewModel.cocktailListSizeLiveData.observe(viewLifecycleOwner, Observer {
             showFilterSnackbar(it?.first ?: 0, it?.second ?: 0)
@@ -99,7 +70,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
     }
 
     private fun showDrinkFilterDialog(drinkFilterType: DrinkFilterType) {
-        val dialogFragment = DrinkFilterDialogFragment.newInstance(drinkFilterType, currentFilterList)
+        val dialogFragment = DrinkFilterDialogFragment.newInstance(drinkFilterType, viewModel.drinkFilterLiveData.value!!)
         dialogFragment.show(childFragmentManager, DrinkFilterDialogFragment::class.java.simpleName)
     }
 
@@ -114,18 +85,11 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
                     .setBackgroundTint(resources.getColor(R.color.background_primary))
                     .setTextColor(resources.getColor(R.color.txt_title))
                     .setAction(getString(R.string.drink_filter_btn_undo)) {
-                        viewModel.drinkFilterLiveData.value = saveFilterList
+                        viewModel.backDrinkFilter()
                     }
                     .show()
         }
         isFragmentNotJustCreated = true
-    }
-
-    private fun copyFilterList(copyList: HashMap<DrinkFilterType, DrinkFilter>, originalList: HashMap<DrinkFilterType, DrinkFilter>) {
-        copyList[DrinkFilterType.CATEGORY] = originalList[DrinkFilterType.CATEGORY] ?: DrinkFilterCategory.DISABLE
-        copyList[DrinkFilterType.ALCOHOL] = originalList[DrinkFilterType.ALCOHOL] ?: DrinkFilterAlcohol.DISABLE
-        copyList[DrinkFilterType.INGREDIENT] = originalList[DrinkFilterType.INGREDIENT] ?: DrinkFilterIngredient.DISABLE
-        copyList[DrinkFilterType.GLASS] = originalList[DrinkFilterType.GLASS] ?: DrinkFilterGlass.DISABLE
     }
 
 }

@@ -9,10 +9,11 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import java.util.*
 
-class DrinkListAdapter(private val context: Context,
-                       private val onItemClickListener: OnItemClickListener,
-                       private val onItemLongClickListener: OnItemLongClickListener)
-    : RecyclerView.Adapter<DrinkItemHolder>() {
+class DrinkListAdapter(
+        private val context: Context,
+        private val onItemClickListener: OnItemClickListener,
+        private val onItemLongClickListener: OnItemLongClickListener
+) : RecyclerView.Adapter<DrinkItemHolder>() {
 
     private var cocktailList: List<CocktailDbModel> = ArrayList()
 

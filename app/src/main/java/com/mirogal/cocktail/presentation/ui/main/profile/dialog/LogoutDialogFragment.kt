@@ -4,7 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import android.view.View
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.base.BaseBottomSheetDialogFragment
+import com.mirogal.cocktail.presentation.ui.base.dialog.BaseBottomSheetDialogFragment
 import kotlinx.android.synthetic.main.dialog_fragment_logout.*
 
 class LogoutDialogFragment : BaseBottomSheetDialogFragment() {

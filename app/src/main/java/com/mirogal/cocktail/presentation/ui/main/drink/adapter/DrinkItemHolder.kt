@@ -10,7 +10,10 @@ import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 
-class DrinkItemHolder(private val context: Context, itemView: View) : RecyclerView.ViewHolder(itemView) {
+class DrinkItemHolder(
+        private val context: Context,
+        itemView: View
+) : RecyclerView.ViewHolder(itemView) {
 
     private val tvName: TextView = itemView.findViewById(R.id.tv_name)
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
