@@ -29,7 +29,8 @@ import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMa
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(), DrinkListAdapter.OnItemClickListener,
+class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
+        DrinkListAdapter.OnItemClickListener,
         DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
