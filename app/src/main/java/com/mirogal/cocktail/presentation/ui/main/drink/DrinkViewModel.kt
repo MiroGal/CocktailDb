@@ -7,6 +7,8 @@ import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.*
+import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiverLiveData
+import com.mirogal.cocktail.presentation.receiver.ProposeDrinkReceiverLiveData
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 import java.util.*
 
@@ -30,6 +32,9 @@ class DrinkViewModel(application: Application) : BaseViewModel(application) {
     val isDrinkSortEnableLiveData: LiveData<Boolean>
 
     val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
+
+    val proposeDrinkReceiverLiveData = ProposeDrinkReceiverLiveData(context)
+    val batteryChangeReceiverLiveData = BatteryChangeReceiverLiveData(context)
 
     private val observer: Observer<in List<CocktailDbModel>?> = Observer { }
 

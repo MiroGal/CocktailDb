@@ -22,7 +22,8 @@ import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
-class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItemClickListener {
+class SearchActivity : BaseActivity<SearchViewModel>(),
+        SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
     override val viewModel: SearchViewModel by viewModels()
