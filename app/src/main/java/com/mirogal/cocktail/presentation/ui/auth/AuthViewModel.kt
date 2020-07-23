@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
@@ -17,8 +18,10 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
 
     val inputLoginLiveData: MutableLiveData<String?> = MutableLiveData()
     val inputPasswordLiveData: MutableLiveData<String?> = MutableLiveData()
-    val isAuthDataCorrectLiveData: LiveData<Boolean>
-    val isAuthDataValidLiveData: LiveData<AuthDataValidStatus>
+    val isAuthDataCorrectLiveData: LiveData<Boolean?>
+    val isAuthDataValidLiveData: LiveData<AuthDataValidStatus?>
+
+    private val observer: Observer<in AuthDataValidStatus?> = Observer { }
 
     init {
         isAuthDataCorrectLiveData = MediatorLiveData<Boolean>().apply {
@@ -42,6 +45,15 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
                     value = isAuthDataValid()
             }
         }
+
+        isAuthDataValidLiveData.observeForever(observer)
+
+        fillInputField()
+    }
+
+    override fun onCleared() {
+        isAuthDataValidLiveData.removeObserver(observer)
+        super.onCleared()
     }
 
     private fun isAuthDataCorrect(): Boolean {
@@ -60,6 +72,12 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
             login != validLogin && password == validPassword -> AuthDataValidStatus.LOGIN_INVALID_PASSWORD_VALID
             else -> AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID
         }
+    }
+
+    // Temporary method
+    private fun fillInputField() {
+        inputLoginLiveData.value = validLogin
+        inputPasswordLiveData.value = validPassword
     }
 
 }

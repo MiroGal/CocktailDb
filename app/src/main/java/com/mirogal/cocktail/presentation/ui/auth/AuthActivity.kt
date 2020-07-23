@@ -1,6 +1,5 @@
 package com.mirogal.cocktail.presentation.ui.auth
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +21,8 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     override val contentLayoutResId = R.layout.activity_auth
     override val viewModel: AuthViewModel by viewModels()
 
-    private var isAuthDataValid: AuthDataValidStatus = AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID
+    private val validLogin = "MiroGal"
+    private val validPassword = "Miro89"
 
     override fun setApplicationTheme() {
         setTheme(R.style.AppTheme_NoActionBar)
@@ -38,24 +38,24 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         btn_authorization.isClickable = false
         btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
         btn_authorization.setOnClickListener {
-            when (isAuthDataValid) {
+            when (viewModel.isAuthDataValidLiveData.value ?: AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
                     startActivity(Intent(this@AuthActivity, MainActivity::class.java))
                 }
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_INVALID -> {
-                    showInvalidAuthDataDialog(isAuthDataValid)
+                    showInvalidAuthDataDialog(AuthDataValidStatus.LOGIN_VALID_PASSWORD_INVALID)
                     txt_password.requestFocus()
                     txt_password.setSelection(txt_password.text?.length!!)
                     txt_password_layout.error = getString(R.string.auth_message_invalid_password)
                 }
                 AuthDataValidStatus.LOGIN_INVALID_PASSWORD_VALID -> {
-                    showInvalidAuthDataDialog(isAuthDataValid)
+                    showInvalidAuthDataDialog(AuthDataValidStatus.LOGIN_INVALID_PASSWORD_VALID)
                     txt_login.requestFocus()
                     txt_login.setSelection(txt_login.text?.length!!)
                     txt_login_layout.error = getString(R.string.auth_message_invalid_login)
                 }
                 else -> {
-                    showInvalidAuthDataDialog(isAuthDataValid)
+                    showInvalidAuthDataDialog(AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID)
                     txt_login.requestFocus()
                     txt_login.setSelection(txt_login.text?.length!!)
                     txt_login_layout.error = getString(R.string.auth_message_invalid_login)
@@ -70,16 +70,13 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     override fun configureObserver(savedInstanceState: Bundle?) {
         viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
             if (btn_authorization.isClickable != it) {
-                btn_authorization.isClickable = it
-                if (it) {
+                btn_authorization.isClickable = it ?: false
+                if (it == true) {
                     btn_authorization.setBackgroundResource(R.drawable.bg_accent_button)
                 } else {
                     btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
                 }
             }
-        })
-        viewModel.isAuthDataValidLiveData.observe(this, Observer {
-            isAuthDataValid = it
         })
 
         fillInputField()
@@ -131,12 +128,11 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     }
 
     // Temporary method
-    @SuppressLint("SetTextI18n")
     private fun fillInputField() {
         btn_authorization.isClickable = true
         btn_authorization.setBackgroundResource(R.drawable.bg_accent_button)
-        txt_login.setText("MiroGal")
-        txt_password.setText("Miro89")
+        txt_login.setText(validLogin)
+        txt_password.setText(validPassword)
     }
 
 }

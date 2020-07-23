@@ -3,6 +3,7 @@ package com.mirogal.cocktail.presentation.service
 import android.content.Context
 import android.content.Intent
 import androidx.core.app.JobIntentService
+import java.util.concurrent.TimeUnit
 
 class ProposeDrinkService : JobIntentService() {
 
@@ -21,13 +22,7 @@ class ProposeDrinkService : JobIntentService() {
         baseContext.sendBroadcast(intentStart)
 
         Thread(Runnable {
-            for (i in 0..3) {
-                try {
-                    Thread.sleep(1000)
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-            }
+            Thread.sleep(TimeUnit.SECONDS.toMillis(3))
 
             val newIntent = Intent()
             newIntent.action = "ACTION_SNACKBAR_TIMER_FINISH"
