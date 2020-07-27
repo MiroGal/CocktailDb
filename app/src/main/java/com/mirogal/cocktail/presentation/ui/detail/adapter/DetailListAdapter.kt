@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.detail.IngredientModel
+import com.mirogal.cocktail.presentation.modelnative.detail.IngredientModel
 
 class DetailListAdapter(private val ingredientList: List<IngredientModel>) : RecyclerView.Adapter<DetailItemHolder>() {
 

@@ -7,9 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.paging.PagedList
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.network.model.NetworkStatus
-import com.mirogal.cocktail.data.repository.CocktailRepository
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.network.model.NetworkStatus
+import com.mirogal.cocktail.datanative.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class SearchViewModel(application: Application) : BaseViewModel(application) {

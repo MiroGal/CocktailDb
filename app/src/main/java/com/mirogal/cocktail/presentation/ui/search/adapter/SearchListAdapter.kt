@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.paging.PagedListAdapter
 import androidx.recyclerview.widget.DiffUtil
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 
 class SearchListAdapter(
         private val context: Context,

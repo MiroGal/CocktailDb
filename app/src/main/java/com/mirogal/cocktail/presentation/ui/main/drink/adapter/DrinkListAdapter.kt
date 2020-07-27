@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import java.util.*
 
 class DrinkListAdapter(

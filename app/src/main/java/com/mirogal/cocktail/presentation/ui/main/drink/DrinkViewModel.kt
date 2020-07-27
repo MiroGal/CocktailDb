@@ -3,10 +3,10 @@ package com.mirogal.cocktail.presentation.ui.main.drink
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.repository.CocktailRepository
-import com.mirogal.cocktail.presentation.model.drink.DrinkPage
-import com.mirogal.cocktail.presentation.model.filter.*
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.repository.CocktailRepository
+import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
+import com.mirogal.cocktail.presentation.modelnative.filter.*
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiverLiveData
 import com.mirogal.cocktail.presentation.receiver.ProposeDrinkReceiverLiveData
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel

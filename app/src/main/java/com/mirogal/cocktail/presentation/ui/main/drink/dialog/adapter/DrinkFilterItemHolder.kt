@@ -4,8 +4,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilter
-import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilter
+import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilterType
 
 class DrinkFilterItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 

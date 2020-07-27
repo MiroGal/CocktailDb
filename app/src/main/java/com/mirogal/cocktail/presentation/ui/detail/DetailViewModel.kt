@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.switchMap
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.repository.CocktailRepository
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.repository.CocktailRepository
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class DetailViewModel(application: Application) : BaseViewModel(application) {

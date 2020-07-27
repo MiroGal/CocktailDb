@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 
 class DrinkItemHolder(
         private val context: Context,
