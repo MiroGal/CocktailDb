@@ -12,7 +12,7 @@ import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 

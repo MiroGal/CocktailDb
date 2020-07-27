@@ -10,7 +10,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import com.mirogal.cocktail.datanative.network.model.NetworkStatus
 import com.mirogal.cocktail.datanative.repository.CocktailRepository
-import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
 
 class SearchViewModel(application: Application) : BaseViewModel(application) {
 

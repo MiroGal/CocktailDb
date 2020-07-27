@@ -2,7 +2,7 @@ package com.mirogal.cocktail.presentation.ui.main
 
 import android.app.Application
 import androidx.lifecycle.MutableLiveData
-import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
 
 class MainViewModel(application: Application) : BaseViewModel(application) {
 

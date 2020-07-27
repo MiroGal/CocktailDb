@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.modelnative.filter.DrinkSort
-import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
+import com.mirogal.cocktail.presentation.ui.basenative.dialog.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkSortListAdapter
 import com.mirogal.cocktail.presentation.ui.util.DividerItemDecorationWithoutUnderLine

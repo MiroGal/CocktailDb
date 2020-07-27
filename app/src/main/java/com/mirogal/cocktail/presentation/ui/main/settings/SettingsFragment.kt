@@ -8,7 +8,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.base.BaseFragment
+import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.fragment_settings_content.*

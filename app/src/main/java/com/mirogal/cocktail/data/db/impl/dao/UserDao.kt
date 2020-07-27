@@ -3,10 +3,12 @@ package com.mirogal.cocktail.data.db.impl.dao
 import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mirogal.cocktail.data.db.Table
+import com.mirogal.cocktail.data.db.impl.dao.base.BaseDao
+import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.db.model.UserDbModel
 
 @Dao
-interface UserDao {
+interface UserDao : BaseDao<CocktailDbModel> {
 
     @get:Query("SELECT * FROM ${Table.USER}")
     val userLiveData: LiveData<UserDbModel?>

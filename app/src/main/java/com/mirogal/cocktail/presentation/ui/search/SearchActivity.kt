@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import com.mirogal.cocktail.datanative.network.model.NetworkStatus
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration

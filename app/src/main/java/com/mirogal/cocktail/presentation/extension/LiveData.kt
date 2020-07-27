@@ -3,10 +3,7 @@ package com.mirogal.cocktail.presentation.extension
 import android.os.Handler
 import android.os.Looper
 import androidx.annotation.MainThread
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
 
 @MainThread
 inline fun <reified T> LiveData<T>.observe(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
@@ -150,35 +147,35 @@ fun <T> LiveData<T>.distinctNotNullValues(onDistinct: (current: T, new: T) -> Un
             }
         }
 
-//@MainThread
-//inline fun <T> LiveData<T?>.observeTillDestroyNotNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
-//    if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
-//
-//    val liveDataObserver = Observer<T?> {
-//        if (it != null && owner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED))
-//            observer(it)
-//    }
-//
-//    owner.lifecycle.addObserver(
-//            onCreate = { observeForever(liveDataObserver) },
-//            onDestroy = { removeObserver(liveDataObserver) }
-//    )
-//}
+@MainThread
+inline fun <T> LiveData<T?>.observeTillDestroyNotNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
+    if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
 
-//@MainThread
-//inline fun <T> LiveData<T>.observeTillDestroy(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
-//    if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
-//
-//    val liveDataObserver = Observer<T?> {
-//        if (it != null && owner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED))
-//            observer(it)
-//    }
-//
+    val liveDataObserver = Observer<T?> {
+        if (it != null && owner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED))
+            observer(it)
+    }
+
 //    owner.lifecycle.addObserver(
 //            onCreate = { observeForever(liveDataObserver) },
 //            onDestroy = { removeObserver(liveDataObserver) }
 //    )
-//}
+}
+
+@MainThread
+inline fun <T> LiveData<T>.observeTillDestroy(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
+    if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
+
+    val liveDataObserver = Observer<T?> {
+        if (it != null && owner.lifecycle.currentState.isAtLeast(Lifecycle.State.CREATED))
+            observer(it)
+    }
+
+//    owner.lifecycle.addObserver(
+//            onCreate = { observeForever(liveDataObserver) },
+//            onDestroy = { removeObserver(liveDataObserver) }
+//    )
+}
 
 
 fun <T> LiveData<T>.debounce(duration: Long = 300L): LiveData<T> = MediatorLiveData<T>().also {

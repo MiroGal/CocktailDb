@@ -6,7 +6,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
-import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
 
 class AuthViewModel(application: Application) : BaseViewModel(application) {
 

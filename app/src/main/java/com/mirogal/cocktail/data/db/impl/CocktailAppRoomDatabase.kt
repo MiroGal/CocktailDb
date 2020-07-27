@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.mirogal.cocktail.data.db.impl.dao.CocktailDao
+import com.mirogal.cocktail.data.db.impl.dao.UserDao
 import com.mirogal.cocktail.data.db.impl.typeconverter.DateConverter
 import com.mirogal.cocktail.data.db.impl.typeconverter.StringListToStringConverter
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
@@ -24,6 +25,7 @@ import com.mirogal.cocktail.util.SingletonHolder
 abstract class CocktailAppRoomDatabase : RoomDatabase() {
 
     abstract fun cocktailDao(): CocktailDao
+    abstract fun userDao(): UserDao
 
     companion object : SingletonHolder<CocktailAppRoomDatabase, Context>({
         Room

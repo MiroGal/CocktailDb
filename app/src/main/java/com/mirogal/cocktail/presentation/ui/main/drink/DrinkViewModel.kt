@@ -9,7 +9,7 @@ import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
 import com.mirogal.cocktail.presentation.modelnative.filter.*
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiverLiveData
 import com.mirogal.cocktail.presentation.receiver.ProposeDrinkReceiverLiveData
-import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
 import java.util.*
 
 class DrinkViewModel(application: Application) : BaseViewModel(application) {
