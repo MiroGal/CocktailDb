@@ -3,6 +3,7 @@ package com.mirogal.cocktail.data.repository.impl.source
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.mirogal.cocktail.data.db.source.CocktailDbSource
+import com.mirogal.cocktail.data.network.source.CocktailNetSource
 import com.mirogal.cocktail.data.repository.impl.mapper.CocktailRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.source.base.BaseRepositoryImpl
 import com.mirogal.cocktail.data.repository.model.CocktailRepoModel
@@ -10,6 +11,7 @@ import com.mirogal.cocktail.data.repository.source.CocktailRepository
 
 class CocktailRepositoryImpl(
         private val dbSource: CocktailDbSource,
+        private val netSource: CocktailNetSource,
         private val mapper: CocktailRepoModelMapper
 ) : BaseRepositoryImpl(),
         CocktailRepository {
@@ -55,6 +57,10 @@ class CocktailRepositoryImpl(
 
     override suspend fun deleteAllCocktails() {
         dbSource.deleteAllCocktails()
+    }
+
+    override suspend fun getCocktailListByName(name: String): List<CocktailRepoModel> {
+        return netSource.getCocktailList(name).map(mapper::mapNetToRepo)
     }
 
 }

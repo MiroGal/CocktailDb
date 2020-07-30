@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background_primary"
-    tools:context=".presentation.ui.search.SearchActivity"
+    tools:context=".presentation.ui.searchnative.SearchActivity"
     tools:ignore="Overdraw">
 
     <com.google.android.material.appbar.AppBarLayout

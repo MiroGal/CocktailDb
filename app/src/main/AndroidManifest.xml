@@ -46,6 +46,15 @@
                 android:value="com.mirogal.cocktail.presentation.ui.main.MainActivity" />
         </activity>
         <activity
+            android:name="com.mirogal.cocktail.presentation.ui.searchnative.SearchActivity"
+            android:parentActivityName="com.mirogal.cocktail.presentation.ui.main.MainActivity"
+            android:label="@string/search_label"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mirogal.cocktail.presentation.ui.main.MainActivity" />
+        </activity>
+        <activity
             android:name="com.mirogal.cocktail.presentation.ui.detail.DetailActivity"
             android:parentActivityName="com.mirogal.cocktail.presentation.ui.main.MainActivity"
             android:label="@string/detail_label"

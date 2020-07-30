@@ -4,35 +4,17 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.paging.PagedListAdapter
-import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
+import java.util.*
 
 class SearchListAdapter(
         private val context: Context,
         private val onItemClickListener: OnItemClickListener
-) : PagedListAdapter<CocktailDbModel, SearchItemHolder>(DIFF_CALLBACK) {
+) : RecyclerView.Adapter<SearchItemHolder>() {
 
-    companion object {
-        private val DIFF_CALLBACK = object : DiffUtil.ItemCallback<CocktailDbModel>() {
-
-            override fun areItemsTheSame(oldItem: CocktailDbModel, newItem: CocktailDbModel)
-                    = oldItem.id == newItem.id
-
-            override fun areContentsTheSame(oldItem: CocktailDbModel, newItem: CocktailDbModel)
-                    = oldItem.name == newItem.name && oldItem.imagePath == newItem.imagePath
-        }
-    }
-
-    override fun onBindViewHolder(holderSearch: SearchItemHolder, position: Int) {
-        if (position <= -1) {
-            return
-        }
-        val item = getItem(position)
-        holderSearch.bind(item!!)
-        holderSearch.setListener(onItemClickListener)
-    }
+    private var cocktailList: List<CocktailModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -40,8 +22,22 @@ class SearchListAdapter(
         return SearchItemHolder(context, view)
     }
 
+    override fun onBindViewHolder(holderSearch: SearchItemHolder, position: Int) {
+        holderSearch.bind(cocktailList[position])
+        holderSearch.setListener(onItemClickListener)
+    }
+
+    override fun getItemCount(): Int {
+        return cocktailList.size
+    }
+
+    fun refreshData(newData: List<CocktailModel>) {
+        cocktailList = newData
+        notifyDataSetChanged()
+    }
+
     interface OnItemClickListener {
-        fun onItemClick(cocktail: CocktailDbModel)
+        fun onItemClick(cocktailModel: CocktailModel)
     }
 
 }

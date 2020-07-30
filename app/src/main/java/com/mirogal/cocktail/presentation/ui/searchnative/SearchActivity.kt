@@ -1,38 +1,38 @@
-package com.mirogal.cocktail.presentation.ui.search
+package com.mirogal.cocktail.presentation.ui.searchnative
 
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
+import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
+import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.datanative.network.model.NetworkStatus
+import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
-import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
+import com.mirogal.cocktail.presentation.ui.searchnative.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_search.*
 import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
-class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<SearchViewModel>(),
+class SearchActivity : BaseActivity<SearchViewModel>(),
         SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
-
-    override fun getViewModelClass() = SearchViewModel::class
+    override val viewModel: SearchViewModel by viewModels()
 
     private val listAdapter = SearchListAdapter(this, this)
 
     private var searchText: String? = null
 
     override fun configureView(savedInstanceState: Bundle?) {
-        super.configureView(savedInstanceState)
-
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -50,20 +50,24 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
         rv_search_list.addItemDecoration(itemDecoration)
     }
 
-    override fun configureObserver() {
-        super.configureObserver()
-
-        viewModel.cocktailListLiveData.observe(this, Observer { list ->
-            if (list?.isNotEmpty()!!) {
-                showData()
-            } else {
-                showEmpty()
+    override fun configureObserver(savedInstanceState: Bundle?) {
+        viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbModel?> ->
+            try {
+                listAdapter.submitList(pagedList)
+            } catch (ignored: Exception) {
             }
-            listAdapter.refreshData(list)
         })
         rv_search_list.adapter = listAdapter
 
-        viewModel.searchStringLiveData.observe(this, Observer { query: String? ->
+        viewModel.networkStatusLiveData.observe(this, Observer { status: NetworkStatus.Status ->
+            if (status == NetworkStatus.EMPTY) {
+                showEmpty()
+            } else {
+                showData()
+            }
+        })
+
+        viewModel.searchTextMutableLiveData.observe(this, Observer { query: String? ->
             searchText = query
             if (!(query != null && query.isNotEmpty())) {
                 showPreview()
@@ -89,7 +93,7 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
                     }
 
                     override fun onQueryTextChange(s: String): Boolean {
-                        viewModel.setSearchString(s)
+                        viewModel.setSearchName(s)
                         return false
                     }
                 }
@@ -99,13 +103,13 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
     }
 
 
-    override fun onItemClick(cocktailModel: CocktailModel) {
-        viewModel.saveCocktail(cocktailModel)
-        openDrinkDetailActivity(cocktailModel.id, cocktailModel.names.default)
+    override fun onItemClick(cocktail: CocktailDbModel) {
+        viewModel.addCocktailToDb(cocktail)
+        openDrinkDetailActivity(cocktail.id, cocktail.name)
     }
 
 
-    private fun openDrinkDetailActivity(cocktailId: Long, cocktailName: String?) {
+    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
         val intent = Intent(this, DetailActivity::class.java)
         intent.putExtra("cocktailId", cocktailId)
         intent.putExtra("cocktailName", cocktailName)

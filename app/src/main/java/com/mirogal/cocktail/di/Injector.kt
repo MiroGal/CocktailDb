@@ -24,11 +24,15 @@ import com.mirogal.cocktail.data.local.impl.source.TokenLocalSourceImpl
 import com.mirogal.cocktail.data.local.source.TokenLocalSource
 import com.mirogal.cocktail.data.network.impl.deserializer.BooleanDeserializer
 import com.mirogal.cocktail.data.network.impl.deserializer.Iso8601DateDeserializer
+import com.mirogal.cocktail.data.network.impl.deserializer.model.CocktailNetModelDeserializer
 import com.mirogal.cocktail.data.network.impl.extension.deserializeType
 import com.mirogal.cocktail.data.network.impl.interceptor.*
 import com.mirogal.cocktail.data.network.impl.source.AuthNetSourceImpl
+import com.mirogal.cocktail.data.network.impl.source.CocktailNetSourceImpl
 import com.mirogal.cocktail.data.network.impl.source.UserNetSourceImpl
+import com.mirogal.cocktail.data.network.model.cocktail.CocktailContainerNetModel
 import com.mirogal.cocktail.data.network.source.AuthNetSource
+import com.mirogal.cocktail.data.network.source.CocktailNetSource
 import com.mirogal.cocktail.data.network.source.UserNetSource
 import com.mirogal.cocktail.data.network.source.base.BaseNetSource
 import com.mirogal.cocktail.data.repository.impl.mapper.CocktailRepoModelMapper
@@ -50,6 +54,7 @@ import com.mirogal.cocktail.presentation.mapper.LocalizedStringModelMapper
 import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.mapper.base.BaseModelMapper
 import com.mirogal.cocktail.presentation.ui.base.MainViewModel
+import com.mirogal.cocktail.presentation.ui.search.SearchViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
@@ -71,6 +76,7 @@ object Injector {
 
     private val baseGsonBuilder: GsonBuilder
         get() = GsonBuilder()
+                .registerTypeAdapter(deserializeType<CocktailContainerNetModel>(), CocktailNetModelDeserializer())
                 .registerTypeAdapter(deserializeType<Boolean>(), BooleanDeserializer(false))
                 .registerTypeAdapter(deserializeType<Date>(), Iso8601DateDeserializer())
                 .setPrettyPrinting()
@@ -82,7 +88,7 @@ object Injector {
 
         provideRetrofit(
                 appContext,
-                "https://devlightschool.ew.r.appspot.com/",
+                "https://www.thecocktaildb.com/",
                 setOf(),
                 setOf(
                         GsonConverterFactory.create(baseGsonBuilder.create())
@@ -158,6 +164,13 @@ object Injector {
                         provideModelMapper(appContext),
                         handle
                 ) as T
+
+                SearchViewModel::class.java -> SearchViewModel(
+                        provideRepository(appContext),
+                        provideModelMapper(appContext),
+                        handle
+                ) as T
+
                 else -> throw NotImplementedError("Must provide viewModel for class ${modelClass.simpleName}")
             }
         }
@@ -168,6 +181,7 @@ object Injector {
         return when (T::class.java) {
             CocktailRepository::class.java -> CocktailRepositoryImpl(
                     provideDbDataSource(context),
+                    provideNetDataSource(context),
                     provideRepoModelMapper(context)
             ) as T
 
@@ -214,6 +228,7 @@ object Injector {
         "LOG provideNetDataSource class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
             AuthNetSource::class.java -> AuthNetSourceImpl(provideService()) as T
+            CocktailNetSource::class.java -> CocktailNetSourceImpl(provideService()) as T
             UserNetSource::class.java -> UserNetSourceImpl(provideService()) as T
             else -> throw IllegalStateException("Must provide NetDataSource for class ${T::class.java.simpleName}")
         }

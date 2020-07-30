@@ -1,7 +1,6 @@
 package com.mirogal.cocktail.presentation.ui.main.drink.adapter
 
 import android.content.Context
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -42,7 +41,6 @@ class DrinkItemHolder(
                 .placeholder(R.drawable.ic_placeholder_drink)
                 .error(R.drawable.ic_placeholder_error)
                 .into(ivImage)
-        Log.d("TAG", "holder")
     }
 
     fun setListener(clickListener: DrinkListAdapter.OnItemClickListener,

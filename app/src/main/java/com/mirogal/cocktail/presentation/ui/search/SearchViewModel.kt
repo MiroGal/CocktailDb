@@ -1,58 +1,39 @@
 package com.mirogal.cocktail.presentation.ui.search
 
-import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.paging.PagedList
-import com.mirogal.cocktail.R
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
-import com.mirogal.cocktail.datanative.network.model.NetworkStatus
-import com.mirogal.cocktail.datanative.repository.CocktailRepository
-import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
+import androidx.lifecycle.SavedStateHandle
+import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 
-class SearchViewModel(application: Application) : BaseViewModel(application) {
+class SearchViewModel(
+        private val cocktailRepository: com.mirogal.cocktail.data.repository.source.CocktailRepository,
+        private val cocktailModelMapper: CocktailModelMapper,
+        viewStateHandle: SavedStateHandle
+) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle) {
 
-    private val repository = CocktailRepository.newInstance(application)
-
-    private val sharedPreferences: SharedPreferences = getApplication<Application>()
-            .getSharedPreferences(getApplication<Application>()
-                    .resources.getString(R.string.app_name), Context.MODE_PRIVATE)
-    private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
-
-    val cocktailListLiveData: LiveData<PagedList<CocktailDbModel?>> = repository.loadCocktailListLiveData
-    val searchTextMutableLiveData: MutableLiveData<String?> = MutableLiveData()
-    val networkStatusLiveData: LiveData<NetworkStatus.Status> = repository.networkStatusMutableLiveData
-
-    companion object {
-        private const val KEY_SEARCH_NAME = "search_name"
-    }
+    val cocktailListLiveData: LiveData<List<CocktailModel>?>
+    val searchStringLiveData: MutableLiveData<String?> = MutableLiveData()
 
     init {
-        searchTextMutableLiveData.value = loadSearchNameFromSharedPreferences()
-        if (searchTextMutableLiveData.value != null && searchTextMutableLiveData.value != repository.searchNameMutableLiveData.value) {
-            repository.searchNameMutableLiveData.value = searchTextMutableLiveData.value
+        cocktailListLiveData = MediatorLiveData<List<CocktailModel>?>().apply {
+            addSource(searchStringLiveData) {
+                launchRequest {
+                    postValue(cocktailRepository.getCocktailListByName(it ?: "").map(cocktailModelMapper::mapTo))
+                }
+            }
         }
     }
 
-
-    fun setSearchName(searchName: String) {
-        saveSearchNameToSharedPreferences(searchName)
-        this.searchTextMutableLiveData.value = searchName
-        repository.searchNameMutableLiveData.value = searchName
+    fun setSearchString(search: String) {
+        searchStringLiveData.value = search
     }
 
-    private fun saveSearchNameToSharedPreferences(value: String) {
-        sharedPreferencesEditor.putString(KEY_SEARCH_NAME, value).apply()
-    }
-
-    private fun loadSearchNameFromSharedPreferences(): String? {
-        return sharedPreferences.getString(KEY_SEARCH_NAME, "")
-    }
-
-    fun addCocktailToDb(cocktail: CocktailDbModel?) {
-        repository.addCocktailToDb(cocktail)
+    fun saveCocktail(cocktail: CocktailModel) {
+        launchRequest {
+            cocktailRepository.addOrReplaceCocktail(cocktailModelMapper.mapFrom(cocktail))
+        }
     }
 
 }

@@ -17,4 +17,6 @@ interface CocktailRepository : BaseRepository {
     suspend fun deleteCocktails(vararg cocktail: CocktailRepoModel)
     suspend fun deleteAllCocktails()
 
+    suspend fun getCocktailListByName(name: String): List<CocktailRepoModel>
+
 }
