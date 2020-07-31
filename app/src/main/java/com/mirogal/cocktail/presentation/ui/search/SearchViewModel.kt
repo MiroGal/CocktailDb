@@ -20,13 +20,13 @@ class SearchViewModel(
         cocktailListLiveData = MediatorLiveData<List<CocktailModel>?>().apply {
             addSource(searchStringLiveData) {
                 launchRequest {
-                    postValue(cocktailRepository.getCocktailListByName(it ?: "").map(cocktailModelMapper::mapTo))
+                    postValue(cocktailRepository.getCocktailListByName(it).map(cocktailModelMapper::mapTo))
                 }
             }
         }
     }
 
-    fun setSearchString(search: String) {
+    fun setSearchString(search: String?) {
         searchStringLiveData.value = search
     }
 

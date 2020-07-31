@@ -24,6 +24,7 @@ import com.mirogal.cocktail.data.local.impl.source.TokenLocalSourceImpl
 import com.mirogal.cocktail.data.local.source.TokenLocalSource
 import com.mirogal.cocktail.data.network.impl.deserializer.BooleanDeserializer
 import com.mirogal.cocktail.data.network.impl.deserializer.Iso8601DateDeserializer
+import com.mirogal.cocktail.data.network.impl.deserializer.model.CocktailContainerNetModelDeserializer
 import com.mirogal.cocktail.data.network.impl.deserializer.model.CocktailNetModelDeserializer
 import com.mirogal.cocktail.data.network.impl.extension.deserializeType
 import com.mirogal.cocktail.data.network.impl.interceptor.*
@@ -31,6 +32,7 @@ import com.mirogal.cocktail.data.network.impl.source.AuthNetSourceImpl
 import com.mirogal.cocktail.data.network.impl.source.CocktailNetSourceImpl
 import com.mirogal.cocktail.data.network.impl.source.UserNetSourceImpl
 import com.mirogal.cocktail.data.network.model.cocktail.CocktailContainerNetModel
+import com.mirogal.cocktail.data.network.model.cocktail.CocktailNetModel
 import com.mirogal.cocktail.data.network.source.AuthNetSource
 import com.mirogal.cocktail.data.network.source.CocktailNetSource
 import com.mirogal.cocktail.data.network.source.UserNetSource
@@ -76,7 +78,8 @@ object Injector {
 
     private val baseGsonBuilder: GsonBuilder
         get() = GsonBuilder()
-                .registerTypeAdapter(deserializeType<CocktailContainerNetModel>(), CocktailNetModelDeserializer())
+                .registerTypeAdapter(deserializeType<CocktailContainerNetModel>(), CocktailContainerNetModelDeserializer())
+                .registerTypeAdapter(deserializeType<CocktailNetModel>(), CocktailNetModelDeserializer())
                 .registerTypeAdapter(deserializeType<Boolean>(), BooleanDeserializer(false))
                 .registerTypeAdapter(deserializeType<Date>(), Iso8601DateDeserializer())
                 .setPrettyPrinting()

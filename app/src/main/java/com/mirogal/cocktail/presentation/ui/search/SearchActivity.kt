@@ -5,7 +5,6 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
@@ -89,7 +88,11 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
                     }
 
                     override fun onQueryTextChange(s: String): Boolean {
-                        viewModel.setSearchString(s)
+                        if (s.isEmpty()) {
+                            viewModel.setSearchString(null)
+                        } else {
+                            viewModel.setSearchString(s)
+                        }
                         return false
                     }
                 }
