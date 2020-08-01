@@ -6,9 +6,9 @@ import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
+import com.mirogal.cocktail.presentation.ui.authnative.AuthActivity
 import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
+import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment

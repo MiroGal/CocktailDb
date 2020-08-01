@@ -7,8 +7,8 @@ import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(
         protected val viewStateHandle: SavedStateHandle,
-        applicationContext: Application
-): AndroidViewModel(applicationContext) {
+        application: Application
+): AndroidViewModel(application) {
 
     val errorLiveData: LiveData<java.lang.Exception?> = MutableLiveData()
 

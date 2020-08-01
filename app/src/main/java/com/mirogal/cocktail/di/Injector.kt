@@ -56,6 +56,7 @@ import com.mirogal.cocktail.presentation.mapper.LocalizedStringModelMapper
 import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.mapper.base.BaseModelMapper
 import com.mirogal.cocktail.presentation.ui.base.MainViewModel
+import com.mirogal.cocktail.presentation.ui.detail.DetailViewModel
 import com.mirogal.cocktail.presentation.ui.search.SearchViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -164,6 +165,13 @@ object Injector {
                         provideRepository(appContext),
                         provideRepository(appContext),
                         provideModelMapper(appContext),
+                        provideModelMapper(appContext),
+                        handle,
+                        appContext as Application
+                ) as T
+
+                DetailViewModel::class.java -> DetailViewModel(
+                        provideRepository(appContext),
                         provideModelMapper(appContext),
                         handle,
                         appContext as Application

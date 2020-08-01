@@ -7,7 +7,7 @@
     android:background="@color/background_primary"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".presentation.ui.main.profile.ProfileFragment"
+    tools:context=".presentation.ui.mainnative.profile.ProfileFragment"
     tools:ignore="Overdraw">
 
     <com.google.android.material.appbar.AppBarLayout

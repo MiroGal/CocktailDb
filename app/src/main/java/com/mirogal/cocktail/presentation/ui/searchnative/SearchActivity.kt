@@ -14,7 +14,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import com.mirogal.cocktail.datanative.network.model.NetworkStatus
 import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
+import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
 import com.mirogal.cocktail.presentation.ui.searchnative.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_search.*

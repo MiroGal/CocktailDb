@@ -6,7 +6,7 @@
     android:background="@color/background_primary"
     android:clickable="true"
     android:focusable="true"
-    tools:context=".presentation.ui.main.drink.DrinkFilterFragment"
+    tools:context=".presentation.ui.mainnative.drink.DrinkFilterFragment"
     tools:ignore="Overdraw">
 
     <com.google.android.material.appbar.AppBarLayout

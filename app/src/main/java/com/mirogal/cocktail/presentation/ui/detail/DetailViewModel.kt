@@ -2,20 +2,31 @@ package com.mirogal.cocktail.presentation.ui.detail
 
 import android.app.Application
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.switchMap
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
-import com.mirogal.cocktail.datanative.repository.CocktailRepository
-import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
+import androidx.lifecycle.SavedStateHandle
+import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 
-class DetailViewModel(application: Application) : BaseViewModel(application) {
+class DetailViewModel(
+        private val cocktailRepository: com.mirogal.cocktail.data.repository.source.CocktailRepository,
+        private val cocktailModelMapper: CocktailModelMapper,
+        viewStateHandle: SavedStateHandle,
+        application: Application
+) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle, application) {
 
-    private val repository = CocktailRepository.newInstance(application)
+    val cocktailIdLiveData: MutableLiveData<Long> = MutableLiveData()
 
-    val cocktailIdLiveData: MutableLiveData<Int> = MutableLiveData()
+    val cocktailLiveData: LiveData<CocktailModel?>
 
-    val cocktailLiveData: LiveData<CocktailDbModel> = cocktailIdLiveData.switchMap {
-        repository.getCocktailById(it)
+    init {
+        cocktailLiveData = MediatorLiveData<CocktailModel?>().apply {
+            addSource(cocktailIdLiveData) {
+                launchRequest {
+                    postValue(cocktailRepository.getCocktailById(it)?.run(cocktailModelMapper::mapTo))
+                }
+            }
+        }
     }
 
 }

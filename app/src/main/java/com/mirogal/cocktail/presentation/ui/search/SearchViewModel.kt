@@ -12,20 +12,25 @@ class SearchViewModel(
         private val cocktailRepository: com.mirogal.cocktail.data.repository.source.CocktailRepository,
         private val cocktailModelMapper: CocktailModelMapper,
         viewStateHandle: SavedStateHandle,
-        applicationContext: Application
-) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle, applicationContext) {
+        application: Application
+) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle, application) {
 
-    val cocktailListLiveData: LiveData<List<CocktailModel>?>
+    val cocktailListLiveData: LiveData<List<CocktailModel>>
     val searchStringLiveData: MutableLiveData<String?> = MutableLiveData()
 
     init {
-        cocktailListLiveData = MediatorLiveData<List<CocktailModel>?>().apply {
+        cocktailListLiveData = MediatorLiveData<List<CocktailModel>>().apply {
             addSource(searchStringLiveData) {
                 launchRequest {
-                    postValue(cocktailRepository.getCocktailListByName(it).map(cocktailModelMapper::mapTo))
+                    if (it.isNullOrEmpty()) {
+                        postValue(mutableListOf())
+                    } else {
+                        postValue(cocktailRepository.getCocktailListByName(it).map(cocktailModelMapper::mapTo))
+                    }
                 }
             }
         }
+        cocktailListLiveData.value = null
     }
 
     fun setSearchString(search: String?) {

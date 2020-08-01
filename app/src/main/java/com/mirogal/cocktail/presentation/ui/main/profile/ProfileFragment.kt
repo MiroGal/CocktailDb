@@ -6,7 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
-import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFragment
+import com.mirogal.cocktail.presentation.ui.mainnative.profile.ProfileViewModel
+import com.mirogal.cocktail.presentation.ui.mainnative.profile.dialog.LogoutDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.fragment_profile_content.*
 

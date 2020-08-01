@@ -10,7 +10,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
-import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_search.*
@@ -26,8 +25,6 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
     override fun getViewModelClass() = SearchViewModel::class
 
     private val listAdapter = SearchListAdapter(this, this)
-
-    private var searchText: String? = null
 
     override fun configureView(savedInstanceState: Bundle?) {
         super.configureView(savedInstanceState)
@@ -53,21 +50,16 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
         super.configureObserver()
 
         viewModel.cocktailListLiveData.observe(this, Observer { list ->
-            if (list?.isNotEmpty()!!) {
-                showData()
-            } else {
-                showEmpty()
+            when {
+                list == null -> showPreview()
+                list.isEmpty() -> showEmpty()
+                else -> {
+                    listAdapter.refreshData(list)
+                    showData()
+                }
             }
-            listAdapter.refreshData(list)
         })
         rv_search_list.adapter = listAdapter
-
-        viewModel.searchStringLiveData.observe(this, Observer { query: String? ->
-            searchText = query
-            if (!(query != null && query.isNotEmpty())) {
-                showPreview()
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -79,8 +71,7 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
             isFocusable = true
             isIconified = false
             requestFocusFromTouch() // set focus
-            if (searchText != null)
-                searchView.setQuery(searchText, false) // set searchText
+            searchView.setQuery(viewModel.searchStringLiveData.value ?: "", false) // set searchText
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(s: String): Boolean {
@@ -88,11 +79,12 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
                     }
 
                     override fun onQueryTextChange(s: String): Boolean {
-                        if (s.isEmpty()) {
-                            viewModel.setSearchString(null)
-                        } else {
-                            viewModel.setSearchString(s)
-                        }
+                        viewModel.setSearchString(
+                                when {
+                                    s.isNotEmpty() -> s
+                                    else -> null
+                                }
+                        )
                         return false
                     }
                 }
@@ -109,7 +101,7 @@ class SearchActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<Se
 
 
     private fun openDrinkDetailActivity(cocktailId: Long, cocktailName: String?) {
-        val intent = Intent(this, DetailActivity::class.java)
+        val intent = Intent(this, com.mirogal.cocktail.presentation.ui.detail.DetailActivity::class.java)
         intent.putExtra("cocktailId", cocktailId)
         intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)

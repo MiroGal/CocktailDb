@@ -8,6 +8,6 @@ import retrofit2.http.Query
 interface CocktailApiService {
 
     @GET("api/json/v1/1/search.php")
-    suspend fun getCocktailContainer(@Query("s") name: String? = null): CocktailContainerNetModel
+    suspend fun getCocktailContainer(@Query("s") name: String): CocktailContainerNetModel
 
 }

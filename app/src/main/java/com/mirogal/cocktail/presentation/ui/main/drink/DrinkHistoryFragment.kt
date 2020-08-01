@@ -23,7 +23,7 @@ import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
-import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
+import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMargin
 import kotlinx.android.synthetic.main.fragment_drink_history.*

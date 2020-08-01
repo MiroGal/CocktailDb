@@ -10,7 +10,7 @@ class CocktailNetSourceImpl(
 ) : BaseNetSourceImpl<CocktailApiService>(apiService),
         CocktailNetSource {
 
-    override suspend fun getCocktailList(name: String?): List<CocktailNetModel> {
+    override suspend fun getCocktailList(name: String): List<CocktailNetModel> {
         return performRequest {
             getCocktailContainer(name).cocktailList
         }

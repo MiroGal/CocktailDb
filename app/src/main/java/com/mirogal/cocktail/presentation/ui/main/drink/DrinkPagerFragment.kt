@@ -19,7 +19,7 @@ import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
 import com.mirogal.cocktail.presentation.modelnative.filter.*
 import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
-import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
+import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkPagerAdapter
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment

@@ -8,30 +8,29 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.mappernative.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
-import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
-class DetailActivity : BaseActivity<DetailViewModel>() {
+class DetailActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<DetailViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_detail
-    override val viewModel: DetailViewModel by viewModels()
 
-    private var cocktailId = 0
+    override fun getViewModelClass() = DetailViewModel::class
+
+    private var cocktailId: Long = 0
     private var cocktailName: String? = ""
 
     override fun configureView(savedInstanceState: Bundle?) {
-        cocktailId = intent.getIntExtra("cocktailId", 0)
+        super.configureView(savedInstanceState)
+
+        cocktailId = intent.getLongExtra("cocktailId", 0)
         cocktailName = intent.getStringExtra("cocktailName")
 
         setSupportActionBar(toolbar)
@@ -44,25 +43,29 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         btn_toolbar_back.setOnClickListener { onBackPressed() }
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureObserver() {
+        super.configureObserver()
+
         viewModel.cocktailIdLiveData.value = cocktailId
         viewModel.cocktailLiveData.observe(this, Observer {
-            tv_info_name.text = it.name
-            tv_info_alcoholic.text = it.alcoholic
-            tv_info_glass.text = it.glass
-            tvInstructionBody.text = it.instruction
+            if (it != null) {
+                tv_info_name.text = it.names.default
+                tv_info_alcoholic.text = it.alcoholType.key
+                tv_info_glass.text = it.glass.key
+                tvInstructionBody.text = it.instructions.default
 
-            rv_ingredient_list.layoutManager = LinearLayoutManager(this)
-            val ingredientList = toIngredientList(it.ingredientList, it.measureList)
-            val listAdapter = DetailListAdapter(ingredientList)
-            rv_ingredient_list.adapter = listAdapter
+                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
+//                val ingredientList = toIngredientList(it.ingredientList, it.measureList)
+//                val listAdapter = DetailListAdapter(ingredientList)
+//                rv_ingredient_list.adapter = listAdapter
 
-            Glide.with(this)
-                    .load(it.imagePath)
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_placeholder_drink)
-                    .error(R.drawable.ic_placeholder_error)
-                    .into(iv_image)
+                Glide.with(this)
+                        .load(it.image)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_placeholder_drink)
+                        .error(R.drawable.ic_placeholder_error)
+                        .into(iv_image)
+            }
         })
     }
 
