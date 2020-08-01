@@ -1,12 +1,14 @@
 package com.mirogal.cocktail.presentation.ui.base
 
+import android.app.Application
 import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 open class BaseViewModel(
-        protected val viewStateHandle: SavedStateHandle
-): ViewModel() {
+        protected val viewStateHandle: SavedStateHandle,
+        applicationContext: Application
+): AndroidViewModel(applicationContext) {
 
     val errorLiveData: LiveData<java.lang.Exception?> = MutableLiveData()
 

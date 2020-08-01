@@ -1,5 +1,6 @@
 package com.mirogal.cocktail.presentation.ui.search
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -10,8 +11,9 @@ import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 class SearchViewModel(
         private val cocktailRepository: com.mirogal.cocktail.data.repository.source.CocktailRepository,
         private val cocktailModelMapper: CocktailModelMapper,
-        viewStateHandle: SavedStateHandle
-) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle) {
+        viewStateHandle: SavedStateHandle,
+        applicationContext: Application
+) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle, applicationContext) {
 
     val cocktailListLiveData: LiveData<List<CocktailModel>?>
     val searchStringLiveData: MutableLiveData<String?> = MutableLiveData()

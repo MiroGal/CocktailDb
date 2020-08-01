@@ -165,13 +165,15 @@ object Injector {
                         provideRepository(appContext),
                         provideModelMapper(appContext),
                         provideModelMapper(appContext),
-                        handle
+                        handle,
+                        appContext as Application
                 ) as T
 
                 SearchViewModel::class.java -> SearchViewModel(
                         provideRepository(appContext),
                         provideModelMapper(appContext),
-                        handle
+                        handle,
+                        appContext as Application
                 ) as T
 
                 else -> throw NotImplementedError("Must provide viewModel for class ${modelClass.simpleName}")

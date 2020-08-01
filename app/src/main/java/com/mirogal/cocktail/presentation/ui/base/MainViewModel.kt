@@ -1,5 +1,6 @@
 package com.mirogal.cocktail.presentation.ui.base
 
+import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
@@ -19,8 +20,9 @@ class MainViewModel(
         private val userRepository: UserRepository,
         private val userModelMapper: UserModelMapper,
         private val cocktailModelMapper: CocktailModelMapper,
-        viewStateHandle: SavedStateHandle
-) : BaseViewModel(viewStateHandle) {
+        viewStateHandle: SavedStateHandle,
+        applicationContext: Application
+) : BaseViewModel(viewStateHandle, applicationContext) {
 
     private val cocktailListLiveData =
             cocktailRepository.cocktailListLiveData.map(cocktailModelMapper::mapTo)
