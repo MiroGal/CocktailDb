@@ -14,11 +14,12 @@ import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
-class DetailActivity : com.mirogal.cocktail.presentation.ui.base.BaseActivity<DetailViewModel>() {
+class DetailActivity : BaseActivity<DetailViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_detail
 

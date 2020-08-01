@@ -6,9 +6,9 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
-import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
+import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModelNative
 
-class AuthViewModel(application: Application) : BaseViewModel(application) {
+class AuthViewModel(application: Application) : BaseViewModelNative(application) {
 
     private val validLogin = "MiroGal"
     private val validPassword = "Miro89"

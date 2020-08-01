@@ -3,19 +3,25 @@ package com.mirogal.cocktail.presentation.ui.main.drink
 import android.app.Application
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
+import com.mirogal.cocktail.data.repository.source.CocktailRepository
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
-import com.mirogal.cocktail.datanative.repository.CocktailRepository
+import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
 import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
 import com.mirogal.cocktail.presentation.modelnative.filter.*
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiverLiveData
 import com.mirogal.cocktail.presentation.receiver.ProposeDrinkReceiverLiveData
-import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
+import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 import java.util.*
 
-class DrinkViewModel(application: Application) : BaseViewModel(application) {
+class DrinkViewModel(
+        private val cocktailRepository: CocktailRepository,
+        private val cocktailModelMapper: CocktailModelMapper,
+        viewStateHandle: SavedStateHandle,
+        application: Application
+) : BaseViewModel(viewStateHandle, application) {
 
     val context = application
-    private val repository = CocktailRepository.newInstance(application)
+    private val repository = com.mirogal.cocktail.datanative.repository.CocktailRepository.newInstance(application)
 
     private val saveCocktailListLiveData: LiveData<List<CocktailDbModel>?> = repository.saveCocktailListLiveData
 

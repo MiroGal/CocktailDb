@@ -3,12 +3,11 @@ package com.mirogal.cocktail.presentation.ui.main.drink
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilterType
-import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
+import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter_content.*
@@ -17,7 +16,8 @@ import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
-    override val viewModel: DrinkViewModel by activityViewModels()
+
+    override fun getViewModelClass() = DrinkViewModel::class
 
     private var isFragmentNotJustCreated = false
 
@@ -25,7 +25,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
         fun newInstance() = DrinkFilterFragment()
     }
 
-    override fun configureView(view: View, savedInstanceState: Bundle?) {
+    override fun configureView(savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_filter_label)
 
@@ -57,7 +57,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
         }
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
             btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
             btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""

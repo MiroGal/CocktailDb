@@ -14,7 +14,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.TaskStackBuilder
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
@@ -22,8 +21,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
-import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
-import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseFragment
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMargin
 import kotlinx.android.synthetic.main.fragment_drink_history.*
@@ -34,7 +33,8 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
-    override val viewModel: DrinkViewModel by activityViewModels()
+
+    override fun getViewModelClass() = DrinkViewModel::class
 
     private lateinit var drinkListAdapter: DrinkListAdapter
 
@@ -42,7 +42,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         fun newInstance() = DrinkHistoryFragment()
     }
 
-    override fun configureView(view: View, savedInstanceState: Bundle?) {
+    override fun configureView(savedInstanceState: Bundle?) {
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -57,7 +57,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list?.isNotEmpty()!!) {
                 showData()

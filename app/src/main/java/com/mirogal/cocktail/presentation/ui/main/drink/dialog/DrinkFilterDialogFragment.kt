@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilter
 import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilterType
-import com.mirogal.cocktail.presentation.ui.basenative.dialog.BaseDialogFragment
+import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkFilterListAdapter
 import com.mirogal.cocktail.presentation.ui.util.DividerItemDecorationWithoutUnderLine

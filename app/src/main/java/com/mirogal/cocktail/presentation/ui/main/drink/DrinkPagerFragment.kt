@@ -18,8 +18,8 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
 import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
 import com.mirogal.cocktail.presentation.modelnative.filter.*
-import com.mirogal.cocktail.presentation.ui.basenative.BaseFragment
-import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseFragment
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkPagerAdapter
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment
@@ -34,7 +34,9 @@ import java.util.*
 class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_pager
-    override val viewModel: DrinkViewModel by activityViewModels()
+
+    override fun getViewModelClass() = DrinkViewModel::class
+
     private val mainViewModel: MainViewModel by activityViewModels()
 
     private lateinit var drinkPagerAdapter: DrinkPagerAdapter
@@ -43,7 +45,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
         fun newInstance() = DrinkPagerFragment()
     }
 
-    override fun configureView(view: View, savedInstanceState: Bundle?) {
+    override fun configureView(savedInstanceState: Bundle?) {
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.drink_pager_label)
 
@@ -136,7 +138,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
         })
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
                 toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)

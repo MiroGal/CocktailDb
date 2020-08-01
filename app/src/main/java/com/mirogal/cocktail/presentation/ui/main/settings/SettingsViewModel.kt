@@ -1,6 +1,10 @@
 package com.mirogal.cocktail.presentation.ui.main.settings
 
 import android.app.Application
-import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModel
+import androidx.lifecycle.SavedStateHandle
+import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
-class SettingsViewModel(application: Application) : BaseViewModel(application)
+class SettingsViewModel(
+        viewStateHandle: SavedStateHandle,
+        application: Application
+) : BaseViewModel(viewStateHandle, application)

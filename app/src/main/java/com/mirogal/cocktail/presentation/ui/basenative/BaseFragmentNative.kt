@@ -1,20 +1,16 @@
-package com.mirogal.cocktail.presentation.ui.basenative.dialog
+package com.mirogal.cocktail.presentation.ui.basenative
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.mirogal.cocktail.R
+import androidx.fragment.app.Fragment
 
-abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
+abstract class BaseFragmentNative<ViewModel : BaseViewModelNative> : Fragment() {
 
     protected abstract val contentLayoutResId: Int
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme)
-    }
+    protected abstract val viewModel: ViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(contentLayoutResId, container, false)
@@ -23,9 +19,14 @@ abstract class BaseBottomSheetDialogFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configureView(view, savedInstanceState)
+        configureObserver(view, savedInstanceState)
     }
 
     protected open fun configureView(view: View, savedInstanceState: Bundle?) {
+        // stub
+    }
+
+    protected open fun configureObserver(view: View, savedInstanceState: Bundle?) {
         // stub
     }
 

@@ -5,15 +5,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
+import com.mirogal.cocktail.data.repository.source.CocktailRepository
 import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
+import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class DetailViewModel(
-        private val cocktailRepository: com.mirogal.cocktail.data.repository.source.CocktailRepository,
+        private val cocktailRepository: CocktailRepository,
         private val cocktailModelMapper: CocktailModelMapper,
         viewStateHandle: SavedStateHandle,
         application: Application
-) : com.mirogal.cocktail.presentation.ui.base.BaseViewModel(viewStateHandle, application) {
+) : BaseViewModel(viewStateHandle, application) {
 
     val cocktailIdLiveData: MutableLiveData<Long> = MutableLiveData()
 

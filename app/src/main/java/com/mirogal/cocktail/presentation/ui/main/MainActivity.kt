@@ -2,13 +2,12 @@ package com.mirogal.cocktail.presentation.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.authnative.AuthActivity
-import com.mirogal.cocktail.presentation.ui.basenative.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detailnative.DetailActivity
+import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment
@@ -22,7 +21,8 @@ class MainActivity : BaseActivity<MainViewModel>(),
         DayDrinkDialogFragment.OnActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
-    override val viewModel: MainViewModel by viewModels()
+
+    override fun getViewModelClass() = MainViewModel::class
 
     override fun configureView(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
@@ -40,7 +40,7 @@ class MainActivity : BaseActivity<MainViewModel>(),
         }
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
             if (it) {
                 bottom_nav_view.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED

@@ -55,8 +55,11 @@ import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
 import com.mirogal.cocktail.presentation.mapper.LocalizedStringModelMapper
 import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.mapper.base.BaseModelMapper
-import com.mirogal.cocktail.presentation.ui.base.MainViewModel
 import com.mirogal.cocktail.presentation.ui.detail.DetailViewModel
+import com.mirogal.cocktail.presentation.ui.main.MainViewModel
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
+import com.mirogal.cocktail.presentation.ui.main.profile.ProfileViewModel
+import com.mirogal.cocktail.presentation.ui.main.settings.SettingsViewModel
 import com.mirogal.cocktail.presentation.ui.search.SearchViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -161,10 +164,12 @@ object Injector {
 //            }
             return when (modelClass) {
                 MainViewModel::class.java -> MainViewModel(
+                        handle,
+                        appContext as Application
+                ) as T
+
+                SearchViewModel::class.java -> SearchViewModel(
                         provideRepository(appContext),
-                        provideRepository(appContext),
-                        provideRepository(appContext),
-                        provideModelMapper(appContext),
                         provideModelMapper(appContext),
                         handle,
                         appContext as Application
@@ -177,9 +182,19 @@ object Injector {
                         appContext as Application
                 ) as T
 
-                SearchViewModel::class.java -> SearchViewModel(
+                DrinkViewModel::class.java -> DrinkViewModel(
                         provideRepository(appContext),
                         provideModelMapper(appContext),
+                        handle,
+                        appContext as Application
+                ) as T
+
+                SettingsViewModel::class.java -> SettingsViewModel(
+                        handle,
+                        appContext as Application
+                ) as T
+
+                ProfileViewModel::class.java -> ProfileViewModel(
                         handle,
                         appContext as Application
                 ) as T

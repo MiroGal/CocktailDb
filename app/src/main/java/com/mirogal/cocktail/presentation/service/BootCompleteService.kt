@@ -7,7 +7,7 @@ import android.os.Looper
 import android.widget.Toast
 import androidx.core.app.JobIntentService
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.ui.authnative.AuthActivity
+import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 
 class BootCompleteService : JobIntentService() {
 
