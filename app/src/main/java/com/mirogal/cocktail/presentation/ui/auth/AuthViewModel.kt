@@ -1,14 +1,20 @@
 package com.mirogal.cocktail.presentation.ui.auth
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Observer
+import androidx.lifecycle.*
+import com.mirogal.cocktail.data.repository.source.AuthRepository
+import com.mirogal.cocktail.data.repository.source.UserRepository
+import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
-import com.mirogal.cocktail.presentation.ui.basenative.BaseViewModelNative
+import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
-class AuthViewModel(application: Application) : BaseViewModelNative(application) {
+class AuthViewModel(
+        private val authRepository: AuthRepository,
+        private val userRepository: UserRepository,
+        private val userModelMapper: UserModelMapper,
+        viewStateHandle: SavedStateHandle,
+        application: Application
+) : BaseViewModel(viewStateHandle, application) {
 
     private val validLogin = "MiroGal"
     private val validPassword = "Miro89"

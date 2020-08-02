@@ -7,19 +7,19 @@ import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
-import com.mirogal.cocktail.presentation.ui.basenative.BaseActivityNative
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
-class AuthActivity : BaseActivityNative<AuthViewModel>() {
+class AuthActivity : BaseActivity<AuthViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_auth
-    override val viewModel: AuthViewModel by viewModels()
+
+    override fun getViewModelClass() = AuthViewModel::class
 
     private val validLogin = "MiroGal"
     private val validPassword = "Miro89"
@@ -67,7 +67,7 @@ class AuthActivity : BaseActivityNative<AuthViewModel>() {
         root_view.setOnFocusChangeListener { v, hasFocus -> hideKeyboard() }
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
             if (btn_authorization.isClickable != it) {
                 btn_authorization.isClickable = it ?: false

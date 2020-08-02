@@ -55,6 +55,7 @@ import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
 import com.mirogal.cocktail.presentation.mapper.LocalizedStringModelMapper
 import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.mapper.base.BaseModelMapper
+import com.mirogal.cocktail.presentation.ui.auth.AuthViewModel
 import com.mirogal.cocktail.presentation.ui.detail.DetailViewModel
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
@@ -163,6 +164,14 @@ object Injector {
 //                else -> throw NotImplementedError("Must provide viewModel for class ${modelClass.simpleName}")
 //            }
             return when (modelClass) {
+                AuthViewModel::class.java -> AuthViewModel(
+                        provideRepository(appContext),
+                        provideRepository(appContext),
+                        provideModelMapper(appContext),
+                        handle,
+                        appContext as Application
+                ) as T
+
                 MainViewModel::class.java -> MainViewModel(
                         handle,
                         appContext as Application

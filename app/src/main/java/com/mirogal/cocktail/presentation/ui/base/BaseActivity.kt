@@ -19,6 +19,7 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
     protected open val viewModel: ViewModel by baseViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setApplicationTheme()
         super.onCreate(savedInstanceState)
         setContentView(contentLayoutResId)
     }
@@ -32,6 +33,10 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
             //TODO handle error
             Toast.makeText(this, "error = ${it.message}", Toast.LENGTH_SHORT).show()
         }
+    }
+
+    protected open fun setApplicationTheme() {
+        // stub
     }
 
     protected open fun configureView(savedInstanceState: Bundle?) {

@@ -1,6 +1,7 @@
 package com.mirogal.cocktail.presentation.ui.search
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -40,6 +41,7 @@ class SearchViewModel(
     }
 
     fun saveCocktail(cocktail: CocktailModel) {
+        Log.d(">>>", "VM, id: ${cocktail.id}")
         launchRequest {
             cocktailRepository.addOrReplaceCocktail(cocktailModelMapper.mapFrom(cocktail))
         }
