@@ -12,7 +12,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.main.MainActivity
+import com.mirogal.cocktail.presentation.ui.test.TestActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
 class AuthActivity : BaseActivity<AuthViewModel>() {
@@ -40,7 +40,8 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         btn_authorization.setOnClickListener {
             when (viewModel.isAuthDataValidLiveData.value ?: AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
-                    startActivity(Intent(this@AuthActivity, MainActivity::class.java))
+//                    startActivity(Intent(this@AuthActivity, MainActivity::class.java))
+                    startActivity(Intent(this@AuthActivity, TestActivity::class.java))
                 }
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_INVALID -> {
                     showInvalidAuthDataDialog(AuthDataValidStatus.LOGIN_VALID_PASSWORD_INVALID)

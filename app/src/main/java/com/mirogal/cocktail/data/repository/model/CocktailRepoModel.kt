@@ -1,6 +1,6 @@
 package com.mirogal.cocktail.data.repository.model
 
-class CocktailRepoModel(
+data class CocktailRepoModel(
         val id: Long = -1L,
         val names: LocalizedStringRepoModel = LocalizedStringRepoModel(),
         val category: String = "",

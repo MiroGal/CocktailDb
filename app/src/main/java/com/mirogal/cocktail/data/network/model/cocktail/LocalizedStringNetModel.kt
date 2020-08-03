@@ -1,6 +1,6 @@
 package com.mirogal.cocktail.data.network.model.cocktail
 
-class LocalizedStringNetModel(
+data class LocalizedStringNetModel(
         val default: String? = null,
         val defaultAlternate: String? = null,
         val es: String? = null,

@@ -2,7 +2,7 @@ package com.mirogal.cocktail.data.network.model.cocktail
 
 import java.util.*
 
-class CocktailNetModel(
+data class CocktailNetModel(
         val id: Long = -1L,
         val names: LocalizedStringNetModel = LocalizedStringNetModel(),
         val category: String = "",

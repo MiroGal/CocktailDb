@@ -62,6 +62,7 @@ import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileViewModel
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsViewModel
 import com.mirogal.cocktail.presentation.ui.search.SearchViewModel
+import com.mirogal.cocktail.presentation.ui.test.TestViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.CallAdapter
@@ -164,6 +165,16 @@ object Injector {
 //                else -> throw NotImplementedError("Must provide viewModel for class ${modelClass.simpleName}")
 //            }
             return when (modelClass) {
+                TestViewModel::class.java -> TestViewModel(
+                        provideRepository(appContext),
+                        provideRepository(appContext),
+                        provideRepository(appContext),
+                        provideModelMapper(appContext),
+                        provideModelMapper(appContext),
+                        handle,
+                        appContext as Application
+                ) as T
+
                 AuthViewModel::class.java -> AuthViewModel(
                         provideRepository(appContext),
                         provideRepository(appContext),

@@ -1,5 +1,5 @@
 package com.mirogal.cocktail.data.network.model.cocktail
 
-class CocktailContainerNetModel(
+data class CocktailContainerNetModel(
         val cocktailList: List<CocktailNetModel> = ArrayList()
 )

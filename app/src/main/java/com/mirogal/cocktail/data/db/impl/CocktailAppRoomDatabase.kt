@@ -34,8 +34,9 @@ abstract class CocktailAppRoomDatabase : RoomDatabase() {
                         CocktailAppRoomDatabase::class.java,
                         CocktailAppRoomDatabase::class.java.name
                 )
-                .addMigrations()
-                //.fallbackToDestructiveMigration()
+//                .addMigrations()
+                .fallbackToDestructiveMigration()
+//                .allowMainThreadQueries()
                 .build()
     })
 
