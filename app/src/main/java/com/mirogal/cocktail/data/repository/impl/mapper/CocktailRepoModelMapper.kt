@@ -1,9 +1,12 @@
 package com.mirogal.cocktail.data.repository.impl.mapper
 
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.LocalizedStringDbModel
 import com.mirogal.cocktail.data.network.model.cocktail.CocktailNetModel
+import com.mirogal.cocktail.data.network.model.cocktail.LocalizedStringNetModel
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
 import com.mirogal.cocktail.data.repository.model.CocktailRepoModel
+import com.mirogal.cocktail.data.repository.model.LocalizedStringRepoModel
 import java.util.*
 
 class CocktailRepoModelMapper(
@@ -13,12 +16,12 @@ class CocktailRepoModelMapper(
     override fun mapDbToRepo(db: CocktailDbModel): CocktailRepoModel = with(db) {
         CocktailRepoModel(
                 id = id,
-                names = names.run(localizedStringRepoModelMapper::mapDbToRepo),
+                names = names?.run(localizedStringRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
                 category = category,
                 alcoholType = alcoholType,
                 glass = glass,
                 image = image,
-                instructions = instructions.run(localizedStringRepoModelMapper::mapDbToRepo),
+                instructions = instructions?.run(localizedStringRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
                 ingredientsWithMeasures = ingredients.mapIndexed { index, ingredient -> ingredient to measures[index] }.toMap()
         )
     }
@@ -26,12 +29,12 @@ class CocktailRepoModelMapper(
     override fun mapRepoToDb(repo: CocktailRepoModel): CocktailDbModel = with(repo) {
         CocktailDbModel(
                 id = id,
-                names = names.run(localizedStringRepoModelMapper::mapRepoToDb),
+                names = names?.run(localizedStringRepoModelMapper::mapRepoToDb) ?: LocalizedStringDbModel(),
                 category = category,
                 alcoholType = alcoholType,
                 glass = glass,
                 image = image,
-                instructions = instructions.run(localizedStringRepoModelMapper::mapRepoToDb),
+                instructions = instructions?.run(localizedStringRepoModelMapper::mapRepoToDb) ?: LocalizedStringDbModel(),
                 ingredients = ingredientsWithMeasures.keys.toList(),
                 measures = ingredientsWithMeasures.values.toList()
         )
@@ -40,12 +43,12 @@ class CocktailRepoModelMapper(
     override fun mapNetToRepo(net: CocktailNetModel): CocktailRepoModel = with(net) {
         CocktailRepoModel(
                 id = id,
-                names = names.run(localizedStringRepoModelMapper::mapNetToRepo),
+                names = names?.run(localizedStringRepoModelMapper::mapNetToRepo) ?: LocalizedStringRepoModel(),
                 category = category,
                 alcoholType = alcoholType,
                 glass = glass,
                 image = image,
-                instructions = instructions.run(localizedStringRepoModelMapper::mapNetToRepo),
+                instructions = instructions?.run(localizedStringRepoModelMapper::mapNetToRepo) ?: LocalizedStringRepoModel(),
                 ingredientsWithMeasures = emptyMap()
         )
     }
@@ -53,12 +56,12 @@ class CocktailRepoModelMapper(
     override fun mapRepoToNet(repo: CocktailRepoModel): CocktailNetModel = with(repo) {
         CocktailNetModel(
                 id = id,
-                names = names.run(localizedStringRepoModelMapper::mapRepoToNet),
+                names = names?.run(localizedStringRepoModelMapper::mapRepoToNet) ?: LocalizedStringNetModel(),
                 category = category,
                 alcoholType = alcoholType,
                 glass = glass,
                 image = image,
-                instructions = instructions.run(localizedStringRepoModelMapper::mapRepoToNet),
+                instructions = instructions?.run(localizedStringRepoModelMapper::mapRepoToNet) ?: LocalizedStringNetModel(),
                 ingredientsWithMeasures = emptyMap(),
                 date = Date()
         )

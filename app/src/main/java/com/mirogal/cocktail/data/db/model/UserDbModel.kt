@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 import com.mirogal.cocktail.data.db.Table
 
 @Entity(tableName = Table.USER)
-data class UserDbModel(
+class UserDbModel(
         @PrimaryKey
         @ColumnInfo(name = "id")
         val id: Long = 1L,

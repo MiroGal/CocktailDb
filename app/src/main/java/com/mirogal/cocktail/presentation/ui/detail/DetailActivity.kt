@@ -9,7 +9,6 @@ import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
@@ -50,12 +49,12 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         viewModel.cocktailIdLiveData.value = cocktailId
         viewModel.cocktailLiveData.observe(this, Observer {
             if (it != null) {
-                tv_info_name.text = it.names.default
+                tv_info_name.text = it.names?.default
                 tv_info_alcoholic.text = it.alcoholType.key
                 tv_info_glass.text = it.glass.key
-                tvInstructionBody.text = it.instructions.default
+                tvInstructionBody.text = it.instructions?.default
 
-                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
+//                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
 //                val ingredientList = toIngredientList(it.ingredientList, it.measureList)
 //                val listAdapter = DetailListAdapter(ingredientList)
 //                rv_ingredient_list.adapter = listAdapter

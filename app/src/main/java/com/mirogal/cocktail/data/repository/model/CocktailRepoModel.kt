@@ -1,13 +1,13 @@
 package com.mirogal.cocktail.data.repository.model
 
-data class CocktailRepoModel(
+class CocktailRepoModel(
         val id: Long = -1L,
-        val names: LocalizedStringRepoModel = LocalizedStringRepoModel(),
+        val names: LocalizedStringRepoModel? = LocalizedStringRepoModel(),
         val category: String = "",
         val alcoholType: String = "",
         val glass: String = "",
         val image: String = "",
-        val instructions: LocalizedStringRepoModel = LocalizedStringRepoModel(),
+        val instructions: LocalizedStringRepoModel? = LocalizedStringRepoModel(),
         val ingredientsWithMeasures: Map<String, String?> = emptyMap()/*,
         val date: Date = Date()*/
 )

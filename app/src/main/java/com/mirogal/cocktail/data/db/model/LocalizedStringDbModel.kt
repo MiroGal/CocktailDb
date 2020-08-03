@@ -2,7 +2,7 @@ package com.mirogal.cocktail.data.db.model
 
 import androidx.room.ColumnInfo
 
-data class LocalizedStringDbModel(
+class LocalizedStringDbModel(
         @ColumnInfo(name = "default")
         var default: String? = null,
 

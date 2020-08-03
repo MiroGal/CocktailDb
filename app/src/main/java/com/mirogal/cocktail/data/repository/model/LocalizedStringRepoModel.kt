@@ -1,6 +1,6 @@
 package com.mirogal.cocktail.data.repository.model
 
-data class LocalizedStringRepoModel(
+class LocalizedStringRepoModel(
         val default: String? = null,
         val defaultAlternate: String? = null,
         val es: String? = null,
