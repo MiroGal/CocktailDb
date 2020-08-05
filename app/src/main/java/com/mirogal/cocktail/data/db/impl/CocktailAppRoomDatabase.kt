@@ -14,7 +14,7 @@ import com.mirogal.cocktail.data.db.model.UserDbModel
 import com.mirogal.cocktail.util.SingletonHolder
 
 @Database(
-        version = 5,
+        version = 10,
         entities = [
             CocktailDbModel::class,
             UserDbModel::class

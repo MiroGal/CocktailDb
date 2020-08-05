@@ -4,10 +4,10 @@ import androidx.room.ColumnInfo
 
 class LocalizedStringDbModel(
         @ColumnInfo(name = "default")
-        var default: String? = null,
+        var baseValue: String? = null,
 
         @ColumnInfo(name = "default_alternate")
-        var defaultAlternate: String? = null,
+        var baseValueAlternate: String? = null,
 
         @ColumnInfo(name = "es")
         var es: String? = null,

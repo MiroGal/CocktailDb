@@ -1,6 +1,5 @@
 package com.mirogal.cocktail.data.repository.impl.mapper
 
-import android.util.Log
 import com.mirogal.cocktail.data.db.model.LocalizedStringDbModel
 import com.mirogal.cocktail.data.network.model.cocktail.LocalizedStringNetModel
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
@@ -10,10 +9,9 @@ class LocalizedStringRepoModelMapper :
         BaseRepoModelMapper<LocalizedStringRepoModel, LocalizedStringDbModel, LocalizedStringNetModel>() {
 
     override fun mapDbToRepo(db: LocalizedStringDbModel) = with(db) {
-        Log.d("<--", "name: ${db.default}")
         LocalizedStringRepoModel(
-                default = default,
-                defaultAlternate = defaultAlternate,
+                default = baseValue,
+                defaultAlternate = baseValueAlternate,
                 es = es,
                 de = de,
                 fr = fr,
@@ -23,10 +21,9 @@ class LocalizedStringRepoModelMapper :
     }
 
     override fun mapRepoToDb(repo: LocalizedStringRepoModel) = with(repo) {
-        Log.d("-->", "name: ${repo.default}")
         LocalizedStringDbModel(
-                default = default,
-                defaultAlternate = defaultAlternate,
+                baseValue = default,
+                baseValueAlternate = defaultAlternate,
                 es = es,
                 de = de,
                 fr = fr,
