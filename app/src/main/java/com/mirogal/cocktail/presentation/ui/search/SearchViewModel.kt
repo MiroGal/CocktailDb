@@ -1,14 +1,15 @@
 package com.mirogal.cocktail.presentation.ui.search
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
+import android.util.Log
+import androidx.lifecycle.*
 import com.mirogal.cocktail.data.repository.source.CocktailRepository
+import com.mirogal.cocktail.extension.log
+import com.mirogal.cocktail.presentation.extension.debounce
 import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import kotlinx.coroutines.Job
 
 class SearchViewModel(
         private val cocktailRepository: CocktailRepository,
@@ -17,31 +18,45 @@ class SearchViewModel(
         application: Application
 ) : BaseViewModel(viewStateHandle, application) {
 
-    val cocktailListLiveData: LiveData<List<CocktailModel>>
-    val searchStringLiveData: MutableLiveData<String?> = MutableLiveData()
+    private var searchJob: Job? = null
+
+    val searchResultCocktailListLiveData: LiveData<List<CocktailModel>> = MutableLiveData(emptyList())
+
+    val searchQueryLiveData = MutableLiveData<String>(null)
+    private val searchQueryDebounceLiveData =
+            searchQueryLiveData.map { "LOG $it (${System.currentTimeMillis()})".log; it }
+                    .debounce(1000L)
+    private val searchTriggerObserver = Observer<String?> { query ->
+        "LOG debounce $query (${System.currentTimeMillis()})".log
+        searchCocktail(query)
+    }
 
     init {
-        cocktailListLiveData = MediatorLiveData<List<CocktailModel>>().apply {
-            addSource(searchStringLiveData) {
-                launchRequest {
-                    if (it.isNullOrEmpty()) {
-                        postValue(mutableListOf())
-                    } else {
-                        postValue(cocktailRepository.getCocktailListByName(it).map(cocktailModelMapper::mapTo))
-                    }
+        searchQueryDebounceLiveData.observeForever(searchTriggerObserver)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        searchQueryDebounceLiveData.removeObserver(searchTriggerObserver)
+    }
+
+    private fun searchCocktail(query: String?) {
+        if (searchJob?.isActive == true) searchJob?.cancel()
+        searchJob = launchRequest(searchResultCocktailListLiveData) {
+            when {
+                query.isNullOrEmpty() -> emptyList()
+                else -> {
+                    cocktailRepository
+                            .searchCocktailRemote(query)
+                            .map(cocktailModelMapper::mapTo)
                 }
             }
         }
-        cocktailListLiveData.value = null
-    }
-
-    fun setSearchString(search: String?) {
-        searchStringLiveData.value = search
     }
 
     fun saveCocktail(cocktail: CocktailModel) {
         launchRequest {
-            cocktailRepository.addOrReplaceCocktail(cocktailModelMapper.mapFrom(cocktail))
+            cocktailRepository.addOrReplaceCocktail(cocktail.run(cocktailModelMapper::mapFrom))
         }
     }
 

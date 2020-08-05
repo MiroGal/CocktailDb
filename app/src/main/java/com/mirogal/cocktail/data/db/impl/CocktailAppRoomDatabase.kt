@@ -14,7 +14,7 @@ import com.mirogal.cocktail.data.db.model.UserDbModel
 import com.mirogal.cocktail.util.SingletonHolder
 
 @Database(
-        version = 1,
+        version = 5,
         entities = [
             CocktailDbModel::class,
             UserDbModel::class
@@ -28,15 +28,28 @@ abstract class CocktailAppRoomDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 
     companion object : SingletonHolder<CocktailAppRoomDatabase, Context>({
+
+//        val MIGRATION_1_2 = object : Migration(1, 2) {
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                database.execSQL("ALTER TABLE USER ADD COLUMN avatar TEXT DEFAULT NULL")
+//            }
+//        }
+//
+//        val MIGRATION_2_3 = object : Migration(2, 3) {
+//            override fun migrate(database: SupportSQLiteDatabase) {
+//                database.execSQL("ALTER TABLE USER ADD COLUMN date TEXT DEFAULT NULL")
+//            }
+//        }
+
         Room
                 .databaseBuilder(
                         it.applicationContext,
                         CocktailAppRoomDatabase::class.java,
                         CocktailAppRoomDatabase::class.java.name
                 )
-//                .addMigrations()
-                .fallbackToDestructiveMigration()
-//                .allowMainThreadQueries()
+//                .addMigrations(MIGRATION_1_2/*, MIGRATION_2_3*/)
+                .fallbackToDestructiveMigration() // Migration with destroy ald data
+//                .allowMainThreadQueries() // Work in main thread for debugging
                 .build()
     })
 

@@ -10,4 +10,6 @@ interface AuthRepository : BaseRepository {
      */
     suspend fun signIn(email: String, password: String): Boolean
 
+    suspend fun signUp(name: String, lastName: String, email: String, password: String): Boolean
+
 }

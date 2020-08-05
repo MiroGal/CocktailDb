@@ -5,7 +5,7 @@ import okhttp3.Interceptor
 import okhttp3.Response
 import java.io.IOException
 
-class TokenInterceptor(
+internal class TokenInterceptor(
         private val getToken: () -> String?
 ) : Interceptor {
 

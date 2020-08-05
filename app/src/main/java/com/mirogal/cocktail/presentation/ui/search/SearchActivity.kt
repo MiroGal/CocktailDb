@@ -22,7 +22,6 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
         SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
-
     override fun getViewModelClass() = SearchViewModel::class
 
     private val listAdapter = SearchListAdapter(this, this)
@@ -50,7 +49,7 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
     override fun configureObserver() {
         super.configureObserver()
 
-        viewModel.cocktailListLiveData.observe(this, Observer { list ->
+        viewModel.searchResultCocktailListLiveData.observe(this, Observer { list ->
             when {
                 list == null -> showPreview()
                 list.isEmpty() -> showEmpty()
@@ -72,7 +71,7 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
             isFocusable = true
             isIconified = false
             requestFocusFromTouch() // set focus
-            searchView.setQuery(viewModel.searchStringLiveData.value ?: "", false) // set searchText
+            searchView.setQuery(viewModel.searchQueryLiveData.value ?: "", false) // set searchText
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(s: String): Boolean {
@@ -80,12 +79,10 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
                     }
 
                     override fun onQueryTextChange(s: String): Boolean {
-                        viewModel.setSearchString(
-                                when {
-                                    s.isNotEmpty() -> s
-                                    else -> null
-                                }
-                        )
+                        viewModel.searchQueryLiveData.value = when {
+                            s.isNotEmpty() -> s
+                            else -> null
+                        }
                         return false
                     }
                 }
@@ -95,9 +92,9 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
     }
 
 
-    override fun onItemClick(cocktailModel: CocktailModel) {
-        viewModel.saveCocktail(cocktailModel)
-        openDrinkDetailActivity(cocktailModel.id, cocktailModel.names?.default)
+    override fun onItemClick(cocktail: CocktailModel) {
+        viewModel.saveCocktail(cocktail)
+        openDrinkDetailActivity(cocktail.id, cocktail.names.default)
     }
 
 

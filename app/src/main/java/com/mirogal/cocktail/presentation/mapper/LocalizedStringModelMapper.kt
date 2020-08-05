@@ -9,8 +9,8 @@ import com.mirogal.cocktail.presentation.model.cocktail.LocalizedStringModel
  */
 class LocalizedStringModelMapper : BaseModelMapper<LocalizedStringModel, LocalizedStringRepoModel>() {
 
-    override fun mapTo(model: LocalizedStringRepoModel) = with(model) {
-        LocalizedStringModel(
+    override fun mapFrom(model: LocalizedStringModel) = with(model) {
+        LocalizedStringRepoModel(
                 default = default,
                 defaultAlternate = defaultAlternate,
                 es = es,
@@ -21,8 +21,8 @@ class LocalizedStringModelMapper : BaseModelMapper<LocalizedStringModel, Localiz
         )
     }
 
-    override fun mapFrom(model: LocalizedStringModel) = with(model) {
-        LocalizedStringRepoModel(
+    override fun mapTo(model: LocalizedStringRepoModel) = with(model) {
+        LocalizedStringModel(
                 default = default,
                 defaultAlternate = defaultAlternate,
                 es = es,

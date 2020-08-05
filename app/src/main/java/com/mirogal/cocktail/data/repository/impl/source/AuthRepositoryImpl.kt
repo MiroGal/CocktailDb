@@ -29,4 +29,24 @@ class AuthRepositoryImpl(
                 }
     }
 
+    override suspend fun signUp(
+            name: String,
+            lastName: String,
+            email: String,
+            password: String
+    ): Boolean {
+        return authNetSource
+                .signUp(name, lastName, email, password)
+                .let {
+                    tokenLocalSource.token = it
+
+                    //refresh user
+                    userNetSource.getUser()
+                            .run(userModelMapper::mapNetToDb)
+                            .run { userDbSource.saveUser(this) }
+
+                    tokenLocalSource.token != null
+                }
+    }
+
 }

@@ -4,7 +4,6 @@ import com.mirogal.cocktail.data.network.impl.service.UserApiService
 import com.mirogal.cocktail.data.network.impl.source.base.BaseNetSourceImpl
 import com.mirogal.cocktail.data.network.model.UserNetModel
 import com.mirogal.cocktail.data.network.source.UserNetSource
-import java.io.File
 
 class UserNetSourceImpl(
         apiService: UserApiService
@@ -15,13 +14,6 @@ class UserNetSourceImpl(
         return performRequest {
             getUser()
         }
-    }
-
-    override suspend fun updateUserLogo(avatar: File) {
-        //TODO multipart
-//        return performRequest {
-//            getUser()
-//        }
     }
 
     override suspend fun updateUser(user: UserNetModel) {

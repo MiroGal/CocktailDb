@@ -9,4 +9,6 @@ interface AuthNetSource : BaseNetSource {
      */
     suspend fun signIn(email: String, password: String): String
 
+    suspend fun signUp(name: String, lastName: String, email: String, password: String): String
+
 }

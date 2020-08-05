@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.Observer
@@ -21,7 +22,6 @@ import kotlin.math.abs
 class DetailActivity : BaseActivity<DetailViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_detail
-
     override fun getViewModelClass() = DetailViewModel::class
 
     private var cocktailId: Long = 0
@@ -31,7 +31,7 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         super.configureView(savedInstanceState)
 
         cocktailId = intent.getLongExtra("cocktailId", 0)
-        cocktailName = intent.getStringExtra("cocktailName")
+        cocktailName = intent.getStringExtra("cocktailName") ?: ""
 
         setSupportActionBar(toolbar)
         if (cocktailName!!.isNotEmpty()) {
@@ -49,10 +49,10 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         viewModel.cocktailIdLiveData.value = cocktailId
         viewModel.cocktailLiveData.observe(this, Observer {
             if (it != null) {
-                tv_info_name.text = it.names?.default
+                tv_info_name.text = it.names.default
                 tv_info_alcoholic.text = it.alcoholType.key
                 tv_info_glass.text = it.glass.key
-                tvInstructionBody.text = it.instructions?.default
+                tvInstructionBody.text = it.instructions.default
 
 //                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
 //                val ingredientList = toIngredientList(it.ingredientList, it.measureList)

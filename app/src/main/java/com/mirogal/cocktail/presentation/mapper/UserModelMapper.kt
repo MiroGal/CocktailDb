@@ -10,7 +10,8 @@ class UserModelMapper : BaseModelMapper<UserModel, UserRepoModel>() {
         UserRepoModel(
                 id = id,
                 name = name,
-                lastName = lastName
+                lastName = lastName,
+                avatar = avatar
         )
     }
 
@@ -18,7 +19,8 @@ class UserModelMapper : BaseModelMapper<UserModel, UserRepoModel>() {
         UserModel(
                 id = id,
                 name = name,
-                lastName = lastName
+                lastName = lastName,
+                avatar = avatar
         )
     }
 

@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.map
 import com.mirogal.cocktail.data.db.source.UserDbSource
 import com.mirogal.cocktail.data.network.source.UserNetSource
+import com.mirogal.cocktail.data.network.source.UserUploadNetSource
 import com.mirogal.cocktail.data.repository.impl.mapper.UserRepoModelMapper
 import com.mirogal.cocktail.data.repository.model.UserRepoModel
 import com.mirogal.cocktail.data.repository.source.UserRepository
@@ -12,6 +13,7 @@ import java.io.File
 class UserRepositoryImpl(
         private val userDbSource: UserDbSource,
         private val userNetSource: UserNetSource,
+        private val userUploadNetSource: UserUploadNetSource,
         private val userModelMapper: UserRepoModelMapper
 ) : UserRepository {
 
@@ -22,7 +24,6 @@ class UserRepositoryImpl(
                     else -> null
                 }
             }
-
 
     override suspend fun getUser() = userDbSource.getUser()?.run(userModelMapper::mapDbToRepo)
 
@@ -38,8 +39,10 @@ class UserRepositoryImpl(
         userDbSource.saveUser(user.run(userModelMapper::mapRepoToDb))
     }
 
-    override suspend fun updateUserLogo(avatar: File) {
-        userNetSource.updateUserLogo(avatar)
+    override suspend fun updateUserAvatar(avatar: File, onUploadProgress: (Float) -> Unit): String {
+        return userUploadNetSource
+                .updateUserAvatar(avatar) { percent, _, _ -> onUploadProgress(percent) }
+                .apply{ refreshUser() }
     }
 
     override suspend fun deleteUser() {

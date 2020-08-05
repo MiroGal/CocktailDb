@@ -13,7 +13,7 @@ class CocktailDbModel(
         val id: Long = -1L,
 
         @Embedded(prefix = "name_")
-        val names: LocalizedStringDbModel? = LocalizedStringDbModel(),
+        val names: LocalizedStringDbModel? = null,
 
         @ColumnInfo(name = "category")
         val category: String = "",
@@ -28,7 +28,7 @@ class CocktailDbModel(
         val image: String = "",
 
         @Embedded(prefix = "instruction_")
-        val instructions: LocalizedStringDbModel? = LocalizedStringDbModel(),
+        val instructions: LocalizedStringDbModel? = null,
 
         @ColumnInfo(name = "ingredients")
         val ingredients: List<String> = emptyList(),

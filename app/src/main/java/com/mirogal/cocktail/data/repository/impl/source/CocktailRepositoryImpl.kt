@@ -59,8 +59,8 @@ class CocktailRepositoryImpl(
         dbSource.deleteAllCocktails()
     }
 
-    override suspend fun getCocktailListByName(name: String): List<CocktailRepoModel> {
-        return netSource.getCocktailList(name).map(mapper::mapNetToRepo)
+    override suspend fun searchCocktailRemote(query: String): List<CocktailRepoModel> {
+        return netSource.searchCocktail(query).run(mapper::mapNetToRepo)
     }
 
 }

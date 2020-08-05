@@ -24,18 +24,18 @@ import com.mirogal.cocktail.data.local.impl.source.TokenLocalSourceImpl
 import com.mirogal.cocktail.data.local.source.TokenLocalSource
 import com.mirogal.cocktail.data.network.impl.deserializer.BooleanDeserializer
 import com.mirogal.cocktail.data.network.impl.deserializer.Iso8601DateDeserializer
-import com.mirogal.cocktail.data.network.impl.deserializer.model.CocktailContainerNetModelDeserializer
 import com.mirogal.cocktail.data.network.impl.deserializer.model.CocktailNetModelDeserializer
 import com.mirogal.cocktail.data.network.impl.extension.deserializeType
 import com.mirogal.cocktail.data.network.impl.interceptor.*
 import com.mirogal.cocktail.data.network.impl.source.AuthNetSourceImpl
 import com.mirogal.cocktail.data.network.impl.source.CocktailNetSourceImpl
 import com.mirogal.cocktail.data.network.impl.source.UserNetSourceImpl
-import com.mirogal.cocktail.data.network.model.cocktail.CocktailContainerNetModel
+import com.mirogal.cocktail.data.network.impl.source.UserUploadNetSourceImpl
 import com.mirogal.cocktail.data.network.model.cocktail.CocktailNetModel
 import com.mirogal.cocktail.data.network.source.AuthNetSource
 import com.mirogal.cocktail.data.network.source.CocktailNetSource
 import com.mirogal.cocktail.data.network.source.UserNetSource
+import com.mirogal.cocktail.data.network.source.UserUploadNetSource
 import com.mirogal.cocktail.data.network.source.base.BaseNetSource
 import com.mirogal.cocktail.data.repository.impl.mapper.CocktailRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.mapper.LocalizedStringRepoModelMapper
@@ -62,9 +62,9 @@ import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileViewModel
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsViewModel
 import com.mirogal.cocktail.presentation.ui.search.SearchViewModel
-import com.mirogal.cocktail.presentation.ui.test.TestViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.CallAdapter
 import retrofit2.Converter
 import retrofit2.Retrofit
@@ -84,8 +84,6 @@ object Injector {
 
     private val baseGsonBuilder: GsonBuilder
         get() = GsonBuilder()
-                .registerTypeAdapter(deserializeType<CocktailContainerNetModel>(), CocktailContainerNetModelDeserializer())
-                .registerTypeAdapter(deserializeType<CocktailNetModel>(), CocktailNetModelDeserializer())
                 .registerTypeAdapter(deserializeType<Boolean>(), BooleanDeserializer(false))
                 .registerTypeAdapter(deserializeType<Date>(), Iso8601DateDeserializer())
                 .setPrettyPrinting()
@@ -97,10 +95,39 @@ object Injector {
 
         provideRetrofit(
                 appContext,
-                "https://www.thecocktaildb.com/",
+                "https://devlightschool.ew.r.appspot.com/",
                 setOf(),
                 setOf(
                         GsonConverterFactory.create(baseGsonBuilder.create())
+                ),
+                provideOkHttpClientBuilder(),
+                *arrayOf(
+                        TokenInterceptor { provideRepository.token },
+                        AppVersionInterceptor(),
+                        PlatformInterceptor(),
+                        PlatformVersionInterceptor()
+                )
+        )
+    }
+
+    val cocktailRetrofit by lazy {
+
+        val provideRepository = provideRepository<TokenRepository>(appContext)
+
+        provideRetrofit(
+                appContext,
+                "https://www.thecocktaildb.com/api/json/v1/1/",
+                setOf(),
+                setOf(
+                        GsonConverterFactory.create(
+                                baseGsonBuilder
+                                        //register deserializer for cocktail list for only cocktail retrofit
+                                        .registerTypeAdapter(
+                                                deserializeType<CocktailNetModel>(),
+                                                CocktailNetModelDeserializer()
+                                        )
+                                        .create()
+                        )
                 ),
                 provideOkHttpClientBuilder(),
                 *arrayOf(
@@ -158,23 +185,7 @@ object Injector {
                 modelClass: Class<T>,
                 handle: SavedStateHandle
         ): T {
-//            return when {
-//                modelClass.isAssignableFrom(MainViewModel::class.java) -> {
-//                    MainViewModel(provideRepository(appContext), handle) as T
-//                }
-//                else -> throw NotImplementedError("Must provide viewModel for class ${modelClass.simpleName}")
-//            }
             return when (modelClass) {
-                TestViewModel::class.java -> TestViewModel(
-                        provideRepository(appContext),
-                        provideRepository(appContext),
-                        provideRepository(appContext),
-                        provideModelMapper(appContext),
-                        provideModelMapper(appContext),
-                        handle,
-                        appContext as Application
-                ) as T
-
                 AuthViewModel::class.java -> AuthViewModel(
                         provideRepository(appContext),
                         provideRepository(appContext),
@@ -236,6 +247,7 @@ object Injector {
             UserRepository::class.java -> UserRepositoryImpl(
                     provideDbDataSource(context),
                     provideNetDataSource(context),
+                    provideNetDataSource(context),
                     provideRepoModelMapper(context)
             ) as T
 
@@ -267,24 +279,42 @@ object Injector {
     inline fun <reified T> provideLocalDataSource(context: Context): T {
         "LOG provideLocalDataSource class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
-            TokenLocalSource::class.java -> TokenLocalSourceImpl(SharedPrefsHelper(context.getSharedPreferences("sp", Context.MODE_PRIVATE))) as T
+            TokenLocalSource::class.java -> TokenLocalSourceImpl(
+                    SharedPrefsHelper(
+                            context.getSharedPreferences(
+                                    "sp",
+                                    Context.MODE_PRIVATE
+                            )
+                    )
+            ) as T
             else -> throw IllegalStateException("Must provide LocalDataSource for class ${T::class.java.simpleName}")
         }
     }
 
-    inline fun <reified T: BaseNetSource> provideNetDataSource(context: Context): T {
+    inline fun <reified T : BaseNetSource> provideNetDataSource(context: Context): T {
         "LOG provideNetDataSource class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
             AuthNetSource::class.java -> AuthNetSourceImpl(provideService()) as T
-            CocktailNetSource::class.java -> CocktailNetSourceImpl(provideService()) as T
+            CocktailNetSource::class.java -> CocktailNetSourceImpl(provideCocktailService()) as T
             UserNetSource::class.java -> UserNetSourceImpl(provideService()) as T
+            UserUploadNetSource::class.java -> UserUploadNetSourceImpl(context, provideUploadService()) as T
             else -> throw IllegalStateException("Must provide NetDataSource for class ${T::class.java.simpleName}")
         }
+    }
+
+    inline fun <reified T> provideCocktailService(): T {
+        "LOG provideCocktailService class = ${T::class.java.simpleName}".log
+        return cocktailRetrofit.create(T::class.java) as T
     }
 
     inline fun <reified T> provideService(): T {
         "LOG provideService class = ${T::class.java.simpleName}".log
         return retrofit.create(T::class.java) as T
+    }
+
+    inline fun <reified T> provideUploadService(): T {
+        "LOG provideUploadService class = ${T::class.java.simpleName}".log
+        return uploadRetrofit.create(T::class.java) as T
     }
 
     private fun provideRetrofit(
@@ -322,19 +352,19 @@ object Injector {
             okHttpClientBuilder: OkHttpClient.Builder
     ) {
 
-//        // OkHttp Logger
-//        val logger = HttpLoggingInterceptor()
-//        logger.level = HttpLoggingInterceptor.Level.BODY
-//        okHttpClientBuilder.addInterceptor(logger)
+        // OkHttp Logger
+        val logger = HttpLoggingInterceptor()
+        logger.level = HttpLoggingInterceptor.Level.BODY
+        okHttpClientBuilder.addInterceptor(logger)
 
         // Postman Mock
         okHttpClientBuilder.addInterceptor(PostmanMockInterceptor())
 
-//        // Gander
+        // Gander
 //        okHttpClientBuilder.addInterceptor(
-//            GanderInterceptor(context).apply {
-//                showNotification(true)
-//            }
+//                GanderInterceptor(context).apply {
+//                    showNotification(true)
+//                }
 //        )
     }
 
@@ -387,7 +417,10 @@ object Injector {
         } as T
     }
 
-    private fun provideOkHttpClientBuilder(readTimeoutSeconds: Long = 120, writeTimeoutSeconds: Long = 120): OkHttpClient.Builder {
+    private fun provideOkHttpClientBuilder(
+            readTimeoutSeconds: Long = 120,
+            writeTimeoutSeconds: Long = 120
+    ): OkHttpClient.Builder {
         val builder = OkHttpClient.Builder()
         try {
             val trustAllCerts = arrayOf(
