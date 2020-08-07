@@ -3,6 +3,7 @@ package com.mirogal.cocktail.presentation.extension
 import androidx.annotation.MainThread
 import androidx.lifecycle.ViewModelLazy
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelStoreOwner
 import androidx.savedstate.SavedStateRegistryOwner
 import com.mirogal.cocktail.di.Injector
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -12,23 +13,25 @@ import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 //region Activity
 @MainThread
 inline fun <reified ViewModel : BaseViewModel> BaseActivity<ViewModel>.viewModels(
+        owner: ViewModelStoreOwner = this,
         noinline factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ): Lazy<ViewModel> {
     val factoryPromise = factoryProducer ?: {
         Injector.ViewModelFactory(this)
     }
 
-    return ViewModelLazy(ViewModel::class, { viewModelStore }, factoryPromise)
+    return ViewModelLazy(ViewModel::class, { owner.viewModelStore }, factoryPromise)
 }
 
 @MainThread
 fun <ViewModel: BaseViewModel> BaseActivity<ViewModel>.baseViewModels(
+        owner: ViewModelStoreOwner = this,
         factoryProducer: (() -> ViewModelProvider.Factory)? = null
 ): Lazy<ViewModel> {
     val factoryPromise = factoryProducer ?: {
         Injector.ViewModelFactory(this)
     }
-    return ViewModelLazy(getViewModelClass(), { viewModelStore }, factoryPromise)
+    return ViewModelLazy(getViewModelClass(), { owner.viewModelStore }, factoryPromise)
 }
 //endregion
 

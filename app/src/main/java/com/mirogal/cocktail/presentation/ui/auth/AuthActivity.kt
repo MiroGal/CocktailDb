@@ -24,7 +24,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
     private val validLogin = "MiroGal"
     private val validPassword = "Miro89"
 
-    override fun setApplicationTheme() {
+    override fun configureTheme() {
         setTheme(R.style.AppTheme_NoActionBar)
     }
 

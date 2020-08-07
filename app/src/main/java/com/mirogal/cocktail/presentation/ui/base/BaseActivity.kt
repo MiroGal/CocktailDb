@@ -19,7 +19,7 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
     protected open val viewModel: ViewModel by baseViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        setApplicationTheme()
+        configureTheme()
         super.onCreate(savedInstanceState)
         setContentView(contentLayoutResId)
     }
@@ -28,15 +28,11 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
         super.onPostCreate(savedInstanceState)
         configureView(savedInstanceState)
         configureObserver()
-
-        viewModel.errorLiveData.observeNotNull {
-            //TODO handle error
-            Toast.makeText(this, "error = ${it.message}", Toast.LENGTH_SHORT).show()
-        }
+        configureError()
     }
 
-    protected open fun setApplicationTheme() {
-        // stub
+    protected open fun configureTheme() {
+        //stub
     }
 
     protected open fun configureView(savedInstanceState: Bundle?) {
@@ -45,6 +41,13 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
 
     protected open fun configureObserver() {
         //stub
+    }
+
+    protected open fun configureError() {
+        viewModel.errorLiveData.observeNotNull {
+            //TODO handle error
+            Toast.makeText(this, "error = ${it.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     //region Convenient Observe Methods
