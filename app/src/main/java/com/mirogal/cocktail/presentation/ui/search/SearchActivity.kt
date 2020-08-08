@@ -92,9 +92,9 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
     }
 
 
-    override fun onItemClick(cocktail: CocktailModel) {
-        viewModel.saveCocktail(cocktail)
-        openDrinkDetailActivity(cocktail.id, cocktail.names.default)
+    override fun onItemClick(cocktailModel: CocktailModel) {
+        viewModel.saveCocktail(cocktailModel)
+        openDrinkDetailActivity(cocktailModel.id, cocktailModel.names.default)
     }
 
 

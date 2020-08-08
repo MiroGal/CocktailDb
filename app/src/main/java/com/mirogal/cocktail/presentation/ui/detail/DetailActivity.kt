@@ -6,15 +6,16 @@ import android.graphics.Color
 import android.graphics.Point
 import android.os.Bundle
 import android.util.DisplayMetrics
-import android.util.Log
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
@@ -54,10 +55,10 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
                 tv_info_glass.text = it.glass.key
                 tvInstructionBody.text = it.instructions.default
 
-//                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
-//                val ingredientList = toIngredientList(it.ingredientList, it.measureList)
-//                val listAdapter = DetailListAdapter(ingredientList)
-//                rv_ingredient_list.adapter = listAdapter
+                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
+                val ingredientsWithMeasures = it.ingredientsWithMeasures.toList()
+                val listAdapter = DetailListAdapter(ingredientsWithMeasures)
+                rv_ingredient_list.adapter = listAdapter
 
                 Glide.with(this)
                         .load(it.image)

@@ -1,7 +1,6 @@
 package com.mirogal.cocktail.presentation.ui.search
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.*
 import com.mirogal.cocktail.data.repository.source.CocktailRepository
 import com.mirogal.cocktail.extension.log

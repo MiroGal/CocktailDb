@@ -5,7 +5,7 @@ import android.view.View
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.modelnative.detail.IngredientModel
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailIngredient
 
 class DetailItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -14,10 +14,10 @@ class DetailItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
     private val tvMeasure: TextView = itemView.findViewById(R.id.tv_measure)
 
     @SuppressLint("SetTextI18n")
-    fun bind(ingredientModel: IngredientModel) {
-        tvPosition.text = ingredientModel.id.toString() + "."
-        tvIngredient.text = ingredientModel.name
-        tvMeasure.text = ingredientModel.measure
+    fun bind(position: Int, ingredientsWithMeasures: Pair<CocktailIngredient, String?>) {
+        tvPosition.text = "$position."
+        tvIngredient.text = ingredientsWithMeasures.first.key
+        tvMeasure.text = ingredientsWithMeasures.second
     }
 
 }

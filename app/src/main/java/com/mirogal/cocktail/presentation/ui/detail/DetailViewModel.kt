@@ -19,6 +19,7 @@ class DetailViewModel(
     val cocktailIdLiveData: MutableLiveData<Long> = MutableLiveData()
 
     val cocktailLiveData = cocktailIdLiveData.switchMap { id ->
-        cocktailRepository.getCocktailByIdLiveData(id).map { it?.run(cocktailModelMapper::mapTo) } }
+        cocktailRepository.getCocktailByIdLiveData(id).map { it?.run(cocktailModelMapper::mapTo) }
+    }
 
 }
