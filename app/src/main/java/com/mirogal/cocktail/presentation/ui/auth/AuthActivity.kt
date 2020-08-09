@@ -18,7 +18,6 @@ import kotlinx.android.synthetic.main.activity_auth.*
 class AuthActivity : BaseActivity<AuthViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_auth
-
     override fun getViewModelClass() = AuthViewModel::class
 
     private val validLogin = "MiroGal"

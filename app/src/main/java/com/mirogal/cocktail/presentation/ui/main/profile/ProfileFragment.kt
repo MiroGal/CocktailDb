@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.fragment_profile_content.*
 class ProfileFragment : BaseFragment<ProfileViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_profile
-
     override fun getViewModelClass() = ProfileViewModel::class
 
     companion object {

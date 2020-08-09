@@ -14,9 +14,7 @@ import kotlinx.android.synthetic.main.fragment_settings_content.*
 class SettingsFragment : BaseFragment<SettingsViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_settings
-
     override fun getViewModelClass() = SettingsViewModel::class
-
     private val mainViewModel: MainViewModel by activityViewModels()
 
     companion object {

@@ -21,7 +21,6 @@ class MainActivity : BaseActivity<MainViewModel>(),
         DayDrinkDialogFragment.OnActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
-
     override fun getViewModelClass() = MainViewModel::class
 
     override fun configureView(savedInstanceState: Bundle?) {

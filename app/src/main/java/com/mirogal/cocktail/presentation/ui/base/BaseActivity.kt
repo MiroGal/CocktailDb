@@ -13,9 +13,7 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
 
     @get:LayoutRes
     protected abstract val contentLayoutResId: Int
-
     abstract fun getViewModelClass(): KClass<ViewModel>
-
     protected open val viewModel: ViewModel by baseViewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {

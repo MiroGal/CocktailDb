@@ -34,9 +34,7 @@ import java.util.*
 class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_pager
-
     override fun getViewModelClass() = DrinkViewModel::class
-
     private val mainViewModel: MainViewModel by activityViewModels()
 
     private lateinit var drinkPagerAdapter: DrinkPagerAdapter

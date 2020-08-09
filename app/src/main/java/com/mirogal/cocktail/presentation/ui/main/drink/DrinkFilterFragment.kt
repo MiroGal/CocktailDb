@@ -16,7 +16,6 @@ import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
-
     override fun getViewModelClass() = DrinkViewModel::class
 
     private var isFragmentNotJustCreated = false

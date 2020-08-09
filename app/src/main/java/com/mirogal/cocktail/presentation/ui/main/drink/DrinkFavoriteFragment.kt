@@ -33,7 +33,6 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_favorite
-
     override fun getViewModelClass() = DrinkViewModel::class
 
     private lateinit var drinkListAdapter: DrinkListAdapter

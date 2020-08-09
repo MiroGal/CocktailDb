@@ -16,7 +16,6 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.TaskStackBuilder
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
@@ -34,12 +33,10 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
-
     override fun getViewModelClass() = DrinkViewModel::class
 
     private lateinit var drinkListAdapter: DrinkListAdapter
-
-    private val rvp = RecyclerView.RecycledViewPool()
+//    private val recycledViewPool = RecyclerView.RecycledViewPool()
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
@@ -52,7 +49,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
             else -> 1
         }
         rv_drink_history_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
-        rv_drink_history_list.setRecycledViewPool(rvp)
+//        rv_drink_history_list.setRecycledViewPool(recycledViewPool)
 
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
         val itemDecoration = SpaceItemDecorationWithoutTopMargin(listColumn, spaceInPixel, true, 0)
