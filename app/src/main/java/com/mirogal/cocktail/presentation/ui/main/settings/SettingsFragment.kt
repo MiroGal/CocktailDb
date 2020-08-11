@@ -3,9 +3,10 @@ package com.mirogal.cocktail.presentation.ui.main.settings
 import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.extension.baseViewModels
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
@@ -14,8 +15,8 @@ import kotlinx.android.synthetic.main.fragment_settings_content.*
 class SettingsFragment : BaseFragment<SettingsViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_settings
-    override fun getViewModelClass() = SettingsViewModel::class
-    private val mainViewModel: MainViewModel by activityViewModels()
+    override val viewModel: SettingsViewModel by baseViewModels()
+    private val mainViewModel: MainViewModel by sharedViewModels()
 
     companion object {
         fun newInstance() = SettingsFragment()

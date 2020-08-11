@@ -6,10 +6,10 @@ import android.os.Bundle
 import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
-import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.modelnative.filter.DrinkSort
 import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
@@ -20,7 +20,7 @@ class DrinkSortDialogFragment : BaseDialogFragment(),
         DrinkSortListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.dialog_fragment_drink_filter_sort
-    private val viewModel: DrinkViewModel by activityViewModels()
+    private val viewModel: DrinkViewModel by sharedViewModels()
 
     private lateinit var listAdapter: DrinkSortListAdapter
     private lateinit var rvFilter: RecyclerView

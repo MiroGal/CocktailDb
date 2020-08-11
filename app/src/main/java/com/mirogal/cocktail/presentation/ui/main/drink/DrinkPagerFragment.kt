@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ProcessLifecycleOwner
 import androidx.viewpager2.widget.ViewPager2
@@ -16,6 +15,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
 import com.mirogal.cocktail.presentation.modelnative.filter.*
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -34,8 +34,8 @@ import java.util.*
 class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_pager
-    override fun getViewModelClass() = DrinkViewModel::class
-    private val mainViewModel: MainViewModel by activityViewModels()
+    override val viewModel: DrinkViewModel by sharedViewModels()
+    private val mainViewModel: MainViewModel by sharedViewModels()
 
     private lateinit var drinkPagerAdapter: DrinkPagerAdapter
 
@@ -201,7 +201,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
     private fun addDrinkFilterFragment() {
         val newFragment = DrinkFilterFragment.newInstance()
         childFragmentManager.beginTransaction().apply {
-            add(R.id.root_view, newFragment, DrinkFilterFragment::class.java.simpleName)
+            add(R.id.root_view, newFragment, DrinkFilterFragment::class.java.name)
             commit()
         }
     }
@@ -209,12 +209,12 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
     private fun showDrinkSortDialog() {
         val dialogFragment = DrinkSortDialogFragment.newInstance(
                 viewModel.drinkSortLiveData.value ?: DrinkSort.DISABLE)
-        dialogFragment.show(childFragmentManager, DrinkSortDialogFragment::class.java.simpleName)
+        dialogFragment.show(childFragmentManager, DrinkSortDialogFragment::class.java.name)
     }
 
     fun showDayDrinkDialog(cocktailId: Int, cocktailName: String?) {
         val dialogFragment = DayDrinkDialogFragment.newInstance(cocktailId, cocktailName)
-        dialogFragment.show(childFragmentManager, DayDrinkDialogFragment::class.java.simpleName)
+        dialogFragment.show(childFragmentManager, DayDrinkDialogFragment::class.java.name)
     }
 
     private fun showProposeDrink(id: Int) {

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
@@ -23,7 +24,7 @@ import kotlin.math.abs
 class DetailActivity : BaseActivity<DetailViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_detail
-    override fun getViewModelClass() = DetailViewModel::class
+    override val viewModel: DetailViewModel by baseViewModels()
 
     private var cocktailId: Long = 0
     private var cocktailName: String? = ""

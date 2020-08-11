@@ -21,6 +21,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
@@ -33,7 +34,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_history
-    override fun getViewModelClass() = DrinkViewModel::class
+    override val viewModel: DrinkViewModel by sharedViewModels()
 
     private lateinit var drinkListAdapter: DrinkListAdapter
 //    private val recycledViewPool = RecyclerView.RecycledViewPool()

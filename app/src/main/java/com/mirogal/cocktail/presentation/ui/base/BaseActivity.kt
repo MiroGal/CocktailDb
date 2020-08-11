@@ -7,14 +7,12 @@ import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.presentation.extension.*
-import kotlin.reflect.KClass
 
 abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
 
     @get:LayoutRes
     protected abstract val contentLayoutResId: Int
-    abstract fun getViewModelClass(): KClass<ViewModel>
-    protected open val viewModel: ViewModel by baseViewModels()
+    protected abstract val viewModel: ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         configureTheme()

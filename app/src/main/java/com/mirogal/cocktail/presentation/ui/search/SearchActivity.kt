@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
@@ -22,7 +23,7 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
         SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
-    override fun getViewModelClass() = SearchViewModel::class
+    override val viewModel: SearchViewModel by baseViewModels()
 
     private val listAdapter = SearchListAdapter(this, this)
 

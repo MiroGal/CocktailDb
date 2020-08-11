@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -18,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_auth.*
 class AuthActivity : BaseActivity<AuthViewModel>() {
 
     override val contentLayoutResId = R.layout.activity_auth
-    override fun getViewModelClass() = AuthViewModel::class
+    override val viewModel: AuthViewModel by baseViewModels()
 
     private val validLogin = "MiroGal"
     private val validPassword = "Miro89"
@@ -39,7 +40,6 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         btn_authorization.setOnClickListener {
             when (viewModel.isAuthDataValidLiveData.value ?: AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
-//                    startActivity(Intent(this@AuthActivity, MainActivity::class.java))
                     startActivity(Intent(this@AuthActivity, MainActivity::class.java))
                 }
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_INVALID -> {
@@ -124,7 +124,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
 
     private fun showInvalidAuthDataDialog(authDataValidStatus: AuthDataValidStatus) {
         val dialogFragment = InvalidAuthDataDialogFragment.newInstance(authDataValidStatus)
-        dialogFragment.show(supportFragmentManager, InvalidAuthDataDialogFragment::class.java.simpleName)
+        dialogFragment.show(supportFragmentManager, InvalidAuthDataDialogFragment::class.java.name)
     }
 
     // Temporary method

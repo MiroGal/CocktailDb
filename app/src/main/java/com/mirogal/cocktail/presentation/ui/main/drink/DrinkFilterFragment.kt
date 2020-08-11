@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
@@ -16,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
-    override fun getViewModelClass() = DrinkViewModel::class
+    override val viewModel: DrinkViewModel by sharedViewModels()
 
     private var isFragmentNotJustCreated = false
 
@@ -70,7 +71,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     private fun showDrinkFilterDialog(drinkFilterType: DrinkFilterType) {
         val dialogFragment = DrinkFilterDialogFragment.newInstance(drinkFilterType, viewModel.drinkFilterLiveData.value!!)
-        dialogFragment.show(childFragmentManager, DrinkFilterDialogFragment::class.java.simpleName)
+        dialogFragment.show(childFragmentManager, DrinkFilterDialogFragment::class.java.name)
     }
 
     private fun showFilterSnackbar(historyListSize: Int, favoriteListSize: Int) {
