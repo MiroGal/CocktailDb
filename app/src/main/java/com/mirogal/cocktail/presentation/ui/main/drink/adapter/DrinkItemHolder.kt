@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 
 class DrinkItemHolder(
         private val context: Context,
@@ -18,25 +18,25 @@ class DrinkItemHolder(
     private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
     private val ivFavorite: ImageView = itemView.findViewById(R.id.iv_favorite)
 
-    private lateinit var cocktailModel: CocktailDbModel
-    private var cocktailId = 0
+    private lateinit var cocktailModel: CocktailModel
+    private var cocktailId = -1L
     private var cocktailName: String? = ""
     private var isFavorite: Boolean = false
 
-    fun bind(cocktailModel: CocktailDbModel) {
+    fun bind(cocktailModel: CocktailModel) {
         this.cocktailModel = cocktailModel
         cocktailId = cocktailModel.id
-        cocktailName = cocktailModel.name
+        cocktailName = cocktailModel.names.default
         isFavorite = cocktailModel.isFavorite
 
-        tvName.text = cocktailModel.name
+        tvName.text = cocktailModel.names.default
         if (cocktailModel.isFavorite) {
             ivFavorite.setImageResource(R.drawable.ic_item_favorite)
         } else {
             ivFavorite.setImageResource(R.drawable.ic_item_favorite_border)
         }
         Glide.with(context)
-                .load(cocktailModel.imagePath)
+                .load(cocktailModel.image)
                 .centerCrop()
                 .placeholder(R.drawable.ic_placeholder_drink)
                 .error(R.drawable.ic_placeholder_error)

@@ -5,7 +5,7 @@ import androidx.lifecycle.*
 import com.mirogal.cocktail.data.repository.source.AuthRepository
 import com.mirogal.cocktail.data.repository.source.UserRepository
 import com.mirogal.cocktail.presentation.mapper.UserModelMapper
-import com.mirogal.cocktail.presentation.modelnative.auth.AuthDataValidStatus
+import com.mirogal.cocktail.presentation.constant.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class AuthViewModel(

@@ -21,7 +21,7 @@ class SearchItemHolder(
 
     fun bind(cocktailModel: CocktailModel) {
         this.cocktailModel = cocktailModel
-        tvName.text = cocktailModel.names?.default
+        tvName.text = cocktailModel.names.default
         Glide.with(context)
                 .load(cocktailModel.image)
                 .centerCrop()

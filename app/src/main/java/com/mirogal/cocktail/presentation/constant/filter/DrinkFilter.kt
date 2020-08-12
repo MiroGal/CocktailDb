@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.modelnative.filter
+package com.mirogal.cocktail.presentation.constant.filter
 
 interface DrinkFilter {
 

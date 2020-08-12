@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.modelnative.filter.DrinkSort
+import com.mirogal.cocktail.presentation.constant.filter.DrinkSort
 
 class DrinkSortListAdapter(
         private val currentSort: DrinkSort,

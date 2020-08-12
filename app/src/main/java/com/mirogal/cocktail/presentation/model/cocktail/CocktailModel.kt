@@ -8,6 +8,7 @@ data class CocktailModel(
         val glass: CocktailGlass = CocktailGlass.UNDEFINED,
         val image: String = "",
         val instructions: LocalizedStringModel = LocalizedStringModel(),
-        val ingredientsWithMeasures: Map<CocktailIngredient, String?> = emptyMap()/*,
+        val ingredientsWithMeasures: Map<CocktailIngredient, String?> = emptyMap(),
+        val isFavorite: Boolean/*,
         val date: Date = Date()*/
 )

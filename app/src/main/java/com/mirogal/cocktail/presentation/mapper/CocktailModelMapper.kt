@@ -17,7 +17,8 @@ class CocktailModelMapper(
                 glass = glass.key,
                 image = image,
                 instructions = instructions.run(localizedStringModelMapper::mapFrom),
-                ingredientsWithMeasures = ingredientsWithMeasures.mapKeys { it.key.key }/*,
+                ingredientsWithMeasures = ingredientsWithMeasures.mapKeys { it.key.key },
+                isFavorite = isFavorite/*,
                 date = date*/
         )
     }
@@ -33,7 +34,8 @@ class CocktailModelMapper(
                 instructions = instructions.run(localizedStringModelMapper::mapTo),
                 ingredientsWithMeasures = ingredientsWithMeasures.mapKeys {
                     keyValue -> CocktailIngredient.values().firstOrNull { it.key == keyValue.key } ?: CocktailIngredient.UNDEFINED
-                }/*,
+                },
+                isFavorite = isFavorite/*,
                 date = date*/
         )
     }

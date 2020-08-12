@@ -21,7 +21,8 @@ class CocktailRepoModelMapper(
                 glass = glass,
                 image = image,
                 instructions = instructions?.run(localizedStringRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
-                ingredientsWithMeasures = ingredients.mapIndexed { index, ingredient -> ingredient to measures[index] }.toMap()/*,
+                ingredientsWithMeasures = ingredients.mapIndexed { index, ingredient -> ingredient to measures[index] }.toMap(),
+                isFavorite = isFavorite/*,
                 date = date*/
         )
     }
@@ -37,7 +38,8 @@ class CocktailRepoModelMapper(
                 image = image,
                 instructions = instructions.run(localizedStringRepoModelMapper::mapRepoToDb),
                 ingredients = ingredientsWithMeasures.keys.toList(),
-                measures = ingredientsWithMeasures.values.toList()/*,
+                measures = ingredientsWithMeasures.values.toList(),
+                isFavorite = isFavorite/*,
                 date = date*/
         )
     }
@@ -51,7 +53,8 @@ class CocktailRepoModelMapper(
                 glass = glass,
                 image = image,
                 instructions = instructions.run(localizedStringRepoModelMapper::mapNetToRepo),
-                ingredientsWithMeasures = ingredientsWithMeasures/*,
+                ingredientsWithMeasures = ingredientsWithMeasures,
+                isFavorite = false/*,
                 date = date*/
         )
     }

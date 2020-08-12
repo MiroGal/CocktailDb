@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.modelnative.filter
+package com.mirogal.cocktail.presentation.constant.filter
 
 enum class DrinkFilterCategory(override val type: DrinkFilterType, override val key: String): DrinkFilter {
 

@@ -4,10 +4,10 @@ import android.app.Application
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.data.repository.source.CocktailRepository
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.constant.DrinkPage
+import com.mirogal.cocktail.presentation.constant.filter.*
 import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
-import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
-import com.mirogal.cocktail.presentation.modelnative.filter.*
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.receiver.BatteryChangeReceiverLiveData
 import com.mirogal.cocktail.presentation.receiver.ProposeDrinkReceiverLiveData
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
@@ -20,13 +20,11 @@ class DrinkViewModel(
         application: Application
 ) : BaseViewModel(viewStateHandle, application) {
 
-    val context = application
-    private val repository = com.mirogal.cocktail.datanative.repository.CocktailRepository.newInstance(application)
+    private val saveCocktailListLiveData: LiveData<List<CocktailModel>> =
+            cocktailRepository.cocktailListLiveData.map(cocktailModelMapper::mapTo)
 
-    private val saveCocktailListLiveData: LiveData<List<CocktailDbModel>?> = repository.saveCocktailListLiveData
-
-    val historyCocktailListLiveData: LiveData<List<CocktailDbModel>?>
-    val favoriteCocktailListLiveData: LiveData<List<CocktailDbModel>?>
+    val historyCocktailListLiveData: LiveData<List<CocktailModel>?>
+    val favoriteCocktailListLiveData: LiveData<List<CocktailModel>?>
 
     val cocktailListSizeLiveData: LiveData<Pair<Int, Int>>
 
@@ -39,13 +37,13 @@ class DrinkViewModel(
 
     val currentDrinkPage: MutableLiveData<DrinkPage> = MutableLiveData()
 
-    val proposeDrinkReceiverLiveData = ProposeDrinkReceiverLiveData(context)
-    val batteryChangeReceiverLiveData = BatteryChangeReceiverLiveData(context)
+    val proposeDrinkReceiverLiveData = ProposeDrinkReceiverLiveData(application)
+    val batteryChangeReceiverLiveData = BatteryChangeReceiverLiveData(application)
 
-    private val observer: Observer<in List<CocktailDbModel>?> = Observer { }
+    private val observer: Observer<in List<CocktailModel>?> = Observer { }
 
     init {
-        historyCocktailListLiveData = MediatorLiveData<List<CocktailDbModel>?>().apply {
+        historyCocktailListLiveData = MediatorLiveData<List<CocktailModel>?>().apply {
             addSource(saveCocktailListLiveData) {
                 if (saveCocktailListLiveData.value != null)
                     value = sortCocktailList(filterCocktailList(saveCocktailListLiveData.value))
@@ -98,44 +96,45 @@ class DrinkViewModel(
         super.onCleared()
     }
 
-    private fun filterCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
+    private fun filterCocktailList(list: List<CocktailModel>?): List<CocktailModel>? {
         return list?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY) != DrinkFilterCategory.DISABLE) {
-                it.category?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)?.key?.toLowerCase(Locale.ROOT)
+                it.category.key.equals(drinkFilterLiveData.value?.get(DrinkFilterType.CATEGORY)?.key, true)
             } else true
         }?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) != DrinkFilterAlcohol.DISABLE) {
-                it.alcoholic?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key?.toLowerCase(Locale.ROOT)
+                it.alcoholType.key.equals(drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key, true)
             } else true
-        }?.filter {
+        }?.filter { map ->
             if (drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) != DrinkFilterIngredient.DISABLE) {
-                it.ingredientList.contains(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key)
+                map.ingredientsWithMeasures.mapKeys { it.toString() }
+                        .containsKey(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key.toString())
             } else true
         }?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) != DrinkFilterGlass.DISABLE) {
-                it.glass?.toLowerCase(Locale.ROOT) == drinkFilterLiveData.value?.get(DrinkFilterType.GLASS)?.key?.toLowerCase(Locale.ROOT)
+                it.glass.key.equals(drinkFilterLiveData.value?.get(DrinkFilterType.GLASS)?.key, true)
             } else true
         }
     }
 
-    private fun sortCocktailList(list: List<CocktailDbModel>?): List<CocktailDbModel>? {
+    private fun sortCocktailList(list: List<CocktailModel>?): List<CocktailModel>? {
         return when(drinkSortLiveData.value) {
-            DrinkSort.NAME_ASCENDING -> list?.sortedBy { it.name }
-            DrinkSort.NAME_DESCENDING -> list?.sortedByDescending { it.name }
+            DrinkSort.NAME_ASCENDING -> list?.sortedBy { it.names.default }
+            DrinkSort.NAME_DESCENDING -> list?.sortedByDescending { it.names.default }
             DrinkSort.ALCOHOL_FIRST -> {
                 list?.sortedWith(compareBy(
-                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) },
-                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.OPTIONAL_ALCOHOL.key.toLowerCase(Locale.ROOT) },
-                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.ALCOHOLIC.key.toLowerCase(Locale.ROOT) }))
+                        { it.alcoholType.key == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholType.key == DrinkFilterAlcohol.OPTIONAL_ALCOHOL.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholType.key == DrinkFilterAlcohol.ALCOHOLIC.key.toLowerCase(Locale.ROOT) }))
             }
             DrinkSort.NON_ALCOHOL_FIRST -> {
                 list?.sortedWith(compareBy(
-                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.ALCOHOLIC.key.toLowerCase(Locale.ROOT) },
-                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.OPTIONAL_ALCOHOL.key.toLowerCase(Locale.ROOT) },
-                        { it.alcoholic?.toLowerCase(Locale.ROOT) == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) }))
+                        { it.alcoholType.key == DrinkFilterAlcohol.ALCOHOLIC.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholType.key == DrinkFilterAlcohol.OPTIONAL_ALCOHOL.key.toLowerCase(Locale.ROOT) },
+                        { it.alcoholType.key == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) }))
             }
-            DrinkSort.INGREDIENT_COUNT_ASCENDING -> list?.sortedBy { it.ingredientList.filterNotNull().size }
-            DrinkSort.INGREDIENT_COUNT_DESCENDING -> list?.sortedByDescending { it.ingredientList.filterNotNull().size }
+            DrinkSort.INGREDIENT_COUNT_ASCENDING -> list?.sortedBy { it.ingredientsWithMeasures.size }
+            DrinkSort.INGREDIENT_COUNT_DESCENDING -> list?.sortedByDescending { it.ingredientsWithMeasures.size }
             else -> list
         }
     }
@@ -158,20 +157,20 @@ class DrinkViewModel(
         drinkFilterLiveData.value = savedDrinkFilterLiveData.value
     }
 
-    fun deleteCocktail(id: Int) {
-        repository.deleteCocktailFromDb(id)
+    fun deleteCocktail(id: Long) {
+//        repository.deleteCocktailFromDb(id)
     }
 
-    fun setCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
-        repository.setCocktailStateFavorite(cocktailId, isFavorite)
+    fun setCocktailFavorite(cocktailId: Long, isFavorite: Boolean) {
+//        repository.setCocktailStateFavorite(cocktailId, isFavorite)
     }
 
-    fun switchCocktailStateFavorite(cocktailId: Int, isFavorite: Boolean) {
-        if (isFavorite) {
-            repository.setCocktailStateFavorite(cocktailId, false)
-        } else {
-            repository.setCocktailStateFavorite(cocktailId, true)
-        }
+    fun switchCocktailFavorite(cocktailId: Long, isFavorite: Boolean) {
+//        if (isFavorite) {
+//            repository.setCocktailStateFavorite(cocktailId, false)
+//        } else {
+//            repository.setCocktailStateFavorite(cocktailId, true)
+//        }
     }
 
 }

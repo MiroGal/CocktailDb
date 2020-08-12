@@ -7,7 +7,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
-import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.constant.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_filter.*

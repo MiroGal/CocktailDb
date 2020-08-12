@@ -1,4 +1,4 @@
-package com.mirogal.cocktail.presentation.modelnative.auth
+package com.mirogal.cocktail.presentation.constant
 
 enum class AuthDataValidStatus(val key: String) {
 

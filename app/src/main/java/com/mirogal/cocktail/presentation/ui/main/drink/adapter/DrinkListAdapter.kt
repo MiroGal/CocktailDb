@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import java.util.*
 
 class DrinkListAdapter(
@@ -15,7 +15,7 @@ class DrinkListAdapter(
         private val onItemLongClickListener: OnItemLongClickListener
 ) : RecyclerView.Adapter<DrinkItemHolder>() {
 
-    private var cocktailList: List<CocktailDbModel> = ArrayList()
+    private var cocktailList: List<CocktailModel> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DrinkItemHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -32,18 +32,18 @@ class DrinkListAdapter(
         return cocktailList.size
     }
 
-    fun refreshData(newData: List<CocktailDbModel>) {
+    fun refreshData(newData: List<CocktailModel>) {
         cocktailList = newData
         notifyDataSetChanged()
     }
 
     interface OnItemClickListener {
-        fun onItemClick(cocktailId: Int, cocktailName: String?)
-        fun onFavoriteClick(cocktailId: Int, isFavorite: Boolean)
+        fun onItemClick(cocktailId: Long, cocktailName: String?)
+        fun onFavoriteClick(cocktailId: Long, isFavorite: Boolean)
     }
 
     interface OnItemLongClickListener {
-        fun onItemLongClick(view: View, cocktailModel: CocktailDbModel)
+        fun onItemLongClick(view: View, cocktailModel: CocktailModel)
     }
 
 }

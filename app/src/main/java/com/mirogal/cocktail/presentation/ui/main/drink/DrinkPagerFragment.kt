@@ -14,10 +14,10 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.datanative.db.model.CocktailDbModel
+import com.mirogal.cocktail.presentation.constant.DrinkPage
+import com.mirogal.cocktail.presentation.constant.filter.*
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
-import com.mirogal.cocktail.presentation.modelnative.drink.DrinkPage
-import com.mirogal.cocktail.presentation.modelnative.filter.*
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
@@ -190,7 +190,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
         startActivity(intent)
     }
 
-    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
+    private fun openDrinkDetailActivity(cocktailId: Long, cocktailName: String?) {
         val intent = Intent(activity, DetailActivity::class.java).apply {
             putExtra("cocktailId", cocktailId)
             putExtra("cocktailName", cocktailName)
@@ -217,17 +217,17 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
         dialogFragment.show(childFragmentManager, DayDrinkDialogFragment::class.java.name)
     }
 
-    private fun showProposeDrink(id: Int) {
+    private fun showProposeDrink(id: Long) {
         val cocktailList = viewModel.historyCocktailListLiveData.value
         if (cocktailList != null && cocktailList.size > 1) {
-            val model: CocktailDbModel? = cocktailList.filter{ it.id != id }.shuffled()[0]
+            val model: CocktailModel? = cocktailList.filter{ it.id != id }.shuffled()[0]
             if (model != null) {
                 Snackbar.make(requireView().findViewById(R.id.container),
-                        getString(R.string.drink_pager_snackbar_message) + ": " + model.name.toString(), Snackbar.LENGTH_LONG)
+                        getString(R.string.drink_pager_snackbar_message) + ": " + model.names.default.toString(), Snackbar.LENGTH_LONG)
                         .setBackgroundTint(resources.getColor(R.color.background_primary))
                         .setTextColor(resources.getColor(R.color.txt_title))
                         .setAction(getString(R.string.drink_pager_snackbar_action_open_detail)) {
-                            openDrinkDetailActivity(model.id, model.name)
+                            openDrinkDetailActivity(model.id, model.names.default)
                         }.show()
             }
         }

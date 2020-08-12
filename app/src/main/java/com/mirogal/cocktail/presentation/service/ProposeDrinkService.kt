@@ -18,7 +18,7 @@ class ProposeDrinkService : JobIntentService() {
 
         val intentStart = Intent()
         intentStart.action = "ACTION_SNACKBAR_TIMER_START"
-        intentStart.putExtra("startCocktailId", intent.getIntExtra("cocktailId", -2))
+        intentStart.putExtra("startCocktailId", intent.getLongExtra("cocktailId", -2L))
         baseContext.sendBroadcast(intentStart)
 
         Thread(Runnable {
@@ -27,7 +27,7 @@ class ProposeDrinkService : JobIntentService() {
             val newIntent = Intent()
             newIntent.action = "ACTION_SNACKBAR_TIMER_FINISH"
             newIntent.putExtra("isTimerFinish", true)
-            newIntent.putExtra("finishCocktailId", intent.getIntExtra("cocktailId", -3))
+            newIntent.putExtra("finishCocktailId", intent.getLongExtra("cocktailId", -3L))
             baseContext.sendBroadcast(newIntent)
 
         }).start()

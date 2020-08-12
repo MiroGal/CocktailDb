@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
-import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilter
-import com.mirogal.cocktail.presentation.modelnative.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.constant.filter.DrinkFilter
+import com.mirogal.cocktail.presentation.constant.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkFilterListAdapter
