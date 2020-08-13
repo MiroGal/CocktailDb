@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "82789653041",
+    "firebase_url": "https://cocktaildb-39691.firebaseio.com",
+    "project_id": "cocktaildb-39691",
+    "storage_bucket": "cocktaildb-39691.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:82789653041:android:be172b8b60ebc80f935310",
+        "android_client_info": {
+          "package_name": "com.mirogal.cocktail"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "82789653041-lhjlukd5odq6vktnbgnbi53fbmb5ih7q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirogal.cocktail",
+            "certificate_hash": "93347cef22461d3fed1a28ef5e7625754c1c2c69"
+          }
+        },
+        {
+          "client_id": "82789653041-lork26l0hbaavktrruilfb39lnjknfis.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDekgMUaQ3dDHpfTBvCqf1Z4tI8Syc7-mY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "82789653041-lork26l0hbaavktrruilfb39lnjknfis.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
