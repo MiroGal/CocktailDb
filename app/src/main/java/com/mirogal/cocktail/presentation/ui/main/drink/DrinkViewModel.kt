@@ -108,7 +108,7 @@ class DrinkViewModel(
         }?.filter { map ->
             if (drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) != DrinkFilterIngredient.DISABLE) {
                 map.ingredientsWithMeasures.mapKeys { it.toString() }
-                        .containsKey(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key.toString())
+                        .containsKey(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key)
             } else true
         }?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) != DrinkFilterGlass.DISABLE) {
@@ -158,19 +158,25 @@ class DrinkViewModel(
     }
 
     fun deleteCocktail(id: Long) {
-//        repository.deleteCocktailFromDb(id)
+        launchRequest {
+            cocktailRepository.deleteCocktailById(id)
+        }
     }
 
     fun setCocktailFavorite(cocktailId: Long, isFavorite: Boolean) {
-//        repository.setCocktailStateFavorite(cocktailId, isFavorite)
+        launchRequest {
+            cocktailRepository.setCocktailFavorite(cocktailId, isFavorite)
+        }
     }
 
     fun switchCocktailFavorite(cocktailId: Long, isFavorite: Boolean) {
-//        if (isFavorite) {
-//            repository.setCocktailStateFavorite(cocktailId, false)
-//        } else {
-//            repository.setCocktailStateFavorite(cocktailId, true)
-//        }
+        launchRequest {
+            if (isFavorite) {
+                cocktailRepository.setCocktailFavorite(cocktailId, false)
+            } else {
+                cocktailRepository.setCocktailFavorite(cocktailId, true)
+            }
+        }
     }
 
 }

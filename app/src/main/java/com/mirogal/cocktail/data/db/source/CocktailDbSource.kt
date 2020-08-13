@@ -17,5 +17,7 @@ interface CocktailDbSource : BaseDbSource {
     suspend fun replaceAllCocktails(vararg cocktail: CocktailDbModel)
     suspend fun deleteCocktails(vararg cocktail: CocktailDbModel)
     suspend fun deleteAllCocktails()
+    suspend fun deleteCocktailById(id: Long)
+    suspend fun setCocktailFavorite(id: Long, isFavorite: Boolean)
 
 }

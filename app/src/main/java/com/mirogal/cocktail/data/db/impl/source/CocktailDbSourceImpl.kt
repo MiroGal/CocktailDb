@@ -42,4 +42,12 @@ class CocktailDbSourceImpl(
         cocktailDao.deleteAllCocktails()
     }
 
+    override suspend fun deleteCocktailById(id: Long) {
+        cocktailDao.deleteCocktailById(id)
+    }
+
+    override suspend fun setCocktailFavorite(id: Long, isFavorite: Boolean) {
+        cocktailDao.setCocktailFavorite(id, isFavorite)
+    }
+
 }

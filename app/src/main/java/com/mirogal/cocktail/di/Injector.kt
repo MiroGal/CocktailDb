@@ -80,7 +80,7 @@ import javax.net.ssl.X509TrustManager
 
 object Injector {
 
-    private lateinit var appContext: Context
+    private lateinit var application: Application
 
     private val baseGsonBuilder: GsonBuilder
         get() = GsonBuilder()
@@ -91,10 +91,10 @@ object Injector {
 
     val retrofit by lazy {
 
-        val provideRepository = provideRepository<TokenRepository>(appContext)
+        val provideRepository = provideRepository<TokenRepository>(application)
 
         provideRetrofit(
-                appContext,
+                application,
                 "https://devlightschool.ew.r.appspot.com/",
                 setOf(),
                 setOf(
@@ -112,10 +112,10 @@ object Injector {
 
     val cocktailRetrofit by lazy {
 
-        val provideRepository = provideRepository<TokenRepository>(appContext)
+        val provideRepository = provideRepository<TokenRepository>(application)
 
         provideRetrofit(
-                appContext,
+                application,
                 "https://www.thecocktaildb.com/api/json/v1/1/",
                 setOf(),
                 setOf(
@@ -141,10 +141,10 @@ object Injector {
 
     val uploadRetrofit by lazy {
 
-        val provideRepository = provideRepository<TokenRepository>(appContext)
+        val provideRepository = provideRepository<TokenRepository>(application)
 
         provideRetrofit(
-                appContext,
+                application,
                 "https://devlightschool.ew.r.appspot.com/",
                 setOf(),
                 setOf(
@@ -163,11 +163,11 @@ object Injector {
     /**
      * Must be called at application class or other place (as soon as app starts before activities get created)
      */
-    fun init(applicationContext: Context) {
-        require(applicationContext is Application) { "Context must be application context" }
-        appContext = applicationContext
+    fun init(application: Application) {
+//        require(applicationContext is Application) { "Context must be application context" }
+        this.application = application
         //init database
-        CocktailAppRoomDatabase.instance(applicationContext)
+        CocktailAppRoomDatabase.instance(application)
     }
 
     class ViewModelFactory(
@@ -187,47 +187,47 @@ object Injector {
         ): T {
             return when (modelClass) {
                 AuthViewModel::class.java -> AuthViewModel(
-                        provideRepository(appContext),
-                        provideRepository(appContext),
-                        provideModelMapper(appContext),
+                        provideRepository(application),
+                        provideRepository(application),
+                        provideModelMapper(application),
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 MainViewModel::class.java -> MainViewModel(
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 SearchViewModel::class.java -> SearchViewModel(
-                        provideRepository(appContext),
-                        provideModelMapper(appContext),
+                        provideRepository(application),
+                        provideModelMapper(application),
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 DetailViewModel::class.java -> DetailViewModel(
-                        provideRepository(appContext),
-                        provideModelMapper(appContext),
+                        provideRepository(application),
+                        provideModelMapper(application),
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 DrinkViewModel::class.java -> DrinkViewModel(
-                        provideRepository(appContext),
-                        provideModelMapper(appContext),
+                        provideRepository(application),
+                        provideModelMapper(application),
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 SettingsViewModel::class.java -> SettingsViewModel(
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 ProfileViewModel::class.java -> ProfileViewModel(
                         handle,
-                        appContext as Application
+                        application
                 ) as T
 
                 else -> throw NotImplementedError("Must provide viewModel for class ${modelClass.simpleName}")
@@ -458,22 +458,5 @@ object Injector {
                 .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
     }
-
-//    fun <T : ViewModel> provideViewModelFactory(context: Context, clazz: Class<T>): ViewModelProvider.AndroidViewModelFactory {
-//        return when (clazz) {
-//            MainViewModel::class.java -> provideMainActivityViewModelFactory(context)
-//            else -> throw IllegalStateException("Must provide factory for class ${clazz.simpleName}")
-//        }
-//    }
-//
-//    private fun provideMainActivityViewModelFactory(context: Context): MainViewModelFactory {
-//        return MainViewModelFactory(
-//            getApplication(context),
-//            provideRepository(context),
-//            provideRepository(context),
-//            provideRepository(context),
-//            provideRepository(context)
-//        )
-//    }
 
 }

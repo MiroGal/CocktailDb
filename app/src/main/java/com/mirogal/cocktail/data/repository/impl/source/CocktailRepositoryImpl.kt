@@ -63,4 +63,12 @@ class CocktailRepositoryImpl(
         return netSource.searchCocktail(query).run(mapper::mapNetToRepo)
     }
 
+    override suspend fun deleteCocktailById(id: Long) {
+        dbSource.deleteCocktailById(id)
+    }
+
+    override suspend fun setCocktailFavorite(id: Long, isFavorite: Boolean) {
+        dbSource.setCocktailFavorite(id, isFavorite)
+    }
+
 }

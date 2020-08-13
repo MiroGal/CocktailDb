@@ -42,4 +42,10 @@ interface CocktailDao : BaseDao<CocktailDbModel> {
     @Query("DELETE FROM ${Table.COCKTAIL}")
     fun deleteAllCocktails()
 
+    @Query("DELETE FROM ${Table.COCKTAIL} WHERE id = :id")
+    fun deleteCocktailById(id: Long)
+
+    @Query("UPDATE ${Table.COCKTAIL} SET is_favorite = :isFavorite WHERE id = :id")
+    fun setCocktailFavorite(id: Long, isFavorite: Boolean)
+
 }
