@@ -8,11 +8,14 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.os.bundleOf
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.firebase.AnalyticEvents
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -29,6 +32,8 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
     private var cocktailId: Long = 0
     private var cocktailName: String? = ""
 
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
     override fun configureView(savedInstanceState: Bundle?) {
         super.configureView(savedInstanceState)
 
@@ -43,6 +48,10 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         setScrollAppBar()
 
         btn_toolbar_back.setOnClickListener { onBackPressed() }
+
+        firebaseAnalytics.logEvent(AnalyticEvents.COCKTAIL_DETAIL_OPEN,
+                bundleOf(AnalyticEvents.COCKTAIL_DETAIL_OPEN_KEY to cocktailId.toString())
+        )
     }
 
     override fun configureObserver() {

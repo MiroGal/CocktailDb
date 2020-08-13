@@ -2,10 +2,13 @@ package com.mirogal.cocktail.presentation.ui.main
 
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.os.bundleOf
 import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.firebase.AnalyticEvents
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -26,6 +29,8 @@ class MainActivity : BaseActivity<MainViewModel>(),
     override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by baseViewModels()
 
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(this)
+
     override fun configureView(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             showFragment<DrinkPagerFragment>()
@@ -34,9 +39,24 @@ class MainActivity : BaseActivity<MainViewModel>(),
         bottom_nav_view.selectedItemId = R.id.bottom_nav_drink
         bottom_nav_view.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.bottom_nav_drink -> showFragment<DrinkPagerFragment>()
-                R.id.bottom_nav_profile -> showFragment<ProfileFragment>()
-                R.id.bottom_nav_settings -> showFragment<SettingsFragment>()
+                R.id.bottom_nav_drink -> {
+                    showFragment<DrinkPagerFragment>()
+                    firebaseAnalytics.logEvent(AnalyticEvents.MAIN_TAB_CHANGE,
+                            bundleOf(AnalyticEvents.MAIN_TAB_CHANGE_KEY to "drink")
+                    )
+                }
+                R.id.bottom_nav_profile -> {
+                    showFragment<ProfileFragment>()
+                    firebaseAnalytics.logEvent(AnalyticEvents.MAIN_TAB_CHANGE,
+                            bundleOf(AnalyticEvents.MAIN_TAB_CHANGE_KEY to "profile")
+                    )
+                }
+                R.id.bottom_nav_settings -> {
+                    showFragment<SettingsFragment>()
+                    firebaseAnalytics.logEvent(AnalyticEvents.MAIN_TAB_CHANGE,
+                            bundleOf(AnalyticEvents.MAIN_TAB_CHANGE_KEY to "settings")
+                    )
+                }
             }
             true
         }

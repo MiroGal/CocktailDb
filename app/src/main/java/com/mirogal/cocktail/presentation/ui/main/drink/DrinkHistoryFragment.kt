@@ -37,7 +37,6 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
     override val viewModel: DrinkViewModel by sharedViewModels()
 
     private lateinit var drinkListAdapter: DrinkListAdapter
-//    private val recycledViewPool = RecyclerView.RecycledViewPool()
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
@@ -50,8 +49,6 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
             else -> 1
         }
         rv_drink_history_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
-//        rv_drink_history_list.setRecycledViewPool(recycledViewPool)
-
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
         val itemDecoration = SpaceItemDecorationWithoutTopMargin(listColumn, spaceInPixel, true, 0)
         rv_drink_history_list.addItemDecoration(itemDecoration)

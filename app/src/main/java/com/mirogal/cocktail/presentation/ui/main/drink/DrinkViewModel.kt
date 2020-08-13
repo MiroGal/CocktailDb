@@ -1,9 +1,12 @@
 package com.mirogal.cocktail.presentation.ui.main.drink
 
 import android.app.Application
+import androidx.core.os.bundleOf
 import androidx.lifecycle.*
 import androidx.lifecycle.Observer
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.mirogal.cocktail.data.repository.source.CocktailRepository
+import com.mirogal.cocktail.firebase.AnalyticEvents
 import com.mirogal.cocktail.presentation.constant.DrinkPage
 import com.mirogal.cocktail.presentation.constant.filter.*
 import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
@@ -19,6 +22,8 @@ class DrinkViewModel(
         viewStateHandle: SavedStateHandle,
         application: Application
 ) : BaseViewModel(viewStateHandle, application) {
+
+    private val firebaseAnalytics = FirebaseAnalytics.getInstance(application)
 
     private val saveCocktailListLiveData: LiveData<List<CocktailModel>> =
             cocktailRepository.cocktailListLiveData.map(cocktailModelMapper::mapTo)
@@ -167,6 +172,16 @@ class DrinkViewModel(
         launchRequest {
             cocktailRepository.setCocktailFavorite(cocktailId, isFavorite)
         }
+
+        if (isFavorite) {
+            firebaseAnalytics.logEvent(AnalyticEvents.COCKTAIL_FAVORITE_ADD,
+                    bundleOf(AnalyticEvents.COCKTAIL_FAVORITE_KEY to cocktailId.toString())
+            )
+        } else {
+            firebaseAnalytics.logEvent(AnalyticEvents.COCKTAIL_FAVORITE_REMOVE,
+                    bundleOf(AnalyticEvents.COCKTAIL_FAVORITE_KEY to cocktailId.toString())
+            )
+        }
     }
 
     fun switchCocktailFavorite(cocktailId: Long, isFavorite: Boolean) {
@@ -176,6 +191,16 @@ class DrinkViewModel(
             } else {
                 cocktailRepository.setCocktailFavorite(cocktailId, true)
             }
+        }
+
+        if (isFavorite) {
+            firebaseAnalytics.logEvent(AnalyticEvents.COCKTAIL_FAVORITE_REMOVE,
+                    bundleOf(AnalyticEvents.COCKTAIL_FAVORITE_KEY to cocktailId.toString())
+            )
+        } else {
+            firebaseAnalytics.logEvent(AnalyticEvents.COCKTAIL_FAVORITE_ADD,
+                    bundleOf(AnalyticEvents.COCKTAIL_FAVORITE_KEY to cocktailId.toString())
+            )
         }
     }
 
