@@ -9,7 +9,6 @@ import androidx.fragment.app.Fragment
 abstract class BaseFragment<ViewModel : BaseViewModel> : Fragment() {
 
     protected abstract val contentLayoutResId: Int
-
     protected abstract val viewModel: ViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
