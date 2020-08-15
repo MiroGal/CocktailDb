@@ -68,6 +68,11 @@ class AuthActivity : BaseActivity2<AuthViewModel, ActivityAuthBinding>() {
         root_view.setOnFocusChangeListener { v, hasFocus -> hideKeyboard() }
     }
 
+    override fun configureDataBinding(binding: ActivityAuthBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
+
     override fun configureObserver() {
         viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
             if (btn_authorization.isClickable != it) {

@@ -79,7 +79,7 @@
                 android:layout_height="@dimen/offset_48"
                 android:clickable="false"
                 android:text="@string/auth_btn_login"
-                android:visibility="@{viewmodel.isAuthDataCorrectLiveData ? View.GONE : View.VISIBLE}"
+                android:visibility="@{viewmodel.isAuthDataCorrectLiveData ? View.VISIBLE : View.GONE}"
                 style="@style/AccentButton"
                 />
         </LinearLayout>
