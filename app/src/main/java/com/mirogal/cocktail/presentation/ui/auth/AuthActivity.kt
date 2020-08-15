@@ -10,13 +10,14 @@ import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.ActivityAuthBinding
 import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
-class AuthActivity : BaseActivity<AuthViewModel>() {
+class AuthActivity : BaseActivity2<AuthViewModel, ActivityAuthBinding>() {
 
     override val contentLayoutResId = R.layout.activity_auth
     override val viewModel: AuthViewModel by viewModels()
@@ -67,7 +68,7 @@ class AuthActivity : BaseActivity<AuthViewModel>() {
         root_view.setOnFocusChangeListener { v, hasFocus -> hideKeyboard() }
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
             if (btn_authorization.isClickable != it) {
                 btn_authorization.isClickable = it ?: false

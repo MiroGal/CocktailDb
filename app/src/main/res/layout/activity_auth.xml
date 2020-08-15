@@ -6,7 +6,7 @@
     <data>
         <import type="android.view.View" />
         <variable
-            name="ViewModel"
+            name="viewmodel"
             type="com.mirogal.cocktail.presentation.ui.auth.AuthViewModel" />
     </data>
     <ScrollView
@@ -79,7 +79,7 @@
                 android:layout_height="@dimen/offset_48"
                 android:clickable="false"
                 android:text="@string/auth_btn_login"
-                android:visibility="@{ViewModel.instructionLiveData.value.isNullOrEmpty() ? View.GONE : View.VISIBLE}"
+                android:visibility="@{viewmodel.isAuthDataCorrectLiveData ? View.GONE : View.VISIBLE}"
                 style="@style/AccentButton"
                 />
         </LinearLayout>

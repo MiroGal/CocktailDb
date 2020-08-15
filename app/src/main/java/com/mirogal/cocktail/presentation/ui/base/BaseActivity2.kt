@@ -14,11 +14,13 @@ abstract class BaseActivity2<ViewModel: BaseViewModel, DataBinding: ViewDataBind
     override fun onCreate(savedInstanceState: Bundle?) {
         setApplicationTheme()
         super.onCreate(savedInstanceState)
-        dataBinding = DataBindingUtil.setContentView(this, contentLayoutResId)!!
+
+        dataBinding = DataBindingUtil.setContentView(this, contentLayoutResId)
         dataBinding.lifecycleOwner = this@BaseActivity2
+
         configureView(savedInstanceState)
         configureDataBinding(dataBinding)
-        configureObserver(savedInstanceState)
+        configureObserver()
     }
 
     protected open fun setApplicationTheme() {
@@ -33,7 +35,7 @@ abstract class BaseActivity2<ViewModel: BaseViewModel, DataBinding: ViewDataBind
         // stub
     }
 
-    protected open fun configureObserver(savedInstanceState: Bundle?) {
+    protected open fun configureObserver() {
         // stub
     }
 
