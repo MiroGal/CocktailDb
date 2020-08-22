@@ -3,9 +3,6 @@ package com.mirogal.cocktail.presentation.ui.auth
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.InputFilter
-import android.text.TextWatcher
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.lifecycle.Observer
@@ -30,14 +27,14 @@ class AuthActivity : BaseActivity2<AuthViewModel, ActivityAuthBinding>() {
     }
 
     override fun configureView(savedInstanceState: Bundle?) {
-        txt_login.filters = arrayOf(inputFilter)
-        txt_password.filters = arrayOf(inputFilter)
+//        txt_login.filters = arrayOf(inputFilter)
+//        txt_password.filters = arrayOf(inputFilter)
+//
+//        txt_login.addTextChangedListener(textWatcherLogin)
+//        txt_password.addTextChangedListener(textWatcherPassword)
 
-        txt_login.addTextChangedListener(textWatcherLogin)
-        txt_password.addTextChangedListener(textWatcherPassword)
-
-        btn_authorization.isClickable = false
-        btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
+//        btn_authorization.isClickable = false
+//        btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
         btn_authorization.setOnClickListener {
             when (viewModel.isAuthDataValidLiveData.value ?: AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID) {
                 AuthDataValidStatus.LOGIN_VALID_PASSWORD_VALID -> {
@@ -74,54 +71,65 @@ class AuthActivity : BaseActivity2<AuthViewModel, ActivityAuthBinding>() {
     }
 
     override fun configureObserver() {
-        viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
-            if (btn_authorization.isClickable != it) {
-                btn_authorization.isClickable = it ?: false
-                if (it == true) {
-                    btn_authorization.setBackgroundResource(R.drawable.bg_accent_button)
-                } else {
-                    btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
-                }
+//        viewModel.isAuthDataCorrectLiveData.observe(this, Observer {
+//            if (btn_authorization.isClickable != it) {
+//                btn_authorization.isClickable = it ?: false
+//                if (it == true) {
+//                    btn_authorization.setBackgroundResource(R.drawable.bg_accent_button)
+//                } else {
+//                    btn_authorization.setBackgroundResource(R.drawable.bg_accent_button_inactive)
+//                }
+//            }
+//        })
+
+        viewModel.inputLoginLiveData.observe(this, Observer {
+            if (txt_login_layout.isErrorEnabled) {
+                txt_login_layout.isErrorEnabled = false
+            }
+        })
+        viewModel.inputPasswordLiveData.observe(this, Observer {
+            if (txt_password_layout.isErrorEnabled) {
+                txt_password_layout.isErrorEnabled = false
             }
         })
 
         fillInputField()
     }
 
-    private val inputFilter = InputFilter { source, start, end, dest, dstart, dend ->
-        for (i in start until end) {
-            if (Character.isWhitespace(source[i])) {
-                return@InputFilter ""
-            }
-        }
-        return@InputFilter null
-    }
-
-    private val textWatcherLogin: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            if (txt_login_layout.isErrorEnabled) {
-                txt_login_layout.isErrorEnabled = false
-            }
-            viewModel.inputLoginLiveData.value = s.toString()
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-    }
-
-    private val textWatcherPassword: TextWatcher = object : TextWatcher {
-        override fun afterTextChanged(s: Editable?) {
-            if (txt_password_layout.isErrorEnabled) {
-                txt_password_layout.isErrorEnabled = false
-            }
-            viewModel.inputPasswordLiveData.value = s.toString()
-        }
-
-        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-    }
+//    private val inputFilter = InputFilter { source, start, end, dest, dstart, dend ->
+//        for (i in start until end) {
+//            if (Character.isWhitespace(source[i])) {
+//                return@InputFilter ""
+//            }
+//        }
+//        return@InputFilter null
+//    }
+//
+//    private val textWatcherLogin: TextWatcher = object : TextWatcher {
+//        override fun afterTextChanged(s: Editable?) {
+//            if (txt_login_layout.isErrorEnabled) {
+//                txt_login_layout.isErrorEnabled = false
+//            }
+//            viewModel.inputLoginLiveData.value = s.toString()
+//        }
+//
+//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+//    }
+//
+//    private val textWatcherPassword: TextWatcher = object : TextWatcher {
+//        override fun afterTextChanged(s: Editable?) {
+//            if (txt_password_layout.isErrorEnabled) {
+//                txt_password_layout.isErrorEnabled = false
+//            }
+//            viewModel.inputPasswordLiveData.value = s.toString()
+//        }
+//
+//        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+//
+//        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+//    }
 
     private fun hideKeyboard() {
         val imm: InputMethodManager = this.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager

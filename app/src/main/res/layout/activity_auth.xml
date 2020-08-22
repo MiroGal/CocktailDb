@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
         <import type="android.view.View" />
         <variable
             name="viewmodel"
             type="com.mirogal.cocktail.presentation.ui.auth.AuthViewModel" />
     </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -49,6 +50,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/auth_login_hint"
+                    app:bind_et_setTextWatcher="@{viewmodel.loginTextWatcher}"
+                    app:bind_et_setInputFilter="@{viewmodel.inputFilter}"
                     style="@style/EditText"
                     tools:text="Login"
                     />
@@ -64,6 +67,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:hint="@string/auth_password_hint"
+                    app:bind_et_setTextWatcher="@{viewmodel.passwordTextWatcher}"
+                    app:bind_et_setInputFilter="@{viewmodel.inputFilter}"
                     style="@style/EditText"
                     tools:text="Password"
                     />
@@ -77,9 +82,9 @@
                 android:id="@+id/btn_authorization"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/offset_48"
-                android:clickable="false"
                 android:text="@string/auth_btn_login"
-                android:visibility="@{viewmodel.isAuthDataCorrectLiveData ? View.VISIBLE : View.GONE}"
+                android:clickable="@{viewmodel.isAuthDataCorrectLiveData}"
+                android:background="@{viewmodel.isAuthDataCorrectLiveData ? @drawable/bg_accent_button : @drawable/bg_accent_button_inactive}"
                 style="@style/AccentButton"
                 />
         </LinearLayout>

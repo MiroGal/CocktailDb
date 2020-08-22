@@ -1,6 +1,9 @@
 package com.mirogal.cocktail.presentation.ui.auth
 
 import android.app.Application
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
@@ -78,6 +81,31 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
     private fun fillInputField() {
         inputLoginLiveData.value = validLogin
         inputPasswordLiveData.value = validPassword
+    }
+
+    val loginTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            inputLoginLiveData.value = s.toString()
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    val passwordTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            inputPasswordLiveData.value = s.toString()
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    val inputFilter = InputFilter { source, start, end, dest, dstart, dend ->
+        for (i in start until end) {
+            if (Character.isWhitespace(source[i])) {
+                return@InputFilter ""
+            }
+        }
+        return@InputFilter null
     }
 
 }
