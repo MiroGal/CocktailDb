@@ -4,35 +4,32 @@ import android.text.InputFilter
 import android.text.TextWatcher
 import android.widget.EditText
 import androidx.databinding.BindingAdapter
+import androidx.lifecycle.MutableLiveData
+import com.mirogal.cocktail.presentation.extension.toEditable
 
 
 object EditTextBindingAdapter {
 
-    @BindingAdapter("bind_et_setTextWatcher")
+    @BindingAdapter("android:bind_et_setTextWatcher")
     @JvmStatic
     fun EditText.setTextWatcher(textWatcher: TextWatcher) {
         this.addTextChangedListener(textWatcher)
     }
 
-    @BindingAdapter("bind_et_setInputFilter")
+    @BindingAdapter("android:bind_et_setInputFilter")
     @JvmStatic
     fun EditText.setInputFilter(inputFilter: InputFilter) {
         this.filters = arrayOf(inputFilter)
     }
 
-//    @BindingAdapter("bind_et_setTextWatcher")
-//    @JvmStatic
-//    fun EditText.setTextWatcher(newValue: MutableLiveData<String?>) {
-//        val textWatcher = object : TextWatcher {
-//            override fun afterTextChanged(s: Editable?) {
-//                Log.d(">>>", "+")
-//                newValue.value = s.toString()
-//            }
-//            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-//            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-//        }
-//        Log.d(">>>", "+++++++++++++++++++")
-//        this.addTextChangedListener(textWatcher)
-//    }
+    @BindingAdapter("android:bind_tv_AuthActivity_setText")
+    @JvmStatic
+    fun EditText.setText(data: MutableLiveData<String?>) {
+        val oldValue = this.text.toString()
+        val newValue = data.value
+        if (newValue != oldValue) {
+            this.text = newValue!!.toEditable()
+        }
+    }
 
 }

@@ -51,7 +51,8 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
 
         isAuthDataValidLiveData.observeForever(observer)
 
-        fillInputField()
+        inputLoginLiveData.value = validLogin
+        inputPasswordLiveData.value = validPassword
     }
 
     override fun onCleared() {
@@ -75,12 +76,6 @@ class AuthViewModel(application: Application) : BaseViewModel(application) {
             login != validLogin && password == validPassword -> AuthDataValidStatus.LOGIN_INVALID_PASSWORD_VALID
             else -> AuthDataValidStatus.LOGIN_INVALID_PASSWORD_INVALID
         }
-    }
-
-    // Temporary method
-    private fun fillInputField() {
-        inputLoginLiveData.value = validLogin
-        inputPasswordLiveData.value = validPassword
     }
 
     val loginTextWatcher = object : TextWatcher {

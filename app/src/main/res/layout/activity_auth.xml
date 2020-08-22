@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
@@ -50,8 +51,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/auth_login_hint"
-                    app:bind_et_setTextWatcher="@{viewmodel.loginTextWatcher}"
-                    app:bind_et_setInputFilter="@{viewmodel.inputFilter}"
+                    android:bind_et_setTextWatcher="@{viewmodel.loginTextWatcher}"
+                    android:bind_et_setInputFilter="@{viewmodel.inputFilter}"
+                    android:bind_tv_AuthActivity_setText="@{viewmodel.inputLoginLiveData}"
                     style="@style/EditText"
                     tools:text="Login"
                     />
@@ -67,8 +69,9 @@
                     android:layout_height="wrap_content"
                     android:inputType="textPassword"
                     android:hint="@string/auth_password_hint"
-                    app:bind_et_setTextWatcher="@{viewmodel.passwordTextWatcher}"
-                    app:bind_et_setInputFilter="@{viewmodel.inputFilter}"
+                    android:bind_et_setTextWatcher="@{viewmodel.passwordTextWatcher}"
+                    android:bind_et_setInputFilter="@{viewmodel.inputFilter}"
+                    android:bind_tv_AuthActivity_setText="@{viewmodel.inputPasswordLiveData}"
                     style="@style/EditText"
                     tools:text="Password"
                     />
