@@ -14,7 +14,7 @@ class DetailViewModel(application: Application) : BaseViewModel(application) {
 
     val cocktailIdLiveData: MutableLiveData<Int> = MutableLiveData()
 
-    val cocktailLiveData: LiveData<CocktailDbModel> = cocktailIdLiveData.switchMap {
+    val cocktailModelLiveData: LiveData<CocktailDbModel> = cocktailIdLiveData.switchMap {
         repository.getCocktailById(it)
     }
 

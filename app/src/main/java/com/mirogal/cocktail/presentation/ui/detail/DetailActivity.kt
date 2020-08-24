@@ -14,15 +14,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.ActivityDetailBinding
 import com.mirogal.cocktail.presentation.mapper.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
 import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
-class DetailActivity : BaseActivity<DetailViewModel>() {
+class DetailActivity : BaseActivity2<DetailViewModel, ActivityDetailBinding>() {
 
     override val contentLayoutResId = R.layout.activity_detail
     override val viewModel: DetailViewModel by viewModels()
@@ -44,13 +45,14 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         btn_toolbar_back.setOnClickListener { onBackPressed() }
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureDataBinding(binding: ActivityDetailBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
+
+    override fun configureObserver() {
         viewModel.cocktailIdLiveData.value = cocktailId
-        viewModel.cocktailLiveData.observe(this, Observer {
-            tv_info_name.text = it.name
-            tv_info_alcoholic.text = it.alcoholic
-            tv_info_glass.text = it.glass
-            tvInstructionBody.text = it.instruction
+        viewModel.cocktailModelLiveData.observe(this, Observer {
 
             rv_ingredient_list.layoutManager = LinearLayoutManager(this)
             val ingredientList = toIngredientList(it.ingredientList, it.measureList)
