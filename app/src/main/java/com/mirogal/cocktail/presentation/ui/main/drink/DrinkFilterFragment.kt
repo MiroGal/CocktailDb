@@ -7,6 +7,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentDrinkFilterBinding
 import com.mirogal.cocktail.presentation.model.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter_content.*
 import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 
-class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
+class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBinding>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: DrinkViewModel by activityViewModels()
@@ -23,6 +24,11 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     companion object {
         fun newInstance() = DrinkFilterFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkFilterBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +63,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
         }
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
             btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
             btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""

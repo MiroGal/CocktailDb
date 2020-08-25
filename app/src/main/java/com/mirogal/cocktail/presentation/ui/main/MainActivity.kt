@@ -8,7 +8,7 @@ import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.ActivityMainBinding
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkFilterFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
@@ -18,7 +18,7 @@ import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFrag
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity2<MainViewModel, ActivityMainBinding>(),
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         LogoutDialogFragment.OnActionListener,
         DayDrinkDialogFragment.OnActionListener {
 

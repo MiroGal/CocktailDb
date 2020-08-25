@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.databinding.FragmentDrinkFavoriteBinding
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
@@ -29,7 +30,7 @@ import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMa
 import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
+class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavoriteBinding>(),
         DrinkListAdapter.OnItemClickListener,
         DrinkListAdapter.OnItemLongClickListener {
 
@@ -40,6 +41,11 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
 
     companion object {
         fun newInstance() = DrinkFavoriteFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkFavoriteBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +63,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.favoriteCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list?.isNotEmpty()!!) {
                 showData()

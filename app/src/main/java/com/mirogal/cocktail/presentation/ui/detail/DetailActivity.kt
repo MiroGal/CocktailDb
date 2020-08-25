@@ -17,13 +17,13 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.ActivityDetailBinding
 import com.mirogal.cocktail.presentation.mapper.IngredientMapper.toIngredientList
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
-class DetailActivity : BaseActivity2<DetailViewModel, ActivityDetailBinding>() {
+class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
 
     override val contentLayoutResId = R.layout.activity_detail
     override val viewModel: DetailViewModel by viewModels()

@@ -16,6 +16,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.databinding.FragmentDrinkPagerBinding
 import com.mirogal.cocktail.presentation.model.drink.DrinkPage
 import com.mirogal.cocktail.presentation.model.filter.*
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
-class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
+class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBinding>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_pager
     override val viewModel: DrinkViewModel by activityViewModels()
@@ -41,6 +42,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
 
     companion object {
         fun newInstance() = DrinkPagerFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkPagerBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
@@ -136,7 +142,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
         })
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
                 toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)

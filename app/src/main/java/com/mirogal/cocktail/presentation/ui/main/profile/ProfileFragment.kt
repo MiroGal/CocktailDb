@@ -5,18 +5,24 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.viewModels
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentProfileBinding
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.fragment_profile_content.*
 
-class ProfileFragment : BaseFragment<ProfileViewModel>() {
+class ProfileFragment : BaseFragment<ProfileViewModel, FragmentProfileBinding>() {
 
     override val contentLayoutResId = R.layout.fragment_profile
     override val viewModel: ProfileViewModel by viewModels()
 
     companion object {
         fun newInstance() = ProfileFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentProfileBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {

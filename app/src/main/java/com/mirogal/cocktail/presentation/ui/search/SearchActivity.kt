@@ -14,7 +14,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.network.model.NetworkStatus
 import com.mirogal.cocktail.databinding.ActivitySearchBinding
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
@@ -23,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
-class SearchActivity : BaseActivity2<SearchViewModel, ActivitySearchBinding>(),
+class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(),
         SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search

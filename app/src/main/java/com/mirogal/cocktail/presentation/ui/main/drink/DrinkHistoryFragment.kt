@@ -22,6 +22,7 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.databinding.FragmentDrinkHistoryBinding
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
@@ -29,7 +30,7 @@ import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMa
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
+class DrinkHistoryFragment : BaseFragment<DrinkViewModel, FragmentDrinkHistoryBinding>(),
         DrinkListAdapter.OnItemClickListener,
         DrinkListAdapter.OnItemLongClickListener {
 
@@ -40,6 +41,11 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkHistoryBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(view: View, savedInstanceState: Bundle?) {
@@ -57,7 +63,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.historyCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list?.isNotEmpty()!!) {
                 showData()

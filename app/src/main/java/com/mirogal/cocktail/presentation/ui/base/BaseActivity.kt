@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 
-abstract class BaseActivity2<ViewModel: BaseViewModel, DataBinding: ViewDataBinding> : AppCompatActivity() {
+abstract class BaseActivity<ViewModel: BaseViewModel, DataBinding: ViewDataBinding> : AppCompatActivity() {
 
     protected abstract val contentLayoutResId: Int
     protected abstract val viewModel: ViewModel
@@ -16,7 +16,7 @@ abstract class BaseActivity2<ViewModel: BaseViewModel, DataBinding: ViewDataBind
         super.onCreate(savedInstanceState)
 
         dataBinding = DataBindingUtil.setContentView(this, contentLayoutResId)
-        dataBinding.lifecycleOwner = this@BaseActivity2
+        dataBinding.lifecycleOwner = this@BaseActivity
 
         configureView(savedInstanceState)
         configureDataBinding(dataBinding)
