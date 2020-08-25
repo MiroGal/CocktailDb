@@ -10,12 +10,10 @@
     android:focusable="true"
     tools:context=".presentation.ui.main.drink.DrinkFilterFragment"
     tools:ignore="Overdraw">
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
@@ -23,10 +21,9 @@
             android:paddingStart="@dimen/offset_48"
             android:background="?attr/colorPrimary"
             android:theme="@style/AppTheme.PopupOverlay"
-            tools:ignore="RtlSymmetry" />
-
+            tools:ignore="RtlSymmetry"
+            />
     </com.google.android.material.appbar.AppBarLayout>
-
     <ImageView
         android:id="@+id/btn_toolbar_back"
         android:layout_width="48dp"
@@ -36,8 +33,9 @@
         android:src="@drawable/ic_back"
         android:elevation="@dimen/elevation_4"
         app:elevation="@dimen/elevation_4"
-        tools:ignore="ContentDescription" />
-
-    <include layout="@layout/fragment_drink_filter_content" />
-
+        tools:ignore="ContentDescription"
+        />
+    <include
+        layout="@layout/fragment_drink_filter_content"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

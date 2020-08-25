@@ -1,29 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_primary"
     tools:context=".presentation.ui.search.SearchActivity"
     tools:ignore="Overdraw">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.search.SearchViewModel"
+            />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        android:layout_height="match_parent"
+        android:background="@color/background_primary">
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme.PopupOverlay"
-            app:contentInsetStartWithNavigation="0dp" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/AppTheme.PopupOverlay"
+                app:contentInsetStartWithNavigation="0dp"
+                />
+        </com.google.android.material.appbar.AppBarLayout>
+        <include
+            layout="@layout/activity_search_content"
+            app:viewmodel="@{viewmodel}"
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/activity_search_content" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

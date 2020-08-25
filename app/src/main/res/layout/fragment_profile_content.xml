@@ -9,7 +9,6 @@
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:ignore="MergeRootFrame">
-
     <TextView
         android:id="@+id/btn_logout"
         android:layout_width="match_parent"
@@ -18,6 +17,6 @@
         android:layout_gravity="center"
         android:clickable="false"
         android:text="@string/profile_btn_logout"
-        style="@style/AccentButton" />
-
+        style="@style/AccentButton"
+        />
 </FrameLayout>

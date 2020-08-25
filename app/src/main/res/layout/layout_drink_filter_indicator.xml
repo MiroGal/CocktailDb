@@ -15,7 +15,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_8"
         android:layout_marginBottom="@dimen/offset_8">
-
         <androidx.cardview.widget.CardView
             android:id="@+id/item_filter_category"
             android:layout_width="wrap_content"
@@ -40,23 +39,25 @@
                     android:layout_height="48dp"
                     android:padding="@dimen/offset_8"
                     android:src="@drawable/ic_drink_category"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
                 <TextView
                     android:id="@+id/tv_filter_category_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextTitle"
-                    tools:text="Category"/>
+                    tools:text="Category"
+                    />
                 <ImageView
                     android:id="@+id/btn_item_filter_category_close"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:padding="12dp"
                     android:src="@drawable/ic_close"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/item_filter_alcohol"
             android:layout_width="wrap_content"
@@ -81,23 +82,25 @@
                     android:layout_height="48dp"
                     android:padding="@dimen/offset_8"
                     android:src="@drawable/ic_drink_alcohol_non"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
                 <TextView
                     android:id="@+id/tv_filter_alcohol_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextTitle"
-                    tools:text="Alcohol"/>
+                    tools:text="Alcohol"
+                    />
                 <ImageView
                     android:id="@+id/btn_item_filter_alcohol_close"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:padding="12dp"
                     android:src="@drawable/ic_close"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/item_filter_ingredient"
             android:layout_width="wrap_content"
@@ -122,23 +125,25 @@
                     android:layout_height="48dp"
                     android:padding="@dimen/offset_8"
                     android:src="@drawable/ic_drink_alcohol_non"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
                 <TextView
                     android:id="@+id/tv_filter_ingredient_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextTitle"
-                    tools:text="Alcohol"/>
+                    tools:text="Alcohol"
+                    />
                 <ImageView
                     android:id="@+id/btn_item_filter_ingredient_close"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:padding="12dp"
                     android:src="@drawable/ic_close"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
         <androidx.cardview.widget.CardView
             android:id="@+id/item_filter_glass"
             android:layout_width="wrap_content"
@@ -163,22 +168,24 @@
                     android:layout_height="48dp"
                     android:padding="@dimen/offset_8"
                     android:src="@drawable/ic_drink_alcohol_non"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
                 <TextView
                     android:id="@+id/tv_filter_glass_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/TextTitle"
-                    tools:text="Alcohol"/>
+                    tools:text="Alcohol"
+                    />
                 <ImageView
                     android:id="@+id/btn_item_filter_glass_close"
                     android:layout_width="48dp"
                     android:layout_height="48dp"
                     android:padding="12dp"
                     android:src="@drawable/ic_close"
-                    tools:ignore="ContentDescription" />
+                    tools:ignore="ContentDescription"
+                    />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
-
     </LinearLayout>
 </HorizontalScrollView>

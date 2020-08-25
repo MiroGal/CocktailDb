@@ -2,22 +2,24 @@
 <menu
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <item
         android:id="@+id/action_open"
         android:title="@string/drink_favorite_item_menu_action_open"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/action_shortcut"
         android:title="@string/drink_favorite_item_menu_shortcut"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/action_pin_shortcut"
         android:title="@string/drink_favorite_item_menu_pin_shortcut"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        />
     <item
         android:id="@+id/action_remove_favorite"
         android:title="@string/drink_favorite_item_menu_remove_favorite"
-        app:showAsAction="never" />
-
+        app:showAsAction="never"
+        />
 </menu>

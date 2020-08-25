@@ -3,14 +3,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_favorite_drink_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
-
-    <include layout="@layout/layout_drink_favorite_empty"
-        android:visibility="invisible" />
-
+        android:visibility="visible"
+        />
+    <include
+        layout="@layout/layout_drink_favorite_empty"
+        android:visibility="invisible"
+        />
 </FrameLayout>

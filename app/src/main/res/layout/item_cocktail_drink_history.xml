@@ -6,19 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardCornerRadius="@dimen/radius_8">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:background="?attr/selectableItemBackground">
-
         <ImageView
             android:id="@+id/iv_image"
             android:layout_width="match_parent"
             android:layout_height="160dp"
-            tools:ignore="ContentDescription" />
-
+            tools:ignore="ContentDescription"
+            />
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
@@ -28,10 +26,9 @@
             android:layout_marginStart="@dimen/offset_16"
             android:layout_marginEnd="@dimen/offset_16"
             style="@style/TextBody"
-            tools:text="Name" />
-
+            tools:text="Name"
+            />
     </LinearLayout>
-
     <ImageView
         android:id="@+id/iv_favorite"
         android:layout_width="48dp"
@@ -39,6 +36,6 @@
         android:layout_gravity="end"
         android:padding="@dimen/offset_8"
         android:src="@drawable/ic_item_favorite_border"
-        android:contentDescription="@string/drink_history_item_btn_favorite_description" />
-
+        android:contentDescription="@string/drink_history_item_btn_favorite_description"
+        />
 </androidx.cardview.widget.CardView>

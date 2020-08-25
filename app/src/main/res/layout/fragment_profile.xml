@@ -9,23 +9,22 @@
     android:focusable="true"
     tools:context=".presentation.ui.main.profile.ProfileFragment"
     tools:ignore="Overdraw">
-
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
-
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme.PopupOverlay" />
-
+            android:theme="@style/AppTheme.PopupOverlay"
+            />
     </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/fragment_profile_content" />
-
-    <include layout="@layout/dialog_fragment_logout" />
-
+    <include
+        layout="@layout/fragment_profile_content"
+        />
+    <include
+        layout="@layout/dialog_fragment_logout"
+        />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

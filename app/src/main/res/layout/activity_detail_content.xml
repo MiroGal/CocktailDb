@@ -8,7 +8,8 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.mirogal.cocktail.presentation.ui.detail.DetailViewModel" />
+            type="com.mirogal.cocktail.presentation.ui.detail.DetailViewModel"
+            />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -128,4 +129,5 @@
                 />
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </layout>

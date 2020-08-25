@@ -8,7 +8,8 @@
     <data>
         <variable
             name="viewmodel"
-            type="com.mirogal.cocktail.presentation.ui.detail.DetailViewModel" />
+            type="com.mirogal.cocktail.presentation.ui.detail.DetailViewModel"
+            />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -69,4 +70,5 @@
             app:viewmodel="@{viewmodel}"
             />
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
 </layout>

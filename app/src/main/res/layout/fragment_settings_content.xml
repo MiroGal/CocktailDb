@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingBottom="@dimen/offset_8"
     android:fillViewport="false"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -16,20 +16,19 @@
         android:paddingEnd="@dimen/offset_16"
         android:orientation="vertical"
         android:descendantFocusability="blocksDescendants">
-
         <CheckBox
             android:id="@+id/chb_show_bottom_nav_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_show_bottom_nav_label"
-            style="@style/TextBody"/>
+            style="@style/TextBody"
+            />
         <CheckBox
             android:id="@+id/chb_show_battery_indicator"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/settings_show_battery_indicator"
-            style="@style/TextBody"/>
-
-
+            style="@style/TextBody"
+            />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

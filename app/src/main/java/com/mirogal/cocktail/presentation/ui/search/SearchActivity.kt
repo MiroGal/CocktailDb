@@ -13,7 +13,8 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.network.model.NetworkStatus
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.databinding.ActivitySearchBinding
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
@@ -22,7 +23,7 @@ import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
-class SearchActivity : BaseActivity<SearchViewModel>(),
+class SearchActivity : BaseActivity2<SearchViewModel, ActivitySearchBinding>(),
         SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
@@ -50,7 +51,12 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
         rv_search_list.addItemDecoration(itemDecoration)
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureDataBinding(binding: ActivitySearchBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
+
+    override fun configureObserver() {
         viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbModel?> ->
             try {
                 listAdapter.submitList(pagedList)

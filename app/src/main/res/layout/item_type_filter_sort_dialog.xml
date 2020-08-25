@@ -13,12 +13,11 @@
     android:clickable="true"
     android:focusable="true"
     android:background="@drawable/bg_list_item">
-
     <TextView
         android:id="@+id/tv_filter_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/TextBody"
-        tools:text="Filter name" />
-
+        tools:text="Filter name"
+        />
 </LinearLayout>
