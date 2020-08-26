@@ -12,6 +12,7 @@ object ImageViewBindingAdapter {
         "android:bind_iv_placeholderResId",
         "android:bind_iv_errorResId", "android:bind_iv_errorUrl",
         "android:bind_iv_isCrossFadeEnabled"], requireAll = false)
+    @JvmStatic
     fun ImageView.loadImage(imageUrl: String?,
                           placeholderResId: Int?,
                           errorResId: Int?, errorUrl: String?,
