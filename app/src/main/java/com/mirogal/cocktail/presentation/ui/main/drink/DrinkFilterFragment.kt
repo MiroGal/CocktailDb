@@ -20,7 +20,8 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBind
     override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: DrinkViewModel by activityViewModels()
 
-    private var isFragmentNotJustCreated = false
+    private var isFragmentCreated = true
+    private var isUndo = false
 
     companion object {
         fun newInstance() = DrinkFilterFragment()
@@ -72,6 +73,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBind
         })
         viewModel.cocktailListSizeLiveData.observe(viewLifecycleOwner, Observer {
             showFilterSnackbar(it?.first ?: 0, it?.second ?: 0)
+            isUndo = false
         })
     }
 
@@ -81,7 +83,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBind
     }
 
     private fun showFilterSnackbar(historyListSize: Int, favoriteListSize: Int) {
-        if (isFragmentNotJustCreated) {
+        if (!isFragmentCreated && !isUndo) {
             Snackbar.make(requireView().findViewById(R.id.container),
                     if (historyListSize != 0) {
                         getString(R.string.drink_filter_message_result_found) + ": " + historyListSize + "\uD83D\uDD51" + " / " + favoriteListSize + "\u2665"
@@ -91,11 +93,12 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBind
                     .setBackgroundTint(resources.getColor(R.color.background_primary))
                     .setTextColor(resources.getColor(R.color.txt_title))
                     .setAction(getString(R.string.drink_filter_btn_undo)) {
+                        isUndo = true
                         viewModel.backDrinkFilter()
                     }
                     .show()
         }
-        isFragmentNotJustCreated = true
+        isFragmentCreated = false
     }
 
 }
