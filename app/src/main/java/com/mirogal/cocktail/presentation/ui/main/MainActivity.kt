@@ -42,6 +42,29 @@ class MainActivity : BaseActivity<MainViewModel>(),
         }
     }
 
+    private inline fun <reified T : BaseFragment<*>> showFragment() = with(supportFragmentManager) {
+        val isFragmentFound: Boolean
+        val targetFragment = findFragmentByTag(T::class.java.name).apply {
+            isFragmentFound = this != null
+        } ?: T::class.java.newInstance()
+        commit(true) {
+            setPrimaryNavigationFragment(targetFragment)
+            when {
+                isFragmentFound -> show(targetFragment)
+                else -> add(R.id.fcv_container, targetFragment, T::class.java.name)
+            }
+            fragments
+                    // skip dialogs
+                    .filterIsInstance<BaseFragment<*>>()
+                    // skip currently shown fragment
+                    .filter { it != targetFragment && it != DrinkFilterFragment::class }
+                    // hide other if needed
+                    .forEach {
+                        hide(it)
+                    }
+        }
+    }
+
     override fun configureObserver() {
         viewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
             if (it) {
@@ -88,29 +111,6 @@ class MainActivity : BaseActivity<MainViewModel>(),
             putExtra("cocktailName", cocktailName)
         }
         startActivity(intent)
-    }
-
-    private inline fun <reified T : BaseFragment<*>> showFragment() = with(supportFragmentManager) {
-        val isFragmentFound: Boolean
-        val targetFragment = findFragmentByTag(T::class.java.name)
-                .apply { isFragmentFound = this != null }
-                ?: T::class.java.newInstance()
-        commit(true) {
-            setPrimaryNavigationFragment(targetFragment)
-            when {
-                isFragmentFound -> show(targetFragment)
-                else -> add(R.id.fcv_container, targetFragment, T::class.java.name)
-            }
-            fragments
-                    // skip dialogs
-                    .filterIsInstance<BaseFragment<*>>()
-                    // skip currently shown fragment
-                    .filter { it != targetFragment }
-                    // hide other if needed
-                    .forEach {
-                        hide(it)
-                    }
-        }
     }
 
 }

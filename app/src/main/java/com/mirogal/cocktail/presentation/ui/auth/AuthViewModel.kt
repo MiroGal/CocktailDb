@@ -1,11 +1,14 @@
 package com.mirogal.cocktail.presentation.ui.auth
 
 import android.app.Application
+import android.text.Editable
+import android.text.InputFilter
+import android.text.TextWatcher
 import androidx.lifecycle.*
 import com.mirogal.cocktail.data.repository.source.AuthRepository
 import com.mirogal.cocktail.data.repository.source.UserRepository
-import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.constant.AuthDataValidStatus
+import com.mirogal.cocktail.presentation.mapper.UserModelMapper
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class AuthViewModel(
@@ -54,7 +57,8 @@ class AuthViewModel(
 
         isAuthDataValidLiveData.observeForever(observer)
 
-        fillInputField()
+        inputLoginLiveData.value = validLogin
+        inputPasswordLiveData.value = validPassword
     }
 
     override fun onCleared() {
@@ -80,10 +84,29 @@ class AuthViewModel(
         }
     }
 
-    // Temporary method
-    private fun fillInputField() {
-        inputLoginLiveData.value = validLogin
-        inputPasswordLiveData.value = validPassword
+    val loginTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            inputLoginLiveData.value = s.toString()
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    val passwordTextWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+            inputPasswordLiveData.value = s.toString()
+        }
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    }
+
+    val inputFilter = InputFilter { source, start, end, dest, dstart, dend ->
+        for (i in start until end) {
+            if (Character.isWhitespace(source[i])) {
+                return@InputFilter ""
+            }
+        }
+        return@InputFilter null
     }
 
 }

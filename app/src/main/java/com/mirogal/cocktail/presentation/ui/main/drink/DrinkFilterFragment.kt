@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.constant.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DrinkFilterDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_filter.*
@@ -19,7 +19,8 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
     override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: DrinkViewModel by sharedViewModels()
 
-    private var isFragmentNotJustCreated = false
+    private var isFragmentCreated = true
+    private var isUndo = false
 
     companion object {
         fun newInstance() = DrinkFilterFragment()
@@ -66,6 +67,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
         })
         viewModel.cocktailListSizeLiveData.observe(viewLifecycleOwner, Observer {
             showFilterSnackbar(it?.first ?: 0, it?.second ?: 0)
+            isUndo = false
         })
     }
 
@@ -75,7 +77,7 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
     }
 
     private fun showFilterSnackbar(historyListSize: Int, favoriteListSize: Int) {
-        if (isFragmentNotJustCreated) {
+        if (!isFragmentCreated && !isUndo) {
             Snackbar.make(requireView().findViewById(R.id.container),
                     if (historyListSize != 0) {
                         getString(R.string.drink_filter_message_result_found) + ": " + historyListSize + "\uD83D\uDD51" + " / " + favoriteListSize + "\u2665"
@@ -85,11 +87,12 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
                     .setBackgroundTint(resources.getColor(R.color.background_primary))
                     .setTextColor(resources.getColor(R.color.txt_title))
                     .setAction(getString(R.string.drink_filter_btn_undo)) {
+                        isUndo = true
                         viewModel.backDrinkFilter()
                     }
                     .show()
         }
-        isFragmentNotJustCreated = true
+        isFragmentCreated = false
     }
 
 }

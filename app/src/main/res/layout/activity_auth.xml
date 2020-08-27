@@ -1,78 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_primary"
-    android:fillViewport="true"
-    tools:context=".presentation.ui.auth.AuthActivity"
-    tools:ignore="Overdraw">
-    <LinearLayout
-        android:id="@+id/root_view"
+    tools:context=".presentation.ui.auth.AuthActivity">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.auth.AuthViewModel"
+            />
+    </data>
+
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="@dimen/offset_32"
-        android:paddingBottom="@dimen/offset_32"
-        android:paddingStart="@dimen/offset_16"
-        android:paddingEnd="@dimen/offset_16"
-        android:orientation="vertical"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:descendantFocusability="beforeDescendants">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
-            android:src="@drawable/img_logo_cocktail"
-            tools:ignore="ContentDescription" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txt_login_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/auth_login_hint"
-                style="@style/EditText"
-                tools:text="Login" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/txt_password_layout"
+        android:layout_height="match_parent"
+        android:background="@color/background_primary"
+        android:fillViewport="true">
+        <LinearLayout
+            android:id="@+id/root_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:passwordToggleEnabled="true">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/txt_password"
+            android:paddingTop="@dimen/offset_32"
+            android:paddingBottom="@dimen/offset_32"
+            android:paddingStart="@dimen/offset_16"
+            android:paddingEnd="@dimen/offset_16"
+            android:orientation="vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:descendantFocusability="beforeDescendants">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:src="@drawable/img_logo_cocktail"
+                tools:ignore="ContentDescription"
+                />
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_login_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_login"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/auth_login_hint"
+                    android:bind_et_setTextWatcher="@{viewmodel.loginTextWatcher}"
+                    android:bind_et_setInputFilter="@{viewmodel.inputFilter}"
+                    android:bind_tv_AuthActivity_setText="@{viewmodel.inputLoginLiveData}"
+                    style="@style/EditText"
+                    tools:text="Login"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/txt_password_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:hint="@string/auth_password_hint"
-                style="@style/EditText"
-                tools:text="Password" />
-        </com.google.android.material.textfield.TextInputLayout>
+                app:passwordToggleEnabled="true">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:hint="@string/auth_password_hint"
+                    android:bind_et_setTextWatcher="@{viewmodel.passwordTextWatcher}"
+                    android:bind_et_setInputFilter="@{viewmodel.inputFilter}"
+                    android:bind_tv_AuthActivity_setText="@{viewmodel.inputPasswordLiveData}"
+                    style="@style/EditText"
+                    tools:text="Password"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+            <TextView
+                android:id="@+id/btn_authorization"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/offset_48"
+                android:text="@string/auth_btn_login"
+                android:clickable="@{viewmodel.isAuthDataCorrectLiveData}"
+                android:background="@{viewmodel.isAuthDataCorrectLiveData ? @drawable/bg_accent_button : @drawable/bg_accent_button_inactive}"
+                style="@style/AccentButton"
+                />
+        </LinearLayout>
+    </ScrollView>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
-
-        <TextView
-            android:id="@+id/btn_authorization"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/offset_48"
-            android:clickable="false"
-            android:text="@string/auth_btn_login"
-            style="@style/AccentButton" />
-
-    </LinearLayout>
-</ScrollView>
+</layout>
