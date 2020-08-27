@@ -14,6 +14,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentDrinkPagerBinding
 import com.mirogal.cocktail.presentation.constant.DrinkPage
 import com.mirogal.cocktail.presentation.constant.filter.*
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
@@ -31,7 +32,7 @@ import kotlinx.android.synthetic.main.layout_battery_indicator.*
 import kotlinx.android.synthetic.main.layout_drink_filter_indicator.*
 import java.util.*
 
-class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
+class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBinding>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_pager
     override val viewModel: DrinkViewModel by sharedViewModels()
@@ -41,6 +42,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
 
     companion object {
         fun newInstance() = DrinkPagerFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkPagerBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(savedInstanceState: Bundle?) {

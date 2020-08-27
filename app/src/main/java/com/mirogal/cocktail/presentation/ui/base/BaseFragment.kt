@@ -6,22 +6,26 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.presentation.extension.*
 
-abstract class BaseFragment<ViewModel: BaseViewModel> : Fragment() {
+abstract class BaseFragment<ViewModel: BaseViewModel, DataBinding: ViewDataBinding> : Fragment() {
 
     @get:LayoutRes
     protected abstract val contentLayoutResId: Int
     protected abstract val viewModel: ViewModel
+    protected open lateinit var dataBinding: DataBinding
 
-    override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(contentLayoutResId, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        dataBinding = DataBindingUtil.inflate(inflater, contentLayoutResId, container, false)
+        dataBinding.lifecycleOwner = this.viewLifecycleOwner
+
+        configureDataBinding(dataBinding)
+
+        return dataBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,6 +33,10 @@ abstract class BaseFragment<ViewModel: BaseViewModel> : Fragment() {
 
         configureView(savedInstanceState)
         configureObserver()
+    }
+
+    protected open fun configureDataBinding(binding: DataBinding) {
+        //stub
     }
 
     protected open fun configureView(savedInstanceState: Bundle?) {

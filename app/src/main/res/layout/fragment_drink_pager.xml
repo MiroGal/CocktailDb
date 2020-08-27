@@ -1,115 +1,118 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/root_view"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_primary"
-    tools:context=".presentation.ui.mainnative.drink.DrinkPagerFragment"
-    tools:ignore="Overdraw">
-    <LinearLayout
+    tools:context=".presentation.ui.main.drink.DrinkPagerFragment">
+
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel"
+            />
+    </data>
+
+    <FrameLayout
+        android:id="@+id/root_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        tools:ignore="UselessParent">
-
-        <com.google.android.material.appbar.AppBarLayout
+        android:background="@color/background_primary">
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:theme="@style/AppTheme.AppBarOverlay"
-            android:elevation="0dp"
-            app:elevation="0dp">
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                android:background="?attr/colorPrimary"
-                android:theme="@style/AppTheme.PopupOverlay"
-                android:elevation="@dimen/elevation_4"
-                app:elevation="@dimen/elevation_4">
-
-                <ImageView
-                    android:id="@+id/toolbar_action_filter"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="@dimen/offset_4"
-                    android:layout_gravity="end"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_filter_list_disable"
-                    android:longClickable="true"
-                    tools:ignore="ContentDescription" />
-                <ImageView
-                    android:id="@+id/toolbar_action_sort"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_margin="@dimen/offset_4"
-                    android:layout_gravity="end"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/ic_sort_list_disable"
-                    android:longClickable="true"
-                    tools:ignore="ContentDescription" />
-
-            </androidx.appcompat.widget.Toolbar>
-
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/background_primary" />
-
-        </com.google.android.material.appbar.AppBarLayout>
-
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:id="@+id/container"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            tools:ignore="UselessParent">
             <com.google.android.material.appbar.AppBarLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:theme="@style/AppTheme.AppBarOverlay"
-                android:background="@color/background_primary"
                 android:elevation="0dp"
                 app:elevation="0dp">
-
-                <FrameLayout
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary"
+                    android:theme="@style/AppTheme.PopupOverlay"
+                    android:elevation="@dimen/elevation_4"
+                    app:elevation="@dimen/elevation_4">
+                    <ImageView
+                        android:id="@+id/toolbar_action_filter"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="@dimen/offset_4"
+                        android:layout_gravity="end"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_filter_list_disable"
+                        android:longClickable="true"
+                        tools:ignore="ContentDescription"
+                        />
+                    <ImageView
+                        android:id="@+id/toolbar_action_sort"
+                        android:layout_width="48dp"
+                        android:layout_height="48dp"
+                        android:layout_margin="@dimen/offset_4"
+                        android:layout_gravity="end"
+                        android:scaleType="centerInside"
+                        android:src="@drawable/ic_sort_list_disable"
+                        android:longClickable="true"
+                        tools:ignore="ContentDescription"
+                        />
+                </androidx.appcompat.widget.Toolbar>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tab_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:layout_scrollFlags="scroll|snap|enterAlways">
-
-                    <include layout="@layout/layout_drink_filter_indicator" />
-
-                </FrameLayout>
-
+                    android:background="@color/background_primary"
+                    />
             </com.google.android.material.appbar.AppBarLayout>
-
-            <androidx.viewpager2.widget.ViewPager2
-                android:id="@+id/view_pager"
+            <androidx.coordinatorlayout.widget.CoordinatorLayout
+                android:id="@+id/container"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+                android:layout_height="0dp"
+                android:layout_weight="1">
+                <com.google.android.material.appbar.AppBarLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/AppTheme.AppBarOverlay"
+                    android:background="@color/background_primary"
+                    android:elevation="0dp"
+                    app:elevation="0dp">
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_scrollFlags="scroll|snap|enterAlways">
+                        <include
+                            layout="@layout/layout_drink_filter_indicator"
+                            />
+                    </FrameLayout>
+                </com.google.android.material.appbar.AppBarLayout>
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/view_pager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    />
+                <include
+                    layout="@layout/layout_battery_indicator"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginBottom="@dimen/fab_margin"
+                    android:layout_marginStart="@dimen/fab_margin"
+                    android:layout_marginEnd="88dp"
+                    app:layout_behavior="@string/fab_transformation_sheet_behavior"
+                    />
+                <com.google.android.material.floatingactionbutton.FloatingActionButton
+                    android:id="@+id/fab_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|end"
+                    android:layout_margin="@dimen/fab_margin"
+                    android:src="@drawable/ic_fab_search"
+                    />
+            </androidx.coordinatorlayout.widget.CoordinatorLayout>
+        </LinearLayout>
+    </FrameLayout>
 
-            <include layout="@layout/layout_battery_indicator"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_gravity="bottom"
-                android:layout_marginBottom="@dimen/fab_margin"
-                android:layout_marginStart="@dimen/fab_margin"
-                android:layout_marginEnd="88dp"
-                app:layout_behavior="@string/fab_transformation_sheet_behavior" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/fab_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="@dimen/fab_margin"
-                android:src="@drawable/ic_fab_search" />
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-    </LinearLayout>
-</FrameLayout>
+</layout>

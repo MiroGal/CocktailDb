@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentDrinkFilterBinding
 import com.mirogal.cocktail.presentation.constant.filter.DrinkFilterType
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -14,7 +15,7 @@ import kotlinx.android.synthetic.main.fragment_drink_filter.*
 import kotlinx.android.synthetic.main.fragment_drink_filter_content.*
 import kotlinx.android.synthetic.main.fragment_drink_pager.toolbar
 
-class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
+class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBinding>() {
 
     override val contentLayoutResId = R.layout.fragment_drink_filter
     override val viewModel: DrinkViewModel by sharedViewModels()
@@ -24,6 +25,11 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel>() {
 
     companion object {
         fun newInstance() = DrinkFilterFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkFilterBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(savedInstanceState: Bundle?) {

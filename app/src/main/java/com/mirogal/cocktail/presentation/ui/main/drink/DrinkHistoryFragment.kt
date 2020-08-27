@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentDrinkHistoryBinding
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -29,7 +30,7 @@ import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMa
 import kotlinx.android.synthetic.main.fragment_drink_history.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
+class DrinkHistoryFragment : BaseFragment<DrinkViewModel, FragmentDrinkHistoryBinding>(),
         DrinkListAdapter.OnItemClickListener,
         DrinkListAdapter.OnItemLongClickListener {
 
@@ -37,10 +38,14 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
     override val viewModel: DrinkViewModel by sharedViewModels()
 
     private lateinit var drinkListAdapter: DrinkListAdapter
-//    private val recycledViewPool = RecyclerView.RecycledViewPool()
 
     companion object {
         fun newInstance() = DrinkHistoryFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkHistoryBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(savedInstanceState: Bundle?) {
@@ -49,9 +54,8 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
             Configuration.ORIENTATION_LANDSCAPE -> 3
             else -> 1
         }
-        rv_drink_history_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
-//        rv_drink_history_list.setRecycledViewPool(recycledViewPool)
 
+        rv_drink_history_list.layoutManager = GridLayoutManager(requireContext(), listColumn)
         val spaceInPixel = resources.getDimensionPixelSize(R.dimen.offset_16)
         val itemDecoration = SpaceItemDecorationWithoutTopMargin(listColumn, spaceInPixel, true, 0)
         rv_drink_history_list.addItemDecoration(itemDecoration)
@@ -210,15 +214,15 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
     }
 
     private fun showData() {
-        if (rv_drink_history_list.visibility == View.INVISIBLE) {
+        if (rv_drink_history_list.visibility == View.GONE) {
             rv_drink_history_list.visibility = View.VISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
+            layoutEmpty.visibility = View.GONE
         }
     }
 
     private fun showEmpty() {
-        if (layoutEmpty.visibility == View.INVISIBLE) {
-            rv_drink_history_list.visibility = View.INVISIBLE
+        if (layoutEmpty.visibility == View.GONE) {
+            rv_drink_history_list.visibility = View.GONE
             layoutEmpty.visibility = View.VISIBLE
         }
     }

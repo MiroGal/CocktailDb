@@ -48,7 +48,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         }
     }
 
-    private inline fun <reified T : BaseFragment<*>> showFragment() = with(supportFragmentManager) {
+    private inline fun <reified T : BaseFragment<*, *>> showFragment() = with(supportFragmentManager) {
         val isFragmentFound: Boolean
         val targetFragment = findFragmentByTag(T::class.java.name).apply {
             isFragmentFound = this != null
@@ -61,7 +61,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             }
             fragments
                     // skip dialogs
-                    .filterIsInstance<BaseFragment<*>>()
+                    .filterIsInstance<BaseFragment<*, *>>()
                     // skip currently shown fragment
                     .filter { it != targetFragment && it != DrinkFilterFragment::class }
                     // hide other if needed

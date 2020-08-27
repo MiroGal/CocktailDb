@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".presentation.ui.main.drink.DrinkFavoriteFragment">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_favorite_drink_list"
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel"
+            />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="visible" />
+        android:layout_height="match_parent">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_favorite_drink_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            />
+        <include
+            layout="@layout/layout_drink_favorite_empty"
+            android:visibility="gone"
+            />
+    </FrameLayout>
 
-    <include layout="@layout/layout_drink_favorite_empty"
-        android:visibility="invisible" />
-
-</FrameLayout>
+</layout>

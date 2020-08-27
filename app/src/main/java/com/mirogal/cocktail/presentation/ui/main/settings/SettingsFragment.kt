@@ -5,6 +5,7 @@ import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentSettingsBinding
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -12,7 +13,7 @@ import com.mirogal.cocktail.presentation.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.fragment_settings_content.*
 
-class SettingsFragment : BaseFragment<SettingsViewModel>() {
+class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding>() {
 
     override val contentLayoutResId = R.layout.fragment_settings
     override val viewModel: SettingsViewModel by baseViewModels()
@@ -20,6 +21,11 @@ class SettingsFragment : BaseFragment<SettingsViewModel>() {
 
     companion object {
         fun newInstance() = SettingsFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentSettingsBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(savedInstanceState: Bundle?) {

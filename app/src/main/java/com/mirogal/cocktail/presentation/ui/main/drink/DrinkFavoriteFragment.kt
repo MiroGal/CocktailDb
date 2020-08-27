@@ -20,6 +20,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.FragmentDrinkFavoriteBinding
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
@@ -29,7 +30,7 @@ import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMa
 import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
+class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavoriteBinding>(),
         DrinkListAdapter.OnItemClickListener,
         DrinkListAdapter.OnItemLongClickListener {
 
@@ -40,6 +41,11 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
 
     companion object {
         fun newInstance() = DrinkFavoriteFragment()
+    }
+
+    override fun configureDataBinding(binding: FragmentDrinkFavoriteBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
     }
 
     override fun configureView(savedInstanceState: Bundle?) {
@@ -207,15 +213,15 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
     }
 
     private fun showData() {
-        if (rv_favorite_drink_list.visibility == View.INVISIBLE) {
+        if (rv_favorite_drink_list.visibility == View.GONE) {
             rv_favorite_drink_list.visibility = View.VISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
+            layoutEmpty.visibility = View.GONE
         }
     }
 
     private fun showEmpty() {
-        if (layoutEmpty.visibility == View.INVISIBLE) {
-            rv_favorite_drink_list.visibility = View.INVISIBLE
+        if (layoutEmpty.visibility == View.GONE) {
+            rv_favorite_drink_list.visibility = View.GONE
             layoutEmpty.visibility = View.VISIBLE
         }
     }
