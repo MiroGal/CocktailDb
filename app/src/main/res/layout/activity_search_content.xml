@@ -1,23 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:ignore="MergeRootFrame">
+    tools:context=".presentation.ui.search.SearchActivity">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_search_list"
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.search.SearchViewModel"
+            />
+    </data>
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="visible" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="visible"
+            />
+        <include
+            layout="@layout/layout_search_empty"
+            android:visibility="gone"
+            />
+        <include
+            layout="@layout/layout_search_drink_preview"
+            android:visibility="gone"
+            />
+    </FrameLayout>
 
-    <include layout="@layout/layout_search_empty"
-        android:visibility="invisible" />
-
-    <include layout="@layout/layout_search_drink_preview"
-        android:visibility="invisible" />
-
-</FrameLayout>
+</layout>

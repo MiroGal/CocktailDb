@@ -6,6 +6,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.ActivityMainBinding
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -19,12 +20,17 @@ import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFrag
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : BaseActivity<MainViewModel>(),
+class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         LogoutDialogFragment.OnActionListener,
         DayDrinkDialogFragment.OnActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
     override val viewModel: MainViewModel by baseViewModels()
+
+    override fun configureDataBinding(binding: ActivityMainBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
 
     override fun configureView(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {

@@ -5,19 +5,26 @@ import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.presentation.extension.*
 
-abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
+abstract class BaseActivity<ViewModel: BaseViewModel, DataBinding: ViewDataBinding> : AppCompatActivity() {
 
     @get:LayoutRes
     protected abstract val contentLayoutResId: Int
     protected abstract val viewModel: ViewModel
+    protected open lateinit var dataBinding: DataBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         configureTheme()
         super.onCreate(savedInstanceState)
-        setContentView(contentLayoutResId)
+
+        dataBinding = DataBindingUtil.setContentView(this, contentLayoutResId)
+        dataBinding.lifecycleOwner = this@BaseActivity
+
+        configureDataBinding(dataBinding)
     }
 
     override fun onPostCreate(savedInstanceState: Bundle?) {
@@ -28,6 +35,10 @@ abstract class BaseActivity<ViewModel: BaseViewModel> : AppCompatActivity() {
     }
 
     protected open fun configureTheme() {
+        //stub
+    }
+
+    protected open fun configureDataBinding(binding: DataBinding) {
         //stub
     }
 

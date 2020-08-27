@@ -10,11 +10,11 @@ import com.mirogal.cocktail.databinding.ActivityAuthBinding
 import com.mirogal.cocktail.presentation.constant.AuthDataValidStatus
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.ui.auth.dialog.InvalidAuthDataDialogFragment
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.main.MainActivity
 import kotlinx.android.synthetic.main.activity_auth.*
 
-class AuthActivity : BaseActivity2<AuthViewModel, ActivityAuthBinding>() {
+class AuthActivity : BaseActivity<AuthViewModel, ActivityAuthBinding>() {
 
     override val contentLayoutResId = R.layout.activity_auth
     override val viewModel: AuthViewModel by baseViewModels()

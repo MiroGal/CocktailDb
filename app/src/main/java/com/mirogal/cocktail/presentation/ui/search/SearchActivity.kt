@@ -9,6 +9,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.ActivitySearchBinding
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -19,13 +20,18 @@ import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
-class SearchActivity : BaseActivity<SearchViewModel>(),
+class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(),
         SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
     override val viewModel: SearchViewModel by baseViewModels()
 
     private val listAdapter = SearchListAdapter(this, this)
+
+    override fun configureDataBinding(binding: ActivitySearchBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
 
     override fun configureView(savedInstanceState: Bundle?) {
         super.configureView(savedInstanceState)
@@ -107,25 +113,25 @@ class SearchActivity : BaseActivity<SearchViewModel>(),
     }
 
     private fun showData() {
-        if (rv_search_list.visibility == View.INVISIBLE) {
+        if (rv_search_list.visibility == View.GONE) {
             rv_search_list.visibility = View.VISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
-            layoutStart.visibility = View.INVISIBLE
+            layoutEmpty.visibility = View.GONE
+            layoutStart.visibility = View.GONE
         }
     }
 
     private fun showEmpty() {
-        if (layoutEmpty.visibility == View.INVISIBLE) {
-            rv_search_list.visibility = View.INVISIBLE
+        if (layoutEmpty.visibility == View.GONE) {
+            rv_search_list.visibility = View.GONE
             layoutEmpty.visibility = View.VISIBLE
-            layoutStart.visibility = View.INVISIBLE
+            layoutStart.visibility = View.GONE
         }
     }
 
     private fun showPreview() {
-        if (layoutStart.visibility == View.INVISIBLE) {
-            rv_search_list.visibility = View.INVISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
+        if (layoutStart.visibility == View.GONE) {
+            rv_search_list.visibility = View.GONE
+            layoutEmpty.visibility = View.GONE
             layoutStart.visibility = View.VISIBLE
         }
     }
