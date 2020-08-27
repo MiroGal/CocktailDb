@@ -16,12 +16,14 @@
         android:gravity="center"
         tools:text="Dialog Title"
         style="@style/TextTitle"
-        android:textColor="@color/txt_error"/>
+        android:textColor="@color/txt_error"
+        />
     <TextView
         android:id="@+id/tv_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         tools:text="Dialog message"
-        style="@style/TextBody" />
+        style="@style/TextBody"
+        />
 </LinearLayout>

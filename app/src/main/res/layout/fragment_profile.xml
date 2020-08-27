@@ -1,31 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_primary"
-    android:clickable="true"
-    android:focusable="true"
-    tools:context=".presentation.ui.main.profile.ProfileFragment"
-    tools:ignore="Overdraw">
+    tools:context=".presentation.ui.main.profile.ProfileFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.main.profile.ProfileViewModel"
+            />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        android:layout_height="match_parent"
+        android:background="@color/background_primary"
+        android:clickable="true"
+        android:focusable="true">
+        <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            android:theme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="?attr/colorPrimary"
+                android:theme="@style/AppTheme.PopupOverlay"
+                />
+        </com.google.android.material.appbar.AppBarLayout>
+        <include
+            layout="@layout/fragment_profile_content"
+            app:viewmodel="@{viewmodel}"
+            />
+        <include
+            layout="@layout/dialog_fragment_logout"
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    </com.google.android.material.appbar.AppBarLayout>
-
-    <include layout="@layout/fragment_profile_content" />
-
-    <include layout="@layout/dialog_fragment_logout" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

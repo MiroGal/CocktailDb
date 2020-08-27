@@ -6,9 +6,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.OnLifecycleEvent
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.presentation.ui.main.drink.DrinkPagerFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFragment
 
-class DrinkPagerObserver(val context: AppCompatActivity) : LifecycleObserver {
+class DrinkPagerObserver(
+        val context: AppCompatActivity
+) : LifecycleObserver {
 
     private val sharedPreferences = context.applicationContext
             .getSharedPreferences(context.applicationContext.getString(R.string.app_name), Context.MODE_PRIVATE)

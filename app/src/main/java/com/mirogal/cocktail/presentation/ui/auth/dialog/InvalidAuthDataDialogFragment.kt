@@ -7,8 +7,8 @@ import android.view.View
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.auth.AuthDataValidStatus
-import com.mirogal.cocktail.presentation.ui.base.BaseDialogFragment
+import com.mirogal.cocktail.presentation.constant.AuthDataValidStatus
+import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
 
 class InvalidAuthDataDialogFragment : BaseDialogFragment() {
 

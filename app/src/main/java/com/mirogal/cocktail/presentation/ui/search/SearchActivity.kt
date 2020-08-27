@@ -5,16 +5,14 @@ import android.content.res.Configuration
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
 import androidx.lifecycle.Observer
-import androidx.paging.PagedList
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.network.model.NetworkStatus
+import com.mirogal.cocktail.databinding.ActivitySearchBinding
+import com.mirogal.cocktail.presentation.extension.baseViewModels
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
-import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.search.adapter.SearchListAdapter
 import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecoration
 import kotlinx.android.synthetic.main.activity_search.*
@@ -22,16 +20,22 @@ import kotlinx.android.synthetic.main.activity_search_content.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 import kotlinx.android.synthetic.main.layout_search_drink_preview.*
 
-class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItemClickListener {
+class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(),
+        SearchListAdapter.OnItemClickListener {
 
     override val contentLayoutResId = R.layout.activity_search
-    override val viewModel: SearchViewModel by viewModels()
+    override val viewModel: SearchViewModel by baseViewModels()
 
     private val listAdapter = SearchListAdapter(this, this)
 
-    private var searchText: String? = null
+    override fun configureDataBinding(binding: ActivitySearchBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
 
     override fun configureView(savedInstanceState: Bundle?) {
+        super.configureView(savedInstanceState)
+
         setSupportActionBar(toolbar)
 
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -49,29 +53,20 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
         rv_search_list.addItemDecoration(itemDecoration)
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
-        viewModel.cocktailListLiveData.observe(this, Observer { pagedList: PagedList<CocktailDbModel?> ->
-            try {
-                listAdapter.submitList(pagedList)
-            } catch (ignored: Exception) {
+    override fun configureObserver() {
+        super.configureObserver()
+
+        viewModel.searchResultCocktailListLiveData.observe(this, Observer { list ->
+            when {
+                list == null -> showPreview()
+                list.isEmpty() -> showEmpty()
+                else -> {
+                    listAdapter.refreshData(list)
+                    showData()
+                }
             }
         })
         rv_search_list.adapter = listAdapter
-
-        viewModel.networkStatusLiveData.observe(this, Observer { status: NetworkStatus.Status ->
-            if (status == NetworkStatus.EMPTY) {
-                showEmpty()
-            } else {
-                showData()
-            }
-        })
-
-        viewModel.searchTextMutableLiveData.observe(this, Observer { query: String? ->
-            searchText = query
-            if (!(query != null && query.isNotEmpty())) {
-                showPreview()
-            }
-        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -83,8 +78,7 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
             isFocusable = true
             isIconified = false
             requestFocusFromTouch() // set focus
-            if (searchText != null)
-                searchView.setQuery(searchText, false) // set searchText
+            searchView.setQuery(viewModel.searchQueryLiveData.value ?: "", false) // set searchText
             setOnQueryTextListener(
                 object : SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(s: String): Boolean {
@@ -92,7 +86,10 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
                     }
 
                     override fun onQueryTextChange(s: String): Boolean {
-                        viewModel.setSearchName(s)
+                        viewModel.searchQueryLiveData.value = when {
+                            s.isNotEmpty() -> s
+                            else -> null
+                        }
                         return false
                     }
                 }
@@ -102,39 +99,39 @@ class SearchActivity : BaseActivity<SearchViewModel>(), SearchListAdapter.OnItem
     }
 
 
-    override fun onItemClick(cocktail: CocktailDbModel) {
-        viewModel.addCocktailToDb(cocktail)
-        openDrinkDetailActivity(cocktail.id, cocktail.name)
+    override fun onItemClick(cocktailModel: CocktailModel) {
+        viewModel.saveCocktail(cocktailModel)
+        openDrinkDetailActivity(cocktailModel.id, cocktailModel.names.baseValue)
     }
 
 
-    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
-        val intent = Intent(this, DetailActivity::class.java)
+    private fun openDrinkDetailActivity(cocktailId: Long, cocktailName: String?) {
+        val intent = Intent(this, com.mirogal.cocktail.presentation.ui.detail.DetailActivity::class.java)
         intent.putExtra("cocktailId", cocktailId)
         intent.putExtra("cocktailName", cocktailName)
         startActivity(intent)
     }
 
     private fun showData() {
-        if (rv_search_list.visibility == View.INVISIBLE) {
+        if (rv_search_list.visibility == View.GONE) {
             rv_search_list.visibility = View.VISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
-            layoutStart.visibility = View.INVISIBLE
+            layoutEmpty.visibility = View.GONE
+            layoutStart.visibility = View.GONE
         }
     }
 
     private fun showEmpty() {
-        if (layoutEmpty.visibility == View.INVISIBLE) {
-            rv_search_list.visibility = View.INVISIBLE
+        if (layoutEmpty.visibility == View.GONE) {
+            rv_search_list.visibility = View.GONE
             layoutEmpty.visibility = View.VISIBLE
-            layoutStart.visibility = View.INVISIBLE
+            layoutStart.visibility = View.GONE
         }
     }
 
     private fun showPreview() {
-        if (layoutStart.visibility == View.INVISIBLE) {
-            rv_search_list.visibility = View.INVISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
+        if (layoutStart.visibility == View.GONE) {
+            rv_search_list.visibility = View.GONE
+            layoutEmpty.visibility = View.GONE
             layoutStart.visibility = View.VISIBLE
         }
     }

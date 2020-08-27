@@ -9,28 +9,29 @@
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
-
     <View
         android:layout_width="@dimen/offset_48"
         android:layout_height="@dimen/offset_4"
         android:layout_gravity="center"
         android:layout_marginBottom="@dimen/offset_16"
-        android:background="@drawable/bg_dialog_bottom_sheet_line" />
+        android:background="@drawable/bg_dialog_bottom_sheet_line"
+        />
     <TextView
         android:id="@+id/tv_dialog_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/offset_16"
         android:text="@string/dialog_day_drink_title"
-        style="@style/TextTitle" />
+        style="@style/TextTitle"
+        />
     <TextView
         android:id="@+id/tv_dialog_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/offset_32"
         android:text="@string/dialog_day_drink_message"
-        style="@style/TextBody" />
-
+        style="@style/TextBody"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -47,7 +48,8 @@
             android:paddingEnd="@dimen/offset_16"
             android:clickable="false"
             android:text="@string/dialog_day_drink_btn_cancel"
-            style="@style/SystemButton" />
+            style="@style/SystemButton"
+            />
         <TextView
             android:id="@+id/btn_dialog_ok"
             android:layout_width="0dp"
@@ -58,7 +60,7 @@
             android:paddingEnd="@dimen/offset_16"
             android:clickable="false"
             android:text="@string/dialog_day_drink_btn_ok"
-            style="@style/SystemButton" />
+            style="@style/SystemButton"
+            />
     </LinearLayout>
-
 </LinearLayout>

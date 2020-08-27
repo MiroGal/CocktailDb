@@ -1,58 +1,62 @@
 package com.mirogal.cocktail.presentation.ui.search
 
 import android.app.Application
-import android.content.Context
-import android.content.SharedPreferences
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.paging.PagedList
-import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
-import com.mirogal.cocktail.data.network.model.NetworkStatus
-import com.mirogal.cocktail.data.repository.CocktailRepository
+import androidx.lifecycle.*
+import com.mirogal.cocktail.data.repository.source.CocktailRepository
+import com.mirogal.cocktail.extension.log
+import com.mirogal.cocktail.presentation.extension.debounce
+import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
+import kotlinx.coroutines.Job
 
-class SearchViewModel(application: Application) : BaseViewModel(application) {
+class SearchViewModel(
+        private val cocktailRepository: CocktailRepository,
+        private val cocktailModelMapper: CocktailModelMapper,
+        viewStateHandle: SavedStateHandle,
+        application: Application
+) : BaseViewModel(viewStateHandle, application) {
 
-    private val repository = CocktailRepository.newInstance(application)
+    private var searchJob: Job? = null
 
-    private val sharedPreferences: SharedPreferences = getApplication<Application>()
-            .getSharedPreferences(getApplication<Application>()
-                    .resources.getString(R.string.app_name), Context.MODE_PRIVATE)
-    private val sharedPreferencesEditor: SharedPreferences.Editor = sharedPreferences.edit()
+    val searchResultCocktailListLiveData: LiveData<List<CocktailModel>> = MutableLiveData(emptyList())
 
-    val cocktailListLiveData: LiveData<PagedList<CocktailDbModel?>> = repository.loadCocktailListLiveData
-    val searchTextMutableLiveData: MutableLiveData<String?> = MutableLiveData()
-    val networkStatusLiveData: LiveData<NetworkStatus.Status> = repository.networkStatusMutableLiveData
-
-    companion object {
-        private const val KEY_SEARCH_NAME = "search_name"
+    val searchQueryLiveData = MutableLiveData<String>(null)
+    private val searchQueryDebounceLiveData =
+            searchQueryLiveData.map { "LOG $it (${System.currentTimeMillis()})".log; it }
+                    .debounce(1000L)
+    private val searchTriggerObserver = Observer<String?> { query ->
+        "LOG debounce $query (${System.currentTimeMillis()})".log
+        searchCocktail(query)
     }
 
     init {
-        searchTextMutableLiveData.value = loadSearchNameFromSharedPreferences()
-        if (searchTextMutableLiveData.value != null && searchTextMutableLiveData.value != repository.searchNameMutableLiveData.value) {
-            repository.searchNameMutableLiveData.value = searchTextMutableLiveData.value
+        searchQueryDebounceLiveData.observeForever(searchTriggerObserver)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        searchQueryDebounceLiveData.removeObserver(searchTriggerObserver)
+    }
+
+    private fun searchCocktail(query: String?) {
+        if (searchJob?.isActive == true) searchJob?.cancel()
+        searchJob = launchRequest(searchResultCocktailListLiveData) {
+            when {
+                query.isNullOrEmpty() -> emptyList()
+                else -> {
+                    cocktailRepository
+                            .searchCocktailRemote(query)
+                            .map(cocktailModelMapper::mapTo)
+                }
+            }
         }
     }
 
-
-    fun setSearchName(searchName: String) {
-        saveSearchNameToSharedPreferences(searchName)
-        this.searchTextMutableLiveData.value = searchName
-        repository.searchNameMutableLiveData.value = searchName
-    }
-
-    private fun saveSearchNameToSharedPreferences(value: String) {
-        sharedPreferencesEditor.putString(KEY_SEARCH_NAME, value).apply()
-    }
-
-    private fun loadSearchNameFromSharedPreferences(): String? {
-        return sharedPreferences.getString(KEY_SEARCH_NAME, "")
-    }
-
-    fun addCocktailToDb(cocktail: CocktailDbModel?) {
-        repository.addCocktailToDb(cocktail)
+    fun saveCocktail(cocktail: CocktailModel) {
+        launchRequest {
+            cocktailRepository.addOrReplaceCocktail(cocktail.run(cocktailModelMapper::mapFrom))
+        }
     }
 
 }

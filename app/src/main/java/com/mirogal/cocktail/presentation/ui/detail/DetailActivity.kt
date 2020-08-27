@@ -8,13 +8,13 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.activity.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.mapper.IngredientMapper.toIngredientList
+import com.mirogal.cocktail.databinding.ActivityDetailBinding
+import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
 import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
@@ -22,17 +22,24 @@ import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
-class DetailActivity : BaseActivity<DetailViewModel>() {
+class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
 
     override val contentLayoutResId = R.layout.activity_detail
-    override val viewModel: DetailViewModel by viewModels()
+    override val viewModel: DetailViewModel by baseViewModels()
 
-    private var cocktailId = 0
+    private var cocktailId: Long = 0
     private var cocktailName: String? = ""
 
+    override fun configureDataBinding(binding: ActivityDetailBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
+
     override fun configureView(savedInstanceState: Bundle?) {
-        cocktailId = intent.getIntExtra("cocktailId", 0)
-        cocktailName = intent.getStringExtra("cocktailName")
+        super.configureView(savedInstanceState)
+
+        cocktailId = intent.getLongExtra("cocktailId", 0)
+        cocktailName = intent.getStringExtra("cocktailName") ?: ""
 
         setSupportActionBar(toolbar)
         if (cocktailName!!.isNotEmpty()) {
@@ -44,25 +51,25 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         btn_toolbar_back.setOnClickListener { onBackPressed() }
     }
 
-    override fun configureObserver(savedInstanceState: Bundle?) {
+    override fun configureObserver() {
+        super.configureObserver()
+
         viewModel.cocktailIdLiveData.value = cocktailId
-        viewModel.cocktailLiveData.observe(this, Observer {
-            tv_info_name.text = it.name
-            tv_info_alcoholic.text = it.alcoholic
-            tv_info_glass.text = it.glass
-            tvInstructionBody.text = it.instruction
+        viewModel.cocktailModelLiveData.observe(this, Observer {
+            if (it != null) {
 
-            rv_ingredient_list.layoutManager = LinearLayoutManager(this)
-            val ingredientList = toIngredientList(it.ingredientList, it.measureList)
-            val listAdapter = DetailListAdapter(ingredientList)
-            rv_ingredient_list.adapter = listAdapter
+                rv_ingredient_list.layoutManager = LinearLayoutManager(this)
+                val ingredientsWithMeasures = it.ingredientsWithMeasures.toList()
+                val listAdapter = DetailListAdapter(ingredientsWithMeasures)
+                rv_ingredient_list.adapter = listAdapter
 
-            Glide.with(this)
-                    .load(it.imagePath)
-                    .centerCrop()
-                    .placeholder(R.drawable.anim_placeholder_progress)
-                    .error(R.drawable.ic_placeholder_error)
-                    .into(iv_image)
+                Glide.with(this)
+                        .load(it.image)
+                        .centerCrop()
+                        .placeholder(R.drawable.ic_placeholder_drink)
+                        .error(R.drawable.ic_placeholder_error)
+                        .into(iv_image)
+            }
         })
     }
 

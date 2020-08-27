@@ -14,14 +14,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.TaskStackBuilder
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.databinding.FragmentDrinkFavoriteBinding
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.detail.DetailActivity
 import com.mirogal.cocktail.presentation.ui.main.drink.adapter.DrinkListAdapter
@@ -29,12 +30,12 @@ import com.mirogal.cocktail.presentation.ui.util.SpaceItemDecorationWithoutTopMa
 import kotlinx.android.synthetic.main.fragment_drink_favorite.*
 import kotlinx.android.synthetic.main.layout_drink_history_empty.*
 
-class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
+class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavoriteBinding>(),
         DrinkListAdapter.OnItemClickListener,
         DrinkListAdapter.OnItemLongClickListener {
 
     override val contentLayoutResId = R.layout.fragment_drink_favorite
-    override val viewModel: DrinkViewModel by activityViewModels()
+    override val viewModel: DrinkViewModel by sharedViewModels()
 
     private lateinit var drinkListAdapter: DrinkListAdapter
 
@@ -42,7 +43,12 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         fun newInstance() = DrinkFavoriteFragment()
     }
 
-    override fun configureView(view: View, savedInstanceState: Bundle?) {
+    override fun configureDataBinding(binding: FragmentDrinkFavoriteBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
+
+    override fun configureView(savedInstanceState: Bundle?) {
         val listColumn = when (this.resources.configuration.orientation) {
             Configuration.ORIENTATION_PORTRAIT -> 2
             Configuration.ORIENTATION_LANDSCAPE -> 3
@@ -57,7 +63,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         drinkListAdapter = DrinkListAdapter(requireContext(), this, this)
     }
 
-    override fun configureObserver(view: View, savedInstanceState: Bundle?) {
+    override fun configureObserver() {
         viewModel.favoriteCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
             if (list?.isNotEmpty()!!) {
                 showData()
@@ -70,41 +76,41 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
     }
 
 
-    override fun onItemClick(cocktailId: Int, cocktailName: String?) {
+    override fun onItemClick(cocktailId: Long, cocktailName: String?) {
         openDrinkDetailActivity(cocktailId, cocktailName)
     }
 
-    override fun onFavoriteClick(cocktailId: Int, isFavorite: Boolean) {
-        viewModel.switchCocktailStateFavorite(cocktailId, isFavorite)
+    override fun onFavoriteClick(cocktailId: Long, isFavorite: Boolean) {
+        viewModel.switchCocktailFavorite(cocktailId, isFavorite)
     }
 
-    override fun onItemLongClick(view: View, cocktailModel: CocktailDbModel) {
+    override fun onItemLongClick(view: View, cocktailModel: CocktailModel) {
         createAndOpenItemMenu(view, cocktailModel)
     }
 
 
-    private fun createAndOpenItemMenu(view: View, cocktailModel: CocktailDbModel) {
+    private fun createAndOpenItemMenu(view: View, cocktailModel: CocktailModel) {
         val popupMenu = PopupMenu(requireActivity(), view)
         popupMenu.inflate(R.menu.item_drink_favorite_popup_menu)
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.name)
+                R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.names.baseValue)
                 R.id.action_shortcut -> addItemShortcut(cocktailModel)
                 R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
-                R.id.action_remove_favorite -> viewModel.setCocktailStateFavorite(cocktailModel.id, false)
+                R.id.action_remove_favorite -> viewModel.setCocktailFavorite(cocktailModel.id, false)
             }
             true
         }
         popupMenu.show()
     }
 
-    private fun addItemShortcut(cocktailModel: CocktailDbModel) {
+    private fun addItemShortcut(cocktailModel: CocktailModel) {
         // Check system version (must be Android 7.1 or higher)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N_MR1) {
             // Download image
             Glide.with(requireActivity())
                     .asBitmap()
-                    .load(cocktailModel.imagePath)
+                    .load(cocktailModel.image)
 //                    .centerCrop() // for square icon
                     .circleCrop() // for round icon
                     .into(object : CustomTarget<Bitmap>(){
@@ -114,9 +120,9 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                                     .getSystemService<ShortcutManager>(ShortcutManager::class.java)
                             // Create intent
                             val intent = Intent(requireActivity(), DetailActivity::class.java)
-                            intent.action = Intent.ACTION_VIEW
+                            intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                             intent.putExtra("cocktailId", cocktailModel.id)
-                            intent.putExtra("cocktailName", cocktailModel.name)
+                            intent.putExtra("cocktailName", cocktailModel.names.baseValue)
                             // Create intent stack (for correct work back button)
                             val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                             stackBuilder.addParentStack(DetailActivity::class.java)
@@ -124,8 +130,8 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                             // Create ShortcutInfo
                             val shortcutInfo = ShortcutInfo.Builder(requireActivity(),
                                     cocktailModel.id.toString())
-                                    .setShortLabel(cocktailModel.name.toString())
-                                    .setLongLabel("${cocktailModel.name} (${cocktailModel.alcoholic})")
+                                    .setShortLabel(cocktailModel.names.baseValue.toString())
+                                    .setLongLabel("${cocktailModel.names.baseValue} (${cocktailModel.alcoholType.key})")
                                     .setIcon(Icon.createWithBitmap(resource))
 //                                    .setIntent(intent) // for single activity
                                     .setIntents(stackBuilder.intents) // for activity stack
@@ -134,7 +140,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                             shortcutManager!!.dynamicShortcuts = listOf(shortcutInfo)
 
                             Toast.makeText(requireActivity(),
-                                    cocktailModel.name.toString() + " "
+                                    cocktailModel.names.baseValue.toString() + " "
                                             + getString(R.string.drink_item_menu_toast_shortcut_added),
                                     Toast.LENGTH_SHORT).show()
                         }
@@ -145,13 +151,13 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         }
     }
 
-    private fun addItemPinShortcut(cocktailModel: CocktailDbModel) {
+    private fun addItemPinShortcut(cocktailModel: CocktailModel) {
         // Check system version (must be Android 8.0 or higher)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Download image
             Glide.with(requireActivity())
                     .asBitmap()
-                    .load(cocktailModel.imagePath)
+                    .load(cocktailModel.image)
 //                    .centerCrop() // for square icon
                     .circleCrop() // for round icon
                     .into(object : CustomTarget<Bitmap>(){
@@ -163,17 +169,17 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                             if (shortcutManager!!.isRequestPinShortcutSupported) {
                                 // Create ShortcutManager
                                 val intent = Intent(requireActivity(), DetailActivity::class.java)
-                                intent.action = Intent.ACTION_VIEW
+                                intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                                 intent.putExtra("cocktailId", cocktailModel.id)
-                                intent.putExtra("cocktailName", cocktailModel.name)
+                                intent.putExtra("cocktailName", cocktailModel.names.baseValue)
                                 // Create intent stack (for correct work back button)
                                 val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                                 stackBuilder.addParentStack(DetailActivity::class.java)
                                 stackBuilder.addNextIntent(intent)
                                 // Create ShortcutInfo
                                 val shortcutInfo = ShortcutInfo.Builder(requireActivity(), cocktailModel.id.toString())
-                                        .setShortLabel(cocktailModel.name.toString())
-                                        .setLongLabel("${cocktailModel.name} (${cocktailModel.alcoholic})")
+                                        .setShortLabel(cocktailModel.names.baseValue.toString())
+                                        .setLongLabel("${cocktailModel.names.baseValue} (${cocktailModel.alcoholType})")
                                         .setIcon(Icon.createWithBitmap(resource))
 //                                        .setIntent(intent) // for single activity
                                         .setIntents(stackBuilder.intents) // for activity stack
@@ -186,7 +192,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
                                 shortcutManager.requestPinShortcut(shortcutInfo, successCallbackIntent.intentSender)
 
                                 Toast.makeText(requireActivity(),
-                                        cocktailModel.name.toString() + " "
+                                        cocktailModel.names.baseValue.toString() + " "
                                                 + getString(R.string.drink_item_menu_toast_pin_shortcut_added),
                                         Toast.LENGTH_SHORT).show()
                             }
@@ -198,7 +204,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
         }
     }
 
-    private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {
+    private fun openDrinkDetailActivity(cocktailId: Long, cocktailName: String?) {
         val intent = Intent(activity, DetailActivity::class.java).apply {
             putExtra("cocktailId", cocktailId)
             putExtra("cocktailName", cocktailName)
@@ -207,15 +213,15 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel>(),
     }
 
     private fun showData() {
-        if (rv_favorite_drink_list.visibility == View.INVISIBLE) {
+        if (rv_favorite_drink_list.visibility == View.GONE) {
             rv_favorite_drink_list.visibility = View.VISIBLE
-            layoutEmpty.visibility = View.INVISIBLE
+            layoutEmpty.visibility = View.GONE
         }
     }
 
     private fun showEmpty() {
-        if (layoutEmpty.visibility == View.INVISIBLE) {
-            rv_favorite_drink_list.visibility = View.INVISIBLE
+        if (layoutEmpty.visibility == View.GONE) {
+            rv_favorite_drink_list.visibility = View.GONE
             layoutEmpty.visibility = View.VISIBLE
         }
     }
