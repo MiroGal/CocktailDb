@@ -1,62 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<layout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_primary"
-    android:fitsSystemWindows="true"
-    tools:context=".presentation.ui.detailnative.DetailActivity"
-    tools:ignore="Overdraw">
+    tools:context=".presentation.ui.detail.DetailActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
+    <data>
+        <variable
+            name="viewmodel"
+            type="com.mirogal.cocktail.presentation.ui.detail.DetailViewModel"
+            />
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@color/background_primary"
-        android:theme="@style/AppTheme.AppBarOverlay">
-        <com.google.android.material.appbar.CollapsingToolbarLayout
-            android:id="@+id/toolbar_layout"
+        android:fitsSystemWindows="true">
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:minHeight="56dp"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
-            <FrameLayout
-                android:id="@+id/fl_image_container"
+            android:background="@color/background_primary"
+            android:theme="@style/AppTheme.AppBarOverlay">
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/toolbar_layout"
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:fitsSystemWindows="true">
-                <ImageView
-                    android:id="@+id/iv_image"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
+                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
+                <FrameLayout
+                    android:id="@+id/fl_image_container"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="bottom"
-                    android:scaleType="centerCrop"
-                    tools:ignore="ContentDescription" />
-            </FrameLayout>
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
-                app:layout_collapseMode="pin"
-                app:popupTheme="@style/AppTheme.PopupOverlay"
-                app:statusBarScrim="?attr/colorAccent" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
-    </com.google.android.material.appbar.AppBarLayout>
+                    android:layout_height="300dp"
+                    android:fitsSystemWindows="true">
+                    <ImageView
+                        android:id="@+id/iv_image"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="bottom"
+                        android:scaleType="centerCrop"
+                        tools:ignore="ContentDescription"
+                        />
+                </FrameLayout>
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="pin"
+                    app:popupTheme="@style/AppTheme.PopupOverlay"
+                    app:statusBarScrim="?attr/colorAccent"
+                    />
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+        <ImageView
+            android:id="@+id/btn_toolbar_back"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="@dimen/offset_4"
+            android:background="@drawable/bg_toolbar_back"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_back"
+            android:elevation="@dimen/elevation_4"
+            app:elevation="@dimen/elevation_4"
+            tools:ignore="ContentDescription"
+            />
+        <include
+            layout="@layout/activity_detail_content"
+            app:viewmodel="@{viewmodel}"
+            />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <ImageView
-        android:id="@+id/btn_toolbar_back"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:layout_margin="@dimen/offset_4"
-        android:background="@drawable/bg_toolbar_back"
-        android:scaleType="centerInside"
-        android:src="@drawable/ic_back"
-        android:elevation="@dimen/elevation_4"
-        app:elevation="@dimen/elevation_4"
-        tools:ignore="ContentDescription" />
-
-    <include layout="@layout/activity_detail_content" />
-
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

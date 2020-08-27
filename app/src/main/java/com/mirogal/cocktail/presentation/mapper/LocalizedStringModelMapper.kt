@@ -11,8 +11,8 @@ class LocalizedStringModelMapper : BaseModelMapper<LocalizedStringModel, Localiz
 
     override fun mapFrom(model: LocalizedStringModel) = with(model) {
         LocalizedStringRepoModel(
-                default = default,
-                defaultAlternate = defaultAlternate,
+                default = baseValue,
+                defaultAlternate = baseValueAlternate,
                 es = es,
                 de = de,
                 fr = fr,
@@ -23,8 +23,8 @@ class LocalizedStringModelMapper : BaseModelMapper<LocalizedStringModel, Localiz
 
     override fun mapTo(model: LocalizedStringRepoModel) = with(model) {
         LocalizedStringModel(
-                default = default,
-                defaultAlternate = defaultAlternate,
+                baseValue = default,
+                baseValueAlternate = defaultAlternate,
                 es = es,
                 de = de,
                 fr = fr,

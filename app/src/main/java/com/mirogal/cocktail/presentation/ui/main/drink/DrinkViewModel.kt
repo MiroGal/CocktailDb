@@ -119,8 +119,8 @@ class DrinkViewModel(
 
     private fun sortCocktailList(list: List<CocktailModel>?): List<CocktailModel>? {
         return when(drinkSortLiveData.value) {
-            DrinkSort.NAME_ASCENDING -> list?.sortedBy { it.names.default }
-            DrinkSort.NAME_DESCENDING -> list?.sortedByDescending { it.names.default }
+            DrinkSort.NAME_ASCENDING -> list?.sortedBy { it.names.baseValue }
+            DrinkSort.NAME_DESCENDING -> list?.sortedByDescending { it.names.baseValue }
             DrinkSort.ALCOHOL_FIRST -> {
                 list?.sortedWith(compareBy(
                         { it.alcoholType.key == DrinkFilterAlcohol.NON_ALCOHOLIC.key.toLowerCase(Locale.ROOT) },

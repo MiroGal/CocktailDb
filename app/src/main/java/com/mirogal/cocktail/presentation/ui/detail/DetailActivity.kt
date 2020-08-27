@@ -13,21 +13,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
 import com.mirogal.cocktail.R
+import com.mirogal.cocktail.databinding.ActivityDetailBinding
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.service.ProposeDrinkService
-import com.mirogal.cocktail.presentation.ui.base.BaseActivity
+import com.mirogal.cocktail.presentation.ui.base.BaseActivity2
 import com.mirogal.cocktail.presentation.ui.detail.adapter.DetailListAdapter
 import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_detail_content.*
 import kotlin.math.abs
 
-class DetailActivity : BaseActivity<DetailViewModel>() {
+class DetailActivity : BaseActivity2<DetailViewModel, ActivityDetailBinding>() {
 
     override val contentLayoutResId = R.layout.activity_detail
     override val viewModel: DetailViewModel by baseViewModels()
 
     private var cocktailId: Long = 0
     private var cocktailName: String? = ""
+
+    override fun configureDataBinding(binding: ActivityDetailBinding) {
+        super.configureDataBinding(binding)
+        dataBinding.viewmodel = viewModel
+    }
 
     override fun configureView(savedInstanceState: Bundle?) {
         super.configureView(savedInstanceState)
@@ -49,12 +55,8 @@ class DetailActivity : BaseActivity<DetailViewModel>() {
         super.configureObserver()
 
         viewModel.cocktailIdLiveData.value = cocktailId
-        viewModel.cocktailLiveData.observe(this, Observer {
+        viewModel.cocktailModelLiveData.observe(this, Observer {
             if (it != null) {
-                tv_info_name.text = it.names.default
-                tv_info_alcoholic.text = it.alcoholType.key
-                tv_info_glass.text = it.glass.key
-                tvInstructionBody.text = it.instructions.default
 
                 rv_ingredient_list.layoutManager = LinearLayoutManager(this)
                 val ingredientsWithMeasures = it.ingredientsWithMeasures.toList()

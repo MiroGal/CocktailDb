@@ -90,7 +90,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
         popupMenu.inflate(R.menu.item_drink_history_popup_menu)
         popupMenu.setOnMenuItemClickListener {
             when (it.itemId) {
-                R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.names.default)
+                R.id.action_open -> openDrinkDetailActivity(cocktailModel.id, cocktailModel.names.baseValue)
                 R.id.action_shortcut -> addItemShortcut(cocktailModel)
                 R.id.action_pin_shortcut -> addItemPinShortcut(cocktailModel)
                 R.id.action_add_favorite -> viewModel.setCocktailFavorite(cocktailModel.id, true)
@@ -119,7 +119,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
                             val intent = Intent(requireActivity(), DetailActivity::class.java)
                             intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                             intent.putExtra("cocktailId", cocktailModel.id)
-                            intent.putExtra("cocktailName", cocktailModel.names.default)
+                            intent.putExtra("cocktailName", cocktailModel.names.baseValue)
                             // Create intent stack (for correct work back button)
                             val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                             stackBuilder.addParentStack(DetailActivity::class.java)
@@ -127,8 +127,8 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
                             // Create ShortcutInfo
                             val shortcutInfo = ShortcutInfo.Builder(requireActivity(),
                                     cocktailModel.id.toString())
-                                    .setShortLabel(cocktailModel.names.default.toString())
-                                    .setLongLabel("${cocktailModel.names.default} (${cocktailModel.alcoholType.key})")
+                                    .setShortLabel(cocktailModel.names.baseValue.toString())
+                                    .setLongLabel("${cocktailModel.names.baseValue} (${cocktailModel.alcoholType.key})")
                                     .setIcon(Icon.createWithBitmap(resource))
 //                                    .setIntent(intent) // for single activity
                                     .setIntents(stackBuilder.intents) // for activity stack
@@ -137,7 +137,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
                             shortcutManager!!.dynamicShortcuts = listOf(shortcutInfo)
 
                             Toast.makeText(requireActivity(),
-                                    cocktailModel.names.default.toString() + " "
+                                    cocktailModel.names.baseValue.toString() + " "
                                             + getString(R.string.drink_item_menu_toast_shortcut_added),
                                     Toast.LENGTH_SHORT).show()
                         }
@@ -168,15 +168,15 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
                                 val intent = Intent(requireActivity(), DetailActivity::class.java)
                                 intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
                                 intent.putExtra("cocktailId", cocktailModel.id)
-                                intent.putExtra("cocktailName", cocktailModel.names.default)
+                                intent.putExtra("cocktailName", cocktailModel.names.baseValue)
                                 // Create intent stack (for correct work back button)
                                 val stackBuilder: TaskStackBuilder = TaskStackBuilder.create(requireActivity())
                                 stackBuilder.addParentStack(DetailActivity::class.java)
                                 stackBuilder.addNextIntent(intent)
                                 // Create ShortcutInfo
                                 val shortcutInfo = ShortcutInfo.Builder(requireActivity(), cocktailModel.id.toString())
-                                        .setShortLabel(cocktailModel.names.default.toString())
-                                        .setLongLabel("${cocktailModel.names.default} (${cocktailModel.alcoholType})")
+                                        .setShortLabel(cocktailModel.names.baseValue.toString())
+                                        .setLongLabel("${cocktailModel.names.baseValue} (${cocktailModel.alcoholType})")
                                         .setIcon(Icon.createWithBitmap(resource))
 //                                        .setIntent(intent) // for single activity
                                         .setIntents(stackBuilder.intents) // for activity stack
@@ -189,7 +189,7 @@ class DrinkHistoryFragment : BaseFragment<DrinkViewModel>(),
                                 shortcutManager.requestPinShortcut(shortcutInfo, successCallbackIntent.intentSender)
 
                                 Toast.makeText(requireActivity(),
-                                        cocktailModel.names.default.toString() + " "
+                                        cocktailModel.names.baseValue.toString() + " "
                                                 + getString(R.string.drink_item_menu_toast_pin_shortcut_added),
                                         Toast.LENGTH_SHORT).show()
                             }

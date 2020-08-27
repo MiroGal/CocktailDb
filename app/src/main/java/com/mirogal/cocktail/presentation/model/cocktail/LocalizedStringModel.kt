@@ -1,8 +1,8 @@
 package com.mirogal.cocktail.presentation.model.cocktail
 
 data class LocalizedStringModel(
-        val default: String? = null,
-        val defaultAlternate: String? = null,
+        val baseValue: String? = null,
+        val baseValueAlternate: String? = null,
         val es: String? = null,
         val de: String? = null,
         val fr: String? = null,

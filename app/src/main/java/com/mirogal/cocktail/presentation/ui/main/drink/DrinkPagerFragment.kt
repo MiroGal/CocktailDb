@@ -223,11 +223,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel>() {
             val model: CocktailModel? = cocktailList.filter{ it.id != id }.shuffled()[0]
             if (model != null) {
                 Snackbar.make(requireView().findViewById(R.id.container),
-                        getString(R.string.drink_pager_snackbar_message) + ": " + model.names.default.toString(), Snackbar.LENGTH_LONG)
+                        getString(R.string.drink_pager_snackbar_message) + ": " + model.names.baseValue.toString(), Snackbar.LENGTH_LONG)
                         .setBackgroundTint(resources.getColor(R.color.background_primary))
                         .setTextColor(resources.getColor(R.color.txt_title))
                         .setAction(getString(R.string.drink_pager_snackbar_action_open_detail)) {
-                            openDrinkDetailActivity(model.id, model.names.default)
+                            openDrinkDetailActivity(model.id, model.names.baseValue)
                         }.show()
             }
         }

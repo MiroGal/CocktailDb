@@ -26,10 +26,10 @@ class DrinkItemHolder(
     fun bind(cocktailModel: CocktailModel) {
         this.cocktailModel = cocktailModel
         cocktailId = cocktailModel.id
-        cocktailName = cocktailModel.names.default
+        cocktailName = cocktailModel.names.baseValue
         isFavorite = cocktailModel.isFavorite
 
-        tvName.text = cocktailModel.names.default
+        tvName.text = cocktailModel.names.baseValue
         if (cocktailModel.isFavorite) {
             ivFavorite.setImageResource(R.drawable.ic_item_favorite)
         } else {
