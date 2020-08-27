@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -134,9 +135,9 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
                 if (position == 0) {
-                    viewModel.currentDrinkPage.value = DrinkPage.HISTORY
+                    viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
                 } else {
-                    viewModel.currentDrinkPage.value = DrinkPage.FAVORITE
+                    viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
                 }
             }
         })
@@ -186,6 +187,10 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
                 showChargeLevel(it.first.toString())
                 showChargeState(it.second)
             }
+        })
+
+        viewModel.currentDrinkPageIntLiveData.observe(viewLifecycleOwner, Observer {
+            Log.d(">>>", "$it")
         })
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(DrinkPagerObserver(requireActivity() as AppCompatActivity))
