@@ -24,7 +24,7 @@ object ViewPagerBindingAdapter {
 
     @BindingAdapter("android:bind_vp_pageAttrChanged")
     @JvmStatic
-    fun ViewPager2.pageChangeListener(pageAttrChanged: InverseBindingListener?) {
+    fun ViewPager2.pageChangeListener(listener: InverseBindingListener?) {
 
     }
 
