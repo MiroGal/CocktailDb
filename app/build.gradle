@@ -33,6 +33,7 @@ android {
         jvmTarget = '1.8'
     }
 
+    //DataBinging
     buildFeatures {
         dataBinding=true
     }
@@ -56,6 +57,10 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation "androidx.constraintlayout:constraintlayout:2.0.1"
     implementation "androidx.viewpager2:viewpager2:1.1.0-alpha01"
+
+    testImplementation "junit:junit:4.13"
+    androidTestImplementation "androidx.test.ext:junit:1.1.2"
+    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 
     //region Ktx
     implementation "androidx.core:core-ktx:1.3.1"
@@ -103,7 +108,4 @@ dependencies {
     implementation "jp.wasabeef:glide-transformations:4.0.1"
     //endregion
 
-    testImplementation "junit:junit:4.13"
-    androidTestImplementation "androidx.test.ext:junit:1.1.2"
-    androidTestImplementation "androidx.test.espresso:espresso-core:3.3.0"
 }
