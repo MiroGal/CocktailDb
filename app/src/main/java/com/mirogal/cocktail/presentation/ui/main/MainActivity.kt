@@ -72,7 +72,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     override fun configureObserver() {
-        viewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
+        viewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
             if (it) {
                 bottom_nav_view.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
             } else {

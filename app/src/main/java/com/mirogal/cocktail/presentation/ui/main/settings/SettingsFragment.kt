@@ -38,24 +38,18 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
 
     private val onCheckedChangeListener = CompoundButton.OnCheckedChangeListener { buttonView, isChecked ->
         when (buttonView) {
-            chb_show_bottom_nav_label -> {
-                if (mainViewModel.isBottomNavLabelVisibleLiveData.value != isChecked)
-                    mainViewModel.isBottomNavLabelVisibleLiveData.value = isChecked
-            }
-            chb_show_battery_indicator -> {
-                if (mainViewModel.isBatteryIndicatorVisibleLiveData.value != isChecked)
-                    mainViewModel.isBatteryIndicatorVisibleLiveData.value = isChecked
-            }
+            chb_show_bottom_nav_label -> mainViewModel.isBottomNavLabelShowLiveData.value = isChecked
+            chb_show_battery_indicator -> mainViewModel.isBatteryIndicatorShowLiveData.value = isChecked
         }
 
     }
 
     override fun configureObserver() {
-        mainViewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
+        mainViewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
             if (chb_show_bottom_nav_label.isChecked != it)
                 chb_show_bottom_nav_label.isChecked = it
         })
-        mainViewModel.isBatteryIndicatorVisibleLiveData.observe(this, Observer {
+        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, Observer {
             if (chb_show_battery_indicator.isChecked != it)
                 chb_show_battery_indicator.isChecked = it
         })

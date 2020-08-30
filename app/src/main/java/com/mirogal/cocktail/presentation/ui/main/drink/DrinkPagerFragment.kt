@@ -79,7 +79,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             toolbar_action_filter -> addDrinkFilterFragment()
             toolbar_action_sort -> showDrinkSortDialog()
             fab_search -> openSearchDrinkActivity()
-            btn_battery_indicator_close -> mainViewModel.isBatteryIndicatorVisibleLiveData.value = false
+            btn_battery_indicator_close -> mainViewModel.isBatteryIndicatorShowLiveData.value = false
             btn_item_filter_category_close -> {
                 val drinkFilter = viewModel.drinkFilterLiveData.value
                 drinkFilter?.put(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE)
@@ -168,7 +168,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         })
 
-        mainViewModel.isBatteryIndicatorVisibleLiveData.observe(this, Observer {
+        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, Observer {
             if (it) {
                 layout_charge_indicator.visibility = View.VISIBLE
             } else {

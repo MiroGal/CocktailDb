@@ -97,11 +97,11 @@ class SharedPrefsHelper(
     @Suppress("UNCHECKED_CAST")
     fun <T> get(clazz: Class<T>, key: String, defaultValue: T): T {
         return when (clazz) {
-            Boolean::class.java -> getBoolean(key, defValue = defaultValue as Boolean)
-            String::class.java -> getString(key, defValue = defaultValue as? String?)
-            Int::class.java -> getInt(key, defValue = defaultValue as Int)
-            Long::class.java -> getLong(key, defValue = defaultValue as Long)
-            Double::class.java -> getDouble(key, defValue = defaultValue as Double)
+            Boolean::class.javaObjectType -> getBoolean(key, defValue = defaultValue as Boolean)
+            String::class.javaObjectType -> getString(key, defValue = defaultValue as? String?)
+            Int::class.javaObjectType -> getInt(key, defValue = defaultValue as Int)
+            Long::class.javaObjectType -> getLong(key, defValue = defaultValue as Long)
+            Double::class.javaObjectType -> getDouble(key, defValue = defaultValue as Double)
             else -> throw NotImplementedError("TODO implement")
         } as T
     }
@@ -109,11 +109,11 @@ class SharedPrefsHelper(
     @Suppress("UNCHECKED_CAST")
     fun <T> set(clazz: Class<T>, key: String, value: T) {
         when (clazz) {
-            Boolean::class.java -> putBoolean(key, value as Boolean)
-            String::class.java -> putString(key, value as? String?)
-            Int::class.java -> putInt(key, value as Int)
-            Long::class.java -> putLong(key, value as Long)
-            Double::class.java -> putDouble(key, value as Double)
+            Boolean::class.javaObjectType -> putBoolean(key, value as Boolean)
+            String::class.javaObjectType -> putString(key, value as? String?)
+            Int::class.javaObjectType -> putInt(key, value as Int)
+            Long::class.javaObjectType -> putLong(key, value as Long)
+            Double::class.javaObjectType -> putDouble(key, value as Double)
             else -> throw NotImplementedError("TODO implement")
         }
     }

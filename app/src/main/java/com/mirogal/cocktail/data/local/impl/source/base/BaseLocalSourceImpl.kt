@@ -24,7 +24,7 @@ open class BaseLocalSourceImpl(
 
         override fun setValue(value: T) {
             super.setValue(value)
-            if (value != this.value) sharedPrefsHelper.set(clazz, key, value)
+            sharedPrefsHelper.set(clazz, key, value)
         }
 
         override fun onActive() {
