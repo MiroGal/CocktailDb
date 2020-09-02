@@ -21,13 +21,17 @@ class SearchViewModel(
 
     val searchResultCocktailListLiveData: LiveData<List<CocktailModel>> = MutableLiveData(emptyList())
 
-    val searchQueryLiveData = MutableLiveData<String>(null)
+    val searchQueryLiveData: MutableLiveData<String?> by stateHandle(searchQueryInitialValue)
     private val searchQueryDebounceLiveData =
             searchQueryLiveData.map { "LOG $it (${System.currentTimeMillis()})".log; it }
                     .debounce(1000L)
     private val searchTriggerObserver = Observer<String?> { query ->
         "LOG debounce $query (${System.currentTimeMillis()})".log
         searchCocktail(query)
+    }
+
+    companion object {
+        val searchQueryInitialValue = null
     }
 
     init {

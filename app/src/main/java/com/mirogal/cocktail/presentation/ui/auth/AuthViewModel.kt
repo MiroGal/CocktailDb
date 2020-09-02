@@ -19,18 +19,20 @@ class AuthViewModel(
         application: Application
 ) : BaseViewModel(viewStateHandle, application) {
 
-    private val validLogin = "MiroGal"
-    private val validPassword = "Miro89"
+    val inputLoginLiveData: MutableLiveData<String?> by stateHandle(validLogin)
+    val inputPasswordLiveData: MutableLiveData<String?> by stateHandle(validPassword)
 
-    private val minLoginLength = 6
-    private val minPasswordLength = 6
-
-    val inputLoginLiveData: MutableLiveData<String?> = MutableLiveData()
-    val inputPasswordLiveData: MutableLiveData<String?> = MutableLiveData()
     val isAuthDataCorrectLiveData: LiveData<Boolean?>
     val isAuthDataValidLiveData: LiveData<AuthDataValidStatus?>
 
-    private val observer: Observer<in AuthDataValidStatus?> = Observer { }
+    private val isAuthDataValidObserver: Observer<in AuthDataValidStatus?> = Observer { }
+
+    companion object {
+        const val validLogin = "MiroGal"
+        const val validPassword = "Miro89"
+        const val minLoginLength = 6
+        const val minPasswordLength = 6
+    }
 
     init {
         isAuthDataCorrectLiveData = MediatorLiveData<Boolean>().apply {
@@ -55,14 +57,11 @@ class AuthViewModel(
             }
         }
 
-        isAuthDataValidLiveData.observeForever(observer)
-
-        inputLoginLiveData.value = validLogin
-        inputPasswordLiveData.value = validPassword
+        isAuthDataValidLiveData.observeForever(isAuthDataValidObserver)
     }
 
     override fun onCleared() {
-        isAuthDataValidLiveData.removeObserver(observer)
+        isAuthDataValidLiveData.removeObserver(isAuthDataValidObserver)
         super.onCleared()
     }
 

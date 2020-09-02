@@ -5,9 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
@@ -125,26 +123,28 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
         view_pager.adapter = drinkPagerAdapter
 
         TabLayoutMediator(tab_layout, view_pager) { tab, position ->
-            if (position == 0) {
-                tab.text = getString(R.string.drink_pager_tab_history)
-            } else if (position == 1) {
-                tab.text = getString(R.string.drink_pager_tab_favorite)
+            when (position) {
+                0 -> tab.text = getString(R.string.drink_pager_tab_history)
+                1 -> tab.text = getString(R.string.drink_pager_tab_favorite)
             }
         }.attach()
 
         view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageSelected(position: Int) {
                 super.onPageSelected(position)
-                if (position == 0) {
-                    viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
-                } else {
-                    viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
+                when (position) {
+                    DrinkPage.HISTORY.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
+                    DrinkPage.FAVORITE.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
                 }
             }
         })
     }
 
     override fun configureObserver() {
+        viewModel.currentDrinkPageLiveData.observe(viewLifecycleOwner, Observer {
+            if (view_pager.currentItem != it.ordinal) view_pager.currentItem = it.ordinal
+        })
+
         viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
                 toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)
@@ -188,11 +188,6 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
                 showChargeLevel(it.first.toString())
                 showChargeState(it.second)
             }
-        })
-
-        viewModel.currentDrinkPageIntLiveData.observe(viewLifecycleOwner, Observer {
-            Toast.makeText(requireContext(), "$it", Toast.LENGTH_SHORT).show()
-            Log.d(">>>", "$it")
         })
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(DrinkPagerObserver(requireActivity() as AppCompatActivity))
