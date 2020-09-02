@@ -60,10 +60,10 @@
     <string name="drink_favorite_item_menu_pin_shortcut">Add pin shortcut</string>
     <string name="drink_favorite_item_menu_remove_favorite">Remove from favorite</string>
 
-    <string name="drink_item_menu_toast_shortcut_added">cocktail shortcut added</string>
+    <string name="drink_item_menu_toast_shortcut_added">Shortcut added</string>
     <string name="drink_item_menu_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>
 
-    <string name="drink_item_menu_toast_pin_shortcut_added">cocktail pin shortcut added</string>
+    <string name="drink_item_menu_toast_pin_shortcut_added">Pin shortcut added</string>
     <string name="drink_item_menu_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
 
     <string name="dialog_day_drink_title">Welcome back</string>
@@ -80,7 +80,7 @@
     <string name="drink_filter_message_result_found">Results</string>
     <string name="drink_filter_message_result_not_found">Not found</string>
 
-    <string name="dialog_drink_filter_title">drink filter</string>
+    <string name="dialog_drink_filter_title">Drink filter</string>
     <string name="dialog_drink_sort_title">Sort cocktails</string>
     <!--endregion-->
 

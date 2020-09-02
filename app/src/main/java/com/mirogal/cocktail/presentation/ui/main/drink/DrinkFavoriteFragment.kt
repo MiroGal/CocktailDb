@@ -191,10 +191,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavorite
                                 // Create PinShortcut
                                 shortcutManager.requestPinShortcut(shortcutInfo, successCallbackIntent.intentSender)
 
-                                Toast.makeText(requireActivity(),
-                                        cocktailModel.names.baseValue.toString() + " "
-                                                + getString(R.string.drink_item_menu_toast_pin_shortcut_added),
-                                        Toast.LENGTH_SHORT).show()
+                                Toast.makeText(requireActivity(), getString(R.string.drink_item_menu_toast_pin_shortcut_added), Toast.LENGTH_SHORT).show()
                             }
                         }
                         override fun onLoadCleared(placeholder: Drawable?) {}

@@ -58,10 +58,10 @@
     <string name="drink_favorite_item_menu_pin_shortcut">Додати ярлик</string>
     <string name="drink_favorite_item_menu_remove_favorite">Прибрати з улюблених</string>
 
-    <string name="drink_item_menu_toast_shortcut_added">швидкий запуск коктелю додано</string>
+    <string name="drink_item_menu_toast_shortcut_added">Швидкий запуск додано</string>
     <string name="drink_item_menu_toast_shortcut_not_added">Не вдалося додати швидкий запуск\nФункція підтримується від версії Android Nougat++</string>
 
-    <string name="drink_item_menu_toast_pin_shortcut_added">ярлик коктелю додано</string>
+    <string name="drink_item_menu_toast_pin_shortcut_added">Ярлик додано</string>
     <string name="drink_item_menu_toast_pin_shortcut_not_added">Не вдалося додати ярлик коктелю\nФункція підтримується від версії Android Oreo</string>
 
     <string name="dialog_day_drink_title">З поверненням</string>
@@ -78,7 +78,7 @@
     <string name="drink_filter_message_result_found">Результати</string>
     <string name="drink_filter_message_result_not_found">Нічого не знайдено</string>
 
-    <string name="dialog_drink_filter_title">фільтр напоїв</string>
+    <string name="dialog_drink_filter_title">Фільтрування</string>
     <string name="dialog_drink_sort_title">Сортування</string>
     <!--endregion-->
 
