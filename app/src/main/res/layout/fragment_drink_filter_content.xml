@@ -47,13 +47,13 @@
                         android:layout_marginStart="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Filter"
                         />
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:padding="@dimen/offset_8"
+                        android:padding="@dimen/offset_12"
                         android:src="@drawable/ic_arrow_forward"
                         tools:ignore="ContentDescription"
                         />
@@ -65,7 +65,7 @@
                         android:layout_marginEnd="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Disable"
                         />
                 </LinearLayout>
@@ -89,13 +89,13 @@
                         android:layout_marginStart="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Filter"
                         />
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:padding="@dimen/offset_8"
+                        android:padding="@dimen/offset_12"
                         android:src="@drawable/ic_arrow_forward"
                         tools:ignore="ContentDescription"
                         />
@@ -107,7 +107,7 @@
                         android:layout_marginEnd="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Disable"
                         />
                 </LinearLayout>
@@ -131,13 +131,13 @@
                         android:layout_marginStart="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Filter"
                         />
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:padding="@dimen/offset_8"
+                        android:padding="@dimen/offset_12"
                         android:src="@drawable/ic_arrow_forward"
                         tools:ignore="ContentDescription"
                         />
@@ -149,7 +149,7 @@
                         android:layout_marginEnd="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Disable"
                         />
                 </LinearLayout>
@@ -173,13 +173,13 @@
                         android:layout_marginStart="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Filter"
                         />
                     <ImageView
                         android:layout_width="48dp"
                         android:layout_height="48dp"
-                        android:padding="@dimen/offset_8"
+                        android:padding="@dimen/offset_12"
                         android:src="@drawable/ic_arrow_forward"
                         tools:ignore="ContentDescription"
                         />
@@ -191,7 +191,7 @@
                         android:layout_marginEnd="@dimen/offset_16"
                         android:gravity="center"
                         android:singleLine="true"
-                        style="@style/TextTitle"
+                        style="@style/TextButton"
                         tools:text="Disable"
                         />
                 </LinearLayout>

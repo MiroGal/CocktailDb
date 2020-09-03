@@ -19,10 +19,12 @@ import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFrag
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
+import com.mirogal.cocktail.presentation.ui.main.settings.dialog.LanguageDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         LogoutDialogFragment.OnActionListener,
+        LanguageDialogFragment.OnActionListener,
         DayDrinkDialogFragment.OnActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
@@ -110,6 +112,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         openAuthActivity()
     }
 
+    override fun onDialogLanguageBtnClick() {
+        openMainActivity()
+    }
+
     override fun onDialogDayDrinkBtnOkClick(cocktailId: Int, cocktailName: String?) {
         openDrinkDetailActivity(cocktailId, cocktailName)
     }
@@ -120,6 +126,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
         startActivity(intent)
+    }
+
+    private fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        }
+        startActivity(intent)
+        Runtime.getRuntime().exit(0)
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {

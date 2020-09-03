@@ -1,6 +1,9 @@
 package com.mirogal.cocktail.presentation.ui.base
 
+import android.content.Context
+import android.content.res.Configuration
 import android.os.Bundle
+import android.view.ContextThemeWrapper
 import android.widget.Toast
 import androidx.annotation.LayoutRes
 import androidx.annotation.MainThread
@@ -9,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.presentation.extension.*
+import java.util.*
 
 abstract class BaseActivity<ViewModel: BaseViewModel, DataBinding: ViewDataBinding> : AppCompatActivity() {
 
@@ -16,6 +20,24 @@ abstract class BaseActivity<ViewModel: BaseViewModel, DataBinding: ViewDataBindi
     protected abstract val contentLayoutResId: Int
     protected abstract val viewModel: ViewModel
     protected open lateinit var dataBinding: DataBinding
+
+    companion object {
+        var dLocale: Locale? = null
+    }
+
+    init {
+        updateConfig(wrapper = this)
+    }
+
+    private fun updateConfig(wrapper: ContextThemeWrapper) {
+        if (dLocale == Locale("")) {
+            return
+        }
+        Locale.setDefault(dLocale)
+        val configuration = Configuration()
+        configuration.setLocale(dLocale)
+        wrapper.applyOverrideConfiguration(configuration)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         configureTheme()

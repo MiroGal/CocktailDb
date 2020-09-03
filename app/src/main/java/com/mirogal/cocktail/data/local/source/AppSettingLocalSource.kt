@@ -6,5 +6,6 @@ interface AppSettingLocalSource {
 
     val isBottomNavLabelShowLiveData: MutableLiveData<Boolean>
     val isBatteryIndicatorShowLiveData: MutableLiveData<Boolean>
+    val appLanguageLiveData: MutableLiveData<String?>
 
 }

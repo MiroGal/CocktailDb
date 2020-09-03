@@ -10,6 +10,7 @@ import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.BaseFragment
 import com.mirogal.cocktail.presentation.ui.main.MainViewModel
+import com.mirogal.cocktail.presentation.ui.main.settings.dialog.LanguageDialogFragment
 import kotlinx.android.synthetic.main.fragment_drink_pager.*
 import kotlinx.android.synthetic.main.fragment_settings_content.*
 
@@ -32,6 +33,7 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity).supportActionBar?.setTitle(R.string.settings_label)
 
+        btn_app_language.setOnClickListener { showLanguageDialog() }
         chb_show_bottom_nav_label.setOnCheckedChangeListener(onCheckedChangeListener)
         chb_show_battery_indicator.setOnCheckedChangeListener(onCheckedChangeListener)
     }
@@ -41,7 +43,6 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
             chb_show_bottom_nav_label -> mainViewModel.isBottomNavLabelShowLiveData.value = isChecked
             chb_show_battery_indicator -> mainViewModel.isBatteryIndicatorShowLiveData.value = isChecked
         }
-
     }
 
     override fun configureObserver() {
@@ -53,6 +54,11 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
             if (chb_show_battery_indicator.isChecked != it)
                 chb_show_battery_indicator.isChecked = it
         })
+    }
+
+    private fun showLanguageDialog() {
+        val dialogFragment = LanguageDialogFragment.newInstance()
+        dialogFragment.show(childFragmentManager, LanguageDialogFragment::class.java.name)
     }
 
 }

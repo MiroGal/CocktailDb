@@ -12,5 +12,7 @@ class AppSettingRepositoryImpl(
             = appSettingLocalSource.isBottomNavLabelShowLiveData
     override val isBatteryIndicatorShowLiveData: MutableLiveData<Boolean>
             = appSettingLocalSource.isBatteryIndicatorShowLiveData
+    override val appLanguageLiveData: MutableLiveData<String?>
+            = appSettingLocalSource.appLanguageLiveData
 
 }

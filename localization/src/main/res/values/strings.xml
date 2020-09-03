@@ -28,8 +28,12 @@
 
     <!--region Settings-->
     <string name="settings_label">Settings</string>
+    <string name="setting_btn_language">Language</string>
     <string name="settings_show_bottom_nav_label">Show navigation bar titles</string>
     <string name="settings_show_battery_indicator">Show battery indicator</string>
+    <string name="dialog_language_title">Chose language</string>
+    <string translatable="false" name="dialog_language_btn_en">English</string>
+    <string translatable="false" name="dialog_language_btn_uk">Українська</string>
     <!--endregion-->
 
     <!--region Main-->

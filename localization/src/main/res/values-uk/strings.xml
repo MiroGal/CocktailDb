@@ -26,8 +26,10 @@
 
     <!--region Settings-->
     <string name="settings_label">Налаштування</string>
+    <string name="setting_btn_language">Мова</string>
     <string name="settings_show_bottom_nav_label">Показати підписи в нижній панелі</string>
     <string name="settings_show_battery_indicator">Показати індикатор заряду акумолятора</string>
+    <string name="dialog_language_title">Виберіть мову</string>
     <!--endregion-->
 
     <!--region Main-->

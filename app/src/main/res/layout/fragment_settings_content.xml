@@ -27,6 +27,16 @@
             android:paddingEnd="@dimen/offset_16"
             android:orientation="vertical"
             android:descendantFocusability="blocksDescendants">
+            <TextView
+                android:id="@+id/btn_app_language"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/offset_48"
+                android:layout_marginVertical="@dimen/offset_16"
+                android:layout_gravity="center"
+                android:clickable="false"
+                android:text="@string/setting_btn_language"
+                style="@style/Button"
+                />
             <CheckBox
                 android:id="@+id/chb_show_bottom_nav_label"
                 android:layout_width="wrap_content"

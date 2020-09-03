@@ -218,6 +218,7 @@ object Injector {
                 ) as T
 
                 SettingsViewModel::class.java -> SettingsViewModel(
+                        provideRepository(application),
                         handle,
                         application
                 ) as T
