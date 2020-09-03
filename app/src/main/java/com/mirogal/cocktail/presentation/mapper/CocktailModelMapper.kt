@@ -2,7 +2,10 @@ package com.mirogal.cocktail.presentation.mapper
 
 import com.mirogal.cocktail.data.repository.model.CocktailRepoModel
 import com.mirogal.cocktail.presentation.mapper.base.BaseModelMapper
-import com.mirogal.cocktail.presentation.model.cocktail.*
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailAlcoholType
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailCategory
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailGlass
+import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
 
 class CocktailModelMapper(
         private val localizedStringModelMapper: LocalizedStringModelMapper
@@ -17,7 +20,7 @@ class CocktailModelMapper(
                 glass = glass.key,
                 image = image,
                 instructions = instructions.run(localizedStringModelMapper::mapFrom),
-                ingredientsWithMeasures = ingredientsWithMeasures.mapKeys { it.key.key },
+                ingredientsWithMeasures = ingredientsWithMeasures,
                 isFavorite = isFavorite/*,
                 date = date*/
         )
@@ -32,9 +35,7 @@ class CocktailModelMapper(
                 glass = CocktailGlass.values().firstOrNull { it.key == glass } ?: CocktailGlass.UNDEFINED,
                 image = image,
                 instructions = instructions.run(localizedStringModelMapper::mapTo),
-                ingredientsWithMeasures = ingredientsWithMeasures.mapKeys {
-                    keyValue -> CocktailIngredient.values().firstOrNull { it.key == keyValue.key } ?: CocktailIngredient.UNDEFINED
-                },
+                ingredientsWithMeasures = ingredientsWithMeasures,
                 isFavorite = isFavorite/*,
                 date = date*/
         )

@@ -105,10 +105,9 @@ class DrinkViewModel(
             if (drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL) != DrinkFilterAlcohol.DISABLE) {
                 it.alcoholType.key.equals(drinkFilterLiveData.value?.get(DrinkFilterType.ALCOHOL)?.key, true)
             } else true
-        }?.filter { map ->
+        }?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT) != DrinkFilterIngredient.DISABLE) {
-                map.ingredientsWithMeasures.mapKeys { it.toString() }
-                        .containsKey(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key)
+                it.ingredientsWithMeasures.containsKey(drinkFilterLiveData.value?.get(DrinkFilterType.INGREDIENT)?.key)
             } else true
         }?.filter {
             if (drinkFilterLiveData.value?.get(DrinkFilterType.GLASS) != DrinkFilterGlass.DISABLE) {
