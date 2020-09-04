@@ -36,7 +36,6 @@ class DrinkViewModel(
     val isDrinkSortEnableLiveData: LiveData<Boolean>
 
     val currentDrinkPageLiveData: MutableLiveData<DrinkPage> = MutableLiveData()
-    val currentDrinkPageIntLiveData: MutableLiveData<Int> = MutableLiveData()
 
     val proposeDrinkReceiverLiveData = ProposeDrinkReceiverLiveData(application)
     val batteryChangeReceiverLiveData = BatteryChangeReceiverLiveData(application)
@@ -89,7 +88,6 @@ class DrinkViewModel(
         }.distinctUntilChanged()
 
         currentDrinkPageLiveData.value = DrinkPage.HISTORY
-        currentDrinkPageIntLiveData.value = 0
 
         // For correct work cocktailListSizeLiveData
         favoriteCocktailListLiveData.observeForever(observer)

@@ -5,18 +5,16 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.FragmentDrinkPagerBinding
-import com.mirogal.cocktail.presentation.constant.DrinkPage
 import com.mirogal.cocktail.presentation.constant.filter.*
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
@@ -131,16 +129,16 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         }.attach()
 
-        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                if (position == 0) {
-                    viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
-                } else {
-                    viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
-                }
-            }
-        })
+//        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                if (position == 0) {
+//                    viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
+//                } else {
+//                    viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
+//                }
+//            }
+//        })
     }
 
     override fun configureObserver() {
@@ -187,10 +185,6 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
                 showChargeLevel(it.first.toString())
                 showChargeState(it.second)
             }
-        })
-
-        viewModel.currentDrinkPageIntLiveData.observe(viewLifecycleOwner, Observer {
-            Log.d(">>>", "$it")
         })
 
         ProcessLifecycleOwner.get().lifecycle.addObserver(DrinkPagerObserver(requireActivity() as AppCompatActivity))
