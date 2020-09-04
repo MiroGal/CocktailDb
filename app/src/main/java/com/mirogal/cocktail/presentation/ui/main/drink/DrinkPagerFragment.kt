@@ -129,15 +129,15 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         }.attach()
 
-        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                when (position) {
-                    DrinkPage.HISTORY.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
-                    DrinkPage.FAVORITE.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
-                }
-            }
-        })
+//        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+//            override fun onPageSelected(position: Int) {
+//                super.onPageSelected(position)
+//                when (position) {
+//                    DrinkPage.HISTORY.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
+//                    DrinkPage.FAVORITE.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
+//                }
+//            }
+//        })
     }
 
     override fun configureObserver() {
