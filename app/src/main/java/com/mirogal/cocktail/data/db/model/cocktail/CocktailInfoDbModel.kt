@@ -1,19 +1,16 @@
-package com.mirogal.cocktail.data.db.model
+package com.mirogal.cocktail.data.db.model.cocktail
 
 import androidx.room.ColumnInfo
-import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.mirogal.cocktail.data.db.Table
 
-@Entity(tableName = Table.COCKTAIL)
-class CocktailDbModel(
+@Entity(tableName = Table.COCKTAIL_INFO)
+class CocktailInfoDbModel(
+
         @PrimaryKey
         @ColumnInfo(name = "id")
         val id: Long = -1L,
-
-        @Embedded(prefix = "name_")
-        val names: LocalizedStringDbModel? = null,
 
         @ColumnInfo(name = "category")
         val category: String = "",
@@ -27,9 +24,6 @@ class CocktailDbModel(
         @ColumnInfo(name = "image")
         val image: String = "",
 
-        @Embedded(prefix = "instruction_")
-        val instructions: LocalizedStringDbModel? = null,
-
         @ColumnInfo(name = "ingredients")
         val ingredients: List<String> = emptyList(),
 
@@ -41,4 +35,5 @@ class CocktailDbModel(
 
         @ColumnInfo(name = "date")
         val date: Date = Date()*/
+
 )

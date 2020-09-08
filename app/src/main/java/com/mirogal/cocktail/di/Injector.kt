@@ -39,9 +39,7 @@ import com.mirogal.cocktail.data.network.source.CocktailNetSource
 import com.mirogal.cocktail.data.network.source.UserNetSource
 import com.mirogal.cocktail.data.network.source.UserUploadNetSource
 import com.mirogal.cocktail.data.network.source.base.BaseNetSource
-import com.mirogal.cocktail.data.repository.impl.mapper.CocktailRepoModelMapper
-import com.mirogal.cocktail.data.repository.impl.mapper.LocalizedStringRepoModelMapper
-import com.mirogal.cocktail.data.repository.impl.mapper.UserRepoModelMapper
+import com.mirogal.cocktail.data.repository.impl.mapper.*
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.source.*
 import com.mirogal.cocktail.data.repository.source.*
@@ -368,6 +366,8 @@ object Injector {
         "LOG provideRepoModelMapper class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
             CocktailRepoModelMapper::class.java -> CocktailRepoModelMapper(
+                    provideNestedRepoModelMapper(context),
+                    provideNestedRepoModelMapper(context),
                     provideNestedRepoModelMapper(context)
             )
             UserRepoModelMapper::class.java -> UserRepoModelMapper()
@@ -390,7 +390,8 @@ object Injector {
         "LOG provideNestedRepoModelMapper class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
             LocalizedStringRepoModelMapper::class.java -> LocalizedStringRepoModelMapper()
-
+            CocktailNameRepoModelMapper::class.java -> CocktailNameRepoModelMapper()
+            CocktailInstructionRepoModelMapper::class.java -> CocktailInstructionRepoModelMapper()
             else -> throw IllegalStateException("Must provide NestedRepoModelMapper for class ${T::class.java.simpleName}")
         } as T
     }

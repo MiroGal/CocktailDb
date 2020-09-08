@@ -4,31 +4,64 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.mirogal.cocktail.data.db.Table
 import com.mirogal.cocktail.data.db.impl.dao.base.BaseDao
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInfoDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInstructionDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailNameDbModel
 
 @Dao
 interface CocktailDao : BaseDao<CocktailDbModel> {
 
-    @get:Query("SELECT * FROM ${Table.COCKTAIL}")
+    @get:Query("SELECT * FROM ${Table.COCKTAIL_INFO}")
     val cocktailListLiveData: LiveData<List<CocktailDbModel>>
 
-    @get:Query("SELECT * FROM ${Table.COCKTAIL} WHERE is_favorite = 1")
+    @get:Query("SELECT * FROM ${Table.COCKTAIL_INFO} WHERE is_favorite = 1")
     val favouriteCocktailListLiveData: LiveData<List<CocktailDbModel>>
 
-    @Query("SELECT * FROM ${Table.COCKTAIL} LIMIT 1")
+    @Transaction
+    @Query("SELECT * FROM ${Table.COCKTAIL_INFO} LIMIT 1")
     fun getFirstCocktail(): CocktailDbModel?
 
-    @Query("SELECT * FROM ${Table.COCKTAIL} WHERE id = :id")
+    @Transaction
+    @Query("SELECT * FROM ${Table.COCKTAIL_INFO} WHERE id = :id")
     fun getCocktailByIdLiveData(id: Long): LiveData<CocktailDbModel?>
 
-    @Query("SELECT * FROM ${Table.COCKTAIL} WHERE id = :id")
+    @Transaction
+    @Query("SELECT * FROM ${Table.COCKTAIL_INFO} WHERE id = :id")
     fun getCocktailById(id: Long): CocktailDbModel?
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrReplaceCocktail(cocktail: CocktailDbModel)
+    @Transaction
+    fun addOrReplaceCocktails(vararg cocktails: CocktailDbModel) {
+        cocktails.forEach { cocktail ->
+            insertCocktailInfo(cocktail.cocktailInfo)
+            cocktail.cocktailNames.forEach {
+                insertCocktailName(it)
+            }
+            cocktail.cocktailInstructions.forEach {
+                insertCocktailInstruction(it)
+            }
+        }
+    }
+
+    @Transaction
+    fun addOrReplaceCocktail(cocktail: CocktailDbModel) {
+        insertCocktailInfo(cocktail.cocktailInfo)
+        cocktail.cocktailNames.forEach {
+            insertCocktailName(it)
+        }
+        cocktail.cocktailInstructions.forEach {
+            insertCocktailInstruction(it)
+        }
+    }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addOrReplaceCocktails(vararg cocktail: CocktailDbModel)
+    fun insertCocktailInfo(cocktailInfo: CocktailInfoDbModel?): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCocktailName(cocktailName: CocktailNameDbModel?): Long
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertCocktailInstruction(cocktailInstruction: CocktailInstructionDbModel?): Long
 
     @Transaction
     fun replaceAllCocktails(vararg cocktail: CocktailDbModel) {
@@ -36,16 +69,20 @@ interface CocktailDao : BaseDao<CocktailDbModel> {
         addOrReplaceCocktails(*cocktail)
     }
 
-    @Delete
-    fun deleteCocktails(vararg cocktail: CocktailDbModel)
+    // Crash method!!!
+//    @Transaction
+//    @Delete
+//    fun deleteCocktails(vararg cocktail: NewCocktailDbModel)
 
-    @Query("DELETE FROM ${Table.COCKTAIL}")
+    @Transaction
+    @Query("DELETE FROM ${Table.COCKTAIL_INFO}")
     fun deleteAllCocktails()
 
-    @Query("DELETE FROM ${Table.COCKTAIL} WHERE id = :id")
+    @Transaction
+    @Query("DELETE FROM ${Table.COCKTAIL_INFO} WHERE id = :id")
     fun deleteCocktailById(id: Long)
 
-    @Query("UPDATE ${Table.COCKTAIL} SET is_favorite = :isFavorite WHERE id = :id")
+    @Query("UPDATE ${Table.COCKTAIL_INFO} SET is_favorite = :isFavorite WHERE id = :id")
     fun setCocktailFavorite(id: Long, isFavorite: Boolean)
 
 }

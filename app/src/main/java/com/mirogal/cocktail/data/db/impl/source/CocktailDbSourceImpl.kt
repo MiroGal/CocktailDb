@@ -2,7 +2,7 @@ package com.mirogal.cocktail.data.db.impl.source
 
 import androidx.lifecycle.LiveData
 import com.mirogal.cocktail.data.db.impl.dao.CocktailDao
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailDbModel
 import com.mirogal.cocktail.data.db.source.CocktailDbSource
 
 class CocktailDbSourceImpl(
@@ -35,7 +35,7 @@ class CocktailDbSourceImpl(
     }
 
     override suspend fun deleteCocktails(vararg cocktail: CocktailDbModel) {
-        cocktailDao.deleteCocktails(*cocktail)
+//        cocktailDao.deleteCocktails(*cocktail)
     }
 
     override suspend fun deleteAllCocktails() {

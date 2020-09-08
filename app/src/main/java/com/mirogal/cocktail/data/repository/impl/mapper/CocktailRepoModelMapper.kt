@@ -1,46 +1,52 @@
 package com.mirogal.cocktail.data.repository.impl.mapper
 
-import android.util.Log
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInfoDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailDbModel
 import com.mirogal.cocktail.data.network.model.cocktail.CocktailNetModel
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
 import com.mirogal.cocktail.data.repository.model.CocktailRepoModel
 import com.mirogal.cocktail.data.repository.model.LocalizedStringRepoModel
 
 class CocktailRepoModelMapper(
-        private val localizedStringRepoModelMapper: LocalizedStringRepoModelMapper
+        private val localizedStringRepoModelMapper: LocalizedStringRepoModelMapper,
+        private val cocktailNameRepoModelMapper: CocktailNameRepoModelMapper,
+        private val cocktailInstructionRepoModelMapper: CocktailInstructionRepoModelMapper
 ) : BaseRepoModelMapper<CocktailRepoModel, CocktailDbModel, CocktailNetModel>() {
 
     override fun mapDbToRepo(db: CocktailDbModel): CocktailRepoModel = with(db) {
-        Log.d("<--", "class: ${db.names}")
         CocktailRepoModel(
-                id = id,
-                names = names?.run(localizedStringRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
-                category = category,
-                alcoholType = alcoholType,
-                glass = glass,
-                image = image,
-                instructions = instructions?.run(localizedStringRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
-                ingredientsWithMeasures = ingredients.mapIndexed { index, ingredient -> ingredient to measures[index] }.toMap(),
-                isFavorite = isFavorite/*,
+                id = cocktailInfo.id,
+                names = LocalizedStringRepoModel(),
+//                names = names?.run(cocktailNameRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
+                category = cocktailInfo.category,
+                alcoholType = cocktailInfo.alcoholType,
+                glass = cocktailInfo.glass,
+                image = cocktailInfo.image,
+                instructions = LocalizedStringRepoModel(),
+//                instructions = instructions?.run(cocktailInstructionRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
+                ingredientsWithMeasures = cocktailInfo.ingredients.mapIndexed { index, ingredient -> ingredient to cocktailInfo.measures[index] }.toMap(),
+                isFavorite = cocktailInfo.isFavorite/*,
                 date = date*/
         )
     }
 
     override fun mapRepoToDb(repo: CocktailRepoModel): CocktailDbModel = with(repo) {
-        Log.d("-->", "class: ${repo.names}")
         CocktailDbModel(
-                id = id,
-                names = names.run(localizedStringRepoModelMapper::mapRepoToDb),
-                category = category,
-                alcoholType = alcoholType,
-                glass = glass,
-                image = image,
-                instructions = instructions.run(localizedStringRepoModelMapper::mapRepoToDb),
-                ingredients = ingredientsWithMeasures.keys.toList(),
-                measures = ingredientsWithMeasures.values.toList(),
-                isFavorite = isFavorite/*,
-                date = date*/
+                cocktailInfo = CocktailInfoDbModel(
+                        id = id,
+                        category = category,
+                        alcoholType = alcoholType,
+                        glass = glass,
+                        image = image,
+                        ingredients = ingredientsWithMeasures.keys.toList(),
+                        measures = ingredientsWithMeasures.values.toList(),
+                        isFavorite = isFavorite/*,
+                        date = date*/
+                ),
+                cocktailNames = arrayListOf(),
+//                names = names.run(cocktailNameRepoModelMapper::mapRepoToDb),
+                cocktailInstructions = arrayListOf()
+//                instructions = instructions.run(cocktailInstructionRepoModelMapper::mapRepoToDb)
         )
     }
 

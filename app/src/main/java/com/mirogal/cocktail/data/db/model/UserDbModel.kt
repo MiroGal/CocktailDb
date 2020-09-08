@@ -7,6 +7,7 @@ import com.mirogal.cocktail.data.db.Table
 
 @Entity(tableName = Table.USER)
 class UserDbModel(
+
         @PrimaryKey
         @ColumnInfo(name = "id")
         val id: Long = 1L,
@@ -19,4 +20,5 @@ class UserDbModel(
 
         @ColumnInfo(name = "avatar")
         val avatar: String? = null
+
 )
