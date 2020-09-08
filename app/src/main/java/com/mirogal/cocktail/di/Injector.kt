@@ -70,7 +70,6 @@ import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
@@ -97,12 +96,7 @@ object Injector {
                         GsonConverterFactory.create(baseGsonBuilder.create())
                 ),
                 provideOkHttpClientBuilder(),
-                *arrayOf(
-                        TokenInterceptor { provideRepository.token },
-                        AppVersionInterceptor(),
-                        PlatformInterceptor(),
-                        PlatformVersionInterceptor()
-                )
+                TokenInterceptor { provideRepository.token }, AppVersionInterceptor(), PlatformInterceptor(), PlatformVersionInterceptor()
         )
     }
 
@@ -126,12 +120,7 @@ object Injector {
                         )
                 ),
                 provideOkHttpClientBuilder(),
-                *arrayOf(
-                        TokenInterceptor { provideRepository.token },
-                        AppVersionInterceptor(),
-                        PlatformInterceptor(),
-                        PlatformVersionInterceptor()
-                )
+                TokenInterceptor { provideRepository.token }, AppVersionInterceptor(), PlatformInterceptor(), PlatformVersionInterceptor()
         )
     }
 
@@ -147,12 +136,7 @@ object Injector {
                         GsonConverterFactory.create(baseGsonBuilder.create())
                 ),
                 provideOkHttpClientBuilder(writeTimeoutSeconds = TimeUnit.MINUTES.toSeconds(5L)),
-                *arrayOf(
-                        TokenInterceptor { provideRepository.token },
-                        AppVersionInterceptor(),
-                        PlatformInterceptor(),
-                        PlatformVersionInterceptor()
-                )
+                TokenInterceptor { provideRepository.token }, AppVersionInterceptor(), PlatformInterceptor(), PlatformVersionInterceptor()
         )
     }
 
@@ -359,7 +343,7 @@ object Injector {
         return builder.build()
     }
 
-    internal fun configureOkHttpInterceptors(
+    private fun configureOkHttpInterceptors(
             context: Context,
             okHttpClientBuilder: OkHttpClient.Builder
     ) {
@@ -466,7 +450,7 @@ object Injector {
         }
 
         return builder
-                .hostnameVerifier(HostnameVerifier { _, _ -> true })
+                .hostnameVerifier({ _, _ -> true })
                 .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
     }

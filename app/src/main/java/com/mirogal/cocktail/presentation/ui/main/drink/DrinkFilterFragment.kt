@@ -65,13 +65,13 @@ class DrinkFilterFragment : BaseFragment<DrinkViewModel, FragmentDrinkFilterBind
     }
 
     override fun configureObserver() {
-        viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, {
             btn_filter_category_text_2.text = it[DrinkFilterType.CATEGORY]?.key?.replace("\\", "") ?: ""
             btn_filter_alcohol_text_2.text = it[DrinkFilterType.ALCOHOL]?.key?.replace("\\", "") ?: ""
             btn_filter_ingredient_text_2.text = it[DrinkFilterType.INGREDIENT]?.key?.replace("\\", "") ?: ""
             btn_filter_glass_text_2.text = it[DrinkFilterType.GLASS]?.key?.replace("\\", "") ?: ""
         })
-        viewModel.cocktailListSizeLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.cocktailListSizeLiveData.observe(viewLifecycleOwner, {
             showFilterSnackbar(it?.first ?: 0, it?.second ?: 0)
             isUndo = false
         })

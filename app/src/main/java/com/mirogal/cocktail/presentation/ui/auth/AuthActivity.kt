@@ -65,12 +65,12 @@ class AuthActivity : BaseActivity<AuthViewModel, ActivityAuthBinding>() {
     }
 
     override fun configureObserver() {
-        viewModel.inputLoginLiveData.observe(this, Observer {
+        viewModel.inputLoginLiveData.observe(this, {
             if (txt_login_layout.isErrorEnabled) {
                 txt_login_layout.isErrorEnabled = false
             }
         })
-        viewModel.inputPasswordLiveData.observe(this, Observer {
+        viewModel.inputPasswordLiveData.observe(this, {
             if (txt_password_layout.isErrorEnabled) {
                 txt_password_layout.isErrorEnabled = false
             }

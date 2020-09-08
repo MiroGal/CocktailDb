@@ -46,11 +46,11 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
     }
 
     override fun configureObserver() {
-        mainViewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
+        mainViewModel.isBottomNavLabelShowLiveData.observe(this, {
             if (chb_show_bottom_nav_label.isChecked != it)
                 chb_show_bottom_nav_label.isChecked = it
         })
-        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, Observer {
+        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, {
             if (chb_show_battery_indicator.isChecked != it)
                 chb_show_battery_indicator.isChecked = it
         })

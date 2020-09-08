@@ -60,12 +60,12 @@ abstract class BaseFragment<ViewModel: BaseViewModel, DataBinding: ViewDataBindi
 
     @MainThread
     protected inline fun <T> LiveData<T?>.observeTillDestroyNotNull(crossinline observer: (T) -> Unit) {
-        this.observeTillDestroyNotNull(viewLifecycleOwner, observer)
+        observeTillDestroyNotNull(viewLifecycleOwner, observer)
     }
 
     @MainThread
     protected inline fun <T> LiveData<T>.observeTillDestroy(crossinline observer: (T) -> Unit) {
-        this.observeTillDestroy(viewLifecycleOwner, observer)
+        observeTillDestroy(viewLifecycleOwner, observer)
     }
 
     @MainThread

@@ -55,7 +55,7 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
         super.configureObserver()
 
         viewModel.cocktailIdLiveData.value = cocktailId
-        viewModel.cocktailModelLiveData.observe(this, Observer {
+        viewModel.cocktailModelLiveData.observe(this, {
             if (it != null) {
 
                 rv_ingredient_list.layoutManager = LinearLayoutManager(this)

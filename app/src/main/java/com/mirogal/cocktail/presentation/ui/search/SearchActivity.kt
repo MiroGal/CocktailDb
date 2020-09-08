@@ -56,7 +56,7 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(),
     override fun configureObserver() {
         super.configureObserver()
 
-        viewModel.searchResultCocktailListLiveData.observe(this, Observer { list ->
+        viewModel.searchResultCocktailListLiveData.observe(this, { list ->
             when {
                 list == null -> showPreview()
                 list.isEmpty() -> showEmpty()

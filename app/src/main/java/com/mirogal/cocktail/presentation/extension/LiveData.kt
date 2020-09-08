@@ -105,11 +105,6 @@ inline fun <reified T, reified R> LiveData<T?>.mapNotNull(crossinline predicate:
             it.addSource(this) { newValue -> if (newValue != null) it.value = newValue.predicate() }
         }
 
-//inline fun <reified T, reified R> LiveData<T>.mapNotNull(crossinline predicate: T.() -> R = { this as R }): LiveData<R> =
-//    MediatorLiveData<R>().also {
-//        it.addSource(this) { newValue -> if (newValue != null) it.value = newValue.predicate() }
-//    }
-
 fun <T> LiveData<T>.mapWithPrevious(initialValue: T, predicate: (current: T, new: T) -> T): LiveData<T> =
         MediatorLiveData<T>().also {
             it.value = predicate(it.value ?: initialValue, this.value ?: initialValue)
@@ -148,7 +143,7 @@ fun <T> LiveData<T>.distinctNotNullValues(onDistinct: (current: T, new: T) -> Un
         }
 
 @MainThread
-inline fun <T> LiveData<T?>.observeTillDestroyNotNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
+inline fun <T> observeTillDestroyNotNull(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
     if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
 
     val liveDataObserver = Observer<T?> {
@@ -163,7 +158,7 @@ inline fun <T> LiveData<T?>.observeTillDestroyNotNull(owner: LifecycleOwner, cro
 }
 
 @MainThread
-inline fun <T> LiveData<T>.observeTillDestroy(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
+inline fun <T> observeTillDestroy(owner: LifecycleOwner, crossinline observer: (T) -> Unit) {
     if (owner.lifecycle.currentState == Lifecycle.State.DESTROYED) return
 
     val liveDataObserver = Observer<T?> {
@@ -198,7 +193,7 @@ fun <T> LiveData<T>.throttle(duration: Long = 300L): LiveData<T> = MediatorLiveD
     val throttle = Throttle(duration)
 
     mld.addSource(source) {
-        throttle.attempt(Runnable { mld.value = it })
+        throttle.attempt({ mld.value = it })
     }
 }
 

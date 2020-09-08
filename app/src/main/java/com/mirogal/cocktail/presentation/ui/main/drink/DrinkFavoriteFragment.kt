@@ -14,7 +14,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.widget.PopupMenu
 import androidx.core.app.TaskStackBuilder
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.target.CustomTarget
@@ -64,7 +63,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavorite
     }
 
     override fun configureObserver() {
-        viewModel.favoriteCocktailListLiveData.observe(viewLifecycleOwner, Observer { list ->
+        viewModel.favoriteCocktailListLiveData.observe(viewLifecycleOwner, { list ->
             if (list?.isNotEmpty()!!) {
                 showData()
             } else {
@@ -117,7 +116,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavorite
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                             // Create ShortcutManager
                             val shortcutManager = requireActivity()
-                                    .getSystemService<ShortcutManager>(ShortcutManager::class.java)
+                                    .getSystemService(ShortcutManager::class.java)
                             // Create intent
                             val intent = Intent(requireActivity(), DetailActivity::class.java)
                             intent.action = "com.android.launcher.action.INSTALL_SHORTCUT"
@@ -164,7 +163,7 @@ class DrinkFavoriteFragment : BaseFragment<DrinkViewModel, FragmentDrinkFavorite
                         override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
                             // Create ShortcutManager
                             val shortcutManager = requireActivity()
-                                    .getSystemService<ShortcutManager>(ShortcutManager::class.java)
+                                    .getSystemService(ShortcutManager::class.java)
                             // Check supporting pin shortcut
                             if (shortcutManager!!.isRequestPinShortcutSupported) {
                                 // Create ShortcutManager

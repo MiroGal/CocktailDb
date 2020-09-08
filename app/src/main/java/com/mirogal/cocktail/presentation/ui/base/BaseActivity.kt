@@ -1,6 +1,5 @@
 package com.mirogal.cocktail.presentation.ui.base
 
-import android.content.Context
 import android.content.res.Configuration
 import android.os.Bundle
 import android.view.ContextThemeWrapper
@@ -92,12 +91,12 @@ abstract class BaseActivity<ViewModel: BaseViewModel, DataBinding: ViewDataBindi
 
     @MainThread
     protected inline fun <T> LiveData<T?>.observeTillDestroyNotNull(crossinline observer: (T) -> Unit) {
-        this.observeTillDestroyNotNull(this@BaseActivity, observer)
+        observeTillDestroyNotNull(this@BaseActivity, observer)
     }
 
     @MainThread
     protected inline fun <T> LiveData<T>.observeTillDestroy(crossinline observer: (T) -> Unit) {
-        this.observeTillDestroy(this@BaseActivity, observer)
+        observeTillDestroy(this@BaseActivity, observer)
     }
 
     @MainThread

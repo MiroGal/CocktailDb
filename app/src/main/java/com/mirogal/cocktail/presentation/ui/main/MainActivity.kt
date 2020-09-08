@@ -75,7 +75,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     override fun configureObserver() {
-        viewModel.currentBottomNavTabLiveData.observe(this, Observer {
+        viewModel.currentBottomNavTabLiveData.observe(this, {
             if (it != null && bottom_nav_view.selectedItemId != it.key) {
                 bottom_nav_view.menu.findItem(it.key).isChecked = true
                 when (it) {
@@ -85,7 +85,7 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
                 }
             }
         })
-        viewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
+        viewModel.isBottomNavLabelShowLiveData.observe(this, {
             if (it) {
                 bottom_nav_view.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
             } else {

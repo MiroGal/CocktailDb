@@ -1,4 +1,1 @@
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mirogal.localization">
-</manifest>
+<manifest package="com.mirogal.localization" />

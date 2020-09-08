@@ -45,14 +45,12 @@ open class BaseViewModel(
     protected fun <T> stateHandle(
             initialValue: T? = null,
             key: String? = null
-    ) = object : ReadOnlyProperty<Any, MutableLiveData<T>> {
-        override fun getValue(thisRef: Any, property: KProperty<*>): MutableLiveData<T> {
-            val stateKey = key ?: property.name
-            return if (initialValue == null) {
-                viewStateHandle.getLiveData(stateKey)
-            } else {
-                viewStateHandle.getLiveData(stateKey, initialValue)
-            }
+    ) = ReadOnlyProperty<Any, MutableLiveData<T>> { thisRef, property ->
+        val stateKey = key ?: property.name
+        if (initialValue == null) {
+            viewStateHandle.getLiveData(stateKey)
+        } else {
+            viewStateHandle.getLiveData(stateKey, initialValue)
         }
     }
 

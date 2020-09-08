@@ -10,12 +10,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ProcessLifecycleOwner
-import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.FragmentDrinkPagerBinding
-import com.mirogal.cocktail.presentation.constant.DrinkPage
 import com.mirogal.cocktail.presentation.constant.filter.*
 import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.model.cocktail.CocktailModel
@@ -141,11 +139,11 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
     }
 
     override fun configureObserver() {
-        viewModel.currentDrinkPageLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.currentDrinkPageLiveData.observe(viewLifecycleOwner, {
             if (view_pager.currentItem != it.ordinal) view_pager.currentItem = it.ordinal
         })
 
-        viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, {
             if (it) {
                 toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)
             } else {
@@ -153,7 +151,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         })
 
-        viewModel.isDrinkSortEnableLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.isDrinkSortEnableLiveData.observe(viewLifecycleOwner, {
             if (it) {
                 toolbar_action_sort.setImageResource(R.drawable.ic_sort_list_disable)
             } else {
@@ -161,7 +159,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         })
 
-        viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.drinkFilterLiveData.observe(viewLifecycleOwner, {
             if (it != null) {
                 showFilterCategory(it[DrinkFilterType.CATEGORY] as DrinkFilterCategory)
                 showFilterAlcohol(it[DrinkFilterType.ALCOHOL] as DrinkFilterAlcohol)
@@ -170,7 +168,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         })
 
-        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, Observer {
+        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, {
             if (it) {
                 layout_charge_indicator.visibility = View.VISIBLE
             } else {
@@ -178,12 +176,12 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         })
 
-        viewModel.proposeDrinkReceiverLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.proposeDrinkReceiverLiveData.observe(viewLifecycleOwner, {
             if (it != null)
                 showProposeDrink(it)
         })
 
-        viewModel.batteryChangeReceiverLiveData.observe(viewLifecycleOwner, Observer {
+        viewModel.batteryChangeReceiverLiveData.observe(viewLifecycleOwner, {
             if (it != null) {
                 showChargeLevel(it.first.toString())
                 showChargeState(it.second)

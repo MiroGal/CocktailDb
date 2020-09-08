@@ -1,4 +1,3 @@
 rootProject.name='Cocktail'
-include ':mylibrary'
 include ':app'
 include ':localization'

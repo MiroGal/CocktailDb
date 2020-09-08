@@ -21,7 +21,7 @@ class ProposeDrinkService : JobIntentService() {
         intentStart.putExtra("startCocktailId", intent.getLongExtra("cocktailId", -2L))
         baseContext.sendBroadcast(intentStart)
 
-        Thread(Runnable {
+        Thread({
             Thread.sleep(TimeUnit.SECONDS.toMillis(3))
 
             val newIntent = Intent()
