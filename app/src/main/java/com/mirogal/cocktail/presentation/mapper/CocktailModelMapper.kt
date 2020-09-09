@@ -21,8 +21,8 @@ class CocktailModelMapper(
                 image = image,
                 instructions = instructions.run(localizedStringModelMapper::mapFrom),
                 ingredientsWithMeasures = ingredientsWithMeasures,
-                isFavorite = isFavorite/*,
-                date = date*/
+                isFavorite = isFavorite,
+//                date = date
         )
     }
 
@@ -36,8 +36,8 @@ class CocktailModelMapper(
                 image = image,
                 instructions = instructions.run(localizedStringModelMapper::mapTo),
                 ingredientsWithMeasures = ingredientsWithMeasures,
-                isFavorite = isFavorite/*,
-                date = date*/
+                isFavorite = isFavorite,
+//                date = date
         )
     }
 

@@ -31,9 +31,9 @@ class CocktailInfoDbModel(
         val measures: List<String?> = emptyList(),
 
         @ColumnInfo(name = "is_favorite")
-        val isFavorite: Boolean = false/*,
+        val isFavorite: Boolean = false,
 
-        @ColumnInfo(name = "date")
-        val date: Date = Date()*/
+//        @ColumnInfo(name = "date")
+//        val date: Date = Date()
 
 )

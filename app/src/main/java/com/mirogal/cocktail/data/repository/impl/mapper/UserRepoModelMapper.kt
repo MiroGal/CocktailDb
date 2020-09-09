@@ -12,7 +12,7 @@ class UserRepoModelMapper : BaseRepoModelMapper<UserRepoModel, UserDbModel, User
                 id = id,
                 name = name,
                 lastName = lastName,
-//                avatar = avatar
+                avatar = avatar
         )
     }
 
@@ -21,7 +21,7 @@ class UserRepoModelMapper : BaseRepoModelMapper<UserRepoModel, UserDbModel, User
                 id = id,
                 name = name,
                 lastName = lastName,
-//                avatar = avatar
+                avatar = avatar
         )
     }
 
@@ -30,7 +30,7 @@ class UserRepoModelMapper : BaseRepoModelMapper<UserRepoModel, UserDbModel, User
                 id = id,
                 name = name,
                 lastName = lastName,
-//                avatar = avatar
+                avatar = avatar
         )
     }
 
@@ -39,7 +39,7 @@ class UserRepoModelMapper : BaseRepoModelMapper<UserRepoModel, UserDbModel, User
                 id = id,
                 name = name,
                 lastName = lastName,
-//                avatar = avatar
+                avatar = avatar
         )
     }
 

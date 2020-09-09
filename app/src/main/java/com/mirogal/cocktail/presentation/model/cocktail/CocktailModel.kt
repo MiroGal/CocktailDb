@@ -9,6 +9,6 @@ data class CocktailModel(
         val image: String = "",
         val instructions: LocalizedStringModel = LocalizedStringModel(),
         val ingredientsWithMeasures: Map<String, String?> = emptyMap(),
-        val isFavorite: Boolean/*,
-        val date: Date = Date()*/
+        val isFavorite: Boolean,
+//        val date: Date = Date()
 )
