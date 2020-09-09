@@ -34,6 +34,6 @@ class CocktailInfoDbModel(
         val isFavorite: Boolean = false,
 
 //        @ColumnInfo(name = "date")
-//        val date: Date = Date()
+//        val date: Date? = null
 
 )

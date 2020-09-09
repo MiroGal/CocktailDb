@@ -10,5 +10,5 @@ data class CocktailModel(
         val instructions: LocalizedStringModel = LocalizedStringModel(),
         val ingredientsWithMeasures: Map<String, String?> = emptyMap(),
         val isFavorite: Boolean,
-//        val date: Date = Date()
+//        val date: Date? = null
 )

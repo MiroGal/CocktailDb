@@ -10,5 +10,5 @@ class CocktailRepoModel(
         val instructions: LocalizedStringRepoModel = LocalizedStringRepoModel(),
         val ingredientsWithMeasures: Map<String, String?> = emptyMap(),
         val isFavorite: Boolean,
-//        val date: Date = Date()
+//        val date: Date? = null
 )
