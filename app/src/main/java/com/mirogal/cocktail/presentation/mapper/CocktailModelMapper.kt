@@ -22,7 +22,7 @@ class CocktailModelMapper(
                 instructions = instructions.run(localizedStringModelMapper::mapFrom),
                 ingredientsWithMeasures = ingredientsWithMeasures,
                 isFavorite = isFavorite,
-//                date = date
+                date = date
         )
     }
 
@@ -37,7 +37,7 @@ class CocktailModelMapper(
                 instructions = instructions.run(localizedStringModelMapper::mapTo),
                 ingredientsWithMeasures = ingredientsWithMeasures,
                 isFavorite = isFavorite,
-//                date = date
+                date = date
         )
     }
 

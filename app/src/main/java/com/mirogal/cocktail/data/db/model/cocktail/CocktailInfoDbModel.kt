@@ -4,6 +4,7 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.mirogal.cocktail.data.db.Table
+import java.util.*
 
 @Entity(tableName = Table.COCKTAIL_INFO)
 class CocktailInfoDbModel(
@@ -33,7 +34,7 @@ class CocktailInfoDbModel(
         @ColumnInfo(name = "is_favorite")
         val isFavorite: Boolean = false,
 
-//        @ColumnInfo(name = "date")
-//        val date: Date? = null
+        @ColumnInfo(name = "date")
+        val date: Date? = null
 
 )
