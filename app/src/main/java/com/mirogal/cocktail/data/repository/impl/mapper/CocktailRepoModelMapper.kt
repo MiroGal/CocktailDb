@@ -26,7 +26,7 @@ class CocktailRepoModelMapper(
                 instructions = cocktailInstructions?.run(cocktailInstructionRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
                 ingredientsWithMeasures = cocktailInfo.ingredients.mapIndexed { index, ingredient -> ingredient to cocktailInfo.measures[index] }.toMap(),
                 isFavorite = cocktailInfo.isFavorite,
-//                date = date
+//                date = cocktailInfo.date
         )
     }
 

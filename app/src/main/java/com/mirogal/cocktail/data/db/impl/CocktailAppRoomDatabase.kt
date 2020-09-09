@@ -42,7 +42,7 @@ abstract class CocktailAppRoomDatabase : RoomDatabase() {
         Room.databaseBuilder(
                 it.applicationContext,
                 CocktailAppRoomDatabase::class.java,
-                "${CocktailAppRoomDatabase::class.java.simpleName}_test_1"
+                CocktailAppRoomDatabase::class.java.simpleName
         )
 //                .addMigrations(MIGRATION_1_2)
                 .fallbackToDestructiveMigration() // Migration with destroy ald data
