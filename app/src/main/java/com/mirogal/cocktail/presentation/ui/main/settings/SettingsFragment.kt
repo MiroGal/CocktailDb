@@ -3,7 +3,6 @@ package com.mirogal.cocktail.presentation.ui.main.settings
 import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.FragmentSettingsBinding
 import com.mirogal.cocktail.presentation.extension.baseViewModels

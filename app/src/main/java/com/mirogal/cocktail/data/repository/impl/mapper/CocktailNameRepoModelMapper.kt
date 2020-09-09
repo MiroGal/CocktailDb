@@ -20,16 +20,4 @@ class CocktailNameRepoModelMapper :
         )
     }
 
-    override fun mapRepoToDb(repo: LocalizedStringRepoModel) = with(repo) {
-        CocktailNameDbModel(
-                baseValue = default,
-                baseValueAlternate = defaultAlternate,
-                es = es,
-                de = de,
-                fr = fr,
-                zhHans = zhHans,
-                zhHant = zhHant
-        )
-    }
-
 }

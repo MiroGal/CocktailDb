@@ -3,7 +3,6 @@ package com.mirogal.cocktail.presentation.ui.main.drink
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.FragmentDrinkFilterBinding

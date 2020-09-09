@@ -10,17 +10,14 @@ import com.mirogal.cocktail.data.db.Table
         foreignKeys = [ForeignKey(
                 entity = CocktailInfoDbModel::class,
                 parentColumns = arrayOf("id"),
-                childColumns = arrayOf("cocktail_id"),
+                childColumns = arrayOf("id"),
                 onDelete = ForeignKey.CASCADE,
                 onUpdate = ForeignKey.CASCADE)])
 class CocktailNameDbModel(
 
-        @PrimaryKey(autoGenerate = true)
+        @PrimaryKey
         @ColumnInfo(name = "id")
-        val id: Long = -1L,
-
-        @ColumnInfo(name = "cocktail_id")
-        val cocktailId: Long = -1L,
+        val id: Long,
 
         @ColumnInfo(name = "default")
         var baseValue: String? = null,

@@ -7,7 +7,7 @@ import com.mirogal.cocktail.R
 import com.mirogal.cocktail.presentation.constant.filter.DrinkSort
 
 class DrinkSortListAdapter(
-        private val currentSort: DrinkSort,
+        currentSort: DrinkSort,
         private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<DrinkSortItemHolder>() {
 

@@ -34,24 +34,16 @@ interface CocktailDao : BaseDao<CocktailDbModel> {
     fun addOrReplaceCocktails(vararg cocktails: CocktailDbModel) {
         cocktails.forEach { cocktail ->
             insertCocktailInfo(cocktail.cocktailInfo)
-            cocktail.cocktailNames.forEach {
-                insertCocktailName(it)
-            }
-            cocktail.cocktailInstructions.forEach {
-                insertCocktailInstruction(it)
-            }
+            insertCocktailName(cocktail.cocktailNames)
+            insertCocktailInstruction(cocktail.cocktailInstructions)
         }
     }
 
     @Transaction
     fun addOrReplaceCocktail(cocktail: CocktailDbModel) {
         insertCocktailInfo(cocktail.cocktailInfo)
-        cocktail.cocktailNames.forEach {
-            insertCocktailName(it)
-        }
-        cocktail.cocktailInstructions.forEach {
-            insertCocktailInstruction(it)
-        }
+        insertCocktailName(cocktail.cocktailNames)
+        insertCocktailInstruction(cocktail.cocktailInstructions)
     }
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

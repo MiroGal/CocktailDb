@@ -3,7 +3,6 @@ package com.mirogal.cocktail.presentation.ui.main
 import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.commit
-import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.ActivityMainBinding

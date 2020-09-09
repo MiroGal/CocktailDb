@@ -193,7 +193,7 @@ fun <T> LiveData<T>.throttle(duration: Long = 300L): LiveData<T> = MediatorLiveD
     val throttle = Throttle(duration)
 
     mld.addSource(source) {
-        throttle.attempt({ mld.value = it })
+        throttle.attempt { mld.value = it }
     }
 }
 

@@ -451,7 +451,7 @@ object Injector {
         }
 
         return builder
-                .hostnameVerifier({ _, _ -> true })
+                .hostnameVerifier { _, _ -> true }
                 .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
     }

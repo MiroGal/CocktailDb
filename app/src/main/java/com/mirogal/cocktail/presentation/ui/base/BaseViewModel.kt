@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
 
 open class BaseViewModel(
         protected val viewStateHandle: SavedStateHandle,

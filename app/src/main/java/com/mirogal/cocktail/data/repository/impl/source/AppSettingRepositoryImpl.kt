@@ -5,7 +5,7 @@ import com.mirogal.cocktail.data.local.source.AppSettingLocalSource
 import com.mirogal.cocktail.data.repository.source.AppSettingRepository
 
 class AppSettingRepositoryImpl(
-        private val appSettingLocalSource: AppSettingLocalSource
+        appSettingLocalSource: AppSettingLocalSource
 ) : AppSettingRepository {
 
     override val isBottomNavLabelShowLiveData: MutableLiveData<Boolean>

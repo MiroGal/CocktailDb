@@ -1,7 +1,9 @@
 package com.mirogal.cocktail.data.repository.impl.mapper
 
-import com.mirogal.cocktail.data.db.model.cocktail.CocktailInfoDbModel
 import com.mirogal.cocktail.data.db.model.cocktail.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInfoDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInstructionDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailNameDbModel
 import com.mirogal.cocktail.data.network.model.cocktail.CocktailNetModel
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
 import com.mirogal.cocktail.data.repository.model.CocktailRepoModel
@@ -16,17 +18,15 @@ class CocktailRepoModelMapper(
     override fun mapDbToRepo(db: CocktailDbModel): CocktailRepoModel = with(db) {
         CocktailRepoModel(
                 id = cocktailInfo.id,
-                names = LocalizedStringRepoModel(),
-//                names = names?.run(cocktailNameRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
+                names = cocktailNames?.run(cocktailNameRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
                 category = cocktailInfo.category,
                 alcoholType = cocktailInfo.alcoholType,
                 glass = cocktailInfo.glass,
                 image = cocktailInfo.image,
-                instructions = LocalizedStringRepoModel(),
-//                instructions = instructions?.run(cocktailInstructionRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
+                instructions = cocktailInstructions?.run(cocktailInstructionRepoModelMapper::mapDbToRepo) ?: LocalizedStringRepoModel(),
                 ingredientsWithMeasures = cocktailInfo.ingredients.mapIndexed { index, ingredient -> ingredient to cocktailInfo.measures[index] }.toMap(),
-                isFavorite = cocktailInfo.isFavorite/*,
-                date = date*/
+                isFavorite = cocktailInfo.isFavorite,
+//                date = date
         )
     }
 
@@ -40,13 +40,29 @@ class CocktailRepoModelMapper(
                         image = image,
                         ingredients = ingredientsWithMeasures.keys.toList(),
                         measures = ingredientsWithMeasures.values.toList(),
-                        isFavorite = isFavorite/*,
-                        date = date*/
+                        isFavorite = isFavorite,
+//                        date = date
                 ),
-                cocktailNames = arrayListOf(),
-//                names = names.run(cocktailNameRepoModelMapper::mapRepoToDb),
-                cocktailInstructions = arrayListOf()
-//                instructions = instructions.run(cocktailInstructionRepoModelMapper::mapRepoToDb)
+                cocktailNames = CocktailNameDbModel(
+                        id = id,
+                        baseValue = names.default,
+                        baseValueAlternate = names.defaultAlternate,
+                        es = names.es,
+                        de = names.de,
+                        fr = names.fr,
+                        zhHans = names.zhHans,
+                        zhHant = names.zhHant
+                ),
+                cocktailInstructions = CocktailInstructionDbModel(
+                        id = id,
+                        baseValue = instructions.default,
+                        baseValueAlternate = instructions.defaultAlternate,
+                        es = instructions.es,
+                        de = instructions.de,
+                        fr = instructions.fr,
+                        zhHans = instructions.zhHans,
+                        zhHant = instructions.zhHant
+                )
         )
     }
 
@@ -60,8 +76,8 @@ class CocktailRepoModelMapper(
                 image = image,
                 instructions = instructions.run(localizedStringRepoModelMapper::mapNetToRepo),
                 ingredientsWithMeasures = ingredientsWithMeasures,
-                isFavorite = false/*,
-                date = date*/
+                isFavorite = false,
+//                date = date
         )
     }
 

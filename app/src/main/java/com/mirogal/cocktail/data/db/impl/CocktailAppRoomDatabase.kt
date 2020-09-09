@@ -35,13 +35,13 @@ abstract class CocktailAppRoomDatabase : RoomDatabase() {
 
 //        val MIGRATION_1_2 = object : Migration(1, 2) {
 //            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE USER ADD COLUMN avatar TEXT DEFAULT NULL")
+//                database.execSQL("ALTER TABLE ${Table.USER} ADD COLUMN avatar TEXT DEFAULT NULL")
 //            }
 //        }
 //
 //        val MIGRATION_2_3 = object : Migration(2, 3) {
 //            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE USER ADD COLUMN date TEXT DEFAULT NULL")
+//                database.execSQL("ALTER TABLE ${Table.COCKTAIL_INFO} ADD COLUMN date TEXT DEFAULT NULL")
 //            }
 //        }
 
@@ -49,7 +49,7 @@ abstract class CocktailAppRoomDatabase : RoomDatabase() {
                 .databaseBuilder(
                         it.applicationContext,
                         CocktailAppRoomDatabase::class.java,
-                        "${CocktailAppRoomDatabase::class.java.name}_test_2"
+                        "${CocktailAppRoomDatabase::class.java.name}_test_5"
                 )
 //                .addMigrations(MIGRATION_1_2/*, MIGRATION_2_3*/)
                 .fallbackToDestructiveMigration() // Migration with destroy ald data

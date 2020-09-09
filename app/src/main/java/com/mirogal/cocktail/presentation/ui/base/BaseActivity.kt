@@ -90,12 +90,12 @@ abstract class BaseActivity<ViewModel: BaseViewModel, DataBinding: ViewDataBindi
     }
 
     @MainThread
-    protected inline fun <T> LiveData<T?>.observeTillDestroyNotNull(crossinline observer: (T) -> Unit) {
+    protected inline fun <T> observeTillDestroyNotNull(crossinline observer: (T) -> Unit) {
         observeTillDestroyNotNull(this@BaseActivity, observer)
     }
 
     @MainThread
-    protected inline fun <T> LiveData<T>.observeTillDestroy(crossinline observer: (T) -> Unit) {
+    protected inline fun <T> observeTillDestroy(crossinline observer: (T) -> Unit) {
         observeTillDestroy(this@BaseActivity, observer)
     }
 

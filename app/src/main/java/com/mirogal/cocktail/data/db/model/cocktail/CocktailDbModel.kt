@@ -5,13 +5,13 @@ import androidx.room.Relation
 
 class CocktailDbModel(
 
-        @Embedded()
+        @Embedded
         val cocktailInfo: CocktailInfoDbModel = CocktailInfoDbModel(),
 
-        @Relation(parentColumn = "id", entity = CocktailNameDbModel::class, entityColumn = "cocktail_id")
-        val cocktailNames: List<CocktailNameDbModel> = arrayListOf(),
+        @Relation(parentColumn = "id", entity = CocktailNameDbModel::class, entityColumn = "id")
+        val cocktailNames: CocktailNameDbModel? = null,
 
-        @Relation(parentColumn = "id", entity = CocktailInstructionDbModel::class, entityColumn = "cocktail_id")
-        val cocktailInstructions: List<CocktailInstructionDbModel> = arrayListOf()
+        @Relation(parentColumn = "id", entity = CocktailInstructionDbModel::class, entityColumn = "id")
+        val cocktailInstructions: CocktailInstructionDbModel? = null
 
 )

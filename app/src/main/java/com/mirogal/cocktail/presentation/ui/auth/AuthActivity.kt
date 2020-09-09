@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager
-import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.ActivityAuthBinding
 import com.mirogal.cocktail.presentation.constant.AuthDataValidStatus
