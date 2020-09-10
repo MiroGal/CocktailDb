@@ -1,5 +1,7 @@
 package com.mirogal.cocktail.data.repository.model
 
+import java.util.*
+
 class CocktailRepoModel(
         val id: Long = -1L,
         val names: LocalizedStringRepoModel = LocalizedStringRepoModel(),
@@ -10,5 +12,5 @@ class CocktailRepoModel(
         val instructions: LocalizedStringRepoModel = LocalizedStringRepoModel(),
         val ingredientsWithMeasures: Map<String, String?> = emptyMap(),
         val isFavorite: Boolean,
-//        val date: Date? = null
+        val date: Date? = null
 )

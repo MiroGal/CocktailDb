@@ -1,5 +1,7 @@
 package com.mirogal.cocktail.presentation.model.cocktail
 
+import java.util.*
+
 data class CocktailModel(
         val id: Long = -1L,
         val names: LocalizedStringModel = LocalizedStringModel(),
@@ -10,5 +12,5 @@ data class CocktailModel(
         val instructions: LocalizedStringModel = LocalizedStringModel(),
         val ingredientsWithMeasures: Map<String, String?> = emptyMap(),
         val isFavorite: Boolean,
-//        val date: Date? = null
+        val date: Date? = null
 )
