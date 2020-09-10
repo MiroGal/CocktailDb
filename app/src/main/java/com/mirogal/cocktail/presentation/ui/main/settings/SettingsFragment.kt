@@ -3,7 +3,6 @@ package com.mirogal.cocktail.presentation.ui.main.settings
 import android.os.Bundle
 import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.FragmentSettingsBinding
 import com.mirogal.cocktail.presentation.extension.baseViewModels
@@ -46,11 +45,11 @@ class SettingsFragment : BaseFragment<SettingsViewModel, FragmentSettingsBinding
     }
 
     override fun configureObserver() {
-        mainViewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
+        mainViewModel.isBottomNavLabelShowLiveData.observe(this, {
             if (chb_show_bottom_nav_label.isChecked != it)
                 chb_show_bottom_nav_label.isChecked = it
         })
-        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, Observer {
+        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, {
             if (chb_show_battery_indicator.isChecked != it)
                 chb_show_battery_indicator.isChecked = it
         })

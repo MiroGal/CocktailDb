@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.util.DisplayMetrics
 import android.view.ViewGroup
 import android.widget.FrameLayout
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.AppBarLayout.OnOffsetChangedListener
@@ -55,7 +54,7 @@ class DetailActivity : BaseActivity<DetailViewModel, ActivityDetailBinding>() {
         super.configureObserver()
 
         viewModel.cocktailIdLiveData.value = cocktailId
-        viewModel.cocktailModelLiveData.observe(this, Observer {
+        viewModel.cocktailModelLiveData.observe(this, {
             if (it != null) {
 
                 rv_ingredient_list.layoutManager = LinearLayoutManager(this)

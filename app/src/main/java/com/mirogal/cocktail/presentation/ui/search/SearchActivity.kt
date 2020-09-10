@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.GridLayoutManager
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.ActivitySearchBinding
@@ -56,7 +55,7 @@ class SearchActivity : BaseActivity<SearchViewModel, ActivitySearchBinding>(),
     override fun configureObserver() {
         super.configureObserver()
 
-        viewModel.searchResultCocktailListLiveData.observe(this, Observer { list ->
+        viewModel.searchResultCocktailListLiveData.observe(this, { list ->
             when {
                 list == null -> showPreview()
                 list.isEmpty() -> showEmpty()

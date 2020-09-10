@@ -5,13 +5,13 @@ import com.mirogal.cocktail.data.network.model.cocktail.LocalizedStringNetModel
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
 import com.mirogal.cocktail.data.repository.model.LocalizedStringRepoModel
 
-class LocalizedStringRepoModelMapper :
+class CocktailNameRepoModelMapper :
         BaseRepoModelMapper<LocalizedStringRepoModel, CocktailNameDbModel, LocalizedStringNetModel>() {
 
-    override fun mapNetToRepo(net: LocalizedStringNetModel): LocalizedStringRepoModel = with(net) {
+    override fun mapDbToRepo(dbCocktail: CocktailNameDbModel) = with(dbCocktail) {
         LocalizedStringRepoModel(
-                default = default,
-                defaultAlternate = defaultAlternate,
+                default = baseValue,
+                defaultAlternate = baseValueAlternate,
                 es = es,
                 de = de,
                 fr = fr,

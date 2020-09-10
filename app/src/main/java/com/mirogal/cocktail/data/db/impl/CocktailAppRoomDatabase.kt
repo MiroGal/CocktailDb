@@ -9,14 +9,18 @@ import com.mirogal.cocktail.data.db.impl.dao.CocktailDao
 import com.mirogal.cocktail.data.db.impl.dao.UserDao
 import com.mirogal.cocktail.data.db.impl.typeconverter.DateConverter
 import com.mirogal.cocktail.data.db.impl.typeconverter.StringListToStringConverter
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
 import com.mirogal.cocktail.data.db.model.UserDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInfoDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailInstructionDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailNameDbModel
 import com.mirogal.cocktail.util.SingletonHolder
 
 @Database(
-        version = 10,
+        version = 1,
         entities = [
-            CocktailDbModel::class,
+            CocktailInfoDbModel::class,
+            CocktailNameDbModel::class,
+            CocktailInstructionDbModel::class,
             UserDbModel::class
         ],
         exportSchema = false
@@ -31,25 +35,18 @@ abstract class CocktailAppRoomDatabase : RoomDatabase() {
 
 //        val MIGRATION_1_2 = object : Migration(1, 2) {
 //            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE USER ADD COLUMN avatar TEXT DEFAULT NULL")
-//            }
-//        }
-//
-//        val MIGRATION_2_3 = object : Migration(2, 3) {
-//            override fun migrate(database: SupportSQLiteDatabase) {
-//                database.execSQL("ALTER TABLE USER ADD COLUMN date TEXT DEFAULT NULL")
+//                database.execSQL("ALTER TABLE ${Table.COCKTAIL_INFO} ADD COLUMN date INTEGER DEFAULT NULL")
 //            }
 //        }
 
-        Room
-                .databaseBuilder(
-                        it.applicationContext,
-                        CocktailAppRoomDatabase::class.java,
-                        CocktailAppRoomDatabase::class.java.name
-                )
-//                .addMigrations(MIGRATION_1_2/*, MIGRATION_2_3*/)
+        Room.databaseBuilder(
+                it.applicationContext,
+                CocktailAppRoomDatabase::class.java,
+                CocktailAppRoomDatabase::class.java.simpleName
+        )
+//                .addMigrations(MIGRATION_1_2)
                 .fallbackToDestructiveMigration() // Migration with destroy ald data
-//                .allowMainThreadQueries() // Work in main thread for debugging
+//                .allowMainThreadQueries() // Working in main thread for debugging
                 .build()
     })
 

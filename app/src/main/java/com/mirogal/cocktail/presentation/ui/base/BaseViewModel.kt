@@ -5,7 +5,6 @@ import androidx.lifecycle.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 import kotlin.properties.ReadOnlyProperty
-import kotlin.reflect.KProperty
 
 open class BaseViewModel(
         protected val viewStateHandle: SavedStateHandle,
@@ -42,36 +41,15 @@ open class BaseViewModel(
     }
 
     // SavedStateHandle Delegate
-//    protected fun <T> stateHandle(
-//            key: String? = null,
-//            initialValue: T
-//    ) = object : ReadOnlyProperty<Any, MutableLiveData<T>> {
-//        override fun getValue(thisRef: Any, property: KProperty<*>): MutableLiveData<T> {
-//            val stateKey = key ?: property.name
-//            return viewStateHandle.getLiveData(property.name, initialValue)
-//        }
-//    }
-//
-//    protected fun <T> stateHandle(
-//            key: String? = null
-//    ) = object : ReadOnlyProperty<Any, MutableLiveData<T>> {
-//        override fun getValue(thisRef: Any, property: KProperty<*>): MutableLiveData<T> {
-//            val stateKey = key ?: property.name
-//            return viewStateHandle.getLiveData(stateKey)
-//        }
-//    }
-
     protected fun <T> stateHandle(
-            initialValue: T
-    ) = object : ReadOnlyProperty<Any, MutableLiveData<T>> {
-        override fun getValue(thisRef: Any, property: KProperty<*>): MutableLiveData<T> {
-            return viewStateHandle.getLiveData(property.name, initialValue)
-        }
-    }
-
-    protected fun <T> stateHandle() = object : ReadOnlyProperty<Any, MutableLiveData<T>> {
-        override fun getValue(thisRef: Any, property: KProperty<*>): MutableLiveData<T> {
-            return viewStateHandle.getLiveData(property.name)
+            initialValue: T? = null,
+            key: String? = null
+    ) = ReadOnlyProperty<Any, MutableLiveData<T>> { thisRef, property ->
+        val stateKey = key ?: property.name
+        if (initialValue == null) {
+            viewStateHandle.getLiveData(stateKey)
+        } else {
+            viewStateHandle.getLiveData(stateKey, initialValue)
         }
     }
 

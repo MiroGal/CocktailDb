@@ -8,7 +8,7 @@ import com.mirogal.cocktail.presentation.constant.filter.*
 
 class DrinkFilterListAdapter(
         private val drinkFilterType: DrinkFilterType,
-        private val currentFilterList: HashMap<DrinkFilterType, DrinkFilter>,
+        currentFilterList: HashMap<DrinkFilterType, DrinkFilter>,
         private val onItemClickListener: OnItemClickListener
 ) : RecyclerView.Adapter<DrinkFilterItemHolder>() {
 

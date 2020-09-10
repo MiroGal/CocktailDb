@@ -8,7 +8,7 @@ import com.mirogal.cocktail.presentation.constant.BottomNavTab
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class MainViewModel(
-        private val appSettingRepository: AppSettingRepository,
+        appSettingRepository: AppSettingRepository,
         viewStateHandle: SavedStateHandle,
         application: Application
 ) : BaseViewModel(viewStateHandle, application) {

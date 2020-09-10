@@ -28,15 +28,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.mirogal.cocktail.presentation.ui.test.TestActivity"
-            android:label="@string/drink_pager_label"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity
             android:name="com.mirogal.cocktail.presentation.ui.main.MainActivity"
             android:label="@string/drink_pager_label"
             android:theme="@style/AppTheme.NoActionBar">

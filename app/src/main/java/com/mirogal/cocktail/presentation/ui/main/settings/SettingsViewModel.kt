@@ -7,7 +7,7 @@ import com.mirogal.cocktail.data.repository.source.AppSettingRepository
 import com.mirogal.cocktail.presentation.ui.base.BaseViewModel
 
 class SettingsViewModel(
-        private val appSettingRepository: AppSettingRepository,
+        appSettingRepository: AppSettingRepository,
         viewStateHandle: SavedStateHandle,
         application: Application
 ) : BaseViewModel(viewStateHandle, application) {

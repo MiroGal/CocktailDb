@@ -1,7 +1,7 @@
 package com.mirogal.cocktail.data.db.source
 
 import androidx.lifecycle.LiveData
-import com.mirogal.cocktail.data.db.model.CocktailDbModel
+import com.mirogal.cocktail.data.db.model.cocktail.CocktailDbModel
 import com.mirogal.cocktail.data.db.source.base.BaseDbSource
 
 interface CocktailDbSource : BaseDbSource {

@@ -39,9 +39,7 @@ import com.mirogal.cocktail.data.network.source.CocktailNetSource
 import com.mirogal.cocktail.data.network.source.UserNetSource
 import com.mirogal.cocktail.data.network.source.UserUploadNetSource
 import com.mirogal.cocktail.data.network.source.base.BaseNetSource
-import com.mirogal.cocktail.data.repository.impl.mapper.CocktailRepoModelMapper
-import com.mirogal.cocktail.data.repository.impl.mapper.LocalizedStringRepoModelMapper
-import com.mirogal.cocktail.data.repository.impl.mapper.UserRepoModelMapper
+import com.mirogal.cocktail.data.repository.impl.mapper.*
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.source.*
 import com.mirogal.cocktail.data.repository.source.*
@@ -70,7 +68,6 @@ import java.security.cert.CertificateException
 import java.security.cert.X509Certificate
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.X509TrustManager
 
@@ -97,12 +94,7 @@ object Injector {
                         GsonConverterFactory.create(baseGsonBuilder.create())
                 ),
                 provideOkHttpClientBuilder(),
-                *arrayOf(
-                        TokenInterceptor { provideRepository.token },
-                        AppVersionInterceptor(),
-                        PlatformInterceptor(),
-                        PlatformVersionInterceptor()
-                )
+                TokenInterceptor { provideRepository.token }, AppVersionInterceptor(), PlatformInterceptor(), PlatformVersionInterceptor()
         )
     }
 
@@ -126,12 +118,7 @@ object Injector {
                         )
                 ),
                 provideOkHttpClientBuilder(),
-                *arrayOf(
-                        TokenInterceptor { provideRepository.token },
-                        AppVersionInterceptor(),
-                        PlatformInterceptor(),
-                        PlatformVersionInterceptor()
-                )
+                TokenInterceptor { provideRepository.token }, AppVersionInterceptor(), PlatformInterceptor(), PlatformVersionInterceptor()
         )
     }
 
@@ -147,12 +134,7 @@ object Injector {
                         GsonConverterFactory.create(baseGsonBuilder.create())
                 ),
                 provideOkHttpClientBuilder(writeTimeoutSeconds = TimeUnit.MINUTES.toSeconds(5L)),
-                *arrayOf(
-                        TokenInterceptor { provideRepository.token },
-                        AppVersionInterceptor(),
-                        PlatformInterceptor(),
-                        PlatformVersionInterceptor()
-                )
+                TokenInterceptor { provideRepository.token }, AppVersionInterceptor(), PlatformInterceptor(), PlatformVersionInterceptor()
         )
     }
 
@@ -359,7 +341,7 @@ object Injector {
         return builder.build()
     }
 
-    internal fun configureOkHttpInterceptors(
+    private fun configureOkHttpInterceptors(
             context: Context,
             okHttpClientBuilder: OkHttpClient.Builder
     ) {
@@ -384,6 +366,8 @@ object Injector {
         "LOG provideRepoModelMapper class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
             CocktailRepoModelMapper::class.java -> CocktailRepoModelMapper(
+                    provideNestedRepoModelMapper(context),
+                    provideNestedRepoModelMapper(context),
                     provideNestedRepoModelMapper(context)
             )
             UserRepoModelMapper::class.java -> UserRepoModelMapper()
@@ -406,7 +390,8 @@ object Injector {
         "LOG provideNestedRepoModelMapper class = ${T::class.java.simpleName}".log
         return when (T::class.java) {
             LocalizedStringRepoModelMapper::class.java -> LocalizedStringRepoModelMapper()
-
+            CocktailNameRepoModelMapper::class.java -> CocktailNameRepoModelMapper()
+            CocktailInstructionRepoModelMapper::class.java -> CocktailInstructionRepoModelMapper()
             else -> throw IllegalStateException("Must provide NestedRepoModelMapper for class ${T::class.java.simpleName}")
         } as T
     }
@@ -466,7 +451,7 @@ object Injector {
         }
 
         return builder
-                .hostnameVerifier(HostnameVerifier { _, _ -> true })
+                .hostnameVerifier { _, _ -> true }
                 .readTimeout(readTimeoutSeconds, TimeUnit.SECONDS)
                 .writeTimeout(writeTimeoutSeconds, TimeUnit.SECONDS)
     }
