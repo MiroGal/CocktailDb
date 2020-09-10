@@ -4,9 +4,8 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.model.cocktail.CocktailIngredient
 
-class DetailListAdapter(private val ingredientsWithMeasures:  List<Pair<CocktailIngredient, String?>>) : RecyclerView.Adapter<DetailItemHolder>() {
+class DetailListAdapter(private val ingredientsWithMeasures: List<Pair<String, String?>>) : RecyclerView.Adapter<DetailItemHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DetailItemHolder {
         val inflater = LayoutInflater.from(parent.context)

@@ -9,9 +9,9 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.mirogal.cocktail.R
-import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.constant.filter.DrinkFilter
 import com.mirogal.cocktail.presentation.constant.filter.DrinkFilterType
+import com.mirogal.cocktail.presentation.extension.sharedViewModels
 import com.mirogal.cocktail.presentation.ui.base.dialog.BaseDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel
 import com.mirogal.cocktail.presentation.ui.main.drink.dialog.adapter.DrinkFilterListAdapter
@@ -54,7 +54,7 @@ class DrinkFilterDialogFragment : BaseDialogFragment(),
     @SuppressLint("SetTextI18n")
     override fun configureView(view: View, savedInstanceState: Bundle?): View {
         val tvTitle = view.findViewById<TextView>(R.id.tv_title)
-        tvTitle.text = drinkFilterType.key + " " + getString(R.string.dialog_drink_filter_title)
+        tvTitle.text = getString(R.string.dialog_drink_filter_title)
 
         rvFilter = view.findViewById(R.id.rv_filter_list)
         rvFilter.layoutManager = LinearLayoutManager(requireActivity())

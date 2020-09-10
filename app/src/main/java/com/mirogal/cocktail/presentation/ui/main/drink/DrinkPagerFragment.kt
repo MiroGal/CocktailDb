@@ -78,7 +78,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             toolbar_action_filter -> addDrinkFilterFragment()
             toolbar_action_sort -> showDrinkSortDialog()
             fab_search -> openSearchDrinkActivity()
-            btn_battery_indicator_close -> mainViewModel.isBatteryIndicatorVisibleLiveData.value = false
+            btn_battery_indicator_close -> mainViewModel.isBatteryIndicatorShowLiveData.value = false
             btn_item_filter_category_close -> {
                 val drinkFilter = viewModel.drinkFilterLiveData.value
                 drinkFilter?.put(DrinkFilterType.CATEGORY, DrinkFilterCategory.DISABLE)
@@ -122,26 +122,28 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
         view_pager.adapter = drinkPagerAdapter
 
         TabLayoutMediator(tab_layout, view_pager) { tab, position ->
-            if (position == 0) {
-                tab.text = getString(R.string.drink_pager_tab_history)
-            } else if (position == 1) {
-                tab.text = getString(R.string.drink_pager_tab_favorite)
+            when (position) {
+                0 -> tab.text = getString(R.string.drink_pager_tab_history)
+                1 -> tab.text = getString(R.string.drink_pager_tab_favorite)
             }
         }.attach()
 
 //        view_pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
 //            override fun onPageSelected(position: Int) {
 //                super.onPageSelected(position)
-//                if (position == 0) {
-//                    viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
-//                } else {
-//                    viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
+//                when (position) {
+//                    DrinkPage.HISTORY.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.HISTORY
+//                    DrinkPage.FAVORITE.ordinal -> viewModel.currentDrinkPageLiveData.value = DrinkPage.FAVORITE
 //                }
 //            }
 //        })
     }
 
     override fun configureObserver() {
+        viewModel.currentDrinkPageLiveData.observe(viewLifecycleOwner, Observer {
+            if (view_pager.currentItem != it.ordinal) view_pager.currentItem = it.ordinal
+        })
+
         viewModel.isDrinkFilterEnableLiveData.observe(viewLifecycleOwner, Observer {
             if (it) {
                 toolbar_action_filter.setImageResource(R.drawable.ic_filter_list_disable)
@@ -167,7 +169,7 @@ class DrinkPagerFragment : BaseFragment<DrinkViewModel, FragmentDrinkPagerBindin
             }
         })
 
-        mainViewModel.isBatteryIndicatorVisibleLiveData.observe(this, Observer {
+        mainViewModel.isBatteryIndicatorShowLiveData.observe(this, Observer {
             if (it) {
                 layout_charge_indicator.visibility = View.VISIBLE
             } else {

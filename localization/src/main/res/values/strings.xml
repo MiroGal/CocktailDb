@@ -1,6 +1,6 @@
 <resources>
 
-    <string name="app_name">MiroGal</string>
+    <string translatable="false" name="app_name">MiroGal</string>
 
     <string name="dialog_btn_cancel">Cancel</string>
     <string name="dialog_btn_ok">OK</string>
@@ -28,8 +28,12 @@
 
     <!--region Settings-->
     <string name="settings_label">Settings</string>
+    <string name="setting_btn_language">Language</string>
     <string name="settings_show_bottom_nav_label">Show navigation bar titles</string>
     <string name="settings_show_battery_indicator">Show battery indicator</string>
+    <string name="dialog_language_title">Chose language</string>
+    <string translatable="false" name="dialog_language_btn_en">English</string>
+    <string translatable="false" name="dialog_language_btn_uk">Українська</string>
     <!--endregion-->
 
     <!--region Main-->
@@ -44,7 +48,7 @@
     <string name="drink_pager_tab_favorite">Favorite</string>
     <string name="drink_pager_snackbar_message">View</string>
     <string name="drink_pager_snackbar_action_open_detail">Open</string>
-    <string name="drink_pager_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+    <string name="drink_pager_receiver_airplane_mod_message_on">Taste the margarita with a sense of proportion. And we hope that you are not a pilot during the flight.</string>
 
     <string name="drink_history_message_empty">History is empty</string>
     <string name="drink_favorite_message_empty">Favorite is empty</string>
@@ -60,10 +64,10 @@
     <string name="drink_favorite_item_menu_pin_shortcut">Add pin shortcut</string>
     <string name="drink_favorite_item_menu_remove_favorite">Remove from favorite</string>
 
-    <string name="drink_item_menu_toast_shortcut_added">cocktail shortcut added</string>
+    <string name="drink_item_menu_toast_shortcut_added">Shortcut added</string>
     <string name="drink_item_menu_toast_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Nougat++</string>
 
-    <string name="drink_item_menu_toast_pin_shortcut_added">cocktail pin shortcut added</string>
+    <string name="drink_item_menu_toast_pin_shortcut_added">Pin shortcut added</string>
     <string name="drink_item_menu_toast_pin_shortcut_not_added">Cocktail shortcut is not added\nThe function supported just from Android Oreo</string>
 
     <string name="dialog_day_drink_title">Welcome back</string>
@@ -80,11 +84,11 @@
     <string name="drink_filter_message_result_found">Results</string>
     <string name="drink_filter_message_result_not_found">Not found</string>
 
-    <string name="dialog_drink_filter_title">drink filter</string>
+    <string name="dialog_drink_filter_title">Drink filter</string>
     <string name="dialog_drink_sort_title">Sort cocktails</string>
     <!--endregion-->
 
-    <!--region SearchList-->
+    <!--region Search-->
     <string name="search_label">Search Cocktail</string>
     <string name="search_message_empty">No cocktails found</string>
     <string name="search_message_start">Enter text to start search</string>

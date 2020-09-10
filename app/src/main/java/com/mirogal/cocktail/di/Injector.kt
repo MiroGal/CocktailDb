@@ -20,7 +20,9 @@ import com.mirogal.cocktail.data.db.source.CocktailDbSource
 import com.mirogal.cocktail.data.db.source.UserDbSource
 import com.mirogal.cocktail.data.db.source.base.BaseDbSource
 import com.mirogal.cocktail.data.local.impl.SharedPrefsHelper
+import com.mirogal.cocktail.data.local.impl.source.AppSettingLocalSourceImpl
 import com.mirogal.cocktail.data.local.impl.source.TokenLocalSourceImpl
+import com.mirogal.cocktail.data.local.source.AppSettingLocalSource
 import com.mirogal.cocktail.data.local.source.TokenLocalSource
 import com.mirogal.cocktail.data.network.impl.deserializer.BooleanDeserializer
 import com.mirogal.cocktail.data.network.impl.deserializer.Iso8601DateDeserializer
@@ -41,14 +43,8 @@ import com.mirogal.cocktail.data.repository.impl.mapper.CocktailRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.mapper.LocalizedStringRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.mapper.UserRepoModelMapper
 import com.mirogal.cocktail.data.repository.impl.mapper.base.BaseRepoModelMapper
-import com.mirogal.cocktail.data.repository.impl.source.AuthRepositoryImpl
-import com.mirogal.cocktail.data.repository.impl.source.CocktailRepositoryImpl
-import com.mirogal.cocktail.data.repository.impl.source.TokenRepositoryImpl
-import com.mirogal.cocktail.data.repository.impl.source.UserRepositoryImpl
-import com.mirogal.cocktail.data.repository.source.AuthRepository
-import com.mirogal.cocktail.data.repository.source.CocktailRepository
-import com.mirogal.cocktail.data.repository.source.TokenRepository
-import com.mirogal.cocktail.data.repository.source.UserRepository
+import com.mirogal.cocktail.data.repository.impl.source.*
+import com.mirogal.cocktail.data.repository.source.*
 import com.mirogal.cocktail.data.repository.source.base.BaseRepository
 import com.mirogal.cocktail.extension.log
 import com.mirogal.cocktail.presentation.mapper.CocktailModelMapper
@@ -195,6 +191,7 @@ object Injector {
                 ) as T
 
                 MainViewModel::class.java -> MainViewModel(
+                        provideRepository(application),
                         handle,
                         application
                 ) as T
@@ -221,6 +218,7 @@ object Injector {
                 ) as T
 
                 SettingsViewModel::class.java -> SettingsViewModel(
+                        provideRepository(application),
                         handle,
                         application
                 ) as T
@@ -263,6 +261,10 @@ object Injector {
                     provideLocalDataSource(context)
             ) as T
 
+            AppSettingRepository::class.java -> AppSettingRepositoryImpl(
+                    provideLocalDataSource(context)
+            ) as T
+
             else -> throw IllegalStateException("Must provide repository for class ${T::class.java.simpleName}")
         }
     }
@@ -287,6 +289,16 @@ object Injector {
                             )
                     )
             ) as T
+
+            AppSettingLocalSource::class.java -> AppSettingLocalSourceImpl(
+                    SharedPrefsHelper(
+                            context.getSharedPreferences(
+                                    "sp",
+                                    Context.MODE_PRIVATE
+                            )
+                    )
+            ) as T
+
             else -> throw IllegalStateException("Must provide LocalDataSource for class ${T::class.java.simpleName}")
         }
     }

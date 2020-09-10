@@ -1,0 +1,104 @@
+<resources>
+
+    <string name="dialog_btn_cancel">Відміна</string>
+    <string name="dialog_btn_ok">ОК</string>
+
+    <!--region Auth-->
+    <string name="auth_login_hint">Логін</string>
+    <string name="auth_password_hint">Пароль</string>
+    <string name="auth_btn_login">Ввійти</string>
+    <string name="auth_message_invalid_login">Невірний логін</string>
+    <string name="auth_message_invalid_password">Невірний пароль</string>
+    <string name="dialog_auth_title_valid_invalid">Невірний пароль</string>
+    <string name="dialog_auth_title_invalid_valid">Невірний логін</string>
+    <string name="dialog_auth_title_invalid_invalid">Невірний логін і пароль</string>
+    <string name="dialog_auth_message">Спробуйте повторно ввести логін і пароль використовуючи літери a–z, A–Z, і цифри 0–9. Логін і пароль повинні мати не менше 6 символів. Пароль повинен містити як мінімум одну велику та одну малу літеру і принаймні одну цифру.</string>
+    <!--endregion-->
+
+    <!--region Profile-->
+    <string name="profile_label">Профіль</string>
+    <string name="profile_btn_logout">Вихід з профілю</string>
+
+    <string name="dialog_logout_title">Вихід</string>
+    <string name="dialog_logout_message">Ви впевнені що хочете вийти з профілю?</string>
+    <string name="dialog_logout_btn_ok">Вийти</string>
+    <!--endregion-->
+
+    <!--region Settings-->
+    <string name="settings_label">Налаштування</string>
+    <string name="setting_btn_language">Мова</string>
+    <string name="settings_show_bottom_nav_label">Показати підписи в нижній панелі</string>
+    <string name="settings_show_battery_indicator">Показати індикатор заряду акумолятора</string>
+    <string name="dialog_language_title">Виберіть мову</string>
+    <!--endregion-->
+
+    <!--region Main-->
+    <string name="main_bottom_nav_drink">Коктелі</string>
+    <string name="main_bottom_nav_profile">Профіль</string>
+    <string name="main_bottom_nav_settings">Налаштування</string>
+    <!--endregion-->
+
+    <!--region Drink-->
+    <string name="drink_pager_label">Коктелі</string>
+    <string name="drink_pager_tab_history">Історія</string>
+    <string name="drink_pager_tab_favorite">Улюблені</string>
+    <string name="drink_pager_snackbar_message">Переглянути коктель</string>
+    <string name="drink_pager_snackbar_action_open_detail">Відкрити</string>
+    <string name="drink_pager_receiver_airplane_mod_message_on">Смакуйте маргаритку із відчуттям міри. І надіємося, що Ви не пілот під  час польоту</string>
+
+    <string name="drink_history_message_empty">Історія порожня</string>
+    <string name="drink_favorite_message_empty">Улюблених немає</string>
+    <string name="drink_history_item_btn_favorite_description">Додати/забрати з улюблених</string>
+
+    <string name="drink_history_item_menu_action_open">Відкрити</string>
+    <string name="drink_history_item_menu_pin_shortcut">Додати ярлик</string>
+    <string name="drink_history_item_menu_add_favorite">Додати в улюблені</string>
+    <string name="drink_history_item_menu_delete">Видалити з історії</string>
+
+    <string name="drink_favorite_item_menu_action_open">Відкрити</string>
+    <string name="drink_favorite_item_menu_shortcut">Додати швидкий запуск</string>
+    <string name="drink_favorite_item_menu_pin_shortcut">Додати ярлик</string>
+    <string name="drink_favorite_item_menu_remove_favorite">Прибрати з улюблених</string>
+
+    <string name="drink_item_menu_toast_shortcut_added">Швидкий запуск додано</string>
+    <string name="drink_item_menu_toast_shortcut_not_added">Не вдалося додати швидкий запуск\nФункція підтримується від версії Android Nougat++</string>
+
+    <string name="drink_item_menu_toast_pin_shortcut_added">Ярлик додано</string>
+    <string name="drink_item_menu_toast_pin_shortcut_not_added">Не вдалося додати ярлик коктелю\nФункція підтримується від версії Android Oreo</string>
+
+    <string name="dialog_day_drink_title">З поверненням</string>
+    <string name="dialog_day_drink_message">Переглянути напій дня?</string>
+    <string name="dialog_day_drink_btn_cancel">Ні, дякую</string>
+    <string name="dialog_day_drink_btn_ok">Переглянути</string>
+    <!--endregion-->
+
+    <!--region Filter-->
+    <string name="drink_filter_label">Фільтри</string>
+    <string name="drink_filter_btn_reset">Скинути</string>
+    <string name="drink_filter_btn_result">Результати</string>
+    <string name="drink_filter_btn_undo">Відмінити</string>
+    <string name="drink_filter_message_result_found">Результати</string>
+    <string name="drink_filter_message_result_not_found">Нічого не знайдено</string>
+
+    <string name="dialog_drink_filter_title">Фільтрування</string>
+    <string name="dialog_drink_sort_title">Сортування</string>
+    <!--endregion-->
+
+    <!--region Search-->
+    <string name="search_label">Пошук коктелів</string>
+    <string name="search_message_empty">Напоїв не знайдено</string>
+    <string name="search_message_start">Введіть текст щоб почати пошук</string>
+    <string name="search_toolbar_btn_search">Пошук</string>
+    <!--endregion-->
+
+    <!--region Detail-->
+    <string name="detail_label">Деталі коктелю</string>
+    <string name="detail_info_title">Основна інформація</string>
+    <string name="detail_info_name">Назва:</string>
+    <string name="detail_info_alcoholic">Алкоголь:</string>
+    <string name="detail_info_glass">Посуд:</string>
+    <string name="detail_ingredient_title">Інгредієнти</string>
+    <string name="detail_instruction_title">Приготування</string>
+    <!--endregion-->
+
+</resources>

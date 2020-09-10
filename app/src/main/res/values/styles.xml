@@ -31,9 +31,21 @@
         <item name="android:textSize">@dimen/text_14</item>
     </style>
 
+    <style name="TextButton">
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/txt_title</item>
+    </style>
+
     <style name="EditText">
         <item name="android:textColor">@color/txt_title</item>
         <item name="android:textSize">@dimen/text_17</item>
+    </style>
+
+    <style name="Button">
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/bg_stroke_button</item>
+        <item name="android:textSize">@dimen/text_17</item>
+        <item name="android:textColor">@color/txt_title</item>
     </style>
 
     <style name="AccentButton">

@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import com.google.android.material.bottomnavigation.LabelVisibilityMode
 import com.mirogal.cocktail.R
 import com.mirogal.cocktail.databinding.ActivityMainBinding
+import com.mirogal.cocktail.presentation.constant.BottomNavTab
 import com.mirogal.cocktail.presentation.extension.baseViewModels
 import com.mirogal.cocktail.presentation.ui.auth.AuthActivity
 import com.mirogal.cocktail.presentation.ui.base.BaseActivity
@@ -18,10 +19,12 @@ import com.mirogal.cocktail.presentation.ui.main.drink.dialog.DayDrinkDialogFrag
 import com.mirogal.cocktail.presentation.ui.main.profile.ProfileFragment
 import com.mirogal.cocktail.presentation.ui.main.profile.dialog.LogoutDialogFragment
 import com.mirogal.cocktail.presentation.ui.main.settings.SettingsFragment
+import com.mirogal.cocktail.presentation.ui.main.settings.dialog.LanguageDialogFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         LogoutDialogFragment.OnActionListener,
+        LanguageDialogFragment.OnActionListener,
         DayDrinkDialogFragment.OnActionListener {
 
     override val contentLayoutResId = R.layout.activity_main
@@ -38,11 +41,11 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         }
 
         bottom_nav_view.selectedItemId = R.id.bottom_nav_drink
-        bottom_nav_view.setOnNavigationItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.bottom_nav_drink -> showFragment<DrinkPagerFragment>()
-                R.id.bottom_nav_profile -> showFragment<ProfileFragment>()
-                R.id.bottom_nav_settings -> showFragment<SettingsFragment>()
+        bottom_nav_view.setOnNavigationItemSelectedListener {
+            when (it.itemId) {
+                BottomNavTab.COCKTAIL.key -> viewModel.currentBottomNavTabLiveData.value = BottomNavTab.COCKTAIL
+                BottomNavTab.PROFILE.key -> viewModel.currentBottomNavTabLiveData.value = BottomNavTab.PROFILE
+                BottomNavTab.SETTING.key -> viewModel.currentBottomNavTabLiveData.value = BottomNavTab.SETTING
             }
             true
         }
@@ -72,7 +75,17 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
     }
 
     override fun configureObserver() {
-        viewModel.isBottomNavLabelVisibleLiveData.observe(this, Observer {
+        viewModel.currentBottomNavTabLiveData.observe(this, Observer {
+            if (it != null && bottom_nav_view.selectedItemId != it.key) {
+                bottom_nav_view.menu.findItem(it.key).isChecked = true
+                when (it) {
+                    BottomNavTab.COCKTAIL -> showFragment<DrinkPagerFragment>()
+                    BottomNavTab.PROFILE -> showFragment<ProfileFragment>()
+                    BottomNavTab.SETTING -> showFragment<SettingsFragment>()
+                }
+            }
+        })
+        viewModel.isBottomNavLabelShowLiveData.observe(this, Observer {
             if (it) {
                 bottom_nav_view.labelVisibilityMode = LabelVisibilityMode.LABEL_VISIBILITY_LABELED
             } else {
@@ -99,6 +112,10 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
         openAuthActivity()
     }
 
+    override fun onDialogLanguageBtnClick() {
+        openMainActivity()
+    }
+
     override fun onDialogDayDrinkBtnOkClick(cocktailId: Int, cocktailName: String?) {
         openDrinkDetailActivity(cocktailId, cocktailName)
     }
@@ -109,6 +126,15 @@ class MainActivity : BaseActivity<MainViewModel, ActivityMainBinding>(),
             addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
         }
         startActivity(intent)
+    }
+
+    private fun openMainActivity() {
+        val intent = Intent(this, MainActivity::class.java).apply {
+            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        }
+        startActivity(intent)
+        Runtime.getRuntime().exit(0)
     }
 
     private fun openDrinkDetailActivity(cocktailId: Int, cocktailName: String?) {

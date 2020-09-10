@@ -10,9 +10,9 @@ class TokenLocalSourceImpl(
 ) : BaseLocalSourceImpl(preferences),
         TokenLocalSource {
 
-    override val tokenLiveData: LiveData<String?> = sharedPrefLiveData(TOKEN, "")
+    override val tokenLiveData: LiveData<String?> = sharedPrefLiveData(TOKEN, defaultValue = "")
 
-    override var token: String? = sharedPrefsHelper.get(TOKEN, "")
+    override var token: String? = sharedPrefsHelper.get(TOKEN, defaultValue = "")
         get() = sharedPrefsHelper.get(TOKEN, field)
         set(value) {
             sharedPrefsHelper.set(TOKEN, value)
