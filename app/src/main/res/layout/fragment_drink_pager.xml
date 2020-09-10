@@ -6,6 +6,9 @@
     tools:context=".presentation.ui.main.drink.DrinkPagerFragment">
 
     <data>
+        <import
+            type="com.mirogal.cocktail.presentation.databinding.converter.PageBindingConverter"
+            />
         <variable
             name="viewmodel"
             type="com.mirogal.cocktail.presentation.ui.main.drink.DrinkViewModel"
@@ -91,6 +94,7 @@
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:bind_vp_page="@={viewmodel.currentDrinkPageLiveData}"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
                     />
                 <include
